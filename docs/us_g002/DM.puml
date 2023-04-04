@@ -2,7 +2,7 @@
 'https://plantuml.com/sequence-diagram
 Hide members
 Hide circle
-class Teacher <<Entity>>
+class Teacher<<Entity>>
 class Student <<Entity>>
 class Course <<Entity>>
 class Exam <<Entity>>
@@ -16,7 +16,6 @@ class Date <<Value Object>>
 class "E-mail" <<Value Object>>
 class Name <<Value Object>>
 class "Short Name" <<Value Object>>
-class Header <<Value Object>>
 class "Course Title" <<Value Object>>
 class "Exam Resolution" <<Entity>>
 class Enrollment <<Entity>>
@@ -31,7 +30,6 @@ class "Course Name" <<Value Object>>
 class "Enrollment Limits" <<Value Object>>
 class "Class Title" <<Value Object>>
 class Duration <<Value Object>>
-class "Exam Description" <<Value Object>>
 class "Exam Date Interval" <<Value Object>>
 class "Date of Birth" <<Value Object>>
 class "Tax Payer Number" <<Value Object>>
@@ -47,41 +45,47 @@ class "Column Identifier" <<Value Object>>
 class "Row Identifier" <<Value Object>>
 class "Permission" <<Value Object>>
 class Content <<Value Object>>
-class Section <<Value Object>>
-class Question <<Value Object>>
-class "Question Type" <<Value Object>>
+class "Description" <<Value Object>>
+class Grammar <<Value Object>>
+class "Board owner" <<Entity>>
+class "Teacher in charge" <<Entity>>
+class "Weekly Date" <<Value Object>>
+class "Board Participant" <<Entity>>
 
 
+Person"1" -- "1""Board owner" : can be >
+Board"1.*" -- "1""Board owner" : owns/archives <
 Course -- Class : has >
 Course "1" -- "1.*" Exam : has >
-Cell "1" -- "1.*" "Post-It" : has >
+Cell "1" -- "1" "Post-It" : has >
 Person "1" -- "1" Teacher : can be >
 Person "1" -- "1" Student : can be >
-Person"1" -- "1" "E-mail"
+Person --  "E-mail"
 Person "1" -- "1" Manager : can be >
-Teacher "1" -right- "1" Course : in charge >
-Teacher "1.*" -right- "1" Course : lectures >
+Teacher "1" -right- "1.*" Course : lectures >
+Teacher"1" -- "1""Teacher in charge" : can be >
+"Teacher in charge""1" -- "1.*"Course : in charge >
 Enrollment "1.*" -- "1"Course : has <
-Person "1" -- "1" Name
-Person"1"  --"1"   "Short Name"
-Person"1" -- "1.*" Board : participates/owns/archives >
+Person -- Name
+Person  -- "Short Name"
+Person"1" -up- "1.*" Board : participates >
 Person "1" -- "1.*" Meeting : schedules >
 Course "1" -- "1.*" "Extra-Class" : can have >
 Student "1" -- "1.*" "Exam Resolution": has >
-Exam "1" -- "1" "Course Title"
-Exam "1" -- "1" Header
+Exam "1" -- "1" "Grammar"
 Exam "1" -- "1.*" "Exam Resolution" : has >
-Date "1.*" -up- "1" Class
-Date "1" -up- "1" Meeting
-Date "1" -up- "1" "Extra-Class"
+"Weekly Date" -up- Class
+Date -up- Meeting
+Date -up- "Extra-Class"
 Course -- Status
 Student "1" -- "1.*" Enrollment  : requests >
 Person "1" -- "1.*" "Post-It" : changes/undoes change/creates >
 Meeting "1" -- "1.*" "Invitation" : has >
 Person "1" -- "1.*" "Invitation" : accepts/rejects >
 Invitation -- "Response Status"
-Board "1" -- "1.*" "Board Update"
+Board -- "Board Update"
 "Exam Resolution" "1" -- "1" Grade
+"Course Title" -- Course
 "Course Name" "1" -- "1" Course
 "Description" "1" -- "1" Course
 "Enrollment Limits" "1" -- "1" Course
@@ -91,7 +95,6 @@ Duration "1" -- "1" Class
 Acronym "1" -- "1" Teacher
 "Tax Payer Number" "1" -- "1" Teacher
 "Date of Birth" "1" -- "1" Teacher
-Exam "1" -- "1" "Exam Description"
 Student "1" -- "1" "Date of Birth"
 Student "1" -- "1" "Tax Payer Number"
 Student "1" -- "1" "Mechanographic Number"
@@ -100,15 +103,16 @@ Meeting "1" -- "1" Duration
 Board "1" -- "1" "Board Title"
 Board "1" -- "1.*" Row
 Board "1" -- "1.*" Column
-Row "1" -- "1" "Row Title"
+Row "1" -up- "1" "Row Title"
 Column "1" -- "1" "Column Title"
-Cell "1" -- "1" Row : has >
+Cell "1" -up- "1" Row : has >
 Cell "1" -- "1"Column : has >
 "Column Identifier" "1" -- "1" Column
 "Row Identifier" "1" -- "1" Row
 Board "1" -- "1.*" "Permission"
 Person"1" -- "1.*" "Permission"
 "Post-It""1" --"1" Content
-Exam "1" -- "1.*" Section
-Section "1" -- "1.*" Question
+"Board Participant" -- Board
+"Board Participant" -- Permission
+
 @enduml
