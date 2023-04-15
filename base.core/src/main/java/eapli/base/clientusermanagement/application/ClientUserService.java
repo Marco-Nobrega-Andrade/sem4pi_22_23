@@ -43,19 +43,21 @@ public class ClientUserService {
             AuthzRegistry.authorizationService();
     private final ClientUserRepository repo =
             PersistenceContext.repositories().clientUsers();
-
+    /*
     public Optional<ClientUser> findClientUserByMecNumber(
             final String mecNumber) {
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER,
-                BaseRoles.ADMIN,
+                BaseRoles.MANAGER,
                 BaseRoles.CASHIER);
         return repo.ofIdentity(MecanographicNumber.valueOf(mecNumber));
     }
+    
+     */
 
     public Optional<ClientUser> findClientUserByUsername(
             final Username user) {
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER,
-                BaseRoles.ADMIN);
+                BaseRoles.MANAGER);
         return repo.findByUsername(user);
     }
 }
