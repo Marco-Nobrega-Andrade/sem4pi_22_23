@@ -16,7 +16,7 @@
 |        Course         |                      Curricular unit where student can enroll and teacher can lecture                       |
 |   Course Identifier   |                                  A unique code that identifies the course                                   |
 |      Course Name      |                              Name of the course must be unique for each course                              |
-|     Course Status     |                     Can be state open, state close, state enroll and state in progress                      |
+|     Course Status     |                               Can be  open,  close,  enroll and  in progress                                |
 |     Course Title      |                                             Title of the course                                             |
 |         Date          |                                      Time and day when a event occurs                                       |
 |     Date of Birth     |                                     Time and day when a person was born                                     |
@@ -29,7 +29,7 @@
 |         Exam          |                                         The framing of a evaluation                                         |
 |  Exam Date Interval   |                                  Time limit for a student to take the exam                                  |
 |    Exam Resolution    |                                   The result of an student taking an exam                                   |
-|      Extra-Class      |                  A specific occurence of a class that has a specific group of participants                  |
+|      Extra-Class      |                 A specific occurrence of a class that has a specific group of participants                  |
 |       Full Name       |                                        The extended name of a person                                        |
 |         Grade         |                                     An evaluation of a exam resolution                                      |
 |        Grammar        |                                            Structure of an exam                                             |
@@ -37,7 +37,7 @@
 |        Manager        |                                             Person that manages                                             |
 | Mechanographic Number | Unique number assigned automatically to a student based on the year of registration and a sequential number |
 |        Meeting        |                 event that happen in some time, have a duration and also have participants                  |
-|     Meeting Owner     |                               The person who send invitation and canceles it                                |
+|     Meeting Owner     |                                The person who send invitation and cancels it                                |
 |      Permission       |                                      Can be read or write in the board                                      |
 |        Person         |                                     User of the system without any role                                     |
 |        Post-It        |                                A post in a board that can be a text or image                                |
@@ -50,5 +50,5 @@
 |   Tax Payer Number    |                                       Unique number with nine digits                                        |
 |        Teacher        |                                        Person who lectures a course                                         |
 |   Teacher in charge   |                                        Teacher in charge of a course                                        |
-|      Weekly Date      |                                                 Set of date                                                 |
+|      Weekly Date      |                                           Set of dates of a class                                           |
 
