@@ -1,0 +1,98 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+
+actor Manager
+participant "AddUserUI" as ui <<presentation>>
+participant "AddUserController" as ctrl <<application>>
+participant AuthzRegistry as auth <<application>>
+participant AuthorizationService as authSV <<application>>
+participant UserManagementService as userManSV <<application>>
+participant SystemUserBuilder as SysBuilder <<builder>>
+participant SystemUser as SU  <<domain>>
+participant PersonService as PerHelper <<application>>
+participant StudentBuilder as StdBuilder <<builder>>
+participant Student as Student <<domain>>
+
+participant PersistenceContext as Persistence <<persistence>>
+participant RepositoryFactory as RepFactory <<factory>>
+database UserRepository as UserRep <<repository>>
+database personRepository as PerRep <<repository>>
+ui --> Manager : ask for Information
+activate ui
+activate Manager
+Manager ->ui : Mechanographic Number, Date of Birth, Tax Payer Number
+
+
+
+ui ->ctrl: addUser(username, password, firstName, lastName, fullName, email, Mechanographic Number, Date of Birth, Tax Payer Number)
+activate ctrl
+ctrl -> ctrl :addUser(username, password, firstName, lastName, email, roles, createdON)
+activate ctrl
+deactivate ctrl
+
+ctrl -> authSV : ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER, BaseRoles.MANAGER)
+activate authSV
+deactivate authSV
+
+ctrl -> userManSV : registerNewUser(username, password, firstName,lastName, email, roles, createdOn)
+activate userManSV
+userManSV -> SysBuilder: create(policy, encoder)
+userManSV -> SysBuilder: with(username, password, firstName, lastName, email).createdOn(createdOn).withRoles(roles)
+deactivate SysBuilder
+userManSV -> SysBuilder: build()
+activate SysBuilder
+SysBuilder -> SU: create(username, password, name, email, roles, createdOn)
+SU -> SysBuilder: newUser
+SysBuilder -> userManSV: newUser
+deactivate SysBuilder
+
+userManSV -> Persistence: repositories()
+activate Persistence
+Persistence -> RepFactory: create
+Persistence -> userManSV: factory
+deactivate Persistence
+userManSV -> RepFactory: users()
+activate RepFactory
+RepFactory -> UserRep: create
+RepFactory -> userManSV: userRepository
+deactivate RepFactory
+userManSV->UserRep:save(user)
+userManSV->ctrl: user
+
+deactivate userManSV
+
+ctrl ->PerHelper: create
+activate PerHelper
+PerHelper ->StdBuilder:  create
+PerHelper ->StdBuilder: with(FullName,user,Mechanographic Number, Date of Birth, Tax Payer Number)
+
+
+PerHelper -> StdBuilder: build()
+activate StdBuilder
+StdBuilder -> Student: create(FullName,user,Mechanographic Number, Date of Birth, Tax Payer Number)
+Student -> StdBuilder: student
+StdBuilder -> PerHelper : student
+deactivate StdBuilder
+PerHelper -> Persistence: repositories()
+activate Persistence
+Persistence -> RepFactory: create
+Persistence -> PerHelper: factory
+deactivate Persistence
+PerHelper -> RepFactory: person()
+activate RepFactory
+RepFactory -> PerRep: create
+RepFactory -> PerHelper: personRepository
+deactivate RepFactory
+
+PerHelper -> PerRep: save(student)
+
+deactivate ui
+deactivate ctrl
+
+deactivate RepFactory
+
+
+@enduml
