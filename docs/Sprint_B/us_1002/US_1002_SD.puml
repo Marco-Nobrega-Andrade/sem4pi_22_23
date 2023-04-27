@@ -1,0 +1,17 @@
+@startuml
+actor Manager
+participant CreateCourseUI as UI
+participant CreateCourseController as CONTROLLER
+participant CreateCourseService as SERVICE
+participant CourseFactory as COURSE_FAC
+participant Course as COURSE
+participant CourseMapper as COURSE_MAP
+participant CourseDTO as COURSE_DTO
+participant CourseRepository as COURSE_REPO
+participant RepositoryFactory as REPO_FAC
+participant PersistenceContext as PERS_CONTX
+autonumber
+
+
+
+@enduml
