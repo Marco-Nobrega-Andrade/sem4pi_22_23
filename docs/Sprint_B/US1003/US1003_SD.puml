@@ -40,7 +40,7 @@ CR -> CL : create()
 CR --> OCESv : courseList
 deactivate CR
 OCESv -> cDtoL : create()
-loop foreach course form courseList
+loop foreach course from courseList
 OCESv -> CM : toDTO(course)
 activate CM
 CM -> cDTO
