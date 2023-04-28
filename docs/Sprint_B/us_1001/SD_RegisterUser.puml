@@ -1,4 +1,4 @@
-@startuml
+   @startuml
 'https://plantuml.com/sequence-diagram
 
 autonumber
@@ -45,7 +45,11 @@ Manager -> ui: Role Type
 
 
 alt roleType == manager
-
+ui -> Manager: verify information
+Manager -> ui:confirmation
+note right
+In this SD the confirmation is valid
+end note
 ui ->ctrl: addUser(username, password, firstName, lastName, fullName, email, roleTypes)
 activate ctrl
 ctrl -> ctrl :addUser(username, password, firstName, lastName, email, roles, createdON)
@@ -83,7 +87,7 @@ userManSV->ctrl: user
 
 deactivate userManSV
 
-ctrl ->PerHelper: create
+ctrl ->PerHelper: registerNewPerson(FullName,user)
 activate PerHelper
 PerHelper ->PerBuilder:  create
 PerHelper ->PerBuilder: with(shortName,user)
@@ -105,8 +109,14 @@ activate RepFactory
 RepFactory -> PerRep: create
 RepFactory -> PerHelper: personRepository
 deactivate RepFactory
-
 PerHelper -> PerRep: save(Person)
+
+
+alt "if exception is throwed"
+PerHelper -> ctrl: error
+ctrl -> ui: error
+ui-> Manager: Inform error
+end
 
 deactivate ui
 deactivate ctrl

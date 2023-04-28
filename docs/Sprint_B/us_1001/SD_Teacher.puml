@@ -23,6 +23,11 @@ ui --> Manager : ask for Information
 activate ui
 activate Manager
 Manager ->ui : acronym, Date of Birth, Tax Payer Number
+ui -> Manager: verify information
+Manager -> ui:confirmation
+note right
+In this SD the confirmation is valid
+end note
 
 
 
@@ -63,7 +68,7 @@ userManSV->ctrl: user
 
 deactivate userManSV
 
-ctrl ->PerHelper: create
+ctrl ->PerHelper: registerNewPerson(FullName,user,acronym, Date of Birth, Tax Payer Number)
 activate PerHelper
 PerHelper ->TeaBuilder:  create
 PerHelper ->TeaBuilder: with(FullName,user,acronym, Date of Birth, Tax Payer Number)
@@ -87,7 +92,11 @@ RepFactory -> PerHelper: personRepository
 deactivate RepFactory
 
 PerHelper -> PerRep: save(teacher)
-
+alt "if exception is throwed"
+PerHelper -> ctrl: error
+ctrl -> ui: error
+ui-> Manager: Inform error
+end
 deactivate ui
 deactivate ctrl
 

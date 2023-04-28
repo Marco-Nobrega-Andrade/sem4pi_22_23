@@ -1,0 +1,151 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+
+class Teacher <<domain>>
+class Student <<domain>>
+class AddUserUI <<presentation>>
+class AddUserController <<application>>
+class AuthzRegistry <<application>>
+class AuthorizationService  <<application>>
+class UserManagementService  <<application>>
+class SystemUserBuilder <<builder>>
+class SystemUser   <<domain>>
+class PersonService  <<application>>
+class PersonBuilder  <<builder>>
+class Person <<domain>>
+
+class PersistenceContext  <<persistence>>
+class RepositoryFactory  <<factory>>
+class UserRepository  <<repository>>
+class PersonRepository  <<repository>>
+
+AddUserUI -->AddUserController
+AddUserController --> PersonService
+AddUserController --> UserManagementService
+AddUserController --> AuthzRegistry
+AddUserController --> AuthorizationService
+
+UserManagementService --> SystemUserBuilder
+UserManagementService --> PersistenceContext
+UserManagementService --> RepositoryFactory
+UserManagementService --> UserRepository
+
+PersonService --> PersonBuilder
+PersonService --> PersistenceContext
+PersonService --> RepositoryFactory
+PersonService --> PersonRepository
+
+PersistenceContext --> RepositoryFactory
+RepositoryFactory --> UserRepository
+RepositoryFactory --> PersonRepository
+
+PersonRepository --> Person
+PersonBuilder --> Person
+UserRepository --> SystemUser
+SystemUserBuilder --> SystemUser
+
+
+Person <|-- Student
+Person <|-- Teacher
+
+class AddUserUI {
+doShow();
+showRoles();
+buildRolesMenu();
+}
+
+class Person {
+fullName : FullName
+systemUser : SystemUser
+}
+
+class Student {
+taxPayerNumber :TaxPayerNumber
+mechanographicNumber :MechanographicNumber
+dateOfBirth : dateOfBirth
+}
+
+class Teacher {
+taxPayerNumber : TaxPayerNumber
+acronym : Acronym
+dateOfBirth : dateOfBirth
+}
+
+class AddUserController{
+addUser(String: username,String: password,String: firstName, String: lastName,String: fullName,String: email)
+addUser(String: username,String: password,String: firstName, String: lastName,String: fullName,String: email,String: Acronym ,Date: Date of Birth,int: Tax Payer Number)
+addUser(String: username,String: password,String: firstName, String: lastName,String: fullName,String: email,int: Mechanographic Number,Date: Date of Birth,int: Tax Payer Number)
+}
+
+class PersistenceContext{
+repositories()
+}
+class RepositoryFactory{
+users()
+person()
+}
+
+class UserRepository{
+save(SystemUser : user)
+}
+
+class PersonRepository{
+save(Person: person)
+}
+
+class AuthzRegistry{
+authorizationService()
+userService()
+}
+
+class AuthorizationService{
+ensureAuthenticatedUserHasAnyOf(Role... actions)
+}
+
+class UserManagementService{
+registerNewUser(String: username,String: rawPassword,String: firstName,String: lastName,String: email,Set<Role>: roles,Calendar: createdOn) }
+}
+
+class SystemUserBuilder{
+Username: username;
+Password: password;
+Name: name;
+EmailAddress: email;
+Calendar: createdOn;
+RoleSet: roles;
+PasswordPolicy: policy;
+PasswordEncoder: encoder;
+with(String: userName,String: password, String: firstName, String: lastName,String: email)
+createdOn(Calendar: createdOn)
+withRoles(Set<Role>: someRoles)
+}
+
+class SystemUser{
+Username: username;
+Password: password;
+Name: name;
+EmailAddress: email;
+Calendar: createdOn;
+RoleSet: roles;
+}
+
+class PersonBuilder{
+FullName: fullname
+SystemUser: user
+MechanographicNumber: mechanographicNumber
+DateOfBirth: DateOfBirth
+TaxPayerNumber: taxPayerNumber
+Acronym: acronym
+with(FullName: fullname,SystemUser: user)
+with(FullName: fullname,SystemUser: user ,MechanographicNumber: mechanographicNumber, DateOfBirth: DateOfBirth, TaxPayerNumber: taxPayerNumber)
+with(FullName: fullname,SystemUser: user ,Acronym: acronym, DateOfBirth: DateOfBirth, TaxPayerNumber: taxPayerNumber)
+build()
+}
+
+class PersonService{
+registerNewPerson(FullName: fullname,SystemUser: user)
+registerNewPerson(FullName: fullname,SystemUser: user ,MechanographicNumber: mechanographicNumber, DateOfBirth: DateOfBirth, TaxPayerNumber: taxPayerNumber)
+registerNewPerson(FullName: fullname,SystemUser: user ,Acronym: acronym, DateOfBirth: DateOfBirth, TaxPayerNumber: taxPayerNumber)
+}
+@enduml
