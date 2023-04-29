@@ -92,11 +92,26 @@ RepFactory -> PerHelper: personRepository
 deactivate RepFactory
 
 PerHelper -> PerRep: save(teacher)
+
 alt "if exception is throwed"
-PerHelper -> ctrl: error
-ctrl -> ui: error
-ui-> Manager: Inform error
+PerHelper -> Persistence: repositories()
+activate Persistence
+Persistence -> RepFactory: create
+Persistence -> PerHelper: factory
+deactivate Persistence
+PerHelper -> RepFactory: users()
+activate RepFactory
+RepFactory -> UserRep: create
+RepFactory -> PerHelper: userRepository
+deactivate RepFactory
+PerHelper->UserRep: delete(user.identity)
+userManSV->ctrl: user
 end
+
+PerHelper -> ctrl: success
+ctrl -> ui: success
+ui-> Manager: Inform if the operation was a success
+
 deactivate ui
 deactivate ctrl
 

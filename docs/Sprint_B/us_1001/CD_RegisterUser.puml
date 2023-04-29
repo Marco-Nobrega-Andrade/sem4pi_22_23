@@ -92,6 +92,7 @@ save(SystemUser : user)
 
 class PersonRepository{
 save(Person: person)
+findTotalMechanographicNumberByYear(String :year)
 }
 
 class AuthzRegistry{
@@ -138,8 +139,9 @@ DateOfBirth: DateOfBirth
 TaxPayerNumber: taxPayerNumber
 Acronym: acronym
 with(FullName: fullname,SystemUser: user)
-with(FullName: fullname,SystemUser: user ,MechanographicNumber: mechanographicNumber, DateOfBirth: DateOfBirth, TaxPayerNumber: taxPayerNumber)
+with(FullName: fullname,SystemUser: user , DateOfBirth: DateOfBirth, TaxPayerNumber: taxPayerNumber)
 with(FullName: fullname,SystemUser: user ,Acronym: acronym, DateOfBirth: DateOfBirth, TaxPayerNumber: taxPayerNumber)
+withMechanographicNumber(int number,String year)
 build()
 }
 
