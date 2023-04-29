@@ -1,0 +1,65 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+
+class "MeetingUI" as MeetUI <<presentation>>
+class "MeetingController" as MeetController <<application>>
+
+class "ScheduleMeetingService" as ScheduleMeetService <<application>>
+class "ListPersonService" as PersonService <<application>>
+class "AvailableMeetingDateService" as MeetingService <<application>>
+class "AvailableClassDateService" as ClassService <<application>>
+class "AvailableExtraClassDateService" as ExtraService <<application>>
+
+class "PersonBuilder" as PerBuilder <<builder>>
+class "MeetingBuilder" as MeetBuilder <<builder>>
+class "Email" as Email <<domain>>
+class "Person" as Person <<domain>>
+class "Meeting" as Meet <<domain>>
+
+class "PersistenceContext" as Persistence <<persistence>>
+class "RepositoryFactory" as RepositoryFactory <<factory>>
+
+class "PersonRepository" as PersonRepository <<repository>>
+class "MeetingRepository" as MeetRepository <<repository>>
+class "ClassRepository" as ClassRepository <<repository>>
+class "ExtraClassRepository" as ExtraRepository <<repository>>
+
+MeetUI --> MeetController
+MeetController --> ScheduleMeetService
+
+ScheduleMeetService --> PersonService
+ScheduleMeetService --> MeetingService
+ScheduleMeetService --> ClassService
+ScheduleMeetService --> ExtraService
+
+PersonService --> PerBuilder
+PersonService --> Persistence
+PersonService --> RepositoryFactory
+PersonService --> PersonRepository
+
+MeetingService --> MeetBuilder
+MeetingService --> Persistence
+MeetingService --> RepositoryFactory
+MeetingService --> MeetRepository
+
+ClassService --> Persistence
+ClassService --> RepositoryFactory
+ClassService --> ClassRepository
+
+ExtraService --> Persistence
+ExtraService --> RepositoryFactory
+ExtraService --> ExtraRepository
+
+Persistence --> RepositoryFactory
+
+PersonRepository --> Person
+MeetRepository --> Meet
+ClassRepository --> Class
+ExtraRepository --> ExtraClass
+
+PerBuilder --> Person
+PerBuilder --> Email
+
+
+@enduml
