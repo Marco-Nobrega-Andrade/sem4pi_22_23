@@ -18,7 +18,7 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package eapli.base.clientusermanagement.domain;
+package eapli.base.usermanagement.domain;
 
 import javax.persistence.Embeddable;
 
@@ -40,6 +40,10 @@ public class MecanographicNumber implements ValueObject, Comparable<Mecanographi
         if (StringPredicates.isNullOrEmpty(mecanographicNumber)) {
             throw new IllegalArgumentException(
                     "Mecanographic Number should neither be null nor empty");
+        }
+        if (mecanographicNumber.length() != 9){
+            throw new IllegalArgumentException(
+                    "Mecanographic Number should have 9 digits");
         }
         // TODO validate invariants, i.e., mecanographic number regular
         // expression
