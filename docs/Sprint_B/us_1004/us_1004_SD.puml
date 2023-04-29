@@ -4,7 +4,7 @@ actor "Manager" as MGR
 
 participant ": OpenCloseCourseUI" as UI <<Presentation>>
 control "OpenCloseCourseController" as CTRL <<Application>>
-participant ": CourseStatusService" as CSS <<Service>>
+participant ": OpenCloseCourseService" as CSS <<Service>>
 participant ": PersistenceContext" as PC <<Persistence>>
 participant "factory : RepositoryFactory" as RF <<Factory>>
 participant ": Course" as C <<Domain>>
@@ -40,7 +40,7 @@ CTRL-> CSS : listOpenableClosableCourses()
 activate CSS
 CSS -> CR : listOpenableClosableCourses()
 activate CR
-CR -> CSS : courseList
+CR --> CSS : courseList
 deactivate CR
 deactivate CR
 loop foreach course from courseList
@@ -62,21 +62,25 @@ deactivate UI
 MGR -> UI : picks a course
 activate UI
 
-UI --> MGR : shows its state and asks if it still wants to change it
+UI --> MGR : shows its state and asks to which state to change
+deactivate UI
+MGR -> UI : chooses state
+activate UI
+UI --> MGR : asks for confirmation
 deactivate UI
 
 MGR-> UI : confirms
 activate UI
-UI -> CTRL : updateCourseStatus(courseDTO)
+UI -> CTRL : updateCourseStatus(courseDTO, newStatus)
 activate CTRL
 
-CTRL -> CSS : updateCourseStatus(courseDTO)
+CTRL -> CSS : updateCourseStatus(courseDTO, newStatus)
 activate CSS
 CSS -> CM : toCourse(courseDTO)
 activate CM
 CM --> CSS : course
 deactivate CM
-CSS -> C : changeStatus()
+CSS -> C : changeStatus(newStatus)
 activate C
 deactivate C
 
