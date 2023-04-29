@@ -70,7 +70,7 @@ id : ID_Person
 class Student {
 taxPayerNumber :TaxPayerNumber
 mechanographicNumber :MechanographicNumber
-dateOfBirth : dateOfBirth
+dateOfBirth : DateOfBirth
 }
 
 class Teacher {
@@ -143,10 +143,8 @@ class PersonBuilder{
 FullName: fullname
 SystemUser: user
 ID_Person : id_person
-with(FullName: fullname,SystemUser: user)
-with(ID_Person: Id_Person)
-with(FullName: fullname,SystemUser: user , DateOfBirth: DateOfBirth, TaxPayerNumber: taxPayerNumber)
-with(FullName: fullname,SystemUser: user ,Acronym: acronym, DateOfBirth: DateOfBirth, TaxPayerNumber: taxPayerNumber)
+with(String: fullname,SystemUser: user)
+with(int: Id_Person)
 withMechanographicNumber(int: number,String: year)
 build()
 }
@@ -159,8 +157,8 @@ TaxPayerNumber: taxPayerNumber
 Acronym: acronym
 ID_Person : id_person
 
-with(FullName: fullname,SystemUser: user ,Acronym: acronym, DateOfBirth: DateOfBirth, TaxPayerNumber: taxPayerNumber)
-with(ID_Person: Id_Person)
+with(String: fullname,SystemUser: user ,String: acronym, String: DateOfBirth, int: taxPayerNumber)
+with(int: Id_Person)
 build()
 }
 
@@ -172,16 +170,16 @@ DateOfBirth: DateOfBirth
 TaxPayerNumber: taxPayerNumber
 ID_Person : id_person
 
-with(FullName: fullname,SystemUser: user , DateOfBirth: DateOfBirth, TaxPayerNumber: taxPayerNumber)
+with(String: fullname,SystemUser: user , String: DateOfBirth, int: taxPayerNumber)
 withMechanographicNumber(int number,String year)
-with(ID_Person: Id_Person)
+with(int: Id_Person)
 
 build()
 }
 
 class PersonService{
-registerNewPerson(FullName: fullname,SystemUser: user)
-registerNewPerson(FullName: fullname,SystemUser: user ,MechanographicNumber: mechanographicNumber, DateOfBirth: DateOfBirth, TaxPayerNumber: taxPayerNumber)
-registerNewPerson(FullName: fullname,SystemUser: user ,Acronym: acronym, DateOfBirth: DateOfBirth, TaxPayerNumber: taxPayerNumber)
+registerNewPerson(String: fullname,SystemUser: user)
+registerNewPerson(String: fullname,SystemUser: user , String: DateOfBirth, int: taxPayerNumber)
+registerNewPerson(String: fullname,SystemUser: user ,String: acronym, String: DateOfBirth, int: taxPayerNumber)
 }
 @enduml
