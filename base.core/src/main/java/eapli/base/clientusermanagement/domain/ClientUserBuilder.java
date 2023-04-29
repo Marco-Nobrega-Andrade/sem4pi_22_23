@@ -20,6 +20,7 @@
  */
 package eapli.base.clientusermanagement.domain;
 
+import eapli.base.usermanagement.domain.MecanographicNumber;
 import eapli.framework.domain.model.DomainFactory;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 
