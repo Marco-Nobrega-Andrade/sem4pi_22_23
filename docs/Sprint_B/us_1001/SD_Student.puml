@@ -83,13 +83,13 @@ RepFactory -> PerRep: create
 RepFactory -> PerHelper: personRepository
 deactivate RepFactory
 PerHelper -> PerRep:findTotalMechanographicNumberByYear(year)
-
+PerHelper -> PerRep:findTotalNumberOfPerson()
 PerHelper ->StdBuilder: withMechanographicNumber(number,year)
-
+PerHelper ->StdBuilder: withID_Pessoa(id)
 
 PerHelper -> StdBuilder: build()
 activate StdBuilder
-StdBuilder -> Student: create(FullName,user, Date of Birth,MechanographicNumber, Tax Payer Number)
+StdBuilder -> Student: create(FullName,user, Date of Birth,MechanographicNumber, Tax Payer Number,ID_Pessoa)
 Student -> StdBuilder: student
 StdBuilder -> PerHelper : student
 deactivate StdBuilder

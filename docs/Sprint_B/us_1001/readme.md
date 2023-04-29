@@ -82,11 +82,11 @@ Regards.
 
 ![SD_RegisterUser](SD_RegisterUser.svg "SD_RegisterUser")
 ![SD_Student](SD_Student.svg "SD_Student")
-![SD_Teacher](SD_Teacher.svg"SD_Teacher")
+![SD_Teacher](SD_Teacher.svg "SD_Teacher")
 
 ### 4.3 Class Diagram
 
-![a class diagram](class-diagram-01.svg "A Class Diagram")
+![a class diagram](CD_RegisterUser.svg "A Class Diagram")
 
 
 ### 4.4. Tests

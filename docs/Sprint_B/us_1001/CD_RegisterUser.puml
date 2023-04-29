@@ -13,6 +13,8 @@ class SystemUserBuilder <<builder>>
 class SystemUser   <<domain>>
 class PersonService  <<application>>
 class PersonBuilder  <<builder>>
+class TeacherBuilder  <<builder>>
+class StudentBuilder  <<builder>>
 class Person <<domain>>
 
 class PersistenceContext  <<persistence>>
@@ -20,30 +22,34 @@ class RepositoryFactory  <<factory>>
 class UserRepository  <<repository>>
 class PersonRepository  <<repository>>
 
-AddUserUI -->AddUserController
-AddUserController --> PersonService
-AddUserController --> UserManagementService
-AddUserController --> AuthzRegistry
-AddUserController --> AuthorizationService
+AddUserUI ..>AddUserController
+AddUserController ..> PersonService
+AddUserController ..> UserManagementService
+AddUserController ..> AuthzRegistry
+AddUserController ..> AuthorizationService
 
-UserManagementService --> SystemUserBuilder
-UserManagementService --> PersistenceContext
-UserManagementService --> RepositoryFactory
-UserManagementService --> UserRepository
+UserManagementService ..> SystemUserBuilder
+UserManagementService ..> PersistenceContext
+UserManagementService ..> RepositoryFactory
+UserManagementService ..> UserRepository
 
-PersonService --> PersonBuilder
-PersonService --> PersistenceContext
-PersonService --> RepositoryFactory
-PersonService --> PersonRepository
+PersonService ..> PersonBuilder
+PersonService ..> TeacherBuilder
+PersonService ..> StudentBuilder
+PersonService ..> PersistenceContext
+PersonService ..> RepositoryFactory
+PersonService ..> PersonRepository
 
-PersistenceContext --> RepositoryFactory
-RepositoryFactory --> UserRepository
-RepositoryFactory --> PersonRepository
+PersistenceContext ..> RepositoryFactory
+RepositoryFactory ..> UserRepository
+RepositoryFactory ..> PersonRepository
 
-PersonRepository --> Person
-PersonBuilder --> Person
-UserRepository --> SystemUser
-SystemUserBuilder --> SystemUser
+PersonRepository ..> Person
+PersonBuilder ..> Person
+StudentBuilder ..> Student
+TeacherBuilder ..> Teacher
+UserRepository ..> SystemUser
+SystemUserBuilder ..> SystemUser
 
 
 Person <|-- Student
@@ -58,6 +64,7 @@ buildRolesMenu();
 class Person {
 fullName : FullName
 systemUser : SystemUser
+id : ID_Person
 }
 
 class Student {
@@ -93,6 +100,7 @@ save(SystemUser : user)
 class PersonRepository{
 save(Person: person)
 findTotalMechanographicNumberByYear(String :year)
+findTotalNumberOfPerson()
 }
 
 class AuthzRegistry{
@@ -134,14 +142,40 @@ RoleSet: roles;
 class PersonBuilder{
 FullName: fullname
 SystemUser: user
-MechanographicNumber: mechanographicNumber
+ID_Person : id_person
+with(FullName: fullname,SystemUser: user)
+with(ID_Person: Id_Person)
+with(FullName: fullname,SystemUser: user , DateOfBirth: DateOfBirth, TaxPayerNumber: taxPayerNumber)
+with(FullName: fullname,SystemUser: user ,Acronym: acronym, DateOfBirth: DateOfBirth, TaxPayerNumber: taxPayerNumber)
+withMechanographicNumber(int: number,String: year)
+build()
+}
+
+class TeacherBuilder{
+FullName: fullname
+SystemUser: user
 DateOfBirth: DateOfBirth
 TaxPayerNumber: taxPayerNumber
 Acronym: acronym
-with(FullName: fullname,SystemUser: user)
-with(FullName: fullname,SystemUser: user , DateOfBirth: DateOfBirth, TaxPayerNumber: taxPayerNumber)
+ID_Person : id_person
+
 with(FullName: fullname,SystemUser: user ,Acronym: acronym, DateOfBirth: DateOfBirth, TaxPayerNumber: taxPayerNumber)
+with(ID_Person: Id_Person)
+build()
+}
+
+class StudentBuilder{
+FullName: fullname
+SystemUser: user
+MechanographicNumber: mechanographicNumber
+DateOfBirth: DateOfBirth
+TaxPayerNumber: taxPayerNumber
+ID_Person : id_person
+
+with(FullName: fullname,SystemUser: user , DateOfBirth: DateOfBirth, TaxPayerNumber: taxPayerNumber)
 withMechanographicNumber(int number,String year)
+with(ID_Person: Id_Person)
+
 build()
 }
 

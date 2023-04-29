@@ -73,13 +73,6 @@ activate PerHelper
 PerHelper ->TeaBuilder:  create
 PerHelper ->TeaBuilder: with(FullName,user,acronym, Date of Birth, Tax Payer Number)
 
-
-PerHelper -> TeaBuilder: build()
-activate TeaBuilder
-TeaBuilder -> Teacher: create(FullName,user,acronym, Date of Birth, Tax Payer Number)
-Teacher -> TeaBuilder: teacher
-TeaBuilder -> PerHelper : teacher
-deactivate TeaBuilder
 PerHelper -> Persistence: repositories()
 activate Persistence
 Persistence -> RepFactory: create
@@ -90,6 +83,16 @@ activate RepFactory
 RepFactory -> PerRep: create
 RepFactory -> PerHelper: personRepository
 deactivate RepFactory
+PerHelper -> PerRep:findTotalNumberOfPerson()
+PerHelper ->TeaBuilder: withID_Pessoa(id)
+
+PerHelper -> TeaBuilder: build()
+activate TeaBuilder
+TeaBuilder -> Teacher: create(FullName,user,acronym, Date of Birth, Tax Payer Number,ID_Pessoa)
+Teacher -> TeaBuilder: teacher
+TeaBuilder -> PerHelper : teacher
+deactivate TeaBuilder
+
 
 PerHelper -> PerRep: save(teacher)
 

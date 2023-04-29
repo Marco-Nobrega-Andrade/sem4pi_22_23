@@ -90,15 +90,7 @@ deactivate userManSV
 ctrl ->PerHelper: registerNewPerson(FullName,user)
 activate PerHelper
 PerHelper ->PerBuilder:  create
-PerHelper ->PerBuilder: with(shortName,user)
-
-
-PerHelper -> PerBuilder: build()
-activate PerBuilder
-PerBuilder -> Person: create(shortName,user)
-Person -> PerBuilder: person
-PerBuilder -> PerHelper : person
-deactivate PerBuilder
+PerHelper ->PerBuilder: with(fullName,user)
 PerHelper -> Persistence: repositories()
 activate Persistence
 Persistence -> RepFactory: create
@@ -109,6 +101,18 @@ activate RepFactory
 RepFactory -> PerRep: create
 RepFactory -> PerHelper: personRepository
 deactivate RepFactory
+
+PerHelper -> PerRep:findTotalNumberOfPerson()
+PerHelper ->PerBuilder: withID_Pessoa(id)
+
+
+PerHelper -> PerBuilder: build()
+activate PerBuilder
+PerBuilder -> Person: create(shortName,user,ID_Person)
+Person -> PerBuilder: person
+PerBuilder -> PerHelper : person
+deactivate PerBuilder
+
 PerHelper -> PerRep: save(Person)
 
 
