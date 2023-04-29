@@ -1,15 +1,13 @@
 @startuml
 actor Manager as ACTOR
-participant CreateCourseUI as UI
-participant CreateCourseController as CONTROLLER
-participant CreateCourseService as SERVICE
-participant CourseFactory as COURSE_FAC
-participant Course as COURSE
-participant CourseMapper as COURSE_MAP
-participant CourseDTO as COURSE_DTO
-participant RepositoryFactory as REPO_FAC
-participant PersistenceContext as PERS_CONTX
-participant CourseRepository as COURSE_REPO
+participant CreateCourseUI as UI <<presentation>>
+control CreateCourseController as CONTROLLER <<application>>
+participant CreateCourseService as SERVICE <<application>>
+participant CourseFactory as COURSE_FAC <<factory>>
+participant Course as COURSE <<domain>>
+participant PersistenceContext as PERS_CONTX <<persistence>>
+participant RepositoryFactory as REPO_FAC <<factory>>
+database CourseRepository as COURSE_REPO <<repository>>
 autonumber
 
 activate UI
@@ -19,12 +17,6 @@ UI -> CONTROLLER : create()
 activate CONTROLLER
 CONTROLLER -> SERVICE : create()
 activate SERVICE
-SERVICE -> COURSE_MAP : create()
-activate COURSE_MAP
-deactivate COURSE_MAP
-SERVICE -> COURSE_FAC : create()
-activate COURSE_FAC
-deactivate COURSE_FAC
 deactivate SERVICE
 deactivate CONTROLLER
 UI --> ACTOR : System asks for the course creation data
@@ -34,17 +26,36 @@ UI -> CONTROLLER : createCourse(courseId, courseTitle, courseName, courseIdentif
 activate CONTROLLER
 CONTROLLER -> SERVICE : createCourse(courseId, courseTitle, courseName, courseIdentifier, enrollmentLimits)
 activate SERVICE
+SERVICE -> COURSE_FAC : create()
+activate COURSE_FAC
+deactivate COURSE_FAC
 SERVICE -> COURSE_FAC : buildCourse(courseId, courseTitle, courseName, courseIdentifier, enrollmentLimits)
 activate COURSE_FAC
-COURSE_FAC --> SERVICE : course
+COURSE_FAC -> COURSE : create(courseId, courseTitle, courseName, courseIdentifier, enrollmentLimits)
+activate COURSE
+deactivate COURSE
+COURSE_FAC --> SERVICE : newCourse
 deactivate COURSE_FAC
-SERVICE -> COURSE_MAP : toDTO(course)
-activate COURSE_MAP
-COURSE_MAP --> SERVICE : courseDTO
-deactivate COURSE_MAP
-SERVICE -->CONTROLLER : courseDTO
+SERVICE -> PERS_CONTX : repositories()
+activate PERS_CONTX
+PERS_CONTX -> REPO_FAC : create()
+activate REPO_FAC
+deactivate REPO_FAC
+PERS_CONTX -->SERVICE : repoFactory
+deactivate PERS_CONTX
+SERVICE -> REPO_FAC : courses()
+activate REPO_FAC
+REPO_FAC -> COURSE_REPO : create()
+activate COURSE_REPO
+deactivate COURSE_REPO
+REPO_FAC --> SERVICE : courseRepo
+deactivate REPO_FAC
+SERVICE -> COURSE_REPO : save(newCourse)
+activate COURSE_REPO
+deactivate COURSE_REPO
+SERVICE --> CONTROLLER : operation success
 deactivate SERVICE
-CONTROLLER --> UI : courseDTO
+CONTROLLER --> UI : operation success
 deactivate CONTROLLER
-UI --> ACTOR : System validates inserted data and \n shows it, asking for confirmation
+UI --> ACTOR : System validates and persists inserted data
 @enduml

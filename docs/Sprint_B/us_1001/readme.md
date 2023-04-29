@@ -42,38 +42,81 @@ Afterwards we will adapt it to be able to respond to your necessities for that w
 **5.a.** The Manager doesn´t validate information
 1. The use case terminates
 
+
+### Client Question 
+#### Question
+Good afternoon,
+Is there any format rule regarding the acronym for the teacher length-wise or which characters should or should not be used? Also, should this acronym be unique for each teacher?
+Regards,
+Group 13.
+#### Solution
+Hello.
+I think a sequence of capitalised words should be used for the teacher acronym. Maybe the length could be a configuration setting of the application.
+I think it would be wise to enforce that acronyms be unique.
+Regards.
+
+
 ### 3.2 Enable/Disable users
 
 ### 3.3 List users of the system
 
 ## 4. Design
 
-
-
-## 4.1 SD
-
 ### Register User
+
+### 4.1. Rational
+
+
+|                Main Scenario                 |                 Question: Which class...                  |               Answer                |                                                              Pattern                                                               |
+|:--------------------------------------------:|:---------------------------------------------------------:|:-----------------------------------:|:----------------------------------------------------------------------------------------------------------------------------------:|
+| 1. Manager selects option to register a user |                ...interacts with the user                 |              AddUserUI              |                                                          Pure Fabrication                                                          |
+|                                              |                ...coordinates the use case                |          AddUserController          |                                                             Controller                                                             |
+|                                              |            ...interacts with the domain layer             | UserManagementService\PersonService |             Controller-service - hides the complexity of the use case from the controller class, lowering its coupling             |
+|  2. System asks for the User creation data   |                                                           |                                     |                                                                                                                                    |
+|         3. Manager inserts the data          |                ...stores the inserted data                |          SystemUser\Person          |                                         Information Expert - the class knows its own data                                          |
+|                                              |                  ... creates the object                   |   SystemUserBuilder\PersonBuilder   |                            Builder - Interface that allows the creation of an instance of a given class                            |
+|    4. System persists the created course     | ...creates the instance responsible for persisting Course |          RepositoryFactory          | Abstract Factory - Interface responsible for creating a Factory of related Objects without explicitly specifying the intend Class; |
+|                                              |              ...persists the created object               |   UserRepository\PersonRepository   |            Repository -  hide the details of persisting and reconstructing an object while keeping the domain language             |
+
+### 4.2 Sequence Diagram
 
 ![SD_RegisterUser](SD_RegisterUser.svg "SD_RegisterUser")
 ![SD_Student](SD_Student.svg "SD_Student")
 ![SD_Teacher](SD_Teacher.svg"SD_Teacher")
 
-### 4.2. Class Diagram
+### 4.3 Class Diagram
 
 ![a class diagram](class-diagram-01.svg "A Class Diagram")
 
-### 4.3. Applied Patterns
 
 ### 4.4. Tests
 
-**Test 1:** *Verifies that it is not possible to create an instance of the Example class with null values.*
+**Test 1:** *Verifies that it is not possible to create an instance of the Person class with null values.*
 
 ```
 @Test(expected = IllegalArgumentException.class)
 public void ensureNullIsNotAllowed() {
-	Example instance = new Example(null, null);
+	Person person = new Person(null, null);
 }
-````
+```
+
+**Test 2:** *Verifies that it is not possible to create a TaxPayerNumber with a number that doesn't have the lenght of 9 digits.*
+
+```
+@Test(expected = IllegalArgumentException.class)
+public void ensurenTaxPayerNumberIsValid() {
+	TaxPayerNumber numb = new TaxPayerNumber(12345678);
+}
+```
+
+**Test 3:** *Verifies that it is not possible to create a DateOfBirth with a date from the Future.*
+
+```
+@Test(expected = IllegalArgumentException.class)
+public void ensurenTaxPayerNumberIsValid() {
+	TaxPayerNumber numb = new TaxPayerNumber(12345678);
+}
+```
 
 ## 5. Implementation
 
