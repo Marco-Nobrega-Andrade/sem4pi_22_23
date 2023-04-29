@@ -1,0 +1,193 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor Person
+
+participant "MeetingUI" as MeetUI <<presentation>>
+participant "MeetingController" as MeetController <<application>>
+participant "ScheduleMeetingService" as ScheduleMeetService <<application>>
+participant "ListPersonService" as PersonService <<application>>
+participant "AvailableMeetingDateService" as MeetingService <<application>>
+participant "AvailableClassDateService" as ClassService <<application>>
+participant "AvailableExtraClassDateService" as ExtraService <<application>>
+
+participant "PersonBuilder" as PerBuilder <<builder>>
+participant "MeetingBuilder" as MeetBuilder <<builder>>
+participant "Email" as Email <<domain>>
+participant "Meeting" as Meet <<domain>>
+participant "PersistenceContext" as Persistence <<persistence>>
+participant "RepositoryFactory" as RepositoryFactory <<factory>>
+
+database "PersonRepository" as PersonRepository <<repository>>
+database "MeetingRepository" as MeetRepository <<repository>>
+database "ClassRepository" as ClassRepository <<repository>>
+database "ExtraClassRepository" as ExtraRepository <<repository>>
+
+activate Person
+activate MeetUI
+
+Person -> MeetUI : wants to schedule a meeting
+loop until meeting owner doesn't want to add more participants
+MeetUI -> Person : ask email of participant
+Person -> MeetUI : enters email
+MeetUI -> Person : ask if owner wants to add more participants
+Person -> MeetUI : enters yes or no
+end
+
+MeetUI -> Person : ask meeting date
+Person -> MeetUI : enters date
+
+
+
+MeetUI -> MeetController : verifyMeeting(Data)
+activate MeetController
+MeetController -> ScheduleMeetService :verifyMeetingData(Data)
+activate ScheduleMeetService
+ScheduleMeetService -> PersonService: getPersonsByEmail()
+activate PersonService
+
+
+
+PersonService -> PerBuilder : build(email)
+activate PerBuilder
+PerBuilder -> Email : createEmails(email)
+Email -> PerBuilder : emails
+PerBuilder -> PersonService : emails
+deactivate PerBuilder
+
+
+PersonService -> Persistence: repositories()
+activate Persistence
+Persistence -> RepositoryFactory: create
+Persistence -> PersonService: factory
+deactivate Persistence
+PersonService -> "RepositoryFactory": users()
+activate RepositoryFactory
+RepositoryFactory -> PersonRepository: create
+RepositoryFactory -> PersonService: userRepository
+deactivate RepositoryFactory
+PersonService -> PersonRepository: findAllPersonsWhoMatch(emails)
+PersonRepository -> PersonService: personsList
+
+
+alt given Person doesn't match with persons in Database
+
+PersonRepository -> PersonService: error
+PersonService -> ScheduleMeetService: error
+ScheduleMeetService -> MeetController: error
+MeetController -> MeetUI: error
+MeetUI -> Person: prints error message
+
+end
+
+PersonService -> ScheduleMeetService: personsList
+
+deactivate PersonService
+ScheduleMeetService -> MeetingService: getMeetingDates()
+activate MeetingService
+MeetingService -> Persistence: repositories()
+activate Persistence
+Persistence -> RepositoryFactory: create
+Persistence -> MeetingService: factory
+deactivate Persistence
+MeetingService -> "RepositoryFactory": meetings()
+activate RepositoryFactory
+RepositoryFactory -> MeetRepository: create
+RepositoryFactory -> MeetingService: meetingRepository
+deactivate RepositoryFactory
+MeetingService -> MeetRepository: findAllMeetingsWhoMatch(Persons,Date)
+MeetRepository -> MeetingService: unavailableDatesByPersonMeeting
+MeetingService -> ScheduleMeetService: unavailableDatesByPersonMeeting
+deactivate MeetingService
+
+
+
+ScheduleMeetService -> ClassService: getClassDates()
+activate ClassService
+ClassService -> Persistence: repositories()
+activate Persistence
+Persistence -> RepositoryFactory: create
+Persistence -> ClassService: factory
+deactivate Persistence
+ClassService -> "RepositoryFactory": classes()
+activate RepositoryFactory
+RepositoryFactory -> ClassRepository: create
+RepositoryFactory -> ClassService: classRepository
+deactivate RepositoryFactory
+ClassService -> ClassRepository: findIfClassIsNotAvailableForPersons(Persons,Date)
+ClassRepository -> ClassService: unavailableDatesByPersonClasses
+ClassService -> ScheduleMeetService: unavailableDatesByPersonClasses
+deactivate ClassService
+
+
+
+ScheduleMeetService -> ExtraService: getExtraClassDates()
+activate ExtraService
+ExtraService -> Persistence: repositories()
+activate Persistence
+Persistence -> RepositoryFactory: create
+Persistence -> ExtraService: factory
+deactivate Persistence
+ExtraService -> "RepositoryFactory": extraClasses()
+activate RepositoryFactory
+RepositoryFactory -> ExtraRepository: create
+RepositoryFactory -> ExtraService: extraClassRepository
+deactivate RepositoryFactory
+ExtraService -> ExtraRepository: findIfExtraClassIsNotAvailableForPersons(Persons,Date)
+ExtraRepository -> ExtraService: unavailableDatesByPersonExtraClasses
+ExtraService -> ScheduleMeetService: unavailableDatesByPersonExtraClasses
+deactivate ExtraService
+
+ScheduleMeetService -> ScheduleMeetService: checkMatchesBetweenDates()
+
+alt one of the given dates is not available
+ScheduleMeetService -> MeetController: false
+MeetController -> MeetUI: false
+MeetUI -> Person: The system asks if he wants to continue notifing him that the meeting have dates that are not available (if not the program ends) if yes the program continues
+end
+
+ScheduleMeetService -> MeetController: true
+deactivate ScheduleMeetService
+MeetController -> MeetUI: true
+deactivate MeetController
+MeetUI -> Person: The system asks if he wants to continue (if not the program ends) if yes the program continues
+
+Person -> MeetUI : yes
+MeetUI -> MeetController: scheduledMeeting(Data)
+activate MeetController
+MeetController -> ScheduleMeetService: scheduleMeeting(Data)
+activate ScheduleMeetService
+
+ScheduleMeetService -> MeetingService: createMeeting()
+activate MeetingService
+MeetingService -> MeetBuilder: build(Data)
+activate MeetBuilder
+MeetBuilder -> Meet: createMeeting(Data)
+Meet -> MeetBuilder: meeting
+
+MeetBuilder -> MeetingService: meeting
+deactivate MeetBuilder
+MeetingService -> MeetRepository: save(meeting)
+
+alt given meeting is not saved
+MeetingService -> ScheduleMeetService: error
+ScheduleMeetService -> MeetController: error
+MeetController -> MeetUI: error
+MeetUI -> Person: prints error message
+end
+MeetingService -> ScheduleMeetService: true
+deactivate MeetingService
+ScheduleMeetService -> MeetController: true
+deactivate ScheduleMeetService
+MeetController -> MeetUI: true
+deactivate MeetController
+MeetUI -> Person: prints success message
+
+
+deactivate MeetUI
+deactivate Person
+deactivate MeetController
+
+@enduml
