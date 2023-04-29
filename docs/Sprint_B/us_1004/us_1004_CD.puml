@@ -1,0 +1,59 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+
+class OpenCloseCourseUI <<Presentation>>{
+    courseDTOList : List<CourseDTO>
+    doShow()
+}
+class OpenCloseCourseController <<Controller>>{
+    create()
+    listOpenableClosableCourses()
+    updateCourseStatus(courseDTO : CourseDTO, newStatus : String)
+}
+
+class OpenCloseCourseService  <<Service>> {
+    create()
+    listOpenableClosableCourses()
+    updateCourseStatus(courseDTO : CourseDTO, newStatus : String)
+}
+class PersistenceContext  <<persistence>> {
+    repositories()
+}
+class RepositoryFactory  <<factory>> {
+    create()
+}
+class CourseRepository  <<repository>> {
+    courseRepository()
+}
+class Course <<Domain>> {
+    id : CourseIdentifier
+    courseTitle : CourseTitle
+    courseName : CourseName
+    enrollmentLimits : EnrollmentLimits
+    courseStatus : CourseStatus
+    description : Description
+    changeStatus(newStatus : String)
+}
+class CourseDTO <<DTO>> {
+    String CourseTitle
+    String courseIdentifier
+    String state
+    create()
+}
+class CourseMapper <<DTO>> {
+    toDTO()
+    toCourse()
+}
+
+OpenCloseCourseUI --> OpenCloseCourseController
+OpenCloseCourseController --> OpenCloseCourseService
+OpenCloseCourseService --> PersistenceContext
+PersistenceContext --> RepositoryFactory
+OpenCloseCourseService --> CourseRepository
+OpenCloseCourseService --> CourseMapper
+CourseMapper --> CourseDTO
+OpenCloseCourseService --> Course
+
+
+@enduml
