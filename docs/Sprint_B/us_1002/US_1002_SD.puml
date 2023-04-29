@@ -22,14 +22,14 @@ deactivate CONTROLLER
 UI --> ACTOR : System asks for the course creation data
 
 ACTOR -> UI : Manager inserts the data
-UI -> CONTROLLER : createCourse(courseId, courseTitle, courseName, courseIdentifier, enrollmentLimits)
+UI -> CONTROLLER : createCourse(courseId, courseTitle, courseName, courseIdentifier, maxEnrollments, minEnrollments)
 activate CONTROLLER
-CONTROLLER -> SERVICE : createCourse(courseId, courseTitle, courseName, courseIdentifier, enrollmentLimits)
+CONTROLLER -> SERVICE : createCourse(courseId, courseTitle, courseName, courseIdentifier, maxEnrollments, minEnrollments)
 activate SERVICE
 SERVICE -> COURSE_FAC : create()
 activate COURSE_FAC
 deactivate COURSE_FAC
-SERVICE -> COURSE_FAC : buildCourse(courseId, courseTitle, courseName, courseIdentifier, enrollmentLimits)
+SERVICE -> COURSE_FAC : buildCourse(courseId, courseTitle, courseName, courseIdentifier, maxEnrollments, minEnrollments)
 activate COURSE_FAC
 COURSE_FAC -> COURSE : create(courseId, courseTitle, courseName, courseIdentifier, enrollmentLimits)
 activate COURSE
