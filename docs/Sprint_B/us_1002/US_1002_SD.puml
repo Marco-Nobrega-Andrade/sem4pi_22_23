@@ -1,0 +1,50 @@
+@startuml
+actor Manager as ACTOR
+participant CreateCourseUI as UI
+participant CreateCourseController as CONTROLLER
+participant CreateCourseService as SERVICE
+participant CourseFactory as COURSE_FAC
+participant Course as COURSE
+participant CourseMapper as COURSE_MAP
+participant CourseDTO as COURSE_DTO
+participant RepositoryFactory as REPO_FAC
+participant PersistenceContext as PERS_CONTX
+participant CourseRepository as COURSE_REPO
+autonumber
+
+activate UI
+
+ACTOR -> UI : Manager selects option to create a course
+UI -> CONTROLLER : create()
+activate CONTROLLER
+CONTROLLER -> SERVICE : create()
+activate SERVICE
+SERVICE -> COURSE_MAP : create()
+activate COURSE_MAP
+deactivate COURSE_MAP
+SERVICE -> COURSE_FAC : create()
+activate COURSE_FAC
+deactivate COURSE_FAC
+deactivate SERVICE
+deactivate CONTROLLER
+UI --> ACTOR : System asks for the course creation data
+
+ACTOR -> UI : Manager inserts the data
+UI -> CONTROLLER : createCourse(courseId, courseTitle, courseName, courseIdentifier, enrollmentLimits)
+activate CONTROLLER
+CONTROLLER -> SERVICE : createCourse(courseId, courseTitle, courseName, courseIdentifier, enrollmentLimits)
+activate SERVICE
+SERVICE -> COURSE_FAC : buildCourse(courseId, courseTitle, courseName, courseIdentifier, enrollmentLimits)
+activate COURSE_FAC
+COURSE_FAC --> SERVICE : course
+deactivate COURSE_FAC
+SERVICE -> COURSE_MAP : toDTO(course)
+activate COURSE_MAP
+COURSE_MAP --> SERVICE : courseDTO
+deactivate COURSE_MAP
+SERVICE -->CONTROLLER : courseDTO
+deactivate SERVICE
+CONTROLLER --> UI : courseDTO
+deactivate CONTROLLER
+UI --> ACTOR : System validates inserted data and \n shows it, asking for confirmation
+@enduml

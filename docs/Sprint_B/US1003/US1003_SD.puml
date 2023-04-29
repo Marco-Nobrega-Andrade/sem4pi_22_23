@@ -1,0 +1,83 @@
+@startuml
+actor Manager as M
+participant "<<Presentation>>\n:OpenCloseEnrollmentsUI" as UI
+participant "<<Application>>\n:OpenCloseEnrollmentsUI" as CTRL
+participant "<<Service>>\n:OpenCloseEnrollmentsService" as OCESv
+participant "<<Persistence>>\n:PersistenceContext" as PC
+participant "<<Factory>>\nfactory:RepositoryFactory" as RF
+participant "<<Repository>>\ncourseRepository:CourseRepository" as CR
+participant "<<Domain>>\ncourseList:List<Course>" as CL
+participant "<<DTO>>\ncourseDTOList:List<CourseDTO>" as cDtoL
+participant "<<DTO>>\n:CourseMapper" as CM
+participant "<<DTO>>\ncourseDTO:CourseDTO" as cDTO
+participant "<<Domain>>\ncourse:Course" as C
+
+
+M -> UI : The manager initializes the process\n of open/close the course enrollments
+activate UI
+UI -> CTRL : create()
+activate CTRL
+CTRL -> OCESv : create()
+activate OCESv
+OCESv -> PC : repositories
+activate PC
+PC --> OCESv : factory
+deactivate PC
+OCESv -> RF : courseRepository()
+activate RF
+RF -> CR : create()
+RF --> OCESv: courseRepository
+deactivate RF
+deactivate OCESv
+deactivate CTRL
+UI -> CTRL : listAllOpenCLoseEnrollmentsAvailableCourses()
+activate CTRL
+CTRL -> OCESv : listAllOpenCLoseEnrollmentsAvailableCourses()
+activate OCESv
+OCESv -> CR : listAllOpenCLoseEnrollmentsAvailableCourses()
+activate CR
+CR -> CL : create()
+CR --> OCESv : courseList
+deactivate CR
+OCESv -> cDtoL : create()
+loop foreach course from courseList
+OCESv -> CM : toDTO(course)
+activate CM
+CM -> cDTO
+CM --> OCESv : courseDTO
+deactivate CM
+OCESv -> cDtoL : add(courseDTO)
+activate cDtoL
+deactivate cDtoL
+end loop
+OCESv --> CTRL : courseDTOList
+deactivate OCESv
+CTRL --> UI : courseDTOList
+deactivate CTRL
+UI --> M : The system presents a list of the courses \nthat are available to open/close enrollments
+deactivate UI
+M -> UI : The Manager selects the Course \nwhose Status he wants to change
+activate UI
+UI --> M : Displays the options close/open enrollments
+deactivate UI
+M -> UI : Chooses the option
+activate UI
+UI -> CTRL : changeStatus(selectedCourseDTO, selectedOption)
+activate CTRL
+CTRL -> OCESv : changeStatus(selectedCourseDTO, selectedOption)
+activate OCESv
+OCESv -> CM : toCourse(selectedCourseDTO)
+activate CM
+CM --> OCESv : course
+deactivate CM
+OCESv -> C : changeStatus(selectedOption)
+activate C
+deactivate C
+OCESv -> CR : update(course)
+activate CR
+deactivate CR
+deactivate OCESv
+deactivate CTRL
+UI --> M : The System changes the Status and\n informs the operation success
+deactivate UI
+@enduml

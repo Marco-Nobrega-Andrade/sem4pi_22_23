@@ -1,0 +1,91 @@
+@startuml
+autonumber
+actor "Manager" as MGR
+
+participant ": OpenCloseCourseUI" as UI <<Presentation>>
+control "OpenCloseCourseController" as CTRL <<Application>>
+participant ": CourseStatusService" as CSS <<Service>>
+participant ": PersistenceContext" as PC <<Persistence>>
+participant "factory : RepositoryFactory" as RF <<Factory>>
+participant ": Course" as C <<Domain>>
+database CourseRepository as CR <<Repository>>
+participant ": CourseMapper" as CM <<DTO>>
+participant ": CourseDTO" as CDTO <<DTO>>
+
+activate MGR
+MGR -> UI : asks to change the status of a course to open/closed
+activate UI
+UI -> CTRL : create()
+activate CTRL
+CTRL -> CSS : create()
+activate CSS
+CSS -> PC : repositories()
+activate PC
+PC -> RF : create()
+activate RF
+deactivate RF
+PC --> CSS : factory
+deactivate PC
+CSS ->CR : courseRepository()
+activate CR
+CR --> CSS : courseRepository
+deactivate CR
+deactivate CSS
+deactivate CTRL
+
+
+UI->CTRL : listOpenableClosableCourses()
+activate CTRL
+CTRL-> CSS : listOpenableClosableCourses()
+activate CSS
+CSS -> CR : listOpenableClosableCourses()
+activate CR
+CR -> CSS : courseList
+deactivate CR
+deactivate CR
+loop foreach course from courseList
+CSS -> CM : toDTO(course)
+activate CM
+CM -> CDTO : create()
+deactivate CDTO
+CM --> CSS : courseDTO
+deactivate CM
+end loop
+CSS --> CTRL : courseDTOList
+deactivate CSS
+CTRL --> UI : courseDTOList
+deactivate CTRL
+
+UI --> MGR : shows all courses
+deactivate UI
+
+MGR -> UI : picks a course
+activate UI
+
+UI --> MGR : shows its state and asks if it still wants to change it
+deactivate UI
+
+MGR-> UI : confirms
+activate UI
+UI -> CTRL : updateCourseStatus(courseDTO)
+activate CTRL
+
+CTRL -> CSS : updateCourseStatus(courseDTO)
+activate CSS
+CSS -> CM : toCourse(courseDTO)
+activate CM
+CM --> CSS : course
+deactivate CM
+CSS -> C : changeStatus()
+activate C
+deactivate C
+
+CSS -> CR : update(course)
+activate CR
+deactivate CR
+deactivate CSS
+deactivate CTRL
+
+UI--> MGR : informs operation success
+
+@enduml

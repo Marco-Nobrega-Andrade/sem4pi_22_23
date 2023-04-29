@@ -5,18 +5,58 @@
 In this US the manager wants to be able to register, disable/enable, and list users of the system
 ## 2. Requirements
 
+**Main actor**
+
+* Manager
+
+**Requirement**
 FRU01 - Management of Users Create, disable/enable, and list users of the system
 (Teachers and Students, as well as Managers)
+
 
 ## 3. Analysis
 
 We will start to see how its created an user in the Base app given by eapli.
 Afterwards we will adapt it to be able to respond to your necessities for that we will also need to create the classes Teacher and Student as well as Person
+
+### 3.1 Register users
+**Main scenario**
+1. Manager selects option to register a user
+2. System asks for the base information (Username, Password,firstName,lastName,Full Name,Email)
+3. Manager inserts the data
+4. System shows list of roles
+5. Manager selects roles
+6. System if the role is student or teacher ask for more information
+7. Manager introduces
+8. System ask if the information is correct
+9. Manager validates
+10. System creates User
+11. System display user info
+
+
+**Other scenarios**
+
+**4.a.** The system can´t create the user 
+1. The system notifies that this problem has occurred
+
+**5.a.** The Manager doesn´t validate information
+1. The use case terminates
+
+### 3.2 Enable/Disable users
+
+### 3.3 List users of the system
+
 ## 4. Design
 
-*In this sections, the team should present the solution design that was adopted to solve the requirement. This should include, at least, a diagram of the realization of the functionality (e.g., sequence diagram), a class diagram (presenting the classes that support the functionality), the identification and rational behind the applied design patterns and the specification of the main tests used to validade the functionality.*
 
-### 4.1. Realization
+
+## 4.1 SD
+
+### Register User
+
+![SD_RegisterUser](SD_RegisterUser.svg "SD_RegisterUser")
+![SD_Student](SD_Student.svg "SD_Student")
+![SD_Teacher](SD_Teacher.svg"SD_Teacher")
 
 ### 4.2. Class Diagram
 
