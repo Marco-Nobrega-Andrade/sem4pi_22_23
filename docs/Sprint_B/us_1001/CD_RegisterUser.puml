@@ -80,9 +80,9 @@ dateOfBirth : dateOfBirth
 }
 
 class AddUserController{
-addUser(String: username,String: password,String: firstName, String: lastName,String: fullName,String: email)
-addUser(String: username,String: password,String: firstName, String: lastName,String: fullName,String: email,String: Acronym ,Date: Date of Birth,int: Tax Payer Number)
-addUser(String: username,String: password,String: firstName, String: lastName,String: fullName,String: email,Date: Date of Birth,int: Tax Payer Number)
+addUser(String: username,String: password,String: firstName, String: lastName,String: fullName,String: email,Set<Role> : roleTypes)
+addUser(String: username,String: password,String: firstName, String: lastName,String: fullName,Set<Role>: roleTypes,String: email,String: Acronym ,String: Date of Birth,int: Tax Payer Number)
+addUser(String: username,String: password,String: firstName, String: lastName,String: fullName,String: email,Set<Role>: roleTypes,String: Date of Birth,int: Tax Payer Number)
 }
 
 class PersistenceContext{
@@ -95,6 +95,7 @@ person()
 
 class UserRepository{
 save(SystemUser : user)
+delete(SystemUser : user)
 }
 
 class PersonRepository{
@@ -179,7 +180,7 @@ build()
 
 class PersonService{
 registerNewPerson(String: fullname,SystemUser: user)
-registerNewPerson(String: fullname,SystemUser: user , String: DateOfBirth, int: taxPayerNumber)
-registerNewPerson(String: fullname,SystemUser: user ,String: acronym, String: DateOfBirth, int: taxPayerNumber)
+registerNewStudent(String: fullname,SystemUser: user , String: DateOfBirth, int: taxPayerNumber)
+registerNewTeacher(String: fullname,SystemUser: user ,String: acronym, String: DateOfBirth, int: taxPayerNumber)
 }
 @enduml

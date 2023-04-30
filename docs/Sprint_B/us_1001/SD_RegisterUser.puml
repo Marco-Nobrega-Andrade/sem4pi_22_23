@@ -33,6 +33,7 @@ ctrl -> auth: userService()
 activate auth
 auth -> ctrl: userSvc
 deactivate auth
+ctrl -> PerHelper: create()
 deactivate ctrl
 
 ui --> Manager:show information
@@ -52,9 +53,12 @@ In this SD the confirmation is valid
 end note
 ui ->ctrl: addUser(username, password, firstName, lastName, fullName, email, roleTypes)
 activate ctrl
+ctrl -> authSV : ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER, BaseRoles.MANAGER)
+activate authSV
+deactivate authSV
 ctrl -> ctrl :addUser(username, password, firstName, lastName, email, roles, createdON)
 activate ctrl
-deactivate ctrl
+
 
 ctrl -> authSV : ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER, BaseRoles.MANAGER)
 activate authSV
@@ -86,6 +90,8 @@ userManSV->UserRep:save(user)
 userManSV->ctrl: user
 
 deactivate userManSV
+deactivate ctrl
+
 
 ctrl ->PerHelper: registerNewPerson(FullName,user)
 activate PerHelper
@@ -127,7 +133,7 @@ activate RepFactory
 RepFactory -> UserRep: create
 RepFactory -> PerHelper: userRepository
 deactivate RepFactory
-PerHelper->UserRep: delete(user.identity)
+PerHelper->UserRep: delete(user)
 end
 
 PerHelper -> ctrl: success
