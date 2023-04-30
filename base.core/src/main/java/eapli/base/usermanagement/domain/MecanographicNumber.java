@@ -49,7 +49,20 @@ public class MecanographicNumber implements ValueObject, Comparable<Mecanographi
         // expression
         this.number = mecanographicNumber;
     }
+    public MecanographicNumber(final int number,final String year) {
+        String mecanographicNumber = year + String.format("%05d", number);
+        if (StringPredicates.isNullOrEmpty(mecanographicNumber)) {
+            throw new IllegalArgumentException(
+                    "Mecanographic Number should neither be null nor empty");
+        }
+        if (mecanographicNumber.length() != 9){
+            throw new IllegalArgumentException(
+                    "Mecanographic Number should have 9 digits");
+        }
 
+        // expression
+        this.number = mecanographicNumber;
+    }
     protected MecanographicNumber() {
         // for ORM
     }

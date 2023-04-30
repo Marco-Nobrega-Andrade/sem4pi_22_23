@@ -20,5 +20,5 @@ public interface PersonRepository extends DomainRepository<ID_Person, Person> {
      *              the year to search for
      * @return
      */
-    int findTotalMechanographicNumberByYear(String year);
+    int findTotalMecanographicNumberByYear(String year);
 }
