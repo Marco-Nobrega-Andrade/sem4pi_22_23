@@ -128,7 +128,6 @@ RepFactory -> UserRep: create
 RepFactory -> PerHelper: userRepository
 deactivate RepFactory
 PerHelper->UserRep: delete(user.identity)
-userManSV->ctrl: user
 end
 
 PerHelper -> ctrl: success

@@ -69,7 +69,7 @@ id : ID_Person
 
 class Student {
 taxPayerNumber :TaxPayerNumber
-mechanographicNumber :MechanographicNumber
+mecanographicNumber : MecanographicNumber
 dateOfBirth : DateOfBirth
 }
 
@@ -82,7 +82,7 @@ dateOfBirth : dateOfBirth
 class AddUserController{
 addUser(String: username,String: password,String: firstName, String: lastName,String: fullName,String: email)
 addUser(String: username,String: password,String: firstName, String: lastName,String: fullName,String: email,String: Acronym ,Date: Date of Birth,int: Tax Payer Number)
-addUser(String: username,String: password,String: firstName, String: lastName,String: fullName,String: email,int: Mechanographic Number,Date: Date of Birth,int: Tax Payer Number)
+addUser(String: username,String: password,String: firstName, String: lastName,String: fullName,String: email,Date: Date of Birth,int: Tax Payer Number)
 }
 
 class PersistenceContext{
@@ -99,7 +99,7 @@ save(SystemUser : user)
 
 class PersonRepository{
 save(Person: person)
-findTotalMechanographicNumberByYear(String :year)
+findTotalMecanographicNumberByYear(String :year)
 findTotalNumberOfPerson()
 }
 
@@ -145,7 +145,7 @@ SystemUser: user
 ID_Person : id_person
 with(String: fullname,SystemUser: user)
 with(int: Id_Person)
-withMechanographicNumber(int: number,String: year)
+withMecanographicNumber(int: number,String: year)
 build()
 }
 
@@ -165,13 +165,13 @@ build()
 class StudentBuilder{
 FullName: fullname
 SystemUser: user
-MechanographicNumber: mechanographicNumber
+MecanographicNumber: mecanographicNumber
 DateOfBirth: DateOfBirth
 TaxPayerNumber: taxPayerNumber
 ID_Person : id_person
 
 with(String: fullname,SystemUser: user , String: DateOfBirth, int: taxPayerNumber)
-withMechanographicNumber(int number,String year)
+withMecanographicNumber(int number,String year)
 with(int: Id_Person)
 
 build()
