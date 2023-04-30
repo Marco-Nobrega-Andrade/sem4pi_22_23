@@ -34,7 +34,7 @@ public class MecanographicNumber implements ValueObject, Comparable<Mecanographi
 
     private static final long serialVersionUID = 1L;
 
-    private String number;
+    private String mecanographicNumber;
 
     public MecanographicNumber(final String mecanographicNumber) {
         if (StringPredicates.isNullOrEmpty(mecanographicNumber)) {
@@ -47,7 +47,7 @@ public class MecanographicNumber implements ValueObject, Comparable<Mecanographi
         }
         // TODO validate invariants, i.e., mecanographic number regular
         // expression
-        this.number = mecanographicNumber;
+        this.mecanographicNumber = mecanographicNumber;
     }
     public MecanographicNumber(final int number,final String year) {
         String mecanographicNumber = year + String.format("%05d", number);
@@ -61,10 +61,14 @@ public class MecanographicNumber implements ValueObject, Comparable<Mecanographi
         }
 
         // expression
-        this.number = mecanographicNumber;
+        this.mecanographicNumber = mecanographicNumber;
     }
     protected MecanographicNumber() {
         // for ORM
+    }
+
+    public boolean compareYear(String year){
+        return mecanographicNumber.substring(0, 4).equals(year);
     }
 
     public static MecanographicNumber valueOf(final String mecanographicNumber) {
@@ -81,21 +85,21 @@ public class MecanographicNumber implements ValueObject, Comparable<Mecanographi
         }
 
         final MecanographicNumber that = (MecanographicNumber) o;
-        return this.number.equals(that.number);
+        return this.mecanographicNumber.equals(that.mecanographicNumber);
     }
 
     @Override
     public int hashCode() {
-        return this.number.hashCode();
+        return this.mecanographicNumber.hashCode();
     }
 
     @Override
     public String toString() {
-        return this.number;
+        return this.mecanographicNumber;
     }
 
     @Override
     public int compareTo(final MecanographicNumber arg0) {
-        return number.compareTo(arg0.number);
+        return mecanographicNumber.compareTo(arg0.mecanographicNumber);
     }
 }

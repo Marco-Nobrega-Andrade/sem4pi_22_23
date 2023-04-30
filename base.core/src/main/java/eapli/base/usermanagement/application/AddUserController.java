@@ -23,6 +23,7 @@ package eapli.base.usermanagement.application;
 import java.util.Calendar;
 import java.util.Set;
 
+import eapli.base.usermanagement.application.services.PersonService;
 import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.framework.application.UseCaseController;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
@@ -42,6 +43,8 @@ public class AddUserController {
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
     private final UserManagementService userSvc = AuthzRegistry.userService();
 
+    private final PersonService personService = new PersonService();
+
     /**
      * Get existing RoleTypes available to the user.
      *
@@ -60,9 +63,33 @@ public class AddUserController {
                 createdOn);
     }
 
-    public SystemUser addUser(final String username, final String password, final String firstName,
-            final String lastName,
+    public String addUser(final String username, final String password, final String firstName,
+            final String lastName,final String fullName,
             final String email, final Set<Role> roles) {
-        return addUser(username, password, firstName, lastName, email, roles, CurrentTimeCalendars.now());
+
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER, BaseRoles.MANAGER);
+        SystemUser user = addUser(username, password, firstName, lastName, email, roles, CurrentTimeCalendars.now());
+
+        return personService.registerNewPerson(fullName,user);
+    }
+
+    public String addUser(final String username, final String password, final String firstName,
+                           final String lastName,final String fullName,
+                           final String email, final Set<Role> roles, final String acronym ,String dateOfBirth,int taxPayerNumber) {
+
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER, BaseRoles.MANAGER);
+        SystemUser user = addUser(username, password, firstName, lastName, email, roles, CurrentTimeCalendars.now());
+
+        return personService.registerNewTeacher(fullName,user,acronym,dateOfBirth,taxPayerNumber);
+    }
+
+    public String addUser(final String username, final String password, final String firstName,
+                           final String lastName,final String fullName,
+                           final String email, final Set<Role> roles,String dateOfBirth,int taxPayerNumber) {
+
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER, BaseRoles.MANAGER);
+        SystemUser user = addUser(username, password, firstName, lastName, email, roles, CurrentTimeCalendars.now());
+
+        return personService.registerNewStudent(fullName,user,dateOfBirth,taxPayerNumber);
     }
 }

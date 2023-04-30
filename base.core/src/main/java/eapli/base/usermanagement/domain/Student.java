@@ -2,12 +2,13 @@ package eapli.base.usermanagement.domain;
 
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import java.util.Objects;
 
 @Entity
 public class Student extends Person{
-
+    @Column(unique = true)
     private MecanographicNumber mecanographicNumber;
 
     private DateOfBirth date;
@@ -29,6 +30,11 @@ public class Student extends Person{
 
     public Student() {
         // for ORM only
+    }
+
+
+    public boolean compareYearMecanographicNumber(String year){
+        return mecanographicNumber.compareYear(year);
     }
 
     @Override
