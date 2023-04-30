@@ -27,9 +27,9 @@ public class JpaPersonRepository extends JpaAutoTxRepository<Person, ID_Person,I
 
     @Override
     public int findTotalMecanographicNumberByYear(String year) {
-        TypedQuery<Integer> query = createQuery("SELECT COUNT(p.mecanographicNumber) FROM p WHERE SUBSTRING(p.mecanographicNumber.number, 1, 4) = :year",
-                int.class);
+        TypedQuery<Long> query = createQuery("SELECT COUNT(p.mecanographicNumber) FROM Person p WHERE SUBSTRING(p.mecanographicNumber.mecanographicNumber, 1, 4) = :year",
+                Long.class);
         query.setParameter("year", year);
-        return  query.getSingleResult();
+        return Math.toIntExact(query.getSingleResult());
     }
 }
