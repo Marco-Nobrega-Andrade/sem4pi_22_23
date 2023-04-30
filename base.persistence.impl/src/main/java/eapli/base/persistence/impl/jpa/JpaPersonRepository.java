@@ -26,8 +26,8 @@ public class JpaPersonRepository extends JpaAutoTxRepository<Person, ID_Person,I
     }
 
     @Override
-    public int findTotalMechanographicNumberByYear(String year) {
-        TypedQuery<Integer> query = createQuery("SELECT COUNT(m.mechanographicNumber) FROM Mechanographic m WHERE m.mechanographicNumber LIKE :year || '%'",
+    public int findTotalMecanographicNumberByYear(String year) {
+        TypedQuery<Integer> query = createQuery("SELECT COUNT(p.mecanographicNumber) FROM p WHERE SUBSTRING(p.mecanographicNumber.number, 1, 4) = :year",
                 int.class);
         query.setParameter("year", year);
         return  query.getSingleResult();
