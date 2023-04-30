@@ -43,8 +43,8 @@ import eapli.framework.infrastructure.authz.domain.model.SystemUserBuilder;
  */
 public class ClientUserTest {
 
-    private final String aMecanographicNumber = "abc";
-    private final String anotherMecanographicNumber = "xyz";
+    private final String aMecanographicNumber = "202200001";
+    private final String anotherMecanographicNumber = "202200002";
 
     public static SystemUser dummyUser(final String username, final Role... roles) {
         // should we load from spring context?
@@ -63,10 +63,10 @@ public class ClientUserTest {
     @Test
     public void ensureClientUserEqualsPassesForTheSameMecanographicNumber() throws Exception {
 
-        final ClientUser aClientUser = new ClientUserBuilder().withMecanographicNumber("DUMMY")
+        final ClientUser aClientUser = new ClientUserBuilder().withMecanographicNumber("111111111")
                 .withSystemUser(getNewDummyUser()).build();
 
-        final ClientUser anotherClientUser = new ClientUserBuilder().withMecanographicNumber("DUMMY")
+        final ClientUser anotherClientUser = new ClientUserBuilder().withMecanographicNumber("111111111")
                 .withSystemUser(getNewDummyUser()).build();
 
         final boolean expected = aClientUser.equals(anotherClientUser);
@@ -104,7 +104,7 @@ public class ClientUserTest {
         final Set<Role> roles = new HashSet<>();
         roles.add(BaseRoles.MANAGER);
 
-        final ClientUser aClientUser = new ClientUserBuilder().withMecanographicNumber("DUMMY")
+        final ClientUser aClientUser = new ClientUserBuilder().withMecanographicNumber("111111111")
                 .withSystemUser(getNewDummyUser()).build();
 
         final boolean expected = aClientUser.equals(getNewDummyUser());
@@ -114,7 +114,7 @@ public class ClientUserTest {
 
     @Test
     public void ensureClientUserIsTheSameAsItsInstance() throws Exception {
-        final ClientUser aClientUser = new ClientUserBuilder().withMecanographicNumber("DUMMY")
+        final ClientUser aClientUser = new ClientUserBuilder().withMecanographicNumber("111111111")
                 .withSystemUser(getNewDummyUser()).build();
 
         final boolean expected = aClientUser.sameAs(aClientUser);
