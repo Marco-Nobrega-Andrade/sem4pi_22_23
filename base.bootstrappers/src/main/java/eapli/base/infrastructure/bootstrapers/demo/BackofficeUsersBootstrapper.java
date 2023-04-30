@@ -38,25 +38,25 @@ public class BackofficeUsersBootstrapper extends UsersBootstrapperBase implement
 
     @Override
     public boolean execute() {
-        registerStudent("student", PASSWORD1, "Johny", "Cash", "johny.doe@emai.l.com");
-        registerTeacher("teacher", PASSWORD1, "Oven", "Stove", "Oven.and.stove@emai.l.com");
+        registerStudent("student", PASSWORD1, "Johny", "Cash","Johny Cash", "johny.doe@emai.l.com","01/11/2000",100000000);
+        registerTeacher("teacher", PASSWORD1, "Oven", "Stove", "Oven Stove","Oven.and.stove@emai.l.com","OST","01/11/2000",100000001);
         return true;
     }
 
     private void registerStudent(final String username, final String password,
-                                 final String firstName, final String lastName, final String email) {
+                                 final String firstName, final String lastName,String fullName, final String email,final String dateOfBirth,final int taxPayerNumber) {
         final Set<Role> roles = new HashSet<>();
         roles.add(BaseRoles.STUDENT);
 
-        registerUser(username, password, firstName, lastName, email, roles);
+        registerStudentBaseBootstrap(username, password, firstName, lastName,fullName, email, roles,dateOfBirth,taxPayerNumber);
     }
 
     private void registerTeacher(final String username, final String password,
-                                 final String firstName, final String lastName, final String email) {
+                                 final String firstName, final String lastName,final String fullName, final String email, final String acronym,final String dateOfBirth,final int taxPayerNumber) {
         final Set<Role> roles = new HashSet<>();
         roles.add(BaseRoles.TEACHER);
 
-        registerUser(username, password, firstName, lastName, email, roles);
+        registerTeacherBaseBootstrap(username, password, firstName, lastName,fullName, email, roles,acronym,dateOfBirth,taxPayerNumber);
     }
 
 
