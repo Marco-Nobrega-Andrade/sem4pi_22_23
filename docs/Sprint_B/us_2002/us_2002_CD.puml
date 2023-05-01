@@ -1,0 +1,74 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class ListFutureExamsUI <<Presentation>>{
+    - examDTOList : List<ExamDTO>
+    + doShow()
+}
+
+class ListFutureExamsController <<Controller>>{
+    + create()
+    + listFutureExams()
+}
+
+class ListFutureExamsService  <<Service>> {
+    + create()
+    + listFutureExams()
+}
+
+class PersistenceContext  <<Persistence>> {
+    + repositories()
+}
+
+class RepositoryFactory  <<Factory>> {
+    + create()
+}
+
+class EnrollmentRepository  <<Repository>> {
+    + enrollmentRepository()
+}
+
+class ExamRepository <<Repository>> {
+    + examRepository()
+}
+
+class Exam <<Domain>> {
+    - id : ExamID
+    - examDateInterval : examDateInterval
+    - grammar : Grammar
+}
+
+class ExamDTO <<DTO>> {
+    - grammar : String
+    - courseIdentifier : String
+    - state : State
+    + create()
+}
+
+class ExamMapper <<DTO>> {
+    + toDTO()
+    + toCourse()
+}
+
+class Enrollment <<Domain>>{
+     - status : EnrollmentStatus
+}
+class AuthorizationService <<Service>>{
+    + session()
+}
+
+ListFutureExamsUI ..> ListFutureExamsController
+ListFutureExamsController ..> ListFutureExamsService
+ListFutureExamsService ..> PersistenceContext
+PersistenceContext ..> RepositoryFactory
+ListFutureExamsService ..> EnrollmentRepository
+EnrollmentRepository ..> Enrollment
+ListFutureExamsService ..> ExamRepository
+ExamRepository ..> Exam
+ListFutureExamsService ..> ExamMapper
+ExamMapper ..> ExamDTO
+RepositoryFactory ..> EnrollmentRepository
+RepositoryFactory ..> ExamRepository
+ListFutureExamsService ..> AuthorizationService
+
+@enduml
