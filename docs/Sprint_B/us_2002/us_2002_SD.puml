@@ -1,0 +1,81 @@
+@startuml
+autonumber
+actor "Student" as S
+
+participant ": ListFutureExamsUI" as UI <<Presentation>>
+control "ListFutureExamsController" as CTRL <<Application>>
+participant ": ListFutureExamsService" as FESS <<Service>>
+participant ": PersistenceContext" as PC <<Persistence>>
+participant "factory : RepositoryFactory" as RF <<Factory>>
+participant " : AuthorizationService" as AS <<Service>>
+database EnrollmentRepository as EnR <<Repository>>
+database ExamRepository as ER <<Repository>>
+participant ": ExamMapper" as EM <<DTO>>
+participant ": ExamDTO" as EDTO <<DTO>>
+
+activate S
+S -> UI : Student asks to list its own exams
+activate UI
+UI -> CTRL : create()
+activate CTRL
+CTRL -> FESS : create()
+activate FESS
+FESS -> PC : repositories()
+activate PC
+PC -> RF : create()
+activate RF
+deactivate RF
+PC --> FESS : factory
+deactivate PC
+
+
+FESS -> EnR : enrollmentRepository()
+activate EnR
+EnR --> FESS : enrollmentRepository
+deactivate EnR
+
+FESS -> ER : examRepository()
+activate ER
+ER --> FESS : examRepository
+deactivate ER
+
+deactivate FESS
+deactivate CTRL
+
+
+UI->CTRL : listFutureExams()
+activate CTRL
+CTRL-> FESS : listFutureExams()
+activate FESS
+FESS -> AS : session()
+activate AS
+AS --> FESS : student
+deactivate AS
+FESS --> EnR : listAcceptedCoursesByStudent(student)
+activate EnR
+EnR --> FESS : acceptedCourseList
+deactivate EnR
+FESS -> ER : listFutureExamsByCourseList(acceptedCourseList)
+activate ER
+ER --> FESS : futureExamsList
+deactivate ER
+deactivate ER
+loop foreach exam from futureExamList
+FESS -> EM : toDTO(exam)
+activate EM
+EM -> EDTO : create()
+activate EDTO
+deactivate EDTO
+EM --> FESS : examDTO
+deactivate EM
+end loop
+FESS --> CTRL : examDTOList
+deactivate FESS
+CTRL --> UI : examDTOList
+deactivate CTRL
+
+UI --> S : shows all exams referent to the Student
+deactivate UI
+deactivate S
+
+@enduml
