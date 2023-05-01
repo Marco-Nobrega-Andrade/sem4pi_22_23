@@ -3,16 +3,18 @@ package eapli.base.usermanagement.domain;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import java.util.Objects;
 
 @Entity
 public class Student extends Person{
+    @Embedded
     @Column(unique = true)
     private MecanographicNumber mecanographicNumber;
-
+    @Embedded
     private DateOfBirth date;
-
+    @Embedded
     private TaxPayerNumber taxPayerNumber;
 
     public Student(SystemUser user, FullName fullName, ID_Person id, MecanographicNumber mecanographicNumber, DateOfBirth date, TaxPayerNumber taxPayerNumber) {

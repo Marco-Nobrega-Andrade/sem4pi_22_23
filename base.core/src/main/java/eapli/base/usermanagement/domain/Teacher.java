@@ -3,6 +3,7 @@ package eapli.base.usermanagement.domain;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import java.util.Objects;
 
@@ -13,8 +14,10 @@ public class Teacher extends Person{
     @Column(unique=true)
     private Acronym acronym;
 
+    @Embedded
     private DateOfBirth date;
 
+    @Embedded
     private TaxPayerNumber taxPayerNumber;
 
     public Teacher(SystemUser user, FullName fullName, ID_Person id, Acronym acronym, DateOfBirth date, TaxPayerNumber taxPayerNumber) {

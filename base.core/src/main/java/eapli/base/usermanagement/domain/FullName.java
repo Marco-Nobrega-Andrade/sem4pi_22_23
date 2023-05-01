@@ -3,8 +3,9 @@ package eapli.base.usermanagement.domain;
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.util.StringPredicates;
 
+import javax.persistence.Embeddable;
 import java.util.Objects;
-
+@Embeddable
 public class FullName implements ValueObject, Comparable<FullName> {
 
     private String fullname;

@@ -1,7 +1,6 @@
 package eapli.base.usermanagement.domain;
 
 import eapli.framework.domain.model.AggregateRoot;
-import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 
 import javax.persistence.*;
@@ -11,6 +10,7 @@ import javax.persistence.*;
 @DiscriminatorColumn(name = "Type")
 public class Person implements AggregateRoot<ID_Person> {
 
+    @Embedded
     private FullName fullName;
 
     @EmbeddedId
