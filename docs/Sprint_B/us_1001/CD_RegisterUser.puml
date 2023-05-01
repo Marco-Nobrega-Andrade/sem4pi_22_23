@@ -62,21 +62,21 @@ buildRolesMenu();
 }
 
 class Person {
-fullName : FullName
-systemUser : SystemUser
-id : ID_Person
+FullName : fullName
+SystemUser : systemUser
+ID_Person : id
 }
 
 class Student {
-taxPayerNumber :TaxPayerNumber
-mecanographicNumber : MecanographicNumber
-dateOfBirth : DateOfBirth
+TaxPayerNumber: taxPayerNumber
+MecanographicNumber : mecanographicNumber
+DateOfBirth : dateOfBirth
 }
 
 class Teacher {
-taxPayerNumber : TaxPayerNumber
-acronym : Acronym
-dateOfBirth : dateOfBirth
+TaxPayerNumber: taxPayerNumber
+Acronym : acronym
+DateOfBirth : dateOfBirth
 }
 
 class AddUserController{
@@ -158,7 +158,7 @@ TaxPayerNumber: taxPayerNumber
 Acronym: acronym
 ID_Person : id_person
 
-with(String: fullname,SystemUser: user ,String: acronym, String: DateOfBirth, int: taxPayerNumber)
+with(String: fullname,SystemUser: user ,String: acronym, Date: DateOfBirth, int: taxPayerNumber)
 with(int: Id_Person)
 build()
 }
@@ -171,7 +171,7 @@ DateOfBirth: DateOfBirth
 TaxPayerNumber: taxPayerNumber
 ID_Person : id_person
 
-with(String: fullname,SystemUser: user , String: DateOfBirth, int: taxPayerNumber)
+with(String: fullname,SystemUser: user , Date: DateOfBirth, int: taxPayerNumber)
 withMecanographicNumber(int number,String year)
 with(int: Id_Person)
 
@@ -180,7 +180,7 @@ build()
 
 class PersonService{
 registerNewPerson(String: fullname,SystemUser: user)
-registerNewStudent(String: fullname,SystemUser: user , String: DateOfBirth, int: taxPayerNumber)
-registerNewTeacher(String: fullname,SystemUser: user ,String: acronym, String: DateOfBirth, int: taxPayerNumber)
+registerNewStudent(String: fullname,SystemUser: user , Date: DateOfBirth, int: taxPayerNumber)
+registerNewTeacher(String: fullname,SystemUser: user ,String: acronym, Date: DateOfBirth, int: taxPayerNumber)
 }
 @enduml
