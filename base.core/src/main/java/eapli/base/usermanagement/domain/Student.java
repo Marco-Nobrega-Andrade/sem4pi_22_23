@@ -2,9 +2,7 @@ package eapli.base.usermanagement.domain;
 
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 
-import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
@@ -16,7 +14,10 @@ public class Student extends Person{
     private DateOfBirth date;
     @Embedded
     private TaxPayerNumber taxPayerNumber;
-
+    /*
+    @OneToMany(mappedBy="courseEnrolled", cascade = CascadeType.ALL)
+    private List<Enrollment> enrollmentList;
+    */
     public Student(SystemUser user, FullName fullName, ID_Person id, MecanographicNumber mecanographicNumber, DateOfBirth date, TaxPayerNumber taxPayerNumber) {
         super(user, fullName, id);
         this.mecanographicNumber = mecanographicNumber;
