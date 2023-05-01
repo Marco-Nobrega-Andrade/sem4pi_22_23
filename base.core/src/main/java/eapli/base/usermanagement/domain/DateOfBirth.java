@@ -10,22 +10,15 @@ public class DateOfBirth implements ValueObject, Comparable<DateOfBirth>{
 
     private Date date;
 
-    public DateOfBirth(String date) {
-        Date date_form;
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        try {
-            date_form = formatter.parse(date);
-        }catch (Exception e){
-            throw new IllegalArgumentException(
-                    "Date isn´t in the correct format");
-        }
-        if(date_form.after(new Date())){
+    public DateOfBirth(Date date) {
+        if(date.after(new Date())){
             throw new IllegalArgumentException(
                     "The Date is in a future time");
         }
+        this.date = date;
     }
 
-    public static DateOfBirth valueOf(final String date) {
+    public static DateOfBirth valueOf(final Date date) {
         return new DateOfBirth(date);
     }
 

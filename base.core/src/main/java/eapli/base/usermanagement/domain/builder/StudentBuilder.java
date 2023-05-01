@@ -4,6 +4,8 @@ import eapli.base.usermanagement.domain.*;
 import eapli.framework.domain.model.DomainFactory;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 
+import java.util.Date;
+
 public class StudentBuilder implements DomainFactory<Student> {
 
     private SystemUser systemUser;
@@ -16,7 +18,7 @@ public class StudentBuilder implements DomainFactory<Student> {
 
     private TaxPayerNumber taxPayerNumber;
 
-    public StudentBuilder with(String fullName, SystemUser user, String dateOfBirth, int taxPayerNumber) {
+    public StudentBuilder with(String fullName, SystemUser user, Date dateOfBirth, int taxPayerNumber) {
         withSystemUser(user);
         withfullName(fullName);
         withDateOfBirth(dateOfBirth);
@@ -45,7 +47,7 @@ public class StudentBuilder implements DomainFactory<Student> {
         return this;
     }
 
-    public StudentBuilder withDateOfBirth(final String date) {
+    public StudentBuilder withDateOfBirth(final Date date) {
         this.dateOfBirth = new DateOfBirth(date);
         return this;
     }
