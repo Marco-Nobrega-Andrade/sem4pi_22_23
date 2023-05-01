@@ -12,6 +12,7 @@ import eapli.base.usermanagement.repositories.PersonRepository;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 
 import java.util.Calendar;
+import java.util.Date;
 
 public class PersonService {
 
@@ -26,12 +27,12 @@ public class PersonService {
             personRepository.save(per);
         } catch (Exception e) {
             PersistenceContext.repositories().users().delete(user);
-            return e.getMessage();
+            return "Error: " + e.getMessage();
         }
         return "Success";
     }
 
-    public String registerNewTeacher(String fullname,SystemUser user ,String acronym, String dateOfBirth, int taxPayerNumber){
+    public String registerNewTeacher(String fullname,SystemUser user ,String acronym, Date dateOfBirth, int taxPayerNumber){
         try {
             TeacherBuilder teacherBuilder = new TeacherBuilder();
             teacherBuilder.with(fullname,user,acronym,dateOfBirth,taxPayerNumber);
@@ -41,12 +42,12 @@ public class PersonService {
             personRepository.save(teacher);
         } catch (Exception e) {
             PersistenceContext.repositories().users().delete(user);
-            return e.getMessage();
+            return "Error: " + e.getMessage();
         }
         return "Success";
     }
 
-    public String registerNewStudent(String fullname,SystemUser user , String dateOfBirth, int taxPayerNumber){
+    public String registerNewStudent(String fullname, SystemUser user , Date dateOfBirth, int taxPayerNumber){
         try {
             StudentBuilder studentBuilder = new StudentBuilder();
             studentBuilder.with(fullname,user,dateOfBirth,taxPayerNumber);
@@ -58,7 +59,7 @@ public class PersonService {
             personRepository.save(student);
         }catch (Exception e){
             PersistenceContext.repositories().users().delete(user);
-            return e.getMessage();
+            return "Error: " + e.getMessage();
         }
         return "Success";
     }
