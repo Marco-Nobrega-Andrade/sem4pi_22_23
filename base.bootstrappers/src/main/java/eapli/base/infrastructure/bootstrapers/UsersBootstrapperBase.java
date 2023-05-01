@@ -20,6 +20,9 @@
  */
 package eapli.base.infrastructure.bootstrapers;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -32,7 +35,6 @@ import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.infrastructure.authz.domain.model.Role;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.authz.domain.model.Username;
-import org.springframework.core.ReactiveAdapterRegistry;
 
 public class UsersBootstrapperBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(UsersBootstrapperBase.class);
@@ -57,7 +59,7 @@ public class UsersBootstrapperBase {
         SystemUser u = null;
         try {
 
-            String i = userController.addUser(username, password, firstName, lastName,fullName, email, roles);
+            userController.addUser(username, password, firstName, lastName,fullName, email, roles);
             LOGGER.debug("»»» %s", username);
         } catch (final IntegrityViolationException | ConcurrencyException e) {
             // assuming it is just a primary key violation due to the tentative
@@ -71,14 +73,16 @@ public class UsersBootstrapperBase {
                                          final String lastName, final String fullName, final String email, final Set<Role> roles,final String dateOfBirth, int taxPayerNumber) {
         SystemUser u = null;
         try {
-
-            String i = userController.addUser(username, password, firstName, lastName,fullName, email, roles,dateOfBirth,taxPayerNumber);
+            Date date=new SimpleDateFormat("dd-MM-yyyy").parse(dateOfBirth);
+            userController.addUser(username, password, firstName, lastName,fullName, email, roles,date,taxPayerNumber);
 
             LOGGER.debug("»»» %s", username);
         } catch (final IntegrityViolationException | ConcurrencyException e) {
             // assuming it is just a primary key violation due to the tentative
             // of inserting a duplicated user. let's just lookup that user
             u = listUserController.find(Username.valueOf(username)).orElseThrow(() -> e);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
         }
         return u;
     }
@@ -87,12 +91,15 @@ public class UsersBootstrapperBase {
                                          final String lastName, final String fullName, final String email, final Set<Role> roles,final String acronym,final String dateOfBirth, int taxPayerNumber) {
         SystemUser u = null;
         try {
-            String i = userController.addUser(username, password, firstName, lastName,fullName, email, roles,acronym,dateOfBirth,taxPayerNumber);
+            Date date=new SimpleDateFormat("dd-MM-yyyy").parse(dateOfBirth);
+            userController.addUser(username, password, firstName, lastName,fullName, email, roles,acronym,date,taxPayerNumber);
             LOGGER.debug("»»» %s", username);
         } catch (final IntegrityViolationException | ConcurrencyException e) {
             // assuming it is just a primary key violation due to the tentative
             // of inserting a duplicated user. let's just lookup that user
             u = listUserController.find(Username.valueOf(username)).orElseThrow(() -> e);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
         }
         return u;
     }
