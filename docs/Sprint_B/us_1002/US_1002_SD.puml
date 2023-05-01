@@ -9,7 +9,7 @@ participant PersistenceContext as PERS_CONTX <<persistence>>
 participant RepositoryFactory as REPO_FAC <<factory>>
 database CourseRepository as COURSE_REPO <<repository>>
 autonumber
-
+activate ACTOR
 activate UI
 
 ACTOR -> UI : Manager selects option to create a course
@@ -22,6 +22,8 @@ deactivate CONTROLLER
 UI --> ACTOR : System asks for the course creation data
 
 ACTOR -> UI : Manager inserts the data
+UI --> ACTOR : System ask for confirmation
+ACTOR -> UI : Manager confirms
 UI -> CONTROLLER : createCourse(courseId, courseTitle, courseName, courseIdentifier, maxEnrollments, minEnrollments)
 activate CONTROLLER
 CONTROLLER -> SERVICE : createCourse(courseId, courseTitle, courseName, courseIdentifier, maxEnrollments, minEnrollments)
@@ -57,5 +59,6 @@ SERVICE --> CONTROLLER : operation success
 deactivate SERVICE
 CONTROLLER --> UI : operation success
 deactivate CONTROLLER
-UI --> ACTOR : System validates and persists inserted data
+UI --> ACTOR : operation success
+deactivate ACTOR
 @enduml
