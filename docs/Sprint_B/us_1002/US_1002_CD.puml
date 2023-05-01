@@ -16,7 +16,7 @@ class Course{
 - courseId : CourseIdentifier
 - courseTitle : CourseTitle
 - courseName : CourseName
-- descriptions : Description
+- description : Description
 - enrollmentLimits : EnrollmentLimits
 - courseStatus : CourseStatus
 - teacherInCharge : Teacher
