@@ -35,6 +35,9 @@ public class Course implements AggregateRoot<CourseIdentifier> {
 
     @OneToMany(mappedBy="course", cascade = CascadeType.ALL)
     private List<ExtraClass> extraClassesList;
+
+    @OneToMany(mappedBy="course", cascade = CascadeType.ALL)
+    private List<Exam> examsList;
     */
     public Course(CourseIdentifier courseId, CourseTitle courseTitle, CourseName courseName, Description description, EnrollmentLimits enrollmentLimits, CourseStatus courseStatus, Teacher teacherInCharge, ArrayList<Enrollment> enrollmentsList /* ,ArrayList<Class> classesList, ArrayList<ExtraClass> extraClassesList*/) {
         this.courseId = courseId;
