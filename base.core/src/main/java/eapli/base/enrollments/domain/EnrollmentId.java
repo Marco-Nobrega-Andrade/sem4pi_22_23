@@ -9,16 +9,19 @@ import java.util.Objects;
 public class EnrollmentId implements ValueObject, Comparable<EnrollmentId> {
     private Long enrollment_Id;
 
-    @Override
-    public int compareTo(EnrollmentId o) {
-        return Long.compare(this.enrollment_Id, o.enrollment_Id);
-    }
-
     public EnrollmentId(Long enrollmentId) {
+        if(enrollmentId < 0){
+            throw new IllegalArgumentException("Enrollment Identifier cannot be 0 or less");
+        }
         this.enrollment_Id = enrollmentId;
     }
 
     public EnrollmentId() {
+    }
+
+    @Override
+    public int compareTo(EnrollmentId o) {
+        return Long.compare(this.enrollment_Id, o.enrollment_Id);
     }
 
     @Override
