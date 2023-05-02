@@ -32,4 +32,8 @@ public class CourseTitle implements ValueObject {
     public int hashCode() {
         return Objects.hash(course_Title);
     }
+
+    public String returnCourseTitleString(){
+        return course_Title;
+    }
 }

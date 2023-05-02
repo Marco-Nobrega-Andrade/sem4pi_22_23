@@ -87,4 +87,14 @@ public class Course implements AggregateRoot<CourseIdentifier> {
         return AggregateRoot.super.hasIdentity(id);
     }
 
+    public String returnCourseTitleString(){
+        return courseTitle.returnCourseTitleString();
+    }
+    public String returnCourseIdentifierString(){
+        return courseId.returnCourseIdentifierString();
+    }
+    public String returnCourseStatusString(){
+        return courseStatus.returnCourseStatusString();
+    }
+
 }

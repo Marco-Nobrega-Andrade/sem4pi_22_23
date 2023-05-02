@@ -39,4 +39,8 @@ public class CourseStatus implements ValueObject {
     public int hashCode() {
         return Objects.hash(courseStatusValue);
     }
+
+    public String returnCourseStatusString(){
+        return courseStatusValue.name();
+    }
 }

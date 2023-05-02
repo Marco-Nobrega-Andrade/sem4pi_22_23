@@ -37,4 +37,8 @@ public class CourseIdentifier implements Comparable<CourseIdentifier>, ValueObje
     public int hashCode() {
         return Objects.hash(course_Id);
     }
+
+    public String returnCourseIdentifierString(){
+        return course_Id;
+    }
 }
