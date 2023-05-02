@@ -8,9 +8,13 @@ import java.util.Objects;
 public class CourseStatus implements ValueObject {
 
     private CourseStatusValue courseStatusValue;
-
+    /*
+    Course status lifecycle
+    close --> open --> open enrollments --> closed enrollments --> closed
+    */
     enum CourseStatusValue {
         OPEN,
+        CLOSE,
         CLOSED,
         OPEN_ENROLLMENTS,
         CLOSED_ENROLLMENTS
