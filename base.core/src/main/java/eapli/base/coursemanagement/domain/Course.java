@@ -27,7 +27,7 @@ public class Course implements AggregateRoot<CourseIdentifier> {
     private Teacher teacherInCharge;
 
     @OneToMany(mappedBy="studentEnrolled", cascade = CascadeType.ALL)
-    private List<Enrollment> enrollmentsList;
+    private List<Enrollment> enrollmentsList = new ArrayList<>();
 
     /*
     @OneToMany(mappedBy="course", cascade = CascadeType.ALL)
