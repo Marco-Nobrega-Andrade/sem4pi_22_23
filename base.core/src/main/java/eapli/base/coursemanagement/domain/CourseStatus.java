@@ -13,11 +13,15 @@ public class CourseStatus implements ValueObject {
     close --> open --> open enrollments --> closed enrollments --> closed
     */
     enum CourseStatusValue {
-        OPEN,
-        CLOSE,
-        CLOSED,
-        OPEN_ENROLLMENTS,
-        CLOSED_ENROLLMENTS
+        CLOSE (1){ @Override public String toString() { return "Close"; } },
+        OPEN (2){ @Override public String toString() { return "Open"; } },
+        OPEN_ENROLLMENTS (3){ @Override public String toString() { return "Enrollments open"; } },
+        CLOSED_ENROLLMENTS (4){ @Override public String toString() { return "Enrollements closed"; } },
+        CLOSED (5){ @Override public String toString() { return "Closed"; } };
+        final private int stateNumber;
+        CourseStatusValue (int stateNumber){
+            this.stateNumber = stateNumber;
+        }
     }
 
     public CourseStatus(CourseStatusValue courseStatusValue) {
@@ -41,6 +45,9 @@ public class CourseStatus implements ValueObject {
     }
 
     public String returnCourseStatusString(){
-        return courseStatusValue.name();
+        return courseStatusValue.toString();
+    }
+    public int returnCourseStatusInt(){
+        return courseStatusValue.stateNumber;
     }
 }

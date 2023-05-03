@@ -97,4 +97,12 @@ public class Course implements AggregateRoot<CourseIdentifier> {
         return courseStatus.returnCourseStatusString();
     }
 
+    public boolean changeStatus(String newStatus){
+        CourseStatus courseStatus1 = new CourseStatus(CourseStatus.CourseStatusValue.valueOf(newStatus));
+        if(courseStatus1.returnCourseStatusInt() == courseStatus.returnCourseStatusInt() + 1) {
+            courseStatus = new CourseStatus(CourseStatus.CourseStatusValue.valueOf(newStatus));
+            return true;
+        }
+        return false;
+    }
 }
