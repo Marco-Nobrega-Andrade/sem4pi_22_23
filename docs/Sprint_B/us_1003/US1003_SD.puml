@@ -14,6 +14,7 @@ participant "<<Domain>>\ncourse:Course" as C
 
 
 M -> UI : The manager initializes the process\n of open/close the course enrollments
+activate M
 activate UI
 UI -> CTRL : create()
 activate CTRL
@@ -60,17 +61,17 @@ M -> UI : The Manager selects the Course \nwhose Status he wants to change
 activate UI
 UI --> M : Displays the options close/open enrollments
 deactivate UI
-M -> UI : Chooses the option
+M -> UI : Chooses the option (newStatus)
 activate UI
-UI -> CTRL : changeStatus(selectedCourseDTO, selectedOption)
+UI -> CTRL : changeStatus(selectedCourseDTO, newStatus)
 activate CTRL
-CTRL -> OCESv : changeStatus(selectedCourseDTO, selectedOption)
+CTRL -> OCESv : changeStatus(selectedCourseDTO, newStatus)
 activate OCESv
 OCESv -> CM : toCourse(selectedCourseDTO)
 activate CM
 CM --> OCESv : course
 deactivate CM
-OCESv -> C : changeStatus(selectedOption)
+OCESv -> C : changeStatus(newStatus)
 activate C
 deactivate C
 OCESv -> CR : update(course)
@@ -80,4 +81,5 @@ deactivate OCESv
 deactivate CTRL
 UI --> M : The System changes the Status and\n informs the operation success
 deactivate UI
+deactivate M
 @enduml
