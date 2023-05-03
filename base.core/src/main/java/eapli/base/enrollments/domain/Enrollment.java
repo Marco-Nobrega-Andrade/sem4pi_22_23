@@ -13,14 +13,6 @@ public class Enrollment implements AggregateRoot<EnrollmentId> {
     @Embedded
     private EnrollmentStatus enrollmentStatus;
 
-    @ManyToOne(fetch= FetchType.LAZY)
-    @JoinColumn(name="enrollmentId")
-    private Student studentEnrolled;
-
-    @ManyToOne(fetch= FetchType.LAZY)
-    @JoinColumn(name="courseId")
-    private Course courseEnrolled;
-
     protected Enrollment() {
     }
 
@@ -32,8 +24,7 @@ public class Enrollment implements AggregateRoot<EnrollmentId> {
 
         final Enrollment that = (Enrollment) other;
 
-        return enrollmentId.equals(that.enrollmentId) && enrollmentStatus.equals(that.enrollmentStatus) && studentEnrolled.equals(that.studentEnrolled)
-                && courseEnrolled.equals(that.courseEnrolled);
+        return enrollmentId.equals(that.enrollmentId) && enrollmentStatus.equals(that.enrollmentStatus);
     }
 
     @Override
