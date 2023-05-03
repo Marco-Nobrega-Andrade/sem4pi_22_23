@@ -1,7 +1,7 @@
 @startuml
 actor Manager as M
 participant "<<Presentation>>\n:OpenCloseEnrollmentsUI" as UI
-participant "<<Application>>\n:OpenCloseEnrollmentsUI" as CTRL
+participant "<<Application>>\n:OpenCloseEnrollmentsController" as CTRL
 participant "<<Service>>\n:OpenCloseEnrollmentsService" as OCESv
 participant "<<Persistence>>\n:PersistenceContext" as PC
 participant "<<Factory>>\nfactory:RepositoryFactory" as RF
