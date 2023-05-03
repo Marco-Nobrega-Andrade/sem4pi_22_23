@@ -1,5 +1,6 @@
 package eapli.base.coursemanagement.domain;
 
+import eapli.base.courseclasses.domain.ExtraClass;
 import eapli.base.enrollments.domain.Enrollment;
 import eapli.base.usermanagement.domain.Teacher;
 import eapli.framework.domain.model.AggregateRoot;
@@ -23,23 +24,23 @@ public class Course implements AggregateRoot<CourseIdentifier> {
     @Embedded
     private CourseStatus courseStatus;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.PERSIST)
     private Teacher teacherInCharge;
 
-    @OneToMany(mappedBy="studentEnrolled", cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.PERSIST)
+    private List<Teacher> teachersList = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Enrollment> enrollmentsList = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<ExtraClass> extraClassesList = new ArrayList<>();
 
     /*
     @OneToMany(mappedBy="course", cascade = CascadeType.ALL)
-    private List<Class> classesList;
-
-    @OneToMany(mappedBy="course", cascade = CascadeType.ALL)
-    private List<ExtraClass> extraClassesList;
-
-    @OneToMany(mappedBy="course", cascade = CascadeType.ALL)
     private List<Exam> examsList;
     */
-    public Course(CourseIdentifier courseId, CourseTitle courseTitle, CourseName courseName, Description description, EnrollmentLimits enrollmentLimits, CourseStatus courseStatus, Teacher teacherInCharge, ArrayList<Enrollment> enrollmentsList /* ,ArrayList<Class> classesList, ArrayList<ExtraClass> extraClassesList*/) {
+    public Course(CourseIdentifier courseId, CourseTitle courseTitle, CourseName courseName, Description description, EnrollmentLimits enrollmentLimits, CourseStatus courseStatus, Teacher teacherInCharge) {
         this.courseId = courseId;
         this.courseTitle = courseTitle;
         this.courseName = courseName;
@@ -47,11 +48,6 @@ public class Course implements AggregateRoot<CourseIdentifier> {
         this.enrollmentLimits = enrollmentLimits;
         this.courseStatus = courseStatus;
         this.teacherInCharge = teacherInCharge;
-        this.enrollmentsList = enrollmentsList;
-        /*
-        this.classesList = classesList;
-        this.extraClassesList = extraClassesList;
-         */
     }
 
     protected Course() {
@@ -68,8 +64,8 @@ public class Course implements AggregateRoot<CourseIdentifier> {
 
         return courseId.equals(that.courseId) && courseTitle.equals(that.courseTitle) && courseName.equals(that.courseName) && courseDescription.equals(that.courseDescription)
                 && enrollmentLimits.equals(that.enrollmentLimits) && courseStatus.equals(that.courseStatus) && teacherInCharge.equals(that.teacherInCharge)
-                && enrollmentsList.equals(that.enrollmentsList)
-                /* && classesList.equals(that.classesList) && extraClassesList.equals(that.extraClassesList)*/;
+                && enrollmentsList.equals(that.enrollmentsList) && teachersList.equals(that.teachersList)
+                /*&& classesList.equals(that.classesList)*/ && extraClassesList.equals(that.extraClassesList);
     }
 
     @Override

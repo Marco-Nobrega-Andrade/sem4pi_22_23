@@ -18,7 +18,7 @@ public class Student extends Person{
     @Embedded
     private TaxPayerNumber taxPayerNumber;
 
-    @OneToMany(mappedBy="courseEnrolled", cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Enrollment> enrollmentList = new ArrayList<>();
 
     public Student(SystemUser user, FullName fullName, ID_Person id, MecanographicNumber mecanographicNumber, DateOfBirth date, TaxPayerNumber taxPayerNumber) {
