@@ -10,7 +10,7 @@ public class EnrollmentId implements ValueObject, Comparable<EnrollmentId> {
     private Long enrollment_Id;
 
     public EnrollmentId(Long enrollmentId) {
-        if(enrollmentId < 0){
+        if(enrollmentId <= 0){
             throw new IllegalArgumentException("Enrollment Identifier cannot be 0 or less");
         }
         this.enrollment_Id = enrollmentId;
