@@ -37,14 +37,29 @@ class Course <<Domain>> {
     + returnCourseIdentifierString()
     + returnCourseStatusString()
 }
+class CourseTitle <<Domain>>{
+    - course_title : String
+    + returnCourseTitleString()
+}
+
+class CourseIdentifier <<Domain>>{
+    - course_id : String
+    + returnCourseIdentifierString()
+}
+
+class CourseStatus <<Domain>>{
+    - courseStatusValue : CourseStatusValue
+    + returnCourseStatusString()
+}
 class CourseDTO <<DTO>> {
-    + String CourseTitle
-    + String courseIdentifier
-    + String state
+    + CourseTitle : String
+    + courseIdentifier : String
+    + state : String
 }
 class CourseMapper <<DTO>> {
     + toDTO()
 }
+
 
 OpenCloseCourseUI ..> OpenCloseCourseController
 OpenCloseCourseController ..> OpenCloseCourseService
@@ -54,6 +69,9 @@ OpenCloseCourseService ..> CourseRepository
 OpenCloseCourseService ..> CourseMapper
 CourseMapper ..> CourseDTO
 OpenCloseCourseService ..> Course
+Course -left> CourseTitle
+Course -down> CourseIdentifier
+Course -right> CourseStatus
 
 
 @enduml

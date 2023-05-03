@@ -7,10 +7,13 @@ control "OpenCloseCourseController" as CTRL <<Application>>
 participant ": OpenCloseCourseService" as CSS <<Service>>
 participant ": PersistenceContext" as PC <<Persistence>>
 participant "factory : RepositoryFactory" as RF <<Factory>>
-participant ": Course" as C <<Domain>>
-database CourseRepository as CR <<Repository>>
 participant ": StatusCourseMapper" as CM <<DTO>>
 participant ": StatusCourseDTO" as CDTO <<DTO>>
+participant ": Course" as C <<Domain>>
+participant ": CourseTitle" as CT <<Domain>>
+participant ": CourseIdentifier" as CI <<Domain>>
+participant ": CourseStatus" as CS <<Domain>>
+database CourseRepository as CR <<Repository>>
 
 activate MGR
 MGR -> UI : asks to change the status of a course to open/closed
@@ -47,6 +50,31 @@ deactivate CR
 loop for each course from courseList
 CSS -> CM : toDTO(course)
 activate CM
+CM -> C : returnCourseTitleString()
+activate C
+C -> CT : returnCourseTitleString()
+activate CT
+CT --> C : course_title
+deactivate CT
+C --> CM : course_title
+deactivate C
+CM -> C : returnCourseIdentifierString()
+activate C
+C -> CI : returnCourseIdentifierString()
+activate CI
+CI --> C : course_Id
+deactivate CI
+C --> CM : course_Id
+deactivate C
+CM -> C : returnCourseStatusString()
+activate C
+C -> CS : returnCourseStatusString()
+activate CS
+CS -> CS : name()
+CS --> C : course_status
+deactivate CS
+C --> CM : course_status
+deactivate C
 CM -> CDTO : create()
 activate CDTO
 deactivate CDTO
