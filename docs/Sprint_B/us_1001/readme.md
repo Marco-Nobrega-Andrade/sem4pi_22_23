@@ -67,16 +67,16 @@ Regards.
 ### 4.1. Rational
 
 
-|                Main Scenario                 |                 Question: Which class...                  |               Answer                |                                                              Pattern                                                               |
-|:--------------------------------------------:|:---------------------------------------------------------:|:-----------------------------------:|:----------------------------------------------------------------------------------------------------------------------------------:|
-| 1. Manager selects option to register a user |                ...interacts with the user                 |              AddUserUI              |                                                          Pure Fabrication                                                          |
-|                                              |                ...coordinates the use case                |          AddUserController          |                                                             Controller                                                             |
-|                                              |            ...interacts with the domain layer             | UserManagementService\PersonService |             Controller-service - hides the complexity of the use case from the controller class, lowering its coupling             |
-|  2. System asks for the User creation data   |                                                           |                                     |                                                                                                                                    |
-|         3. Manager inserts the data          |                ...stores the inserted data                |          SystemUser\Person          |                                         Information Expert - the class knows its own data                                          |
-|                                              |                  ... creates the object                   |   SystemUserBuilder\PersonBuilder   |                            Builder - Interface that allows the creation of an instance of a given class                            |
-|    4. System persists the created course     | ...creates the instance responsible for persisting Course |          RepositoryFactory          | Abstract Factory - Interface responsible for creating a Factory of related Objects without explicitly specifying the intend Class; |
-|                                              |              ...persists the created object               |   UserRepository\PersonRepository   |            Repository -  hide the details of persisting and reconstructing an object while keeping the domain language             |
+|                Main Scenario                 |                 Question: Which class...                  |                            Answer                             |                                                              Pattern                                                               |
+|:--------------------------------------------:|:---------------------------------------------------------:|:-------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------------------------:|
+| 1. Manager selects option to register a user |                ...interacts with the user                 |                           AddUserUI                           |                                                          Pure Fabrication                                                          |
+|                                              |                ...coordinates the use case                |                       AddUserController                       |                                                             Controller                                                             |
+|                                              |            ...interacts with the domain layer             |              UserManagementService\PersonService              |             Controller-service - hides the complexity of the use case from the controller class, lowering its coupling             |
+|  2. System asks for the User creation data   |                                                           |                                                               |                                                                                                                                    |
+|         3. Manager inserts the data          |                ...stores the inserted data                |                   SystemUser\Person\Teacher                   |                                         Information Expert - the class knows its own data                                          |
+|                                              |                  ... creates the object                   | SystemUserBuilder\PersonBuilder\TeacherBuilder\StudentBuilder |                            Builder - Interface that allows the creation of an instance of a given class                            |
+|     4. System persists the created User      | ...creates the instance responsible for persisting Course |                       RepositoryFactory                       | Abstract Factory - Interface responsible for creating a Factory of related Objects without explicitly specifying the intend Class; |
+|                                              |              ...persists the created object               |                UserRepository\PersonRepository                |            Repository -  hide the details of persisting and reconstructing an object while keeping the domain language             |
 
 ### 4.2 Sequence Diagram
 
@@ -104,7 +104,7 @@ public void ensureNullIsNotAllowed() {
 
 ```
 @Test(expected = IllegalArgumentException.class)
-public void ensurenTaxPayerNumberIsValid() {
+public void ensureTaxPayerNumberIsValid() {
 	TaxPayerNumber numb = new TaxPayerNumber(12345678);
 }
 ```
@@ -113,8 +113,8 @@ public void ensurenTaxPayerNumberIsValid() {
 
 ```
 @Test(expected = IllegalArgumentException.class)
-public void ensurenTaxPayerNumberIsValid() {
-	TaxPayerNumber numb = new TaxPayerNumber(12345678);
+        public void ensureDateOfBirthCanNotBeInTheFuture() {
+        DateOfBirth test =  new DateOfBirth(new Date(1000,10,2));
 }
 ```
 
