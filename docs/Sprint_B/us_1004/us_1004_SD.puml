@@ -15,8 +15,10 @@ participant ": StatusCourseDTO" as CDTO <<DTO>>
 activate MGR
 MGR -> UI : asks to change the status of a course to open/closed
 activate UI
-UI -> CTRL ** : OpenCloseCourseController()
-CTRL -> CSS ** : OpenCloseCourseService()
+UI -> CTRL  : create()
+activate CTRL
+CTRL -> CSS  : create()
+
 activate CSS
 CSS -> PC : repositories()
 activate PC
@@ -71,10 +73,10 @@ deactivate UI
 
 MGR-> UI : confirms
 activate UI
-UI -> CTRL : updateCourseStatus(statusCourseDTO, newStatus)
+UI -> CTRL : changeCourseStatus(statusCourseDTO, newStatus)
 activate CTRL
 
-CTRL -> CSS : updateCourseStatus(statusCourseDTO, newStatus)
+CTRL -> CSS : changeCourseStatus(statusCourseDTO, newStatus)
 activate CSS
 CSS -> CR : findCourseByCourseIdentifier(statusCourseDTO.courseIdentifier)
 activate CR
