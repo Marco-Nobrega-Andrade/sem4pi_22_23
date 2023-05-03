@@ -24,6 +24,7 @@ import eapli.base.Application;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
 import eapli.base.infrastructure.persistence.RepositoryFactory;
 import eapli.base.usermanagement.repositories.PersonRepository;
+import eapli.base.usermanagement.repositories.StudentRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 import eapli.framework.infrastructure.authz.repositories.impl.jpa.JpaAutoTxUserRepository;
@@ -74,6 +75,16 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     @Override
     public PersonRepository personRepository() {
         return new JpaPersonRepository(Application.settings().getPersistenceUnitName());
+    }
+
+    @Override
+    public StudentRepository studentRepository(TransactionalContext autoTx) {
+        return new JpaStudentRepository(autoTx);
+    }
+
+    @Override
+    public StudentRepository studentRepository() {
+        return new JpaStudentRepository(Application.settings().getPersistenceUnitName());
     }
 
     @Override

@@ -7,7 +7,6 @@ import eapli.base.usermanagement.domain.Person;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
-import javax.persistence.TypedQuery;
 
 public class JpaPersonRepository extends JpaAutoTxRepository<Person, ID_Person,ID_Person> implements PersonRepository {
 
@@ -25,11 +24,5 @@ public class JpaPersonRepository extends JpaAutoTxRepository<Person, ID_Person,I
         return (int) count();
     }
 
-    @Override
-    public int findTotalMecanographicNumberByYear(String year) {
-        TypedQuery<Long> query = createQuery("SELECT COUNT(p.mecanographicNumber) FROM Person p WHERE SUBSTRING(p.mecanographicNumber.mecanographicNumber, 1, 4) = :year",
-                Long.class);
-        query.setParameter("year", year);
-        return Math.toIntExact(query.getSingleResult());
-    }
+
 }
