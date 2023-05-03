@@ -2,44 +2,23 @@ package eapli.base.usermanagement.domain.builder;
 
 import eapli.base.usermanagement.domain.*;
 import eapli.framework.domain.model.DomainFactory;
-import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 
 import java.util.Date;
 
 public class TeacherBuilder implements DomainFactory<Teacher> {
 
-    private SystemUser systemUser;
-    private FullName fullName;
 
-    private ID_Person id;
     private Acronym acronym;
 
     private DateOfBirth dateOfBirth;
 
     private TaxPayerNumber taxPayerNumber;
 
-    public TeacherBuilder with(String fullName ,SystemUser user,String acronym,Date dateOfBirth,int taxPayerNumber){
-        withSystemUser(user);
-        withfullName(fullName);
+    public TeacherBuilder with(String acronym,Date dateOfBirth,int taxPayerNumber){
         withAcronym(acronym);
         withDateOfBirth(dateOfBirth);
         withTaxPayerNumber(taxPayerNumber);
 
-        return this;
-    }
-
-    public TeacherBuilder withSystemUser(final SystemUser systemUser) {
-        this.systemUser = systemUser;
-        return this;
-    }
-
-    public TeacherBuilder withID(final int id) {
-        this.id = new ID_Person(id);
-        return this;
-    }
-
-    public TeacherBuilder withfullName(final String fullName) {
-        this.fullName = new FullName(fullName);
         return this;
     }
 
@@ -61,6 +40,6 @@ public class TeacherBuilder implements DomainFactory<Teacher> {
     public Teacher build() {
         // since the factory knows that all the parts are needed it could throw
         // an exception. however, we will leave that to the constructor
-        return new Teacher(systemUser,fullName,id,acronym,dateOfBirth,taxPayerNumber);
+        return new Teacher(acronym,dateOfBirth,taxPayerNumber);
     }
 }
