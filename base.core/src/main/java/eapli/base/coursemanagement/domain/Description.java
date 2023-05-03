@@ -1,6 +1,7 @@
 package eapli.base.coursemanagement.domain;
 
 import eapli.framework.domain.model.ValueObject;
+import eapli.framework.strings.util.StringPredicates;
 
 import javax.persistence.Embeddable;
 import java.util.Objects;
@@ -10,8 +11,11 @@ public class Description implements ValueObject {
     private String description;
 
     public Description(String description) {
-        if(description == null){
+        if(StringPredicates.isNullOrEmpty(description)){
             throw new IllegalArgumentException("Course description cannot be null");
+        }
+        if(description.isBlank()){
+            throw new IllegalArgumentException("Course description cannot be blank");
         }
         this.description = description;
     }

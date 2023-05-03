@@ -1,6 +1,7 @@
 package eapli.base.coursemanagement.domain;
 
 import eapli.framework.domain.model.ValueObject;
+import eapli.framework.strings.util.StringPredicates;
 
 import javax.persistence.Embeddable;
 import java.util.Objects;
@@ -10,8 +11,11 @@ public class CourseIdentifier implements Comparable<CourseIdentifier>, ValueObje
     private String course_Id;
 
     public CourseIdentifier(String courseId) {
-        if (courseId == null){
-            throw new IllegalArgumentException("Course Identifier cannot be null");
+        if(StringPredicates.isNullOrEmpty(courseId)){
+            throw new IllegalArgumentException("Course identifier cannot be null");
+        }
+        if(courseId.isBlank()){
+            throw new IllegalArgumentException("Course identifier cannot be blank");
         }
         this.course_Id = courseId;
     }

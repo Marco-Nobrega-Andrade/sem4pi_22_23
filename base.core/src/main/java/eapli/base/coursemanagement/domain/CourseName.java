@@ -1,6 +1,7 @@
 package eapli.base.coursemanagement.domain;
 
 import eapli.framework.domain.model.ValueObject;
+import eapli.framework.strings.util.StringPredicates;
 
 import javax.persistence.Embeddable;
 import java.util.Objects;
@@ -10,8 +11,11 @@ public class CourseName implements ValueObject {
     private String course_Name;
 
     public CourseName(String courseName) {
-        if(courseName == null){
+        if(StringPredicates.isNullOrEmpty(courseName)){
             throw new IllegalArgumentException("Course name cannot be null");
+        }
+        if(courseName.isBlank()){
+            throw new IllegalArgumentException("Course name cannot be blank");
         }
         this.course_Name = courseName;
     }
