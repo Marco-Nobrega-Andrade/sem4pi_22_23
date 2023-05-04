@@ -16,10 +16,10 @@ FRU01 - Management of Users Create, disable/enable, and list users of the system
 
 ## 3. Analysis
 
+### 3.1 Register users
 We will start to see how its created an user in the Base app given by eapli.
 Afterwards we will adapt it to be able to respond to your necessities for that we will also need to create the classes Teacher and Student as well as Person
 
-### 3.1 Register users
 **Main scenario**
 1. Manager selects option to register a user
 2. System asks for the base information (Username, Password,firstName,lastName,Full Name,Email)
@@ -31,8 +31,7 @@ Afterwards we will adapt it to be able to respond to your necessities for that w
 8. System ask if the information is correct
 9. Manager validates
 10. System creates User
-11. System display user info
-
+11. System display if the user was created with success
 
 **Other scenarios**
 
@@ -41,7 +40,6 @@ Afterwards we will adapt it to be able to respond to your necessities for that w
 
 **5.a.** The Manager doesn´t validate information
 1. The use case terminates
-
 
 ### Client Question 
 #### Question
@@ -55,38 +53,63 @@ I think a sequence of capitalised words should be used for the teacher acronym. 
 I think it would be wise to enforce that acronyms be unique.
 Regards.
 
+### 3.1 List users
+We will start to see how the users are listed in the Base app given by eapli.
+Afterwards we will change it in accord to your needs.
 
-### 3.2 Enable/Disable users
+**Main scenario**
+1. Manager selects option to list all user
+2. System shows list users
 
-### 3.3 List users of the system
+
+### 3.3 Enable/Disable users
+
 
 ## 4. Design
 
-### Register User
+### 4.1 Register User
 
-### 4.1. Rational
+### 4.1.1 Rational
 
 
-|                Main Scenario                 |                 Question: Which class...                  |                            Answer                             |                                                              Pattern                                                               |
-|:--------------------------------------------:|:---------------------------------------------------------:|:-------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------------------------:|
-| 1. Manager selects option to register a user |                ...interacts with the user                 |                           AddUserUI                           |                                                          Pure Fabrication                                                          |
-|                                              |                ...coordinates the use case                |                       AddUserController                       |                                                             Controller                                                             |
-|                                              |            ...interacts with the domain layer             |              UserManagementService\PersonService              |             Controller-service - hides the complexity of the use case from the controller class, lowering its coupling             |
-|  2. System asks for the User creation data   |                                                           |                                                               |                                                                                                                                    |
-|         3. Manager inserts the data          |                ...stores the inserted data                |                   SystemUser\Person\Teacher                   |                                         Information Expert - the class knows its own data                                          |
-|                                              |                  ... creates the object                   | SystemUserBuilder\PersonBuilder\TeacherBuilder\StudentBuilder |                            Builder - Interface that allows the creation of an instance of a given class                            |
-|     4. System persists the created User      | ...creates the instance responsible for persisting Course |                       RepositoryFactory                       | Abstract Factory - Interface responsible for creating a Factory of related Objects without explicitly specifying the intend Class; |
-|                                              |              ...persists the created object               |                UserRepository\PersonRepository                |            Repository -  hide the details of persisting and reconstructing an object while keeping the domain language             |
+|                Main Scenario                 |                    Question: Which class...                     |                            Answer                             |                                                              Pattern                                                               |
+|:--------------------------------------------:|:---------------------------------------------------------------:|:-------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------------------------:|
+| 1. Manager selects option to register a user |                   ...interacts with the user                    |                           AddUserUI                           |                                                          Pure Fabrication                                                          |
+|                                              |                   ...coordinates the use case                   |                       AddUserController                       |                                                             Controller                                                             |
+|                                              |               ...interacts with the domain layer                |              UserManagementService\PersonService              |             Controller-service - hides the complexity of the use case from the controller class, lowering its coupling             |
+|  2. System asks for the User creation data   |                                                                 |                                                               |                                                                                                                                    |
+|         3. Manager inserts the data          |                   ...stores the inserted data                   |                   SystemUser\Person\Teacher                   |                                         Information Expert - the class knows its own data                                          |
+|                                              |                     ... creates the object                      | SystemUserBuilder\PersonBuilder\TeacherBuilder\StudentBuilder |                            Builder - Interface that allows the creation of an instance of a given class                            |
+|     4. System persists the created User      | ...creates the instance responsible for persisting Person\Users |                       RepositoryFactory                       | Abstract Factory - Interface responsible for creating a Factory of related Objects without explicitly specifying the intend Class; |
+|                                              |                 ...persists the created object                  |                UserRepository\PersonRepository                |            Repository -  hide the details of persisting and reconstructing an object while keeping the domain language             |
 
-### 4.2 Sequence Diagram
+### 4.1.2 Sequence Diagram
 
 ![SD_RegisterUser](SD_RegisterUser.svg "SD_RegisterUser")
 ![SD_Student](SD_Student.svg "SD_Student")
 ![SD_Teacher](SD_Teacher.svg "SD_Teacher")
 
-### 4.3 Class Diagram
+### 4.1.3 Class Diagram
 
 ![a class diagram](CD_RegisterUser.svg "A Class Diagram")
+
+
+### Register User
+
+### 4.1.1 Rational
+
+
+|                  Main Scenario                  |      Question: Which class...      |       Answer        |                                                  Pattern                                                   |
+|:-----------------------------------------------:|:----------------------------------:|:-------------------:|:----------------------------------------------------------------------------------------------------------:|
+| 1. Manager selects option to register all users |     ...interacts with the user     |     ListUsersUI     |                                              Pure Fabrication                                              |
+|                                                 |    ...coordinates the use case     | ListUsersController |                                                 Controller                                                 |
+|                                                 | ...interacts with the domain layer |  ListUsersService   | Controller-service - hides the complexity of the use case from the controller class, lowering its coupling |
+|              2. System find users               |         ...find all Users          |   UserRepository    |   Repository -  hide the details of finding an object in the database while keeping the domain language    |
+|          3. System show list of Users           |     ...interacts with the user     |     ListUsersUI     |                                              Pure Fabrication                                              |
+
+### 4.2 Sequence Diagram
+
+![SD_ListUser](SD_ListUsers.svg "SD_ListUser")
 
 
 ### 4.4. Tests
