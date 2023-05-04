@@ -1,5 +1,6 @@
 package eapli.base.coursemanagement.domain;
 
+import eapli.base.courseclasses.domain.Class;
 import eapli.base.courseclasses.domain.ExtraClass;
 import eapli.base.enrollments.domain.Enrollment;
 import eapli.base.usermanagement.domain.Teacher;
@@ -11,17 +12,17 @@ import java.util.List;
 
 @Entity
 public class Course implements AggregateRoot<CourseIdentifier> {
-    @EmbeddedId
+    @Id
     private CourseIdentifier courseId;
-    @Embedded
+
     private CourseTitle courseTitle;
-    @Embedded
+
     private CourseName courseName;
-    @Embedded
+
     private Description courseDescription;
-    @Embedded
+
     private EnrollmentLimits enrollmentLimits;
-    @Embedded
+
     private CourseStatus courseStatus;
 
     @OneToOne(cascade = CascadeType.PERSIST)
@@ -35,6 +36,9 @@ public class Course implements AggregateRoot<CourseIdentifier> {
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<ExtraClass> extraClassesList = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Class> classesList = new ArrayList<>();
 
     /*
     @OneToMany(mappedBy="course", cascade = CascadeType.ALL)

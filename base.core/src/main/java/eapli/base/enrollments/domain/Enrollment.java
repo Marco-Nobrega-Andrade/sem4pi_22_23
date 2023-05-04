@@ -8,9 +8,9 @@ import javax.persistence.*;
 
 @Entity
 public class Enrollment implements AggregateRoot<EnrollmentId> {
-    @EmbeddedId
+    @Id
     private EnrollmentId enrollmentId;
-    @Embedded
+
     private EnrollmentStatus enrollmentStatus;
 
     protected Enrollment() {

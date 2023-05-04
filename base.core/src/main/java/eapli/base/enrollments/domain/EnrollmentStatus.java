@@ -2,10 +2,11 @@ package eapli.base.enrollments.domain;
 
 import eapli.framework.domain.model.ValueObject;
 
-import javax.persistence.Embeddable;
+
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.util.Objects;
 
-@Embeddable
 public class EnrollmentStatus implements ValueObject {
 
     enum EnrollmentStatusValue{
@@ -13,6 +14,7 @@ public class EnrollmentStatus implements ValueObject {
         ACCEPTED,
         REJECTED
     }
+    @Enumerated(EnumType.STRING)
     private EnrollmentStatusValue enrollmentStatusValue;
 
     public EnrollmentStatus(EnrollmentStatusValue enrollmentStatusValue) {

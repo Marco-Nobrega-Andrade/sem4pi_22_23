@@ -8,9 +8,8 @@ import java.util.Objects;
 
 @Embeddable
 public class ScheduledDate implements ValueObject {
-    @Embedded
+
     private Duration duration;
-    @Embedded
     private Date date;
 
     public ScheduledDate(Duration duration, Date date) {

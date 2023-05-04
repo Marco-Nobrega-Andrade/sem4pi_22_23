@@ -7,9 +7,9 @@ import javax.persistence.*;
 
 @Entity
 public class ExtraClass implements AggregateRoot<ExtraClassId> {
-    @EmbeddedId
+    @Id
     private ExtraClassId extraClassId;
-    @Embedded
+
     private ScheduledDate scheduledDate;
 
     public ExtraClass(ExtraClassId extraClassId, ScheduledDate scheduledDate) {

@@ -2,10 +2,8 @@ package eapli.base.courseclasses.domain;
 
 import eapli.framework.domain.model.ValueObject;
 
-import javax.persistence.Embeddable;
 import java.util.Objects;
 
-@Embeddable
 public class ExtraClassId implements Comparable<ExtraClassId>, ValueObject {
 
     private Long extraClass_id;

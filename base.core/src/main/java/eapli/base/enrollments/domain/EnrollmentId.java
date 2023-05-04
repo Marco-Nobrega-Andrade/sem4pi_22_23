@@ -5,7 +5,7 @@ import eapli.framework.domain.model.ValueObject;
 import javax.persistence.Embeddable;
 import java.util.Objects;
 
-@Embeddable
+//@Embeddable
 public class EnrollmentId implements ValueObject, Comparable<EnrollmentId> {
     private Long enrollment_Id;
 

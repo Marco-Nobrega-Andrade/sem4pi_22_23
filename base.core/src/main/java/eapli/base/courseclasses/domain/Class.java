@@ -7,17 +7,13 @@ import javax.persistence.*;
 
 @Entity
 public class Class implements AggregateRoot<ClassId> {
-    @EmbeddedId
+    @Id
     private ClassId classId;
 
-    @Embedded
     private ClassTitle classTitle;
 
-    @Embedded
     private WeeklyDate weeklyDate;
 
-    @ManyToOne
-    private Course classCourse;
 
     public Class(ClassId classId, ClassTitle classTitle, WeeklyDate weeklyDate) {
         this.classId = classId;

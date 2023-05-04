@@ -3,10 +3,12 @@ package eapli.base.coursemanagement.domain;
 import eapli.framework.domain.model.ValueObject;
 
 import javax.persistence.Embeddable;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.util.Objects;
-@Embeddable
-public class CourseStatus implements ValueObject {
 
+public class CourseStatus implements ValueObject {
+    @Enumerated(EnumType.STRING)
     private CourseStatusValue courseStatusValue;
     /*
     Course status lifecycle

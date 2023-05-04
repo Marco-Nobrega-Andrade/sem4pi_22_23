@@ -7,7 +7,7 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Embeddable;
 import java.util.*;
 
-@Embeddable
+
 public class WeeklyDate implements ValueObject {
 
     @ElementCollection
