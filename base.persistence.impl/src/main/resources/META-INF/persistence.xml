@@ -16,7 +16,7 @@
     <class>eapli.base.clientusermanagement.domain.ClientUser</class>
     <class>eapli.base.clientusermanagement.domain.SignupRequest</class>
     <class>eapli.base.enrollments.domain.Enrollment</class>
-    <!--class>eapli.base.courseclasses.domain.Class</class-->
+    <class>eapli.base.courseclasses.domain.Class</class>
     <class>eapli.base.courseclasses.domain.ExtraClass</class>
     <class>eapli.base.coursemanagement.domain.Course</class>
 
