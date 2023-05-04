@@ -24,8 +24,8 @@
 package eapli.base.app.backoffice.console.presentation.authz;
 
 import eapli.base.usermanagement.application.ListUsersController;
-import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.presentation.console.AbstractListUI;
+import eapli.framework.representations.dto.GeneralDTO;
 import eapli.framework.visitor.Visitor;
 
 /**
@@ -33,7 +33,7 @@ import eapli.framework.visitor.Visitor;
  * @author losa
  */
 @SuppressWarnings({ "squid:S106" })
-public class ListUsersUI extends AbstractListUI<SystemUser> {
+public class ListUsersUI extends AbstractListUI<GeneralDTO> {
     private ListUsersController theController = new ListUsersController();
 
     @Override
@@ -47,12 +47,12 @@ public class ListUsersUI extends AbstractListUI<SystemUser> {
     }
 
     @Override
-    protected Iterable<SystemUser> elements() {
-        return theController.allUsers();
+    protected Iterable<GeneralDTO> elements() {
+        return theController.listAllUsers();
     }
 
     @Override
-    protected Visitor<SystemUser> elementPrinter() {
+    protected Visitor<GeneralDTO> elementPrinter() {
         return new SystemUserPrinter();
     }
 
@@ -63,6 +63,6 @@ public class ListUsersUI extends AbstractListUI<SystemUser> {
 
     @Override
     protected String listHeader() {
-        return String.format("#  %-10s%-30s%-30s", "USERNAME", "F. NAME", "L. NAME");
+        return String.format("#  %-10s%-30s%-30s", "USERNAME", "NAME", "EMAIL");
     }
 }
