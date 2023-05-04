@@ -20,7 +20,7 @@
  */
 package eapli.base.app.backoffice.console.presentation.authz;
 
-import eapli.framework.infrastructure.authz.domain.model.SystemUser;
+import eapli.framework.representations.dto.GeneralDTO;
 import eapli.framework.visitor.Visitor;
 
 /**
@@ -29,10 +29,10 @@ import eapli.framework.visitor.Visitor;
  *
  */
 @SuppressWarnings({ "squid:S106" })
-public class SystemUserPrinter implements Visitor<SystemUser> {
+    public class SystemUserPrinter implements Visitor<GeneralDTO> {
 
     @Override
-    public void visit(final SystemUser visitee) {
-        System.out.printf("%-10s%-30s%-30s", visitee.username(), visitee.name().firstName(), visitee.name().lastName());
+    public void visit(final GeneralDTO visitee) {
+        System.out.printf("%-10s%-30s%-30s", visitee.get("username"), visitee.get("name"), visitee.get("email"));
     }
 }
