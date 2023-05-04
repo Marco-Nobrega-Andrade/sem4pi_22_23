@@ -103,6 +103,6 @@ public class Course implements AggregateRoot<CourseIdentifier> {
             courseStatus = new CourseStatus(CourseStatus.CourseStatusValue.valueOf(newStatus));
             return true;
         }
-        return false;
+        throw new IllegalArgumentException("The course you're trying to change the status cannot change to that one right now.");
     }
 }
