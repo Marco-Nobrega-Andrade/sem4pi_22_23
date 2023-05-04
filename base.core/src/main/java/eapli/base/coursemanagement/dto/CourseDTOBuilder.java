@@ -46,8 +46,8 @@ public class CourseDTOBuilder {
         return this;
     }
 
-    /*public CourseDTO build(){
-
-    }*/
+    public StatusCourseDTO build(){
+        return new StatusCourseDTO(this.courseIdentifier, this.courseTitle, this.courseStatus);
+    }
 
 }
