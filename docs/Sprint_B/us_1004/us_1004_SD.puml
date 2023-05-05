@@ -7,24 +7,28 @@ control "OpenCloseCourseController" as CTRL <<Application>>
 participant ": OpenCloseCourseService" as CSS <<Service>>
 participant ": PersistenceContext" as PC <<Persistence>>
 participant "factory : RepositoryFactory" as RF <<Factory>>
+participant ": StatusCourseMapper" as CM <<DTO>>
+participant ": StatusCourseDTO" as CDTO <<DTO>>
 participant ": Course" as C <<Domain>>
+participant ": CourseTitle" as CT <<Domain>>
+participant ": CourseIdentifier" as CI <<Domain>>
+participant ": CourseStatus" as CS <<Domain>>
 database CourseRepository as CR <<Repository>>
-participant ": CourseMapper" as CM <<DTO>>
-participant ": CourseDTO" as CDTO <<DTO>>
 
 activate MGR
 MGR -> UI : asks to change the status of a course to open/closed
 activate UI
-UI -> CTRL : create()
+UI -> CTRL  : create()
 activate CTRL
-CTRL -> CSS : create()
+CTRL -> CSS  : create()
+
 activate CSS
 CSS -> PC : repositories()
 activate PC
 PC -> RF : create()
 activate RF
 deactivate RF
-PC --> CSS : factory
+PC --> CSS : theFactory
 deactivate PC
 CSS ->CR : courseRepository()
 activate CR
@@ -43,12 +47,38 @@ activate CR
 CR --> CSS : courseList
 deactivate CR
 deactivate CR
-loop foreach course from courseList
+loop for each course from courseList
 CSS -> CM : toDTO(course)
 activate CM
+CM -> C : returnCourseTitleString()
+activate C
+C -> CT : returnCourseTitleString()
+activate CT
+CT --> C : course_title
+deactivate CT
+C --> CM : course_title
+deactivate C
+CM -> C : returnCourseIdentifierString()
+activate C
+C -> CI : returnCourseIdentifierString()
+activate CI
+CI --> C : course_Id
+deactivate CI
+C --> CM : course_Id
+deactivate C
+CM -> C : returnCourseStatusString()
+activate C
+C -> CS : returnCourseStatusString()
+activate CS
+CS -> CS : name()
+CS --> C : course_status
+deactivate CS
+C --> CM : course_status
+deactivate C
 CM -> CDTO : create()
+activate CDTO
 deactivate CDTO
-CM --> CSS : courseDTO
+CM --> CSS : statusCourseDTO
 deactivate CM
 end loop
 CSS --> CTRL : courseDTOList
@@ -56,13 +86,13 @@ deactivate CSS
 CTRL --> UI : courseDTOList
 deactivate CTRL
 
-UI --> MGR : shows all courses
+UI --> MGR : shows all courses with current state
 deactivate UI
 
 MGR -> UI : picks a course
 activate UI
 
-UI --> MGR : shows its state and asks to which state to change
+UI --> MGR : asks to which state to change
 deactivate UI
 MGR -> UI : chooses state
 activate UI
@@ -71,20 +101,20 @@ deactivate UI
 
 MGR-> UI : confirms
 activate UI
-UI -> CTRL : updateCourseStatus(courseDTO, newStatus)
+UI -> CTRL : changeCourseStatus(statusCourseDTO, newStatus)
 activate CTRL
 
-CTRL -> CSS : updateCourseStatus(courseDTO, newStatus)
+CTRL -> CSS : changeCourseStatus(statusCourseDTO, newStatus)
 activate CSS
-CSS -> CM : toCourse(courseDTO)
-activate CM
-CM --> CSS : course
-deactivate CM
+CSS -> CR : findCourseByCourseIdentifier(statusCourseDTO.courseIdentifier)
+activate CR
+CR --> CSS : course
+deactivate CR
 CSS -> C : changeStatus(newStatus)
 activate C
 deactivate C
 
-CSS -> CR : update(course)
+CSS -> CR : save(course)
 activate CR
 deactivate CR
 deactivate CSS

@@ -1,28 +1,29 @@
 package eapli.base.usermanagement.domain;
 
 import eapli.framework.domain.model.AggregateRoot;
-import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "Type")
 public class Person implements AggregateRoot<ID_Person> {
 
+    @Embedded
     private FullName fullName;
 
     @EmbeddedId
     private ID_Person id;
 
-    /**
-     * cascade = CascadeType.NONE as the systemUser is part of another aggregate
-     */
 
-
-    @OneToOne()
+    @OneToOne(cascade = CascadeType.ALL)
     private SystemUser systemUser;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private Teacher teacher;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private Student student;
 
     public Person(final SystemUser user, final FullName fullName, ID_Person id) {
         if (fullName == null || user == null || id == null) {
@@ -31,6 +32,26 @@ public class Person implements AggregateRoot<ID_Person> {
         this.systemUser = user;
         this.fullName = fullName;
         this.id =  id;
+    }
+
+    public Person(final SystemUser user, final FullName fullName, ID_Person id,Teacher teacher) {
+        if (fullName == null || user == null || id == null || teacher == null) {
+            throw new IllegalArgumentException();
+        }
+        this.systemUser = user;
+        this.fullName = fullName;
+        this.id =  id;
+        this.teacher = teacher;
+    }
+
+    public Person(final SystemUser user, final FullName fullName, ID_Person id,Student student) {
+        if (fullName == null || user == null || id == null || student == null) {
+            throw new IllegalArgumentException();
+        }
+        this.systemUser = user;
+        this.fullName = fullName;
+        this.id =  id;
+        this.student = student;
     }
 
     protected Person() {
@@ -53,7 +74,20 @@ public class Person implements AggregateRoot<ID_Person> {
 
         final Person that = (Person) other;
 
-        return fullName.equals(that.fullName) && systemUser.equals(that.systemUser) && id.equals(that.id);
+        return Objects.equals(fullName, that.fullName) && Objects.equals(id, that.id) && Objects.equals(systemUser, that.systemUser) && Objects.equals(teacher, that.teacher) && Objects.equals(student, that.student);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return Objects.equals(fullName, person.fullName) && Objects.equals(id, person.id) && Objects.equals(systemUser, person.systemUser) && Objects.equals(teacher, person.teacher) && Objects.equals(student, person.student);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(fullName, id, systemUser, teacher, student);
     }
 
     @Override

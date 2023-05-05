@@ -21,12 +21,14 @@ class PersistenceContext  <<persistence>>
 class RepositoryFactory  <<factory>>
 class UserRepository  <<repository>>
 class PersonRepository  <<repository>>
+class StudentRepository  <<repository>>
 
 AddUserUI ..>AddUserController
 AddUserController ..> PersonService
-AddUserController ..> UserManagementService
+PersonService ..> UserManagementService
 AddUserController ..> AuthzRegistry
 AddUserController ..> AuthorizationService
+PersonService ..> AuthzRegistry
 
 UserManagementService ..> SystemUserBuilder
 UserManagementService ..> PersistenceContext
@@ -39,10 +41,13 @@ PersonService ..> StudentBuilder
 PersonService ..> PersistenceContext
 PersonService ..> RepositoryFactory
 PersonService ..> PersonRepository
+PersonService ..> StudentRepository
+
 
 PersistenceContext ..> RepositoryFactory
 RepositoryFactory ..> UserRepository
 RepositoryFactory ..> PersonRepository
+RepositoryFactory ..> StudentRepository
 
 PersonRepository ..> Person
 PersonBuilder ..> Person
@@ -51,9 +56,9 @@ TeacherBuilder ..> Teacher
 UserRepository ..> SystemUser
 SystemUserBuilder ..> SystemUser
 
-
-Person <|-- Student
-Person <|-- Teacher
+Person --> SystemUser
+Person --> Student
+Person --> Teacher
 
 class AddUserUI {
 doShow();
@@ -65,6 +70,8 @@ class Person {
 FullName : fullName
 SystemUser : systemUser
 ID_Person : id
+Teacher: teacher
+Student: student
 }
 
 class Student {
@@ -91,6 +98,7 @@ repositories()
 class RepositoryFactory{
 users()
 person()
+student()
 }
 
 class UserRepository{
@@ -100,8 +108,11 @@ delete(SystemUser : user)
 
 class PersonRepository{
 save(Person: person)
-findTotalMecanographicNumberByYear(String :year)
 findTotalNumberOfPerson()
+}
+
+class StudentRepository{
+findTotalMecanographicNumberByYear(String :year)
 }
 
 class AuthzRegistry{
@@ -144,36 +155,35 @@ class PersonBuilder{
 FullName: fullname
 SystemUser: user
 ID_Person : id_person
+Teacher: teacher
+Student: student
+
 with(String: fullname,SystemUser: user)
+with(String: fullname,SystemUser: user, Teacher: teacher)
+with(String: fullname,SystemUser: user, Student: student)
 with(int: Id_Person)
 withMecanographicNumber(int: number,String: year)
 build()
 }
 
 class TeacherBuilder{
-FullName: fullname
-SystemUser: user
 DateOfBirth: DateOfBirth
 TaxPayerNumber: taxPayerNumber
 Acronym: acronym
-ID_Person : id_person
 
-with(String: fullname,SystemUser: user ,String: acronym, Date: DateOfBirth, int: taxPayerNumber)
-with(int: Id_Person)
+with(String: acronym, Date: DateOfBirth, int: taxPayerNumber)
+
 build()
 }
 
 class StudentBuilder{
-FullName: fullname
-SystemUser: user
 MecanographicNumber: mecanographicNumber
 DateOfBirth: DateOfBirth
 TaxPayerNumber: taxPayerNumber
-ID_Person : id_person
 
-with(String: fullname,SystemUser: user , Date: DateOfBirth, int: taxPayerNumber)
+with(Date: DateOfBirth, int: taxPayerNumber)
 withMecanographicNumber(int number,String year)
-with(int: Id_Person)
+
 
 build()
 }

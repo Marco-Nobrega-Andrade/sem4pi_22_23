@@ -3,57 +3,75 @@
 
 
 class OpenCloseCourseUI <<Presentation>>{
-    courseDTOList : List<CourseDTO>
-    doShow()
+    + doShow()
 }
 class OpenCloseCourseController <<Controller>>{
-    create()
-    listOpenableClosableCourses()
-    updateCourseStatus(courseDTO : CourseDTO, newStatus : String)
+    + listOpenableClosableCourses()
+    + changeCourseStatus(statusCourseDTO : StatusCourseDTO, newStatus : String)
 }
 
 class OpenCloseCourseService  <<Service>> {
-    create()
-    listOpenableClosableCourses()
-    updateCourseStatus(courseDTO : CourseDTO, newStatus : String)
+    - courseRepository : CourseRepository
+    + listOpenableClosableCourses()
+    + changeCourseStatus(statusCourseDTO : StatusCourseDTO, newStatus : String)
 }
 class PersistenceContext  <<persistence>> {
-    repositories()
+    + repositories()
 }
-class RepositoryFactory  <<factory>> {
-    create()
+Interface RepositoryFactory  <<factory>> {
+    + courseRepository()
 }
 class CourseRepository  <<repository>> {
-    courseRepository()
+    + listOpenableClosableCourses()
+    + findCourseByCourseIdentifier(courseId : CourseIdentifier)
 }
 class Course <<Domain>> {
-    id : CourseIdentifier
-    courseTitle : CourseTitle
-    courseName : CourseName
-    enrollmentLimits : EnrollmentLimits
-    courseStatus : CourseStatus
-    description : Description
-    changeStatus(newStatus : String)
+    - id : CourseIdentifier
+    - courseTitle : CourseTitle
+    - courseName : CourseName
+    - enrollmentLimits : EnrollmentLimits
+    - courseStatus : CourseStatus
+    - description : Description
+    + changeStatus(newStatus : String)
+    + returnCourseTitleString()
+    + returnCourseIdentifierString()
+    + returnCourseStatusString()
 }
-class CourseDTO <<DTO>> {
-    String CourseTitle
-    String courseIdentifier
-    String state
-    create()
-}
-class CourseMapper <<DTO>> {
-    toDTO()
-    toCourse()
+class CourseTitle <<Domain>>{
+    - course_title : String
+    + returnCourseTitleString()
 }
 
-OpenCloseCourseUI --> OpenCloseCourseController
-OpenCloseCourseController --> OpenCloseCourseService
-OpenCloseCourseService --> PersistenceContext
-PersistenceContext --> RepositoryFactory
-OpenCloseCourseService --> CourseRepository
-OpenCloseCourseService --> CourseMapper
-CourseMapper --> CourseDTO
-OpenCloseCourseService --> Course
+class CourseIdentifier <<Domain>>{
+    - course_id : String
+    + returnCourseIdentifierString()
+}
+
+class CourseStatus <<Domain>>{
+    - courseStatusValue : CourseStatusValue
+    + returnCourseStatusString()
+}
+class CourseDTO <<DTO>> {
+    + CourseTitle : String
+    + courseIdentifier : String
+    + state : String
+}
+class CourseMapper <<DTO>> {
+    + toDTO()
+}
+
+
+OpenCloseCourseUI ..> OpenCloseCourseController
+OpenCloseCourseController ..> OpenCloseCourseService
+OpenCloseCourseService ..> PersistenceContext
+PersistenceContext ..> RepositoryFactory
+OpenCloseCourseService ..> CourseRepository
+OpenCloseCourseService ..> CourseMapper
+CourseMapper ..> CourseDTO
+OpenCloseCourseService ..> Course
+Course -left> CourseTitle
+Course -down> CourseIdentifier
+Course -right> CourseStatus
 
 
 @enduml

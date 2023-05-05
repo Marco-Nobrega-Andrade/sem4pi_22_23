@@ -1,19 +1,23 @@
 @startuml
 actor Manager as M
 participant "<<Presentation>>\n:OpenCloseEnrollmentsUI" as UI
-participant "<<Application>>\n:OpenCloseEnrollmentsUI" as CTRL
+participant "<<Application>>\n:OpenCloseEnrollmentsController" as CTRL
 participant "<<Service>>\n:OpenCloseEnrollmentsService" as OCESv
 participant "<<Persistence>>\n:PersistenceContext" as PC
 participant "<<Factory>>\nfactory:RepositoryFactory" as RF
 participant "<<Repository>>\ncourseRepository:CourseRepository" as CR
 participant "<<Domain>>\ncourseList:List<Course>" as CL
-participant "<<DTO>>\ncourseDTOList:List<CourseDTO>" as cDtoL
+participant "<<DTO>>\ncourseDTOWithIdTitleStatusList\n:List<CourseDTOWithIdTitleStatus>" as cDtoL
 participant "<<DTO>>\n:CourseMapper" as CM
-participant "<<DTO>>\ncourseDTO:CourseDTO" as cDTO
+participant "<<DTO>>\ncourseDTOBuilder\n:CourseDTOBuilder" as cDTOBuilder
 participant "<<Domain>>\ncourse:Course" as C
-
+participant "<<Domain>>:\nCourseTitle" as CT
+participant "<<Domain>>:\nCourseIdentifier" as CI
+participant "<<Domain>>:\nCourseStatus" as CS
+participant "<<DTO>>\ncourseDTO:CourseDTO\nWithIdTitleStatus" as cDTO
 
 M -> UI : The manager initializes the process\n of open/close the course enrollments
+activate M
 activate UI
 UI -> CTRL : create()
 activate CTRL
@@ -41,10 +45,50 @@ CR --> OCESv : courseList
 deactivate CR
 OCESv -> cDtoL : create()
 loop foreach course from courseList
-OCESv -> CM : toDTO(course)
+OCESv -> CM : toDTOWithIdTitleStatus(course)
 activate CM
-CM -> cDTO
-CM --> OCESv : courseDTO
+CM -> cDTOBuilder : create()
+CM -> C : returnCourseIdentifierString()
+activate C
+C -> CI : returnCourseIdentifierString()
+activate CI
+CI --> C : courseId
+deactivate CI
+C --> CM : courseId
+deactivate C
+CM -> cDTOBuilder : withCourseIdentifier(courseId)
+activate cDTOBuilder
+deactivate cDTOBuilder
+CM -> C : returnCourseTitleString()
+activate C
+C -> CT : returnCourseTitleString()
+activate CT
+CT --> C : courseTitle
+deactivate CT
+C --> CM : courseTitle
+deactivate C
+CM -> cDTOBuilder : withCourseTitle(courseTitle)
+activate cDTOBuilder
+deactivate cDTOBuilder
+CM -> C : returnCourseStatusString()
+activate C
+C -> CS : returnCourseStatusString()
+activate CS
+CS -> CS : name()
+CS --> C : courseStatus
+deactivate CS
+C --> CM : courseStatus
+deactivate C
+CM -> cDTOBuilder : withCourseStatus(courseStatus)
+activate cDTOBuilder
+deactivate cDTOBuilder
+CM -> cDTOBuilder : build()
+activate cDTOBuilder
+cDTOBuilder -> cDTO : create()
+cDTOBuilder --> CM : courseDTOWithIdTitleStatus
+deactivate cDTOBuilder
+CM --> OCESv : statusCourseDTO
+deactivate CM
 deactivate CM
 OCESv -> cDtoL : add(courseDTO)
 activate cDtoL
@@ -60,17 +104,17 @@ M -> UI : The Manager selects the Course \nwhose Status he wants to change
 activate UI
 UI --> M : Displays the options close/open enrollments
 deactivate UI
-M -> UI : Chooses the option
+M -> UI : Chooses the option (newStatus)
 activate UI
-UI -> CTRL : changeStatus(selectedCourseDTO, selectedOption)
+UI -> CTRL : changeStatus(selectedCourseDTO, newStatus)
 activate CTRL
-CTRL -> OCESv : changeStatus(selectedCourseDTO, selectedOption)
+CTRL -> OCESv : changeStatus(selectedCourseDTO, newStatus)
 activate OCESv
 OCESv -> CM : toCourse(selectedCourseDTO)
 activate CM
 CM --> OCESv : course
 deactivate CM
-OCESv -> C : changeStatus(selectedOption)
+OCESv -> C : changeStatus(newStatus)
 activate C
 deactivate C
 OCESv -> CR : update(course)
@@ -80,4 +124,5 @@ deactivate OCESv
 deactivate CTRL
 UI --> M : The System changes the Status and\n informs the operation success
 deactivate UI
+deactivate M
 @enduml

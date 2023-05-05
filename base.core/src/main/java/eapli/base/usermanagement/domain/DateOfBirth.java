@@ -2,10 +2,11 @@ package eapli.base.usermanagement.domain;
 
 import eapli.framework.domain.model.ValueObject;
 
-import java.text.SimpleDateFormat;
+import javax.persistence.Embeddable;
 import java.util.Date;
 import java.util.Objects;
 
+@Embeddable
 public class DateOfBirth implements ValueObject, Comparable<DateOfBirth>{
 
     private Date date;

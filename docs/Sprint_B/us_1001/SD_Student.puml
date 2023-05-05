@@ -7,18 +7,22 @@ autonumber
 actor Manager
 participant "AddUserUI" as ui <<presentation>>
 participant "AddUserController" as ctrl <<application>>
-participant AuthzRegistry as auth <<application>>
+participant PersonService as PerHelper <<application>>
 participant AuthorizationService as authSV <<application>>
+participant AuthzRegistry as auth <<application>>
 participant UserManagementService as userManSV <<application>>
 participant SystemUserBuilder as SysBuilder <<builder>>
 participant SystemUser as SU  <<domain>>
-participant PersonService as PerHelper <<application>>
 participant StudentBuilder as StdBuilder <<builder>>
 participant Student as Student <<domain>>
+participant PersonBuilder as PerBuilder <<builder>>
+participant Person as Person <<domain>>
+
 
 participant PersistenceContext as Persistence <<persistence>>
 participant RepositoryFactory as RepFactory <<factory>>
 database UserRepository as UserRep <<repository>>
+database StudentRepository as StdRep <<repository>>
 database personRepository as PerRep <<repository>>
 ui --> Manager : ask for Information
 activate ui
@@ -34,17 +38,20 @@ end note
 ui ->ctrl: addUser(username, password, firstName, lastName, fullName, email, roleTypes, Date of Birth, Tax Payer Number)
 activate ctrl
 ctrl -> authSV : ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER, BaseRoles.MANAGER)
-activate authSV
-deactivate authSV
-ctrl -> ctrl :addUser(username, password, firstName, lastName, email, roles, createdON)
-activate ctrl
 
 
-ctrl -> authSV : ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER, BaseRoles.MANAGER)
-activate authSV
-deactivate authSV
 
-ctrl -> userManSV : registerNewUser(username, password, firstName,lastName, email, roles, createdOn)
+
+ctrl ->PerHelper: registerNewStudent(username, password, firstName, lastName, fullName, email, roleTypes, Date of Birth, Tax Payer Number)
+activate PerHelper
+
+PerHelper -> auth: userService()
+activate auth
+auth -> PerHelper: userSvc
+deactivate auth
+
+
+PerHelper -> userManSV : registerNewUser(username, password, firstName,lastName, email, roles, createdOn)
 activate userManSV
 userManSV -> SysBuilder: create(policy, encoder)
 userManSV -> SysBuilder: with(username, password, firstName, lastName, email).createdOn(createdOn).withRoles(roles)
@@ -52,8 +59,10 @@ deactivate SysBuilder
 userManSV -> SysBuilder: build()
 activate SysBuilder
 SysBuilder -> SU: create(username, password, name, email, roles, createdOn)
-SU -> SysBuilder: newUser
-SysBuilder -> userManSV: newUser
+activate SU
+SU -> SysBuilder: user
+deactivate SU
+SysBuilder -> userManSV: user
 deactivate SysBuilder
 
 userManSV -> Persistence: repositories()
@@ -67,14 +76,49 @@ RepFactory -> UserRep: create
 RepFactory -> userManSV: userRepository
 deactivate RepFactory
 userManSV->UserRep:save(user)
-userManSV->ctrl: user
-deactivate ctrl
+userManSV->PerHelper: user
+
 deactivate userManSV
 
-ctrl ->PerHelper: registerNewStudent(FullName,user, Date of Birth, Tax Payer Number)
-activate PerHelper
+
+
+
 PerHelper ->StdBuilder:  create
-PerHelper ->StdBuilder: with(FullName,user, Date of Birth, Tax Payer Number)
+PerHelper ->StdBuilder: with(Date of Birth, Tax Payer Number)
+
+PerHelper -> Persistence: repositories()
+activate Persistence
+Persistence -> RepFactory: create
+Persistence -> PerHelper: factory
+deactivate Persistence
+PerHelper -> RepFactory: student()
+activate RepFactory
+RepFactory -> StdRep: create
+RepFactory -> PerHelper: studentRepository
+deactivate RepFactory
+PerHelper -> StdRep:findTotalMecanographicNumberByYear(year)
+PerHelper ->StdBuilder: withMecanographicNumber(number,year)
+
+
+
+
+
+PerHelper -> StdBuilder: build()
+activate StdBuilder
+StdBuilder -> Student: create(DateOfBirth,MecanographicNumber, TaxPayerNumber)
+activate Student
+Student -> StdBuilder: student
+deactivate Student
+StdBuilder -> PerHelper : student
+deactivate StdBuilder
+
+
+
+
+PerHelper ->PerBuilder:  create
+PerHelper ->PerBuilder: with(fullName,user,student)
+
+
 PerHelper -> Persistence: repositories()
 activate Persistence
 Persistence -> RepFactory: create
@@ -85,21 +129,25 @@ activate RepFactory
 RepFactory -> PerRep: create
 RepFactory -> PerHelper: personRepository
 deactivate RepFactory
-PerHelper -> PerRep:findTotalMecanographicNumberByYear(year)
+
 PerHelper -> PerRep:findTotalNumberOfPerson()
-PerHelper ->StdBuilder: withMecanographicNumber(number,year)
-PerHelper ->StdBuilder: withID_Pessoa(id)
-
-PerHelper -> StdBuilder: build()
-activate StdBuilder
-StdBuilder -> Student: create(FullName,user, Date of Birth,MecanographicNumber, Tax Payer Number,ID_Pessoa)
-Student -> StdBuilder: student
-StdBuilder -> PerHelper : student
-deactivate StdBuilder
+activate PerRep
+PerRep -> PerHelper: id
+deactivate PerRep
+PerHelper ->PerBuilder: withID_Pessoa(id+1)
 
 
+PerHelper -> PerBuilder: build()
+activate PerBuilder
+PerBuilder -> Person: create(FullName,user,ID_Person,student)
+activate Person
+Person -> PerBuilder: person
+deactivate Person
+PerBuilder -> PerHelper : person
+deactivate PerBuilder
 
-PerHelper -> PerRep: save(student)
+
+PerHelper -> PerRep: save(person)
 
 alt "if exception is throwed"
 PerHelper -> Persistence: repositories()
@@ -116,6 +164,7 @@ PerHelper->UserRep: delete(user)
 end
 
 PerHelper -> ctrl: success
+deactivate PerHelper
 ctrl -> ui: success
 ui-> Manager: Inform if the operation was a success
 deactivate ui

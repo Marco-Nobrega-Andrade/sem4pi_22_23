@@ -22,9 +22,11 @@ package eapli.base.persistence.impl.inmemory;
 
 import eapli.base.clientusermanagement.repositories.ClientUserRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
+import eapli.base.coursemanagement.repositories.CourseRepository;
 import eapli.base.infrastructure.bootstrapers.BaseBootstrapper;
 import eapli.base.infrastructure.persistence.RepositoryFactory;
 import eapli.base.usermanagement.repositories.PersonRepository;
+import eapli.base.usermanagement.repositories.StudentRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 import eapli.framework.infrastructure.authz.repositories.impl.inmemory.InMemoryUserRepository;
@@ -68,12 +70,32 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
 
     @Override
     public PersonRepository personRepository(TransactionalContext autoTx) {
-        return null;
+        return new InMemoryPersonRepository();
     }
 
     @Override
     public PersonRepository personRepository() {
-        return new InMemoryPersonRepository();
+        return personRepository(null);
+    }
+
+    @Override
+    public StudentRepository studentRepository(TransactionalContext autoTx) {
+        return new InMemoryStudentRepository();
+    }
+
+    @Override
+    public StudentRepository studentRepository() {
+        return studentRepository(null);
+    }
+
+    @Override
+    public CourseRepository courseRepository(TransactionalContext autoTx) {
+        return new InMemoryCourseRepository();
+    }
+
+    @Override
+    public CourseRepository courseRepository() {
+        return courseRepository(null);
     }
 
     @Override

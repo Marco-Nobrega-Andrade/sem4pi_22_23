@@ -1,0 +1,108 @@
+package eapli.base.coursemanagement.domain;
+
+import eapli.base.courseclasses.domain.Class;
+import eapli.base.courseclasses.domain.ExtraClass;
+import eapli.base.enrollments.domain.Enrollment;
+import eapli.base.usermanagement.domain.Teacher;
+import eapli.framework.domain.model.AggregateRoot;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+public class Course implements AggregateRoot<CourseIdentifier> {
+    @Id
+    private CourseIdentifier courseId;
+
+    private CourseTitle courseTitle;
+
+    private CourseName courseName;
+
+    private Description courseDescription;
+
+    private EnrollmentLimits enrollmentLimits;
+
+    private CourseStatus courseStatus;
+
+    @OneToOne(cascade = CascadeType.PERSIST)
+    private Teacher teacherInCharge;
+
+    @OneToMany(cascade = CascadeType.PERSIST)
+    private List<Teacher> teachersList = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Enrollment> enrollmentsList = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<ExtraClass> extraClassesList = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Class> classesList = new ArrayList<>();
+
+    /*
+    @OneToMany(mappedBy="course", cascade = CascadeType.ALL)
+    private List<Exam> examsList;
+    */
+    public Course(CourseIdentifier courseId, CourseTitle courseTitle, CourseName courseName, Description description, EnrollmentLimits enrollmentLimits, CourseStatus courseStatus, Teacher teacherInCharge) {
+        this.courseId = courseId;
+        this.courseTitle = courseTitle;
+        this.courseName = courseName;
+        this.courseDescription = description;
+        this.enrollmentLimits = enrollmentLimits;
+        this.courseStatus = courseStatus;
+        this.teacherInCharge = teacherInCharge;
+    }
+
+    protected Course() {
+        //Only for ORM
+    }
+
+    @Override
+    public boolean sameAs(Object other) {
+        if (!(other instanceof Course)) {
+            return false;
+        }
+
+        final Course that = (Course) other;
+
+        return courseId.equals(that.courseId) && courseTitle.equals(that.courseTitle) && courseName.equals(that.courseName) && courseDescription.equals(that.courseDescription)
+                && enrollmentLimits.equals(that.enrollmentLimits) && courseStatus.equals(that.courseStatus) && teacherInCharge.equals(that.teacherInCharge)
+                && enrollmentsList.equals(that.enrollmentsList) && teachersList.equals(that.teachersList)
+                && classesList.equals(that.classesList) && extraClassesList.equals(that.extraClassesList);
+    }
+
+    @Override
+    public int compareTo(CourseIdentifier other) {
+        return AggregateRoot.super.compareTo(other);
+    }
+
+    @Override
+    public CourseIdentifier identity() {
+        return courseId;
+    }
+
+    @Override
+    public boolean hasIdentity(CourseIdentifier id) {
+        return AggregateRoot.super.hasIdentity(id);
+    }
+
+    public String returnCourseTitleString(){
+        return courseTitle.returnCourseTitleString();
+    }
+    public String returnCourseIdentifierString(){
+        return courseId.returnCourseIdentifierString();
+    }
+    public String returnCourseStatusString(){
+        return courseStatus.returnCourseStatusString();
+    }
+
+    public boolean changeStatus(String newStatus){
+        CourseStatus courseStatus1 = new CourseStatus(CourseStatus.CourseStatusValue.valueOf(newStatus));
+        if(courseStatus1.returnCourseStatusInt() == courseStatus.returnCourseStatusInt() + 1) {
+            courseStatus = new CourseStatus(CourseStatus.CourseStatusValue.valueOf(newStatus));
+            return true;
+        }
+        throw new IllegalArgumentException("The course you're trying to change the status cannot change to that one right now.");
+    }
+}

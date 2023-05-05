@@ -1,32 +1,32 @@
 package eapli.base.usermanagement.domain;
 
-import eapli.framework.infrastructure.authz.domain.model.SystemUser;
+import eapli.base.enrollments.domain.Enrollment;
+import eapli.framework.domain.model.AggregateRoot;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
-public class Student extends Person{
-    @Column(unique = true)
+public class Student implements AggregateRoot<MecanographicNumber> {
+    @EmbeddedId
     private MecanographicNumber mecanographicNumber;
-
+    @Embedded
     private DateOfBirth date;
-
+    @Embedded
     private TaxPayerNumber taxPayerNumber;
 
-    public Student(SystemUser user, FullName fullName, ID_Person id, MecanographicNumber mecanographicNumber, DateOfBirth date, TaxPayerNumber taxPayerNumber) {
-        super(user, fullName, id);
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Enrollment> enrollmentList = new ArrayList<>();
+
+    public Student( MecanographicNumber mecanographicNumber, DateOfBirth date, TaxPayerNumber taxPayerNumber) {
         this.mecanographicNumber = mecanographicNumber;
         this.date = date;
         this.taxPayerNumber = taxPayerNumber;
     }
 
-    public Student(MecanographicNumber mecanographicNumber, DateOfBirth date, TaxPayerNumber taxPayerNumber) {
-        this.mecanographicNumber = mecanographicNumber;
-        this.date = date;
-        this.taxPayerNumber = taxPayerNumber;
-    }
 
     public Student() {
         // for ORM only
@@ -42,12 +42,28 @@ public class Student extends Person{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Student student = (Student) o;
-        return Objects.equals(mecanographicNumber, student.mecanographicNumber) && Objects.equals(date, student.date) && Objects.equals(taxPayerNumber, student.taxPayerNumber);
+        return Objects.equals(mecanographicNumber, student.mecanographicNumber) && Objects.equals(date, student.date) && Objects.equals(taxPayerNumber, student.taxPayerNumber) && Objects.equals(enrollmentList, student.enrollmentList);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(mecanographicNumber, date, taxPayerNumber);
+        return Objects.hash(mecanographicNumber, date, taxPayerNumber, enrollmentList);
+    }
+
+    @Override
+    public boolean sameAs(Object other) {
+        if (!(other instanceof Student)) {
+            return false;
+        }
+
+        final Student that = (Student) other;
+
+        return mecanographicNumber.equals(that.mecanographicNumber) && date.equals(that.date) && taxPayerNumber.equals(that.taxPayerNumber) && enrollmentList.equals(that.enrollmentList);
+    }
+
+    @Override
+    public int compareTo(MecanographicNumber other) {
+        return AggregateRoot.super.compareTo(other);
     }
 
     @Override
@@ -56,6 +72,17 @@ public class Student extends Person{
                 "mecanographicNumber=" + mecanographicNumber +
                 ", date=" + date +
                 ", taxPayerNumber=" + taxPayerNumber +
+                ", enrollmentList=" + enrollmentList +
                 '}';
+    }
+
+    @Override
+    public MecanographicNumber identity() {
+        return this.mecanographicNumber;
+    }
+
+    @Override
+    public boolean hasIdentity(MecanographicNumber id) {
+        return AggregateRoot.super.hasIdentity(id);
     }
 }

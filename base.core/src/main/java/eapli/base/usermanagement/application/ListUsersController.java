@@ -25,6 +25,7 @@ package eapli.base.usermanagement.application;
 
 import java.util.Optional;
 
+import eapli.base.usermanagement.application.services.ListUsersService;
 import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.framework.application.UseCaseController;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
@@ -32,6 +33,7 @@ import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.application.UserManagementService;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.authz.domain.model.Username;
+import eapli.framework.representations.dto.GeneralDTO;
 
 /**
  *
@@ -43,10 +45,9 @@ public class ListUsersController{
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
     private final UserManagementService userSvc = AuthzRegistry.userService();
 
-    public Iterable<SystemUser> allUsers() {
+    public Iterable<GeneralDTO> listAllUsers() {
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER, BaseRoles.MANAGER);
-
-        return userSvc.allUsers();
+        return new ListUsersService().listAllUsers();
     }
 
     public Optional<SystemUser> find(final Username u) {

@@ -20,7 +20,6 @@
  */
 package eapli.base.usermanagement.application;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Set;
 
@@ -29,10 +28,8 @@ import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.framework.application.UseCaseController;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
-import eapli.framework.infrastructure.authz.application.UserManagementService;
 import eapli.framework.infrastructure.authz.domain.model.Role;
-import eapli.framework.infrastructure.authz.domain.model.SystemUser;
-import eapli.framework.time.util.CurrentTimeCalendars;
+
 
 /**
  *
@@ -42,7 +39,6 @@ import eapli.framework.time.util.CurrentTimeCalendars;
 public class AddUserController {
 
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
-    private final UserManagementService userSvc = AuthzRegistry.userService();
 
     private final PersonService personService = new PersonService();
 
@@ -55,23 +51,14 @@ public class AddUserController {
         return BaseRoles.nonUserValues();
     }
 
-    public SystemUser addUser(final String username, final String password, final String firstName,
-            final String lastName,
-            final String email, final Set<Role> roles, final Calendar createdOn) {
-        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER, BaseRoles.MANAGER);
-
-        return userSvc.registerNewUser(username, password, firstName, lastName, email, roles,
-                createdOn);
-    }
 
     public String addUser(final String username, final String password, final String firstName,
             final String lastName,final String fullName,
             final String email, final Set<Role> roles) {
 
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER, BaseRoles.MANAGER);
-        SystemUser user = addUser(username, password, firstName, lastName, email, roles, CurrentTimeCalendars.now());
 
-        return personService.registerNewPerson(fullName,user);
+        return personService.registerNewPerson(fullName,username, password, firstName, lastName, email, roles);
     }
 
     public String addUser(final String username, final String password, final String firstName,
@@ -79,9 +66,8 @@ public class AddUserController {
                            final String email, final Set<Role> roles, final String acronym ,Date dateOfBirth,int taxPayerNumber) {
 
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER, BaseRoles.MANAGER);
-        SystemUser user = addUser(username, password, firstName, lastName, email, roles, CurrentTimeCalendars.now());
 
-        return personService.registerNewTeacher(fullName,user,acronym,dateOfBirth,taxPayerNumber);
+        return personService.registerNewTeacher(username, password, firstName, lastName,fullName, email, roles,acronym,dateOfBirth,taxPayerNumber);
     }
 
     public String addUser(final String username, final String password, final String firstName,
@@ -89,8 +75,7 @@ public class AddUserController {
                           final String email, final Set<Role> roles, Date dateOfBirth, int taxPayerNumber) {
 
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER, BaseRoles.MANAGER);
-        SystemUser user = addUser(username, password, firstName, lastName, email, roles, CurrentTimeCalendars.now());
 
-        return personService.registerNewStudent(fullName,user,dateOfBirth,taxPayerNumber);
+        return personService.registerNewStudent(username,password,firstName, lastName,fullName, email, roles, dateOfBirth, taxPayerNumber);
     }
 }
