@@ -4,7 +4,7 @@ import eapli.base.coursemanagement.domain.Course;
 
 public class CourseMapper{
 
-    public static StatusCourseDTO toDTOWithIdTitleStatus(Course course){
+    public static CourseDTOWithIdTitleStatus toDTOWithIdTitleStatus(Course course){
         CourseDTOBuilder courseDTOBuilder = new CourseDTOBuilder();
         return courseDTOBuilder.withCourseIdentifier(course.returnCourseIdentifierString())
                 .withCourseTitle(course.returnCourseTitleString())
