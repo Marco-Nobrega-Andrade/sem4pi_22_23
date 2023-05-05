@@ -30,6 +30,10 @@ public class CourseStatus implements ValueObject {
         this.courseStatusValue = courseStatusValue;
     }
 
+    public CourseStatus(String status) {
+        this.courseStatusValue = CourseStatus.CourseStatusValue.valueOf(status);
+    }
+
     public CourseStatus() {
     }
 

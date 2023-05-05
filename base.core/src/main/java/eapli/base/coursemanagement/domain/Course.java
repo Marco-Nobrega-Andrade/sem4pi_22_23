@@ -69,7 +69,7 @@ public class Course implements AggregateRoot<CourseIdentifier> {
         return courseId.equals(that.courseId) && courseTitle.equals(that.courseTitle) && courseName.equals(that.courseName) && courseDescription.equals(that.courseDescription)
                 && enrollmentLimits.equals(that.enrollmentLimits) && courseStatus.equals(that.courseStatus) && teacherInCharge.equals(that.teacherInCharge)
                 && enrollmentsList.equals(that.enrollmentsList) && teachersList.equals(that.teachersList)
-                /*&& classesList.equals(that.classesList)*/ && extraClassesList.equals(that.extraClassesList);
+                && classesList.equals(that.classesList) && extraClassesList.equals(that.extraClassesList);
     }
 
     @Override
