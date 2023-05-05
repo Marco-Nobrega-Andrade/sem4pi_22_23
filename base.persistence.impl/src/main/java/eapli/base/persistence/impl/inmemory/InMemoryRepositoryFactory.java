@@ -22,6 +22,7 @@ package eapli.base.persistence.impl.inmemory;
 
 import eapli.base.clientusermanagement.repositories.ClientUserRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
+import eapli.base.coursemanagement.repositories.CourseRepository;
 import eapli.base.infrastructure.bootstrapers.BaseBootstrapper;
 import eapli.base.infrastructure.persistence.RepositoryFactory;
 import eapli.base.usermanagement.repositories.PersonRepository;
@@ -85,6 +86,16 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
     @Override
     public StudentRepository studentRepository() {
         return studentRepository(null);
+    }
+
+    @Override
+    public CourseRepository courseRepository(TransactionalContext autoTx) {
+        return new InMemoryCourseRepository();
+    }
+
+    @Override
+    public CourseRepository courseRepository() {
+        return courseRepository(null);
     }
 
     @Override
