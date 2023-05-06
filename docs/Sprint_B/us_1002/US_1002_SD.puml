@@ -24,19 +24,12 @@ UI --> ACTOR : System asks for the course creation data
 ACTOR -> UI : Manager inserts the data
 UI --> ACTOR : System ask for confirmation
 ACTOR -> UI : Manager confirms
-UI -> CONTROLLER : createCourse(courseId, courseTitle, courseName, courseIdentifier, maxEnrollments, minEnrollments)
+UI -> CONTROLLER : createCourse(courseId, courseTitle, courseName, description, maxEnrollments, minEnrollments)
 activate CONTROLLER
-CONTROLLER -> SERVICE : createCourse(courseId, courseTitle, courseName, courseIdentifier, maxEnrollments, minEnrollments)
+CONTROLLER -> SERVICE : createCourse(courseId, courseTitle, courseName, description, maxEnrollments, minEnrollments)
 activate SERVICE
 SERVICE -> COURSE_FAC : create()
 activate COURSE_FAC
-deactivate COURSE_FAC
-SERVICE -> COURSE_FAC : buildCourse(courseId, courseTitle, courseName, courseIdentifier, maxEnrollments, minEnrollments)
-activate COURSE_FAC
-COURSE_FAC -> COURSE : create(courseId, courseTitle, courseName, courseIdentifier, enrollmentLimits)
-activate COURSE
-deactivate COURSE
-COURSE_FAC --> SERVICE : newCourse
 deactivate COURSE_FAC
 SERVICE -> PERS_CONTX : repositories()
 activate PERS_CONTX
@@ -52,9 +45,22 @@ activate COURSE_REPO
 deactivate COURSE_REPO
 REPO_FAC --> SERVICE : courseRepo
 deactivate REPO_FAC
+SERVICE -> COURSE_REPO : ofIdentity(courseId)
+activate COURSE_REPO
+COURSE_REPO --> SERVICE : course
+deactivate COURSE_REPO
+alt if no course found
+SERVICE -> COURSE_FAC : buildCourse(courseId, courseTitle, courseName, description, maxEnrollments, minEnrollments)
+activate COURSE_FAC
+COURSE_FAC -> COURSE : create(courseId, courseTitle, courseName, description, enrollmentLimits)
+activate COURSE
+deactivate COURSE
+COURSE_FAC --> SERVICE : newCourse
+deactivate COURSE_FAC
 SERVICE -> COURSE_REPO : save(newCourse)
 activate COURSE_REPO
 deactivate COURSE_REPO
+end alt
 SERVICE --> CONTROLLER : operation success
 deactivate SERVICE
 CONTROLLER --> UI : operation success
