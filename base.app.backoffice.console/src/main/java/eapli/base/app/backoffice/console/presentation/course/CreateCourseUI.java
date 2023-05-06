@@ -30,7 +30,9 @@ public class CreateCourseUI extends AbstractUI {
             try {
                 controller.createCourse(courseId,courseTitle,courseName,description,maxEnrollments,minEnrollments);
             } catch ( IllegalArgumentException e ) {
+                System.out.println("\n[ERROR]\n");
                 System.out.println(e.getMessage());
+                System.out.print("\n");
             }
         }
         return true;
