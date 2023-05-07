@@ -9,7 +9,7 @@ public class CourseMapper{
         return courseDTOBuilder.withCourseIdentifier(course.returnCourseIdentifierString())
                 .withCourseTitle(course.returnCourseTitleString())
                 .withCourseStatus(course.returnCourseStatusString())
-                .build();
+                .buildWithIdTitleStatus();
     }
 
 }
