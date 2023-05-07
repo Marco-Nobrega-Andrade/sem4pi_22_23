@@ -82,7 +82,7 @@ deactivate C
 CM -> cDTOBuilder : withCourseStatus(courseStatus)
 activate cDTOBuilder
 deactivate cDTOBuilder
-CM -> cDTOBuilder : build()
+CM -> cDTOBuilder : buildWithIdTitleStatus()
 activate cDTOBuilder
 cDTOBuilder -> cDTO : create()
 cDTOBuilder --> CM : courseDTOWithIdTitleStatus
