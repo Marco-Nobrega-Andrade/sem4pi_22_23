@@ -9,6 +9,10 @@ import eapli.base.usermanagement.domain.Student;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import java.util.List;
+
 public class JpaCourseRepository extends JpaAutoTxRepository<Course, CourseIdentifier, CourseIdentifier> implements CourseRepository {
 
     public JpaCourseRepository(final TransactionalContext autoTx) {
@@ -18,5 +22,11 @@ public class JpaCourseRepository extends JpaAutoTxRepository<Course, CourseIdent
     public JpaCourseRepository(final String puname) {
         super(puname, Application.settings().getExtendedPersistenceProperties(),
                 "courseId");
+    }
+
+    @Override
+    public List<Course> listOpenableClosableCourses() {
+        Query query = createQuery("SELECT c FROM Course c WHERE c.courseStatus.courseStatusValue = 'CLOSED_ENROLLMENTS' OR c.courseStatus.courseStatusValue = 'CLOSE'",Course.class);
+        return query.getResultList();
     }
 }
