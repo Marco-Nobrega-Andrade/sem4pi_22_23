@@ -12,7 +12,7 @@ import java.util.List;
 
 @Entity
 public class Course implements AggregateRoot<CourseIdentifier> {
-    @Id
+    @EmbeddedId
     private CourseIdentifier courseId;
 
     private CourseTitle courseTitle;
@@ -69,7 +69,7 @@ public class Course implements AggregateRoot<CourseIdentifier> {
         return courseId.equals(that.courseId) && courseTitle.equals(that.courseTitle) && courseName.equals(that.courseName) && courseDescription.equals(that.courseDescription)
                 && enrollmentLimits.equals(that.enrollmentLimits) && courseStatus.equals(that.courseStatus) && teacherInCharge.equals(that.teacherInCharge)
                 && enrollmentsList.equals(that.enrollmentsList) && teachersList.equals(that.teachersList)
-                /*&& classesList.equals(that.classesList)*/ && extraClassesList.equals(that.extraClassesList);
+                && classesList.equals(that.classesList) && extraClassesList.equals(that.extraClassesList);
     }
 
     @Override
@@ -98,9 +98,9 @@ public class Course implements AggregateRoot<CourseIdentifier> {
     }
 
     public boolean changeStatus(String newStatus){
-        CourseStatus courseStatus1 = new CourseStatus(CourseStatus.CourseStatusValue.valueOf(newStatus));
+        CourseStatus courseStatus1 = new CourseStatus(CourseStatusValue.valueOf(newStatus));
         if(courseStatus1.returnCourseStatusInt() == courseStatus.returnCourseStatusInt() + 1) {
-            courseStatus = new CourseStatus(CourseStatus.CourseStatusValue.valueOf(newStatus));
+            courseStatus = new CourseStatus(CourseStatusValue.valueOf(newStatus));
             return true;
         }
         throw new IllegalArgumentException("The course you're trying to change the status cannot change to that one right now.");

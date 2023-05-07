@@ -7,12 +7,14 @@ control "OpenCloseCourseController" as CTRL <<Application>>
 participant ": OpenCloseCourseService" as CSS <<Service>>
 participant ": PersistenceContext" as PC <<Persistence>>
 participant "factory : RepositoryFactory" as RF <<Factory>>
-participant ": StatusCourseMapper" as CM <<DTO>>
-participant ": StatusCourseDTO" as CDTO <<DTO>>
+participant ": CourseMapper" as CM <<DTO>>
+participant ": CourseDTOBuilder" as CB <<DTO>>
 participant ": Course" as C <<Domain>>
 participant ": CourseTitle" as CT <<Domain>>
 participant ": CourseIdentifier" as CI <<Domain>>
+participant ": CourseStatusValue" as CSV <<Domain>>
 participant ": CourseStatus" as CS <<Domain>>
+participant ": CourseDTOWithIdTitleStatus" as CDTO <<DTO>>
 database CourseRepository as CR <<Repository>>
 
 activate MGR
@@ -48,8 +50,11 @@ CR --> CSS : courseList
 deactivate CR
 deactivate CR
 loop for each course from courseList
-CSS -> CM : toDTO(course)
+CSS -> CM : toDTOWithIdTitleStatus(course)
 activate CM
+CM -> CB : create()
+activate CB
+deactivate CB
 CM -> C : returnCourseTitleString()
 activate C
 C -> CT : returnCourseTitleString()
@@ -58,6 +63,10 @@ CT --> C : course_title
 deactivate CT
 C --> CM : course_title
 deactivate C
+CM -> CB : withCourseIdentifier()
+activate CB
+CB --> CM : courseDTOBuilder
+deactivate CB
 CM -> C : returnCourseIdentifierString()
 activate C
 C -> CI : returnCourseIdentifierString()
@@ -66,19 +75,29 @@ CI --> C : course_Id
 deactivate CI
 C --> CM : course_Id
 deactivate C
+CM -> CB : withCourseTitle()
+activate CB
+CB --> CM : courseDTOBuilder
+deactivate CB
 CM -> C : returnCourseStatusString()
 activate C
 C -> CS : returnCourseStatusString()
 activate CS
-CS -> CS : name()
 CS --> C : course_status
 deactivate CS
 C --> CM : course_status
 deactivate C
-CM -> CDTO : create()
+CM -> CB : withCourseStatus()
+activate CB
+CB --> CM : courseDTOBuilder
+deactivate CB
+CM -> CB : build()
+activate CB
+CB -> CDTO : create(courseIdentifier, courseTitle, courseStatus)
 activate CDTO
 deactivate CDTO
-CM --> CSS : statusCourseDTO
+deactivate CB
+CM --> CSS : courseDTO
 deactivate CM
 end loop
 CSS --> CTRL : courseDTOList
@@ -101,17 +120,29 @@ deactivate UI
 
 MGR-> UI : confirms
 activate UI
-UI -> CTRL : changeCourseStatus(statusCourseDTO, newStatus)
+UI -> CTRL : changeCourseStatus(courseDTO, newStatus)
 activate CTRL
 
-CTRL -> CSS : changeCourseStatus(statusCourseDTO, newStatus)
+CTRL -> CSS : changeCourseStatus(courseDTO, newStatus)
 activate CSS
-CSS -> CR : findCourseByCourseIdentifier(statusCourseDTO.courseIdentifier)
+CSS -> CI : create(courseDTO.courseIdentifier)
+activate CI
+deactivate CI
+CSS -> CR : ofIdentity(CourseIdentifier)
 activate CR
 CR --> CSS : course
 deactivate CR
 CSS -> C : changeStatus(newStatus)
 activate C
+C -> CSV : valueOf(newStatus)
+activate CSV
+CSV --> C : courseStatusValue
+deactivate CSV
+C -> CS : create(courseStatusValue)
+activate CS
+C --> CSS : true
+
+deactivate CS
 deactivate C
 
 CSS -> CR : save(course)

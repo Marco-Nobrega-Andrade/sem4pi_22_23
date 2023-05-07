@@ -23,6 +23,8 @@
  */
 package eapli.base.app.backoffice.console.presentation;
 
+import eapli.base.app.backoffice.console.presentation.course.CreateCourseAction;
+import eapli.base.app.backoffice.console.presentation.course.OpenCloseCourseAction;
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
 import eapli.base.Application;
 import eapli.base.app.backoffice.console.presentation.authz.AddUserUI;
@@ -63,11 +65,10 @@ public class MainMenu extends AbstractUI {
     // SETTINGS
     private static final int SET_KITCHEN_ALERT_LIMIT_OPTION = 1;
 
-    // DISH TYPES
-    private static final int DISH_TYPE_REGISTER_OPTION = 1;
-    private static final int DISH_TYPE_LIST_OPTION = 2;
-    private static final int DISH_TYPE_CHANGE_OPTION = 3;
-    private static final int DISH_TYPE_ACTIVATE_DEACTIVATE_OPTION = 4;
+    // COURSE
+    private static final int CREATE_COURSE_OPTION = 1;
+    private static final int OPEN_CLOSE_COURSE_OPTION = 2;
+
 
     // DISHES
     private static final int DISH_REGISTER_OPTION = 5;
@@ -97,8 +98,8 @@ public class MainMenu extends AbstractUI {
     // MAIN MENU
     private static final int MY_USER_OPTION = 1;
     private static final int USERS_OPTION = 2;
+    private static final int COURSE_OPTION = 3;
     private static final int SETTINGS_OPTION = 4;
-    private static final int DISH_OPTION = 5;
     private static final int TRACEABILITY_OPTION = 6;
     private static final int MEALS_OPTION = 7;
     private static final int REPORTING_DISHES_OPTION = 8;
@@ -148,6 +149,8 @@ public class MainMenu extends AbstractUI {
         if (authz.isAuthenticatedUserAuthorizedTo(BaseRoles.POWER_USER, BaseRoles.MANAGER)) {
             final Menu usersMenu = buildUsersMenu();
             mainMenu.addSubMenu(USERS_OPTION, usersMenu);
+            final Menu coursesMenu = buildCourseMenu();
+            mainMenu.addSubMenu(COURSE_OPTION,coursesMenu);
             final Menu settingsMenu = buildAdminSettingsMenu();
             mainMenu.addSubMenu(SETTINGS_OPTION, settingsMenu);
         }
@@ -159,6 +162,16 @@ public class MainMenu extends AbstractUI {
         mainMenu.addItem(EXIT_OPTION, "Exit", new ExitWithMessageAction("Bye, Bye"));
 
         return mainMenu;
+    }
+
+    private Menu buildCourseMenu() {
+        final Menu menu = new Menu("Courses >");
+
+        menu.addItem(CREATE_COURSE_OPTION,"Create course",new CreateCourseAction());
+        menu.addItem(OPEN_CLOSE_COURSE_OPTION, "Open/Close course",new OpenCloseCourseAction());
+        menu.addItem(EXIT_OPTION,RETURN_LABEL,Actions.SUCCESS);
+
+        return menu;
     }
 
     private Menu buildAdminSettingsMenu() {
