@@ -24,6 +24,7 @@
 package eapli.base.app.backoffice.console.presentation;
 
 import eapli.base.app.backoffice.console.presentation.course.CreateCourseAction;
+import eapli.base.app.backoffice.console.presentation.course.OpenCloseCourseAction;
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
 import eapli.base.Application;
 import eapli.base.app.backoffice.console.presentation.authz.AddUserUI;
@@ -66,6 +67,8 @@ public class MainMenu extends AbstractUI {
 
     // COURSE
     private static final int CREATE_COURSE_OPTION = 1;
+    private static final int OPEN_CLOSE_COURSE_OPTION = 2;
+
 
     // DISHES
     private static final int DISH_REGISTER_OPTION = 5;
@@ -165,6 +168,7 @@ public class MainMenu extends AbstractUI {
         final Menu menu = new Menu("Courses >");
 
         menu.addItem(CREATE_COURSE_OPTION,"Create course",new CreateCourseAction());
+        menu.addItem(OPEN_CLOSE_COURSE_OPTION, "Open/Close course",new OpenCloseCourseAction());
         menu.addItem(EXIT_OPTION,RETURN_LABEL,Actions.SUCCESS);
 
         return menu;
