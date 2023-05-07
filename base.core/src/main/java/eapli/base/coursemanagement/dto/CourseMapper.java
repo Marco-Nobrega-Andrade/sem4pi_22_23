@@ -1,6 +1,8 @@
 package eapli.base.coursemanagement.dto;
 
 import eapli.base.coursemanagement.domain.Course;
+import eapli.base.coursemanagement.domain.CourseIdentifier;
+import eapli.base.coursemanagement.repositories.CourseRepository;
 
 public class CourseMapper{
 
@@ -10,6 +12,10 @@ public class CourseMapper{
                 .withCourseTitle(course.returnCourseTitleString())
                 .withCourseStatus(course.returnCourseStatusString())
                 .buildWithIdTitleStatus();
+    }
+
+    public static Course toCourse(CourseDTOWithIdTitleStatus courseDTOWithIdTitleStatus, CourseRepository courseRepository){
+        return courseRepository.ofIdentity(new CourseIdentifier(courseDTOWithIdTitleStatus.courseIdentifier)).get();
     }
 
 }
