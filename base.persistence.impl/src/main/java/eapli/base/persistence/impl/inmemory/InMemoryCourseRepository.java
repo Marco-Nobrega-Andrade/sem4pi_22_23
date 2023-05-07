@@ -13,4 +13,9 @@ public class InMemoryCourseRepository extends InMemoryDomainRepository<Course, C
     public List<Course> listOpenableClosableCourses() {
         return (List<Course>) match(e -> (e.returnCourseStatusString().equals("Enrollments closed") || e.returnCourseStatusString().equals("Close")));
     }
+
+    @Override
+    public List<Course> listAllOpenCLoseEnrollmentsAvailableCourses() {
+        return null;
+    }
 }

@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface CourseRepository extends DomainRepository<CourseIdentifier, Course> {
     public List<Course> listOpenableClosableCourses();
+
+    List<Course> listAllOpenCLoseEnrollmentsAvailableCourses();
 }
