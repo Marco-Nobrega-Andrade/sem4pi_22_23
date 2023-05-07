@@ -13,9 +13,8 @@ import java.util.List;
 
 
 public class OpenCloseCourseService {
-    private CourseRepository courseRepository = PersistenceContext.repositories().courseRepository();
+    private final CourseRepository courseRepository = PersistenceContext.repositories().courseRepository();
     public List<CourseDTOWithIdTitleStatus> listOpenableClosableCourses(){
-        courseRepository = PersistenceContext.repositories().courseRepository();
         List<Course> courseList = courseRepository.listOpenableClosableCourses();
         List<CourseDTOWithIdTitleStatus> courseDTOList = new ArrayList<>();
         for(Course course : courseList) {
@@ -25,7 +24,6 @@ public class OpenCloseCourseService {
     }
 
     public void changeCourseStatus(CourseDTOWithIdTitleStatus courseDTO, String newStatus){
-        System.out.println(courseDTO.courseIdentifier);
         Course course = courseRepository.ofIdentity(new CourseIdentifier(courseDTO.courseIdentifier)).get();
         course.changeStatus(newStatus);
         courseRepository.save(course);
