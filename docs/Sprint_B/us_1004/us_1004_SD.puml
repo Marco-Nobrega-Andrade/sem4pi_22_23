@@ -8,7 +8,7 @@ participant ": OpenCloseCourseService" as CSS <<Service>>
 participant ": PersistenceContext" as PC <<Persistence>>
 participant "factory : RepositoryFactory" as RF <<Factory>>
 participant ": CourseMapper" as CM <<DTO>>
-participant ": CourseDTOBuilder" as CB <<DTO>>
+participant ": CourseDTOBuilder" as CB <<Builder>>
 participant ": Course" as C <<Domain>>
 participant ": CourseTitle" as CT <<Domain>>
 participant ": CourseIdentifier" as CI <<Domain>>
