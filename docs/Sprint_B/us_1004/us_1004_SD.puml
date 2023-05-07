@@ -91,7 +91,7 @@ CM -> CB : withCourseStatus()
 activate CB
 CB --> CM : courseDTOBuilder
 deactivate CB
-CM -> CB : build()
+CM -> CB : buildWithIdTitleStatus()
 activate CB
 CB -> CDTO : create(courseIdentifier, courseTitle, courseStatus)
 activate CDTO

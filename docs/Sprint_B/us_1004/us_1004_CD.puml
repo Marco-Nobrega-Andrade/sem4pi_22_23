@@ -65,7 +65,7 @@ class CourseDTOBuilder <<Builder>> {
     + withCourseIdentifier(courseIdentifier : String)
     + withCourseTitle(courseTitle : String)
     + withCourseStatus(courseStatus : String)
-    + build()
+    + buildWithIdTitleStatus()
 }
 
 
