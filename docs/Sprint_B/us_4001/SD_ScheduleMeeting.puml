@@ -5,8 +5,8 @@ autonumber
 
 actor Person
 
-participant "MeetingUI" as MeetUI <<presentation>>
-participant "MeetingController" as MeetController <<application>>
+participant "ScheduleMeetingUI" as MeetUI <<presentation>>
+participant "ScheduleMeetingController" as MeetController <<application>>
 participant "ScheduleMeetingService" as ScheduleMeetService <<application>>
 participant "ListPersonService" as PersonService <<application>>
 participant "AvailableMeetingDateService" as MeetingService <<application>>
@@ -72,16 +72,6 @@ PersonService -> PersonRepository: findAllPersonsWhoMatch(emails)
 PersonRepository -> PersonService: personsList
 
 
-alt given Person doesn't match with persons in Database
-
-PersonRepository -> PersonService: error
-PersonService -> ScheduleMeetService: error
-ScheduleMeetService -> MeetController: error
-MeetController -> MeetUI: error
-MeetUI -> Person: prints error message
-
-end
-
 PersonService -> ScheduleMeetService: personsList
 
 deactivate PersonService
@@ -142,11 +132,6 @@ deactivate ExtraService
 
 ScheduleMeetService -> ScheduleMeetService: checkMatchesBetweenDates()
 
-alt one of the given dates is not available
-ScheduleMeetService -> MeetController: false
-MeetController -> MeetUI: false
-MeetUI -> Person: The system asks if he wants to continue notifing him that the meeting have dates that are not available (if not the program ends) if yes the program continues
-end
 
 ScheduleMeetService -> MeetController: true
 deactivate ScheduleMeetService
@@ -171,12 +156,7 @@ MeetBuilder -> MeetingService: meeting
 deactivate MeetBuilder
 MeetingService -> MeetRepository: save(meeting)
 
-alt given meeting is not saved
-MeetingService -> ScheduleMeetService: error
-ScheduleMeetService -> MeetController: error
-MeetController -> MeetUI: error
-MeetUI -> Person: prints error message
-end
+
 MeetingService -> ScheduleMeetService: true
 deactivate MeetingService
 ScheduleMeetService -> MeetController: true

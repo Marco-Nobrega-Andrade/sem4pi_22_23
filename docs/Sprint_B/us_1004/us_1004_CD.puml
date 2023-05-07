@@ -6,14 +6,15 @@ class OpenCloseCourseUI <<Presentation>>{
     + doShow()
 }
 class OpenCloseCourseController <<Controller>>{
+    - openCloseCourseService
     + listOpenableClosableCourses()
-    + changeCourseStatus(statusCourseDTO : StatusCourseDTO, newStatus : String)
+    + changeCourseStatus(courseDTO : CourseDTOWithIdTitleStatus, newStatus : String)
 }
 
 class OpenCloseCourseService  <<Service>> {
     - courseRepository : CourseRepository
     + listOpenableClosableCourses()
-    + changeCourseStatus(statusCourseDTO : StatusCourseDTO, newStatus : String)
+    + changeCourseStatus(courseDTO : CourseDTOWithIdTitleStatus, newStatus : String)
 }
 class PersistenceContext  <<persistence>> {
     + repositories()
@@ -23,7 +24,7 @@ Interface RepositoryFactory  <<factory>> {
 }
 class CourseRepository  <<repository>> {
     + listOpenableClosableCourses()
-    + findCourseByCourseIdentifier(courseId : CourseIdentifier)
+    + ofIdentity(courseId : CourseIdentifier)
 }
 class Course <<Domain>> {
     - id : CourseIdentifier
@@ -51,13 +52,20 @@ class CourseStatus <<Domain>>{
     - courseStatusValue : CourseStatusValue
     + returnCourseStatusString()
 }
-class CourseDTO <<DTO>> {
-    + CourseTitle : String
+class CourseDTOWithIdTitleStatus <<DTO>> {
     + courseIdentifier : String
+    + CourseTitle : String
     + state : String
 }
 class CourseMapper <<DTO>> {
-    + toDTO()
+    + toDTOWithIdTitleStatus(course : Course)
+}
+
+class CourseDTOBuilder <<Builder>> {
+    + withCourseIdentifier(courseIdentifier : String)
+    + withCourseTitle(courseTitle : String)
+    + withCourseStatus(courseStatus : String)
+    + buildWithIdTitleStatus()
 }
 
 
@@ -67,7 +75,8 @@ OpenCloseCourseService ..> PersistenceContext
 PersistenceContext ..> RepositoryFactory
 OpenCloseCourseService ..> CourseRepository
 OpenCloseCourseService ..> CourseMapper
-CourseMapper ..> CourseDTO
+CourseMapper ..> CourseDTOBuilder
+CourseDTOBuilder ..> CourseDTOWithIdTitleStatus
 OpenCloseCourseService ..> Course
 Course -left> CourseTitle
 Course -down> CourseIdentifier
