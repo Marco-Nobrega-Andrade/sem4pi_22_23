@@ -36,6 +36,10 @@ participant "CourseDTOWithIdTitle" as cdto <<DTO>>
 activate User
 User -> ui: List Course
 activate ui
+ui -> ctrl: create()
+activate ctrl
+ctrl->service : create()
+deactivate ctrl
 ui -> ctrl: listCourse()
 activate ctrl
 
