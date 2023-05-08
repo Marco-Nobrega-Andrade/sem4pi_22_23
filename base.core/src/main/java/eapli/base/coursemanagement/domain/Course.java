@@ -106,4 +106,8 @@ public class Course implements AggregateRoot<CourseIdentifier> {
         }
         throw new IllegalArgumentException("The course you're trying to change the status cannot change to that one right now.");
     }
+
+    public boolean hasTeacherInCharge(){
+        return this.teacherInCharge != null;
+    }
 }
