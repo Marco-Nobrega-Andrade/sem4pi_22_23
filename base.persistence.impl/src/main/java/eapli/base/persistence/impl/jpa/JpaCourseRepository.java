@@ -4,9 +4,8 @@ import eapli.base.Application;
 import eapli.base.coursemanagement.domain.Course;
 import eapli.base.coursemanagement.domain.CourseIdentifier;
 import eapli.base.coursemanagement.repositories.CourseRepository;
-import eapli.base.usermanagement.domain.MecanographicNumber;
-import eapli.base.usermanagement.domain.Student;
 import eapli.framework.domain.repositories.TransactionalContext;
+import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
 import javax.persistence.Query;
@@ -33,5 +32,31 @@ public class JpaCourseRepository extends JpaAutoTxRepository<Course, CourseIdent
     @Override
     public List<Course> listAllOpenCLoseEnrollmentsAvailableCourses() {
         return createQuery("SELECT c FROM Course c WHERE c.courseStatus.courseStatusValue = 'OPEN' OR c.courseStatus.courseStatusValue = 'OPEN_ENROLLMENTS'", Course.class).getResultList();
+    }
+
+    @Override
+    public List<Course> findTeacherCourses(SystemUser systemUser) {
+        TypedQuery<Course> query = createQuery(
+                "SELECT DISTINCT c FROM Course c JOIN c.teacherInCharge t JOIN Person p ON p.teacher = c.teacherInCharge WHERE p.systemUser = :systemUser " +
+                        "OR (:systemUser IN (SELECT p.systemUser FROM c.teachersList t JOIN Person p ON t = p.teacher))",
+                Course.class);
+        query.setParameter("systemUser", systemUser);
+        return query.getResultList();
+
+
+    }
+
+    @Override
+    public List<Course> findStudentCourses(SystemUser systemUser) {
+        TypedQuery<Course> query = createQuery(
+                "SELECT DISTINCT c FROM Course c "
+                        + "JOIN c.enrollmentsList e "
+                        + "JOIN Person p ON e.enrollmentId = p.enrollmentList.enrollmentId"
+                        + "WHERE (c.courseStatus.courseStatusValue = 'OPEN_ENROLLMENTS')"
+                        + "OR (e.enrollmentStatus.enrollmentStatusValue =  'ACCEPTED' "
+                        + "AND p.systemUser = :systemUser)",
+                Course.class);
+        query.setParameter("systemUser", systemUser);
+        return query.getResultList();
     }
 }
