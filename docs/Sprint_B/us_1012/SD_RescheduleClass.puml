@@ -1,0 +1,104 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor Teacher
+
+participant "RescheduleClassUI" as UI <<application>>
+participant "RescheduleClassController" as Controller <<application>>
+participant "RescheduleClassService" as Service <<application>>
+
+
+participant "Class Builder" as Builder <<builder>>
+participant "WeeklyDate" as Date <<domain>>
+participant "Class" as Class <<domain>>
+participant "PersistenceContext" as Persistence <<persistence>>
+participant "RepositoryFactory" as Factory <<factory>>
+
+database "ClassRepository" as Repository <<repository>>
+
+activate Teacher
+activate UI
+
+Teacher -> UI : wants to reschedule a class
+UI -> Controller : requestInformation()
+activate Controller
+Controller -> Service : requestInformation()
+activate Service
+Service -> Persistence: repositories()
+activate Persistence
+Persistence -> Factory: create
+Persistence -> Service: factory
+deactivate Persistence
+Service -> Factory: classes()
+activate Factory
+Factory -> Repository: create
+Factory -> Service: userRepository
+deactivate Factory
+
+Service -> Repository : getListOfClasses()
+Repository -> Service : classesList
+Service -> Class : showWeeklyDate()
+Class -> Service : weeklyDate
+Service -> Date : getListScheduleDates()
+Date -> Service : list<ScheduleDate>
+Service -> ClassMapper : map(classesList)
+activate ClassMapper
+ClassMapper -> BuilderDTOClass : build(classesList)
+activate BuilderDTOClass
+BuilderDTOClass -> ClassDTO : build(classesList)
+ClassDTO -> BuilderDTOClass : classDTO
+BuilderDTOClass -> ClassMapper : classDTO
+deactivate BuilderDTOClass
+ClassMapper -> Service : classListDTO
+deactivate ClassMapper
+Service -> Controller : classListDTO
+
+deactivate Service
+Controller -> UI : classesListDTO
+deactivate Controller
+
+
+
+
+
+
+UI -> Teacher : ask to choose a class to reeschedule
+Teacher -> UI : select class
+UI -> Teacher : ask choose date to be reescheduled
+Teacher -> UI : select date
+UI -> Teacher : ask to enter the new date
+Teacher -> UI : enters new date
+
+
+
+UI -> Controller : reeschedule(Date)
+activate Controller
+Controller -> Service : reeschedule(Date)
+activate Service
+Service -> Builder: buildWeeklyDate(newListDates<ScheduledDate>)
+activate Builder
+Builder -> Date : create
+Date -> Builder : weeklyDate
+Builder -> Service : weeklyDate
+deactivate Builder
+
+Service -> Class : reeschedule(WeeklyDate)
+Class -> Service : returns true
+
+Service -> Repository : update(Class)
+
+Repository -> Service : returns true
+
+Service -> Controller : returns true
+deactivate Service
+Controller -> UI : returns true
+deactivate Controller
+UI -> Teacher : The system notifies that the class has been rescheduled
+
+
+deactivate UI
+deactivate Teacher
+deactivate Controller
+@enduml
