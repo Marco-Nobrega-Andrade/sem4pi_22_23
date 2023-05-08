@@ -1,0 +1,97 @@
+@startuml
+@startuml
+actor Student as ACTOR
+participant RequestEnrollmentUI as UI <<presentation>>
+control RequestEnrollmentController as CONTROLLER <<application>>
+participant RequestEnrollmentService as SERVICE <<application>>
+participant CourseMapper as COURSE_MAP <<dto>>
+participant CourseDTOBuilder as COURSE_DTO_BUILD <<builder>>
+participant Course as COURSE <<domain>>
+participant CourseDTOWithIdTitle as COURSE_DTO <<dto>>
+participant CourseTitle as COURSE_TITLE <<domain>>
+participant CourseIdentifier as COURSE_ID <<domain>>
+participant PersistenceContext as PERS_CONTX <<persistence>>
+participant RepositoryFactory as REPO_FAC <<factory>>
+database CourseRepository as COURSE_REPO <<repository>>
+autonumber
+activate ACTOR
+activate UI
+
+ACTOR -> UI : Student selects option to request an enrollment
+UI -> CONTROLLER : create()
+activate CONTROLLER
+CONTROLLER -> SERVICE : create()
+activate SERVICE
+SERVICE -> PERS_CONTX : repositories()
+activate PERS_CONTX
+PERS_CONTX -> REPO_FAC : create()
+activate REPO_FAC
+deactivate REPO_FAC
+PERS_CONTX -->SERVICE : repoFactory
+deactivate PERS_CONTX
+SERVICE -> REPO_FAC : courses()
+activate REPO_FAC
+REPO_FAC -> COURSE_REPO : create()
+activate COURSE_REPO
+deactivate COURSE_REPO
+REPO_FAC --> SERVICE : courseRepo
+deactivate REPO_FAC
+deactivate SERVICE
+CONTROLLER -> SERVICE : listAllStudentAvailableCourses()
+activate SERVICE
+SERVICE -> COURSE_REPO : listAllStudentAvailableCourses()
+activate COURSE_REPO
+COURSE_REPO --> SERVICE : courseList
+deactivate COURSE_REPO
+loop for each course from courseList
+SERVICE -> COURSE_MAP : toDTOWithIdTitleStatus(course)
+activate COURSE_MAP
+COURSE_MAP -> COURSE_DTO_BUILD : create()
+activate COURSE_DTO_BUILD
+deactivate COURSE_DTO_BUILD
+COURSE_MAP -> COURSE : returnCourseTitleString()
+activate COURSE
+COURSE -> COURSE_TITLE : returnCourseTitleString()
+activate COURSE_TITLE
+COURSE_TITLE --> COURSE : course_title
+deactivate COURSE_TITLE
+COURSE --> COURSE_MAP : course_title
+deactivate COURSE
+COURSE_MAP -> COURSE_DTO_BUILD : withCourseIdentifier()
+activate COURSE_DTO_BUILD
+COURSE_DTO_BUILD --> COURSE_MAP : courseDTOBuilder
+deactivate COURSE_DTO_BUILD
+COURSE_MAP -> COURSE : returnCourseIdentifierString()
+activate COURSE
+COURSE -> COURSE_ID : returnCourseIdentifierString()
+activate COURSE_ID
+COURSE_ID --> COURSE : course_Id
+deactivate COURSE_ID
+COURSE --> COURSE_MAP : course_Id
+deactivate COURSE
+COURSE_MAP -> COURSE_DTO_BUILD : withCourseTitle()
+activate COURSE_DTO_BUILD
+COURSE_DTO_BUILD --> COURSE_MAP : courseDTOBuilder
+deactivate COURSE_DTO_BUILD
+COURSE_MAP -> COURSE_DTO_BUILD : buildWithIdTitle()
+activate COURSE_DTO_BUILD
+COURSE_DTO_BUILD -> COURSE_DTO : create(courseIdentifier, courseTitle, courseStatus)
+activate COURSE_DTO
+deactivate COURSE_DTO
+deactivate COURSE_DTO_BUILD
+COURSE_MAP --> SERVICE : courseDTO
+deactivate COURSE_MAP
+end loop
+SERVICE --> CONTROLLER : courseDTOList
+deactivate SERVICE
+CONTROLLER --> UI : courseDTOList
+deactivate CONTROLLER
+UI --> ACTOR : System shows available courses and ask the student to select one
+ACTOR -> UI : Student chooses one course
+UI --> ACTOR : System ask for confirmation
+ACTOR -> UI : Student confirms
+
+deactivate CONTROLLER
+UI --> ACTOR : System informs operation success
+deactivate ACTOR
+@enduml
