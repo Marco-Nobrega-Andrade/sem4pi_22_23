@@ -25,6 +25,7 @@ package eapli.base.app.other.console.presentation;
 
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
 import eapli.base.Application;
+import eapli.base.app.common.console.presentation.course.ListCourseAction;
 import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
@@ -51,9 +52,14 @@ public class MainMenu extends AbstractUI {
 
     // MAIN MENU
     private static final int MY_USER_OPTION = 1;
-    private static final int SALES_OPTION = 7;
+
+    private static final int COURSE_OPTION = 2;
 
     private static final int RECHARGE_USER_CARD_OPTION = 1;
+
+    // COURSE MENU
+    private static final int LIST_COURSE_OPTION = 1;
+
 
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
 
@@ -95,19 +101,19 @@ public class MainMenu extends AbstractUI {
 
     private Menu buildMainMenu() {
         final Menu mainMenu = new Menu();
-        /*
-        final Menu myUserMenu = new MyUserMenu(BaseRoles.CASHIER);
+
+        final Menu myUserMenu = new MyUserMenu(BaseRoles.TEACHER);
         mainMenu.addSubMenu(MY_USER_OPTION, myUserMenu);
-        */
+
         if (!Application.settings().isMenuLayoutHorizontal()) {
             mainMenu.addItem(MenuItem.separator(SEPARATOR_LABEL));
         }
-        /*
-        if (authz.isAuthenticatedUserAuthorizedTo(BaseRoles.CASHIER)) {
-            final Menu cashierMenu = buildCashierMenu();
-            mainMenu.addSubMenu(SALES_OPTION, cashierMenu);
+
+        if (authz.isAuthenticatedUserAuthorizedTo(BaseRoles.TEACHER)) {
+            final Menu courseMenu = buildCourseMenu();
+            mainMenu.addSubMenu(COURSE_OPTION, courseMenu);
         }
-        */
+
         if (!Application.settings().isMenuLayoutHorizontal()) {
             mainMenu.addItem(MenuItem.separator(SEPARATOR_LABEL));
         }
@@ -116,13 +122,14 @@ public class MainMenu extends AbstractUI {
 
         return mainMenu;
     }
-    /*
-    private Menu buildCashierMenu() {
-        final Menu cashierMenu = new Menu("Sales  >");
 
-        cashierMenu.addItem(EXIT_OPTION, "Return", Actions.SUCCESS);
+    private Menu buildCourseMenu() {
+        final Menu courseMenu = new Menu("Course  >");
 
-        return cashierMenu;
+        courseMenu.addItem(LIST_COURSE_OPTION,"List Course", new ListCourseAction());
+        courseMenu.addItem(EXIT_OPTION, "Return", Actions.SUCCESS);
+
+        return courseMenu;
     }
-     */
+
 }

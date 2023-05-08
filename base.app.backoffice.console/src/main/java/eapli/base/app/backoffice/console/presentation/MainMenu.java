@@ -32,6 +32,7 @@ import eapli.base.app.backoffice.console.presentation.authz.AddUserUI;
 import eapli.base.app.backoffice.console.presentation.authz.DeactivateUserAction;
 import eapli.base.app.backoffice.console.presentation.authz.ListUsersAction;
 import eapli.base.app.backoffice.console.presentation.clientuser.AcceptRefuseSignupRequestAction;
+import eapli.base.app.common.console.presentation.course.ListCourseAction;
 import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
@@ -70,8 +71,7 @@ public class MainMenu extends AbstractUI {
     private static final int CREATE_COURSE_OPTION = 1;
     private static final int OPEN_CLOSE_COURSE_OPTION = 2;
     private static final int OPEN_CLOSE_COURSE_ENROLLMENTS_OPTION = 3;
-
-
+    private static final int LIST_COURSE_OPTION = 4;
     // DISHES
     private static final int DISH_REGISTER_OPTION = 5;
     private static final int DISH_LIST_OPTION = 6;
@@ -172,6 +172,7 @@ public class MainMenu extends AbstractUI {
         menu.addItem(CREATE_COURSE_OPTION,"Create course",new CreateCourseAction());
         menu.addItem(OPEN_CLOSE_COURSE_OPTION, "Open/Close course",new OpenCloseCourseAction());
         menu.addItem(OPEN_CLOSE_COURSE_ENROLLMENTS_OPTION, "Open/Close Course Enrollments", new OpenCloseCourseEnrollmentsAction());
+        menu.addItem(LIST_COURSE_OPTION,"List Course", new ListCourseAction());
         menu.addItem(EXIT_OPTION,RETURN_LABEL,Actions.SUCCESS);
 
         return menu;

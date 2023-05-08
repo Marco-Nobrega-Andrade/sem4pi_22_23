@@ -24,14 +24,16 @@
 package eapli.base.app.user.console.presentation;
 
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
+import eapli.base.app.common.console.presentation.course.ListCourseAction;
+import eapli.base.usermanagement.domain.BaseRoles;
+import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
-import eapli.framework.actions.menu.MenuItem;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.presentation.console.ExitWithMessageAction;
+import eapli.framework.presentation.console.menu.HorizontalMenuRenderer;
 import eapli.framework.presentation.console.menu.MenuItemRenderer;
 import eapli.framework.presentation.console.menu.MenuRenderer;
-import eapli.framework.presentation.console.menu.VerticalMenuRenderer;
 
 /**
  * @author Paulo Gandra Sousa
@@ -48,19 +50,12 @@ class MainMenu extends ClientUserBaseUI {
 
     // MAIN MENU
     private static final int MY_USER_OPTION = 1;
-    private static final int BOOKINGS_OPTION = 2;
-    private static final int ACCOUNT_OPTION = 3;
-    private static final int SETTINGS_OPTION = 4;
 
-    // BOOKINGS MENU
-    private static final int BOOK_A_MEAL_OPTION = 2;
-    private static final int LIST_MY_BOOKINGS_OPTION = 3;
+    private static final int COURSE_OPTION = 2;
 
-    // ACCOUNT MENU
-    private static final int LIST_MOVEMENTS_OPTION = 1;
 
-    // SETTINGS
-    private static final int SET_USER_ALERT_LIMIT_OPTION = 1;
+    // COURSE MENU
+    private static final int LIST_COURSE_OPTION = 1;
 
     private final AuthorizationService authz =
             AuthzRegistry.authorizationService();
@@ -78,7 +73,7 @@ class MainMenu extends ClientUserBaseUI {
     public boolean doShow() {
         final Menu menu = buildMainMenu();
         final MenuRenderer renderer =
-                new VerticalMenuRenderer(menu, MenuItemRenderer.DEFAULT);
+                new HorizontalMenuRenderer(menu, MenuItemRenderer.DEFAULT);
         return renderer.render();
     }
 
@@ -88,10 +83,22 @@ class MainMenu extends ClientUserBaseUI {
         final Menu myUserMenu = new MyUserMenu();
         mainMenu.addSubMenu(MY_USER_OPTION, myUserMenu);
 
-        mainMenu.addItem(MenuItem.separator(SEPARATOR_LABEL));
+        if (authz.isAuthenticatedUserAuthorizedTo(BaseRoles.STUDENT)) {
+            final Menu courseMenu = buildCourseMenu();
+            mainMenu.addSubMenu(COURSE_OPTION, courseMenu);
+        }
 
         mainMenu.addItem(EXIT_OPTION, "Exit", new ExitWithMessageAction("Bye, Bye"));
 
         return mainMenu;
+    }
+
+    private Menu buildCourseMenu() {
+        final Menu courseMenu = new Menu("Course  >");
+
+        courseMenu.addItem(LIST_COURSE_OPTION,"List Course", new ListCourseAction());
+        courseMenu.addItem(EXIT_OPTION, "Return", Actions.SUCCESS);
+
+        return courseMenu;
     }
 }

@@ -33,6 +33,7 @@ import eapli.base.infrastructure.authz.AuthenticationCredentialHandler;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.usermanagement.application.eventhandlers.SignupAcceptedWatchDog;
 import eapli.base.usermanagement.domain.BasePasswordPolicy;
+import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
 import eapli.framework.infrastructure.pubsub.EventDispatcher;
@@ -65,7 +66,7 @@ public final class BaseBackoffice extends BaseApplication {
     @Override
     protected void doMain(final String[] args) {
         // login and go to main menu
-        if (new LoginUI(new AuthenticationCredentialHandler()).show()) {
+        if (new LoginUI(new AuthenticationCredentialHandler(), BaseRoles.MANAGER).show()) {
             // go to main menu
             final MainMenu menu = new MainMenu();
             menu.mainLoop();
