@@ -10,7 +10,7 @@ public class CourseDTOWithIdTitleTest {
 
     @Test
     public void ensureThatCourseDTOWithIdTitleHasTheCorrectFormat() {
-        Course course = new Course(new CourseIdentifier("Id1"), new CourseTitle("Title1"), new CourseName("Name1"), new Description("Desciption1"), new EnrollmentLimits(1, 5), new CourseStatus(CourseStatusValue.CLOSE), new Teacher());
+        Course course = new Course(new CourseIdentifier("Id1"), new CourseTitle("Title1"), new CourseName("Name1"), new Description("Desciption1"), new EnrollmentLimits(1, 5), new CourseStatus("CLOSE"), new Teacher());
         CourseDTOWithIdTitle test = CourseMapper.toDTOWithIdTitle(course);
         assertEquals(test.toString(), "Title1 - Id1");
     }
