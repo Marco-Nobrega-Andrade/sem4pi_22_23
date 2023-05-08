@@ -12,6 +12,7 @@ participant "ListCourseController" as ctrl <<application>>
 
 participant ListCourseService as service <<application>>
 
+participant AuthzRegistry as auth <<application>>
 participant AuthorizationService as authSV <<application>>
 participant UserSession as userSe <<Domain>>
 
@@ -39,13 +40,17 @@ ui -> ctrl: listCourse()
 activate ctrl
 
 
-ctrl->service : ListManagerCourse()
+ctrl->service : listCourse()
 activate service
 
 
 
 
 
+service -> auth: authorizationService()
+activate auth
+auth -> service: authz
+deactivate auth
 service -> authSV: session()
 activate authSV
 authSV --> service: userSession
@@ -60,7 +65,7 @@ activate Persistence
 Persistence -> RepFactory: create
 Persistence --> service: factory
 deactivate Persistence
-service -> RepFactory: student()
+service -> RepFactory: courseRepository()
 activate RepFactory
 RepFactory -> courseRep: create
 RepFactory --> service: courseRepository
