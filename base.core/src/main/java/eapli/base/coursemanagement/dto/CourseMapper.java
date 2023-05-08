@@ -18,4 +18,11 @@ public class CourseMapper{
         return courseRepository.ofIdentity(new CourseIdentifier(courseDTOWithIdTitleStatus.courseIdentifier)).get();
     }
 
+    public static CourseDTOWithIdTitle toDTOWithIdTitle(Course course){
+        CourseDTOBuilder courseDTOBuilder = new CourseDTOBuilder();
+        return courseDTOBuilder.withCourseIdentifier(course.returnCourseIdentifierString())
+                .withCourseTitle(course.returnCourseTitleString())
+                .buildWithIdTitle();
+    }
+
 }
