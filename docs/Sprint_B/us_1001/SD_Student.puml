@@ -91,7 +91,7 @@ activate Persistence
 Persistence -> RepFactory: create
 Persistence -> PerHelper: factory
 deactivate Persistence
-PerHelper -> RepFactory: student()
+PerHelper -> RepFactory: studentRepository()
 activate RepFactory
 RepFactory -> StdRep: create
 RepFactory -> PerHelper: studentRepository
@@ -124,7 +124,7 @@ activate Persistence
 Persistence -> RepFactory: create
 Persistence -> PerHelper: factory
 deactivate Persistence
-PerHelper -> RepFactory: person()
+PerHelper -> RepFactory: personRepository()
 activate RepFactory
 RepFactory -> PerRep: create
 RepFactory -> PerHelper: personRepository

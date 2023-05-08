@@ -97,8 +97,8 @@ repositories()
 }
 class RepositoryFactory{
 users()
-person()
-student()
+personRepository()
+studentRepository()
 }
 
 class UserRepository{
