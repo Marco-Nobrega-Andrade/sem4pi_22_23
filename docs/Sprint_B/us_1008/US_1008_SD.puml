@@ -5,14 +5,13 @@ participant RequestEnrollmentUI as UI <<presentation>>
 control RequestEnrollmentController as CONTROLLER <<application>>
 participant RequestEnrollmentService as SERVICE <<application>>
 participant CourseMapper as COURSE_MAP <<dto>>
-participant CourseDTOBuilder as COURSE_DTO_BUILD <<builder>>
 participant Course as COURSE <<domain>>
-participant CourseDTOWithIdTitle as COURSE_DTO <<dto>>
-participant CourseTitle as COURSE_TITLE <<domain>>
 participant CourseIdentifier as COURSE_ID <<domain>>
+participant Enrollment as ENROLL <<domain>>
 participant PersistenceContext as PERS_CONTX <<persistence>>
 participant RepositoryFactory as REPO_FAC <<factory>>
 database CourseRepository as COURSE_REPO <<repository>>
+database EnrollmentRepository as ENROLL_REPO <<repository>>
 autonumber
 activate ACTOR
 activate UI
@@ -44,41 +43,9 @@ activate COURSE_REPO
 COURSE_REPO --> SERVICE : courseList
 deactivate COURSE_REPO
 loop for each course from courseList
-SERVICE -> COURSE_MAP : toDTOWithIdTitleStatus(course)
+SERVICE -> COURSE_MAP : toDTOWithIdTitle(course)
+note right : This method is represented in "us_1008_SD_toDTOWithIdTitle"
 activate COURSE_MAP
-COURSE_MAP -> COURSE_DTO_BUILD : create()
-activate COURSE_DTO_BUILD
-deactivate COURSE_DTO_BUILD
-COURSE_MAP -> COURSE : returnCourseTitleString()
-activate COURSE
-COURSE -> COURSE_TITLE : returnCourseTitleString()
-activate COURSE_TITLE
-COURSE_TITLE --> COURSE : course_title
-deactivate COURSE_TITLE
-COURSE --> COURSE_MAP : course_title
-deactivate COURSE
-COURSE_MAP -> COURSE_DTO_BUILD : withCourseIdentifier()
-activate COURSE_DTO_BUILD
-COURSE_DTO_BUILD --> COURSE_MAP : courseDTOBuilder
-deactivate COURSE_DTO_BUILD
-COURSE_MAP -> COURSE : returnCourseIdentifierString()
-activate COURSE
-COURSE -> COURSE_ID : returnCourseIdentifierString()
-activate COURSE_ID
-COURSE_ID --> COURSE : course_Id
-deactivate COURSE_ID
-COURSE --> COURSE_MAP : course_Id
-deactivate COURSE
-COURSE_MAP -> COURSE_DTO_BUILD : withCourseTitle()
-activate COURSE_DTO_BUILD
-COURSE_DTO_BUILD --> COURSE_MAP : courseDTOBuilder
-deactivate COURSE_DTO_BUILD
-COURSE_MAP -> COURSE_DTO_BUILD : buildWithIdTitle()
-activate COURSE_DTO_BUILD
-COURSE_DTO_BUILD -> COURSE_DTO : create(courseIdentifier, courseTitle, courseStatus)
-activate COURSE_DTO
-deactivate COURSE_DTO
-deactivate COURSE_DTO_BUILD
 COURSE_MAP --> SERVICE : courseDTO
 deactivate COURSE_MAP
 end loop
@@ -90,7 +57,45 @@ UI --> ACTOR : System shows available courses and ask the student to select one
 ACTOR -> UI : Student chooses one course
 UI --> ACTOR : System ask for confirmation
 ACTOR -> UI : Student confirms
-
+UI -> CONTROLLER : createEnrollment(courseDTO)
+activate CONTROLLER
+CONTROLLER -> SERVICE : createEnrollment(courseDTO)
+activate SERVICE
+SERVICE -> COURSE_ID : create(courseIdentifier)
+activate COURSE_ID
+deactivate COURSE_ID
+SERVICE -> COURSE_REPO : ofIdentity(courseId)
+activate COURSE_REPO
+COURSE_REPO --> SERVICE : course
+deactivate COURSE_REPO
+SERVICE -> PERS_CONTX : repositories()
+activate PERS_CONTX
+PERS_CONTX -> REPO_FAC : create()
+activate REPO_FAC
+deactivate REPO_FAC
+PERS_CONTX -->SERVICE : repoFactory
+deactivate PERS_CONTX
+SERVICE -> REPO_FAC : enrollments()
+activate REPO_FAC
+REPO_FAC -> ENROLL_REPO : create()
+activate ENROLL_REPO
+deactivate ENROLL_REPO
+REPO_FAC --> SERVICE : enrollmentsRepo
+deactivate REPO_FAC
+SERVICE -> ENROLL_REPO : totalEnrollmentsPersisted()
+activate ENROLL_REPO
+ENROLL_REPO --> SERVICE : total
+deactivate ENROLL_REPO
+SERVICE -> ENROLL : create(id, status)
+activate ENROLL
+deactivate ENROLL
+SERVICE -> ENROLL_REPO : save(newEnrollment)
+activate ENROLL_REPO
+deactivate ENROLL_REPO
+SERVICE -> COURSE :addEnrollment(newEnrollment)
+activate COURSE
+deactivate COURSE
+deactivate SERVICE
 deactivate CONTROLLER
 UI --> ACTOR : System informs operation success
 deactivate ACTOR
