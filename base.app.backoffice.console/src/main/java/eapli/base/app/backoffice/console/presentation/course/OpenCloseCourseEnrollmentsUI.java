@@ -11,27 +11,42 @@ public class OpenCloseCourseEnrollmentsUI extends AbstractUI {
     private final OpenCloseCourseEnrollmentsController openCloseCourseEnrollmentsController = new OpenCloseCourseEnrollmentsController();
     @Override
     protected boolean doShow() {
+
         List<CourseDTOWithIdTitleStatus> courseDTOWithIdTitleStatusList = openCloseCourseEnrollmentsController.listAllOpenCloseEnrollmentsAvailableCourses();
 
         if(!courseDTOWithIdTitleStatusList.isEmpty()){
 
-            int size = courseDTOWithIdTitleStatusList.size();
-            for (int i = 0; i < size-1; i++) {
-                System.out.println(i + ". " + courseDTOWithIdTitleStatusList.get(i));
+            int changeOption = 0;
+
+            while(changeOption == 0) {
+
+                changeOption = -1;
+                int size = courseDTOWithIdTitleStatusList.size();
+
+                for (int i = 0; i < size; i++) {
+                    System.out.println(i + 1 + ". " + courseDTOWithIdTitleStatusList.get(i));
+                }
+
+                System.out.println("0. Return\n");
+                int idx = Console.readOption(1, size, 0);
+
+                if (idx != 0) {
+
+                    System.out.println("\n1. Open Enrollments\n2. Close Enrollments\n0. Return\n");
+                    changeOption = Console.readOption(1, 2, 0);
+
+                    try {
+                        if (changeOption == 1) {
+                            openCloseCourseEnrollmentsController.changeStatus(courseDTOWithIdTitleStatusList.get(idx - 1), "OPEN_ENROLLMENTS");
+                        } else if (changeOption == 2) {
+                            openCloseCourseEnrollmentsController.changeStatus(courseDTOWithIdTitleStatusList.get(idx - 1), "CLOSED_ENROLLMENTS");
+                        }
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
+
+                }
             }
-
-            System.out.println("Introduce the number of the course you want to change:\n");
-            int idx = Console.readOption(1,size,0);
-
-            System.out.println("1. Open Enrollments\n 2. Close Enrollments");
-            int changeOption = Console.readOption(1,2,0);
-
-            if(changeOption == 1){
-                openCloseCourseEnrollmentsController.changeStatus(courseDTOWithIdTitleStatusList.get(idx-1), "OPEN_ENROLLMENTS");
-            }else{
-                openCloseCourseEnrollmentsController.changeStatus(courseDTOWithIdTitleStatusList.get(idx-1), "CLOSE_ENROLLMENTS");
-            }
-
         }else{
             System.out.println("There are no courses available for open/close enrollments currently!");
         }
