@@ -8,8 +8,6 @@ participant CourseMapper as COURSE_MAP <<dto>>
 participant Course as COURSE <<domain>>
 participant CourseIdentifier as COURSE_ID <<domain>>
 participant Enrollment as ENROLL <<domain>>
-participant PersistenceContext as PERS_CONTX <<persistence>>
-participant RepositoryFactory as REPO_FAC <<factory>>
 database CourseRepository as COURSE_REPO <<repository>>
 database EnrollmentRepository as ENROLL_REPO <<repository>>
 autonumber
@@ -21,20 +19,7 @@ UI -> CONTROLLER : create()
 activate CONTROLLER
 CONTROLLER -> SERVICE : create()
 activate SERVICE
-SERVICE -> PERS_CONTX : repositories()
-activate PERS_CONTX
-PERS_CONTX -> REPO_FAC : create()
-activate REPO_FAC
-deactivate REPO_FAC
-PERS_CONTX -->SERVICE : repoFactory
-deactivate PERS_CONTX
-SERVICE -> REPO_FAC : courses()
-activate REPO_FAC
-REPO_FAC -> COURSE_REPO : create()
-activate COURSE_REPO
-deactivate COURSE_REPO
-REPO_FAC --> SERVICE : courseRepo
-deactivate REPO_FAC
+note right : Creation of CourseRepository as described in "US_1008_SD_RepositoryCreation"
 deactivate SERVICE
 CONTROLLER -> SERVICE : listAllStudentAvailableCourses()
 activate SERVICE
@@ -61,6 +46,19 @@ UI -> CONTROLLER : createEnrollment(courseDTO)
 activate CONTROLLER
 CONTROLLER -> SERVICE : createEnrollment(courseDTO)
 activate SERVICE
+note right SERVICE : Creation of EnrollmentRepository as described in "US_1008_SD_RepositoryCreation"
+note right SERVICE : Creation of StudentRepository as described in "US_1008_SD_RepositoryCreation"
+SERVICE -> ENROLL_REPO : totalEnrollmentsPersisted()
+activate ENROLL_REPO
+ENROLL_REPO --> SERVICE : total
+deactivate ENROLL_REPO
+SERVICE -> ENROLL : create(id, status)
+activate ENROLL
+ENROLL --> SERVICE : newEnrollment
+deactivate ENROLL
+SERVICE -> ENROLL_REPO : save(newEnrollment)
+activate ENROLL_REPO
+deactivate ENROLL_REPO
 SERVICE -> COURSE_ID : create(courseIdentifier)
 activate COURSE_ID
 deactivate COURSE_ID
@@ -68,34 +66,12 @@ SERVICE -> COURSE_REPO : ofIdentity(courseId)
 activate COURSE_REPO
 COURSE_REPO --> SERVICE : course
 deactivate COURSE_REPO
-SERVICE -> PERS_CONTX : repositories()
-activate PERS_CONTX
-PERS_CONTX -> REPO_FAC : create()
-activate REPO_FAC
-deactivate REPO_FAC
-PERS_CONTX -->SERVICE : repoFactory
-deactivate PERS_CONTX
-SERVICE -> REPO_FAC : enrollments()
-activate REPO_FAC
-REPO_FAC -> ENROLL_REPO : create()
-activate ENROLL_REPO
-deactivate ENROLL_REPO
-REPO_FAC --> SERVICE : enrollmentsRepo
-deactivate REPO_FAC
-SERVICE -> ENROLL_REPO : totalEnrollmentsPersisted()
-activate ENROLL_REPO
-ENROLL_REPO --> SERVICE : total
-deactivate ENROLL_REPO
-SERVICE -> ENROLL : create(id, status)
-activate ENROLL
-deactivate ENROLL
-SERVICE -> ENROLL_REPO : save(newEnrollment)
-activate ENROLL_REPO
-deactivate ENROLL_REPO
 SERVICE -> COURSE :addEnrollment(newEnrollment)
 activate COURSE
 deactivate COURSE
+SERVICE --> CONTROLLER : operation success
 deactivate SERVICE
+CONTROLLER --> UI : operation success
 deactivate CONTROLLER
 UI --> ACTOR : System informs operation success
 deactivate ACTOR
