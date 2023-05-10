@@ -1,0 +1,114 @@
+@startuml
+actor Teacher as T
+participant "<<Presentation>>\n:ListAllExamsOfCourseUI" as UI
+control "<<Application>>\n:ListAllExamsOfCourseController" as CTRL
+participant "<<Service>>\n:ListAllExamsOfCourseService" as LECSv
+participant "<<Persistence>>\n:PersistenceContext" as PC
+participant "<<Factory>>\nfactory:RepositoryFactory" as RF
+participant "<<DTO>>\ncourseDTOWithIdTitleStatusList\n:List<CourseDTOWithIdTitleStatus>" as cDtoL
+participant "<<DTO>>\n:CourseMapper" as CM
+database "<<Repository>>\ncourseRepository\n:CourseRepository" as CR
+database "<<Repository>>\nexamRepository\n:ExamRepository" as ER
+participant "<<Domain>>\ncourseList:List<Course>" as CL
+participant "<<DTO>>\ncourseDTOBuilder\n:CourseDTOBuilder" as cDTOBuilder
+participant "<<Domain>>\ncourse:Course" as C
+participant "<<Domain>>:\nCourseTitle" as CT
+participant "<<Domain>>:\nCourseIdentifier" as CI
+participant "<<Domain>>:\nCourseStatus" as CS
+participant "<<DTO>>\ncourseDTO:CourseDTO\nWithIdTitleStatus" as cDTO
+
+T -> UI : The teacher initializes the process\n of viewing all exams in a course
+activate T
+activate UI
+UI -> CTRL : create()
+activate CTRL
+CTRL -> LECSv : create()
+activate LECSv
+LECSv -> PC : repositories
+activate PC
+PC --> LECSv : factory
+deactivate PC
+LECSv -> RF : courseRepository()
+activate RF
+RF -> CR : create()
+RF --> LECSv: courseRepository
+deactivate RF
+LECSv -> RF : examRepository()
+activate RF
+RF -> ER : create()
+RF --> LECSv: examRepository
+deactivate RF
+deactivate LECSv
+deactivate CTRL
+UI -> CTRL : listAllCourses()
+activate CTRL
+CTRL -> LECSv : listAllCourses()
+activate LECSv
+LECSv -> CR : findAll()
+activate CR
+CR -> CL : create()
+CR --> LECSv : courseList
+deactivate CR
+LECSv -> cDtoL : create()
+loop foreach course from courseList
+LECSv -> CM : toDTOWithIdTitleStatus(course)
+activate CM
+CM -> cDTOBuilder : create()
+CM -> C : returnCourseIdentifierString()
+activate C
+C -> CI : returnCourseIdentifierString()
+activate CI
+CI --> C : courseId
+deactivate CI
+C --> CM : courseId
+deactivate C
+CM -> cDTOBuilder : withCourseIdentifier(courseId)
+activate cDTOBuilder
+deactivate cDTOBuilder
+CM -> C : returnCourseTitleString()
+activate C
+C -> CT : returnCourseTitleString()
+activate CT
+CT --> C : courseTitle
+deactivate CT
+C --> CM : courseTitle
+deactivate C
+CM -> cDTOBuilder : withCourseTitle(courseTitle)
+activate cDTOBuilder
+deactivate cDTOBuilder
+CM -> C : returnCourseStatusString()
+activate C
+C -> CS : returnCourseStatusString()
+activate CS
+CS -> CS : name()
+CS --> C : courseStatus
+deactivate CS
+C --> CM : courseStatus
+deactivate C
+CM -> cDTOBuilder : withCourseStatus(courseStatus)
+activate cDTOBuilder
+deactivate cDTOBuilder
+CM -> cDTOBuilder : buildWithIdTitleStatus()
+activate cDTOBuilder
+cDTOBuilder -> cDTO : create()
+cDTOBuilder --> CM : courseDTOWithIdTitleStatus
+deactivate cDTOBuilder
+CM --> LECSv : statusCourseDTO
+deactivate CM
+deactivate CM
+LECSv -> cDtoL : add(courseDTO)
+activate cDtoL
+deactivate cDtoL
+end loop
+LECSv --> CTRL : courseDTOList
+deactivate LECSv
+CTRL --> UI : courseDTOList
+deactivate CTRL
+UI --> T : The system presents the list of courses
+deactivate UI
+T -> UI : The Teacher selects the Course \nwhose exams want to visualize
+activate UI
+UI --> T : The system presents the list of exams
+deactivate UI
+deactivate T
+@enduml
