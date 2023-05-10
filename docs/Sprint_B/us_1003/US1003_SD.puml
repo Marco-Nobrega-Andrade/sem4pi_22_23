@@ -1,14 +1,14 @@
 @startuml
 actor Manager as M
 participant "<<Presentation>>\n:OpenCloseCourseEnrollmentsUI" as UI
-participant "<<Application>>\n:OpenCloseCourseEnrollmentsController" as CTRL
+control "<<Application>>\n:OpenCloseCourseEnrollmentsController" as CTRL
 participant "<<Service>>\n:OpenCloseCourseEnrollmentsService" as OCESv
 participant "<<Persistence>>\n:PersistenceContext" as PC
 participant "<<Factory>>\nfactory:RepositoryFactory" as RF
-participant "<<Domain>>\ncourseList:List<Course>" as CL
 participant "<<DTO>>\ncourseDTOWithIdTitleStatusList\n:List<CourseDTOWithIdTitleStatus>" as cDtoL
 participant "<<DTO>>\n:CourseMapper" as CM
-participant "<<Repository>>\ncourseRepository:CourseRepository" as CR
+database "<<Repository>>\ncourseRepository\n:CourseRepository" as CR
+participant "<<Domain>>\ncourseList:List<Course>" as CL
 participant "<<DTO>>\ncourseDTOBuilder\n:CourseDTOBuilder" as cDTOBuilder
 participant "<<Domain>>\ncourse:Course" as C
 participant "<<Domain>>:\nCourseTitle" as CT
