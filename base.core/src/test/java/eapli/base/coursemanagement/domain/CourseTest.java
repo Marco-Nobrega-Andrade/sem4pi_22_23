@@ -8,6 +8,11 @@ import static org.junit.Assert.*;
 
 public class CourseTest {
 
+    private final String OPEN_STATUS = "OPEN";
+    private final String OPEN_ENROLLMENTS_STATUS = "OPEN_ENROLLMENTS";
+    private final String CLOSED_ENROLLMENTS_STATUS = "CLOSED_ENROLLMENTS";
+    private final String CLOSED_STATUS = "CLOSED";
+    private final String CLOSE_STATUS = "CLOSE";
     private final Course COURSE_OPEN_ENROLLMENTS = new Course(new CourseIdentifier("Id"), new CourseTitle("Title"), new CourseName("Name"), new Description("Desciption"), new EnrollmentLimits(1,5), new CourseStatus(CourseStatusValue.OPEN_ENROLLMENTS), new Teacher());
     private final Course COURSE_CLOSED_ENROLLMENTS = new Course(new CourseIdentifier("Id"), new CourseTitle("Title"), new CourseName("Name"), new Description("Desciption"), new EnrollmentLimits(1,5), new CourseStatus(CourseStatusValue.CLOSED_ENROLLMENTS), new Teacher());
 
@@ -25,32 +30,32 @@ public class CourseTest {
 
     @Test
     public void ensureThatCourseStatusCanChangeFromOpenEnrollmentsToClosedEnrollments(){
-        Assert.assertTrue(COURSE_OPEN_ENROLLMENTS.changeStatus("CLOSED_ENROLLMENTS"));
+        Assert.assertTrue(COURSE_OPEN_ENROLLMENTS.changeStatus(CLOSED_ENROLLMENTS_STATUS));
     }
 
     @Test
     public void ensureThatCourseStatusCanChangeFromClosedEnrollmentsToClosed(){
-        Assert.assertTrue(COURSE_CLOSED_ENROLLMENTS.changeStatus("CLOSED"));
+        Assert.assertTrue(COURSE_CLOSED_ENROLLMENTS.changeStatus(CLOSED_STATUS));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void ensureThatCourseStatusCannotChangeFromOpenEnrollmentsToClosed(){
-        COURSE_OPEN_ENROLLMENTS.changeStatus("CLOSED");
+        COURSE_OPEN_ENROLLMENTS.changeStatus(CLOSED_STATUS);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void ensureThatCourseStatusCannotChangeFromOpenEnrollmentsToOpen(){
-        COURSE_OPEN_ENROLLMENTS.changeStatus("OPEN");
+        COURSE_OPEN_ENROLLMENTS.changeStatus(OPEN_STATUS);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void ensureThatCourseStatusCannotChangeFromClosedEnrollmentsToOpenEnrollments(){
-        COURSE_CLOSED_ENROLLMENTS.changeStatus("OPEN_ENROLLMENTS");
+        COURSE_CLOSED_ENROLLMENTS.changeStatus(OPEN_ENROLLMENTS_STATUS);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void ensureThatCourseStatusCannotChangeFromClosedEnrollmentsToOpen(){
-        COURSE_CLOSED_ENROLLMENTS.changeStatus("OPEN");
+        COURSE_CLOSED_ENROLLMENTS.changeStatus(OPEN_STATUS);
     }
 
 }
