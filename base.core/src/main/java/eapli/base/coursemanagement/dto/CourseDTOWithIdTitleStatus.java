@@ -10,18 +10,6 @@ public class CourseDTOWithIdTitleStatus {
         this.courseState = courseState;
     }
 
-    public String getCourseTitle() {
-        return courseTitle;
-    }
-
-    public String getCourseIdentifier() {
-        return courseIdentifier;
-    }
-
-    public String getCourseState() {
-        return courseState;
-    }
-
     @Override
     public String toString() {
         return courseTitle + " - " + courseIdentifier + "(Current Status : " + courseState + ")"  ;
