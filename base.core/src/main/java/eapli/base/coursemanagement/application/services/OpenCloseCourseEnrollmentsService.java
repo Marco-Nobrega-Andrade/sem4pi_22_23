@@ -22,7 +22,7 @@ public class OpenCloseCourseEnrollmentsService {
     }
 
     public void changeStatus(CourseDTOWithIdTitleStatus selectedCourseDTO, String newStatus){
-        Course course = CourseMapper.toCourse(new CourseIdentifier(selectedCourseDTO.getCourseIdentifier()), courseRepository);
+        Course course = CourseMapper.toCourse(new CourseIdentifier(selectedCourseDTO.courseIdentifier), courseRepository);
         course.changeStatus(newStatus);
         courseRepository.save(course);
     }
