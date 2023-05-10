@@ -110,11 +110,7 @@ UI -> CTRL : changeStatus(selectedCourseDTO, newStatus)
 activate CTRL
 CTRL -> OCESv : changeStatus(selectedCourseDTO, newStatus)
 activate OCESv
-OCESv -> cDTO : getCourseIdentifier()
-activate cDTO
-cDTO --> OCESv : courseId
-deactivate cDTO
-OCESv -> CI : create(courseId)
+OCESv -> CI : create(selectedCourseDTO.courseIdentifier)
 OCESv -> CM : toCourse(courseIdentifier, courseRepository)
 activate CM
 CM -> CR : ofIdentity(courseIdentifier)
