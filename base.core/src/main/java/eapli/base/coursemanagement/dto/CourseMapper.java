@@ -14,8 +14,8 @@ public class CourseMapper{
                 .buildWithIdTitleStatus();
     }
 
-    public static Course toCourse(CourseDTOWithIdTitleStatus courseDTOWithIdTitleStatus, CourseRepository courseRepository){
-        return courseRepository.ofIdentity(new CourseIdentifier(courseDTOWithIdTitleStatus.courseIdentifier)).get();
+    public static Course toCourse(CourseIdentifier courseIdentifier, CourseRepository courseRepository){
+        return courseRepository.ofIdentity(courseIdentifier).get();
     }
 
     public static CourseDTOWithIdTitle toDTOWithIdTitle(Course course){
