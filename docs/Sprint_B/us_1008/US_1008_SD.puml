@@ -4,12 +4,18 @@ actor Student as ACTOR
 participant RequestEnrollmentUI as UI <<presentation>>
 control RequestEnrollmentController as CONTROLLER <<application>>
 participant RequestEnrollmentService as SERVICE <<application>>
+participant AuthorizationService as AUTHZ_SERVICE <<application>>
 participant CourseMapper as COURSE_MAP <<dto>>
 participant Course as COURSE <<domain>>
 participant CourseIdentifier as COURSE_ID <<domain>>
 participant Enrollment as ENROLL <<domain>>
+participant Student as STUDENT <<domain>>
+participant AuthzRegistry as auth <<application>>
+participant AuthorizationService as authSV <<application>>
+participant UserSession as userSe <<Domain>>
 database CourseRepository as COURSE_REPO <<repository>>
 database EnrollmentRepository as ENROLL_REPO <<repository>>
+database StudentRepository as STUDENT_REPO <<repository>>
 autonumber
 activate ACTOR
 activate UI
@@ -45,34 +51,55 @@ ACTOR -> UI : Student confirms
 UI -> CONTROLLER : createEnrollment(courseDTO)
 activate CONTROLLER
 CONTROLLER -> SERVICE : createEnrollment(courseDTO)
+
 activate SERVICE
 note right SERVICE : Creation of EnrollmentRepository as described in "US_1008_SD_RepositoryCreation"
 note right SERVICE : Creation of StudentRepository as described in "US_1008_SD_RepositoryCreation"
+SERVICE -> auth: authorizationService()
+activate auth
+auth -> SERVICE: authz
+deactivate auth
+SERVICE -> authSV: session()
+activate authSV
+authSV --> SERVICE: userSession
+deactivate authSV
+SERVICE -> userSe: authenticatedUser()
+activate userSe
+userSe --> SERVICE : systemUser
+deactivate userSe
+SERVICE -> STUDENT_REPO : findStudentBySystemUser(systemUser)
+activate STUDENT_REPO
+STUDENT_REPO --> SERVICE : student
+deactivate STUDENT_REPO
+SERVICE -> COURSE_ID : create(courseIdentifier)
+activate COURSE_ID
+deactivate COURSE_ID
+SERVICE -> COURSE_REPO : ofIdentity(courseId)
+activate COURSE_REPO
+deactivate COURSE_REPO
+COURSE_REPO --> SERVICE : course
 SERVICE -> ENROLL_REPO : totalEnrollmentsPersisted()
 activate ENROLL_REPO
 ENROLL_REPO --> SERVICE : total
 deactivate ENROLL_REPO
-SERVICE -> ENROLL : create(id, status)
+SERVICE -> ENROLL : create(id, status, course , student)
 activate ENROLL
 ENROLL --> SERVICE : newEnrollment
 deactivate ENROLL
 SERVICE -> ENROLL_REPO : save(newEnrollment)
 activate ENROLL_REPO
 deactivate ENROLL_REPO
-SERVICE -> COURSE_ID : create(courseIdentifier)
-activate COURSE_ID
-deactivate COURSE_ID
-SERVICE -> COURSE_REPO : ofIdentity(courseId)
-activate COURSE_REPO
-COURSE_REPO --> SERVICE : course
-deactivate COURSE_REPO
 SERVICE -> COURSE :addEnrollment(newEnrollment)
 activate COURSE
 deactivate COURSE
+SERVICE -> STUDENT : addEnrollment(newEnrollment)
+activate STUDENT
+deactivate STUDENT
 SERVICE --> CONTROLLER : operation success
 deactivate SERVICE
 CONTROLLER --> UI : operation success
 deactivate CONTROLLER
 UI --> ACTOR : System informs operation success
+deactivate UI
 deactivate ACTOR
 @enduml
