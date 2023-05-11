@@ -18,7 +18,16 @@ public class Enrollment implements AggregateRoot<EnrollmentId> {
     @ManyToOne
     @JoinColumn
     private Student student;
+
     protected Enrollment() {
+        //only for ORM
+    }
+
+    public Enrollment(EnrollmentId enrollmentId, EnrollmentStatus enrollmentStatus, Course course, Student student) {
+        this.enrollmentId = enrollmentId;
+        this.enrollmentStatus = enrollmentStatus;
+        this.course = course;
+        this.student = student;
     }
 
     @Override
