@@ -12,7 +12,12 @@ public class Enrollment implements AggregateRoot<EnrollmentId> {
     private EnrollmentId enrollmentId;
 
     private EnrollmentStatus enrollmentStatus;
-
+    @ManyToOne
+    @JoinColumn
+    private Course course;
+    @ManyToOne
+    @JoinColumn
+    private Student student;
     protected Enrollment() {
     }
 
@@ -30,5 +35,9 @@ public class Enrollment implements AggregateRoot<EnrollmentId> {
     @Override
     public EnrollmentId identity() {
         return this.enrollmentId;
+    }
+
+    public void changeStatus(String newStatus){
+        this.enrollmentStatus = new EnrollmentStatus(EnrollmentStatusValue.valueOf(newStatus));
     }
 }
