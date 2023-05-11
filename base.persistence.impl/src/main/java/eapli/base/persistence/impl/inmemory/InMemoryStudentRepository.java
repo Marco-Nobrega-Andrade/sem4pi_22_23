@@ -22,7 +22,7 @@ public class InMemoryStudentRepository extends InMemoryDomainRepository<Student,
     }
 
     @Override
-    public List<Student> findStudentBySystemUser(SystemUser systemUser) {
+    public Student findStudentBySystemUser(SystemUser systemUser) {
         return null;
     }
 }

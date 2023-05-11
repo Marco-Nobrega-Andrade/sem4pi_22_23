@@ -18,5 +18,5 @@ public interface StudentRepository extends DomainRepository<MecanographicNumber,
      */
     int findTotalMecanographicNumberByYear(String year);
 
-    List<Student> findStudentBySystemUser(SystemUser systemUser);
+    Student findStudentBySystemUser(SystemUser systemUser);
 }

@@ -33,10 +33,10 @@ public class JpaStudentRepository extends JpaAutoTxRepository<Student, Mecanogra
     }
 
     @Override
-    public List<Student> findStudentBySystemUser(SystemUser systemUser) {
+    public Student findStudentBySystemUser(SystemUser systemUser) {
         TypedQuery<Student> query = createQuery("Select Student from Person.student where Person.SystemUser = :systemUser",
                 Student.class);
         query.setParameter("systemUser", systemUser);
-        return query.getResultList();
+        return query.getSingleResult();
     }
 }
