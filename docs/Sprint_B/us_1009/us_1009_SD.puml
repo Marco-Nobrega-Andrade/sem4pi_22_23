@@ -15,6 +15,7 @@ participant ": EnrollmentStatus" as ES <<Domain>>
 participant ": CourseIdentifier" as CI <<Domain>>
 participant ": MechanographicNumber" as SMN <<Domain>>
 participant ": Course" as C <<Domain>>
+participant ": EnrollmentLimits" as EL <<Domain>>
 database CourseRepository as CR <<Repository>>
 database EnrollmentRepository as ER <<Repository>>
 
@@ -92,6 +93,10 @@ ER --> ARES : enrollmentsAccepted
 deactivate ER
 ARES -> C : verifyIfWillExceedEnrollmentLimits(enrollmentsAccepted)
 activate C
+C -> EL : verifyIfWillExceedEnrollmentLimits(enrollmentsAccepted)
+activate EL
+EL --> C : false
+deactivate EL
 C --> ARES : false
 deactivate C
 ARES -> ER : listStudentsPendingInCourse(course)
@@ -170,6 +175,10 @@ ER --> ARES : enrollmentsAccepted
 deactivate ER
 ARES -> C : verifyIfWillExceedEnrollmentLimits(enrollmentsAccepted)
 activate C
+C -> EL : verifyIfWillExceedEnrollmentLimits(enrollmentsAccepted)
+activate EL
+EL --> C : false
+deactivate EL
 C --> ARES : false
 deactivate C
 deactivate CTRL
