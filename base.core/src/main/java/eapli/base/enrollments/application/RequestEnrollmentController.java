@@ -1,7 +1,7 @@
-package eapli.base.enrollments.aplication;
+package eapli.base.enrollments.application;
 
 import eapli.base.coursemanagement.dto.CourseDTOWithIdTitle;
-import eapli.base.enrollments.aplication.services.RequestEnrollmentService;
+import eapli.base.enrollments.application.services.RequestEnrollmentService;
 
 import java.util.List;
 
