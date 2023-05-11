@@ -50,11 +50,10 @@ public class JpaCourseRepository extends JpaAutoTxRepository<Course, CourseIdent
     public List<Course> findStudentCourses(SystemUser systemUser) {
         TypedQuery<Course> query = createQuery(
                 "SELECT DISTINCT c FROM Course c "
-                        + "JOIN c.enrollmentsList e "
-                        + "JOIN Person p ON e.enrollmentId = p.enrollmentList.enrollmentId"
-                        + "WHERE (c.courseStatus.courseStatusValue = 'OPEN_ENROLLMENTS')"
-                        + "OR (e.enrollmentStatus.enrollmentStatusValue =  'ACCEPTED' "
-                        + "AND p.systemUser = :systemUser)",
+                        + "WHERE (c.courseStatus.courseStatusValue = 'OPEN_ENROLLMENTS' AND NOT (:systemUser IN (SELECT p.systemUser FROM c.enrollmentsList e JOIN Person p ON p.student = e.student "
+                        + "Where (e.enrollmentStatus.enrollmentStatusValue = 'REJECTED')))) "
+                        + "OR (:systemUser IN (SELECT p.systemUser FROM c.enrollmentsList e JOIN Person p ON p.student = e.student "
+                        + "Where (e.enrollmentStatus.enrollmentStatusValue = 'ACCEPTED' AND e.enrollmentStatus.enrollmentStatusValue = 'PENDING')))",
                 Course.class);
         query.setParameter("systemUser", systemUser);
         return query.getResultList();
