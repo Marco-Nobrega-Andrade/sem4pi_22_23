@@ -19,6 +19,8 @@
     <class>eapli.base.courseclasses.domain.Class</class>
     <class>eapli.base.courseclasses.domain.ExtraClass</class>
     <class>eapli.base.coursemanagement.domain.Course</class>
+    <class>eapli.base.meetingmanagement.domain.Meeting</class>
+    <class>eapli.base.meetingmanagement.domain.Invitation</class>
 
     <properties>
       <!--<property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/base"/>-->
