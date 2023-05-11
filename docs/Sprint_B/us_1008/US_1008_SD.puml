@@ -98,9 +98,15 @@ deactivate ENROLL_REPO
 SERVICE -> COURSE :addEnrollment(newEnrollment)
 activate COURSE
 deactivate COURSE
+SERVICE -> COURSE_REPO :save(course)
+activate COURSE_REPO
+deactivate COURSE_REPO
 SERVICE -> STUDENT : addEnrollment(newEnrollment)
 activate STUDENT
 deactivate STUDENT
+SERVICE -> STUDENT_REPO : save(student)
+activate STUDENT_REPO
+deactivate STUDENT_REPO
 SERVICE --> CONTROLLER : operation success
 deactivate SERVICE
 CONTROLLER --> UI : operation success
