@@ -1,0 +1,50 @@
+package eapli.base.meetingmanagement.domain;
+import eapli.base.courseclasses.domain.ScheduledDate;
+import eapli.framework.domain.model.AggregateRoot;
+
+import javax.persistence.*;
+
+@Entity
+public class Meeting implements AggregateRoot<MeetingIdentifier> {
+    @EmbeddedId
+    private MeetingIdentifier idMeeting;
+    private ScheduledDate scheduledDate;
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Invitation invitation;
+
+    public Meeting(MeetingIdentifier idMeeting, ScheduledDate scheduledDate, Invitation invitation) {
+        this.idMeeting = idMeeting;
+        this.scheduledDate = scheduledDate;
+        this.invitation = invitation;
+    }
+
+    protected Meeting() {
+        //for ORM
+    }
+
+    @Override
+    public boolean sameAs(Object other) {
+        if (!(other instanceof Meeting)) {
+            return false;
+        }
+
+        final Meeting that = (Meeting) other;
+
+        return idMeeting.equals(that.idMeeting) && scheduledDate.equals(that.scheduledDate) && invitation.equals(that.invitation);
+    }
+
+    public boolean hasIdentity(MeetingIdentifier id) {
+        return AggregateRoot.super.hasIdentity(id);
+    }
+
+    @Override
+    public MeetingIdentifier identity() {
+        return idMeeting;
+    }
+
+    @Override
+    public int compareTo(MeetingIdentifier other) {
+        return AggregateRoot.super.compareTo(other);
+    }
+
+}
