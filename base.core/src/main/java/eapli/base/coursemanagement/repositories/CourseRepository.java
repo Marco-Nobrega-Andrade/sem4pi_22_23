@@ -15,4 +15,6 @@ public interface CourseRepository extends DomainRepository<CourseIdentifier, Cou
     List<Course> findTeacherCourses(SystemUser systemUser);
 
     List<Course> findStudentCourses(SystemUser systemUser);
+
+    List<Course> listAllCoursesOpenToEnrollments();
 }

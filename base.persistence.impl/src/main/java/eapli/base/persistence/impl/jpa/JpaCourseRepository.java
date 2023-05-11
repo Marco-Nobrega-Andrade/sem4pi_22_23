@@ -59,4 +59,8 @@ public class JpaCourseRepository extends JpaAutoTxRepository<Course, CourseIdent
         query.setParameter("systemUser", systemUser);
         return query.getResultList();
     }
+    @Override
+    public List<Course> listAllCoursesOpenToEnrollments(){
+        return createQuery("SELECT c FROM Course c WHERE c.courseStatus.courseStatusValue = 'OPEN'", Course.class).getResultList();
+    }
 }
