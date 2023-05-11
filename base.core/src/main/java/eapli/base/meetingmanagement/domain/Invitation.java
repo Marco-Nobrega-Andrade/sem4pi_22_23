@@ -1,11 +1,9 @@
 package eapli.base.meetingmanagement.domain;
-
-import eapli.framework.domain.model.DomainEntity;
-
+import eapli.framework.domain.model.AggregateRoot;
 import javax.persistence.*;
 
 @Entity
-public class Invitation implements DomainEntity<InvitationIdentifier> {
+public class Invitation implements AggregateRoot<InvitationIdentifier> {
 
     private ResponseStatus status;
     @EmbeddedId
@@ -36,7 +34,7 @@ public class Invitation implements DomainEntity<InvitationIdentifier> {
 
     @Override
     public int compareTo(InvitationIdentifier other) {
-        return DomainEntity.super.compareTo(other);
+        return AggregateRoot.super.compareTo(other);
     }
 
     @Override
@@ -46,7 +44,7 @@ public class Invitation implements DomainEntity<InvitationIdentifier> {
 
     @Override
     public boolean hasIdentity(InvitationIdentifier id) {
-        return DomainEntity.super.hasIdentity(id);
+        return AggregateRoot.super.hasIdentity(id);
     }
 
 }
