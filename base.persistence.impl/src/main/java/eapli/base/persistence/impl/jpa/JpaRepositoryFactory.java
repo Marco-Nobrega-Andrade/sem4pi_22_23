@@ -114,17 +114,32 @@ public class JpaRepositoryFactory implements RepositoryFactory {
 
     @Override
     public MeetingRepository meetingRepository() {
-        return null;
+        return new JpaMeetingRepository(Application.settings().getPersistenceUnitName());
+    }
+    @Override
+    public MeetingRepository meetingRepository(TransactionalContext autoTx) {
+        return new JpaMeetingRepository(autoTx);
     }
 
     @Override
     public ClassRepository classRepository() {
-        return null;
+        return new JpaClassRepository(Application.settings().getPersistenceUnitName());
+    }
+
+    @Override
+    public ClassRepository classRepository(TransactionalContext autoTx) {
+        return new JpaClassRepository(autoTx);
     }
 
     @Override
     public ExtraClassRepository extraClassRepository() {
-        return null;
+        return new JpaExtraClassRepository(Application.settings().getPersistenceUnitName());
+    }
+
+    @Override
+    public ExtraClassRepository extraClassRepository(TransactionalContext autoTx) {
+        return new JpaExtraClassRepository(autoTx);
+
     }
 
     @Override

@@ -11,5 +11,6 @@ import java.util.Optional;
 
 public interface MeetingRepository extends DomainRepository<MeetingIdentifier, Meeting> {
     public Optional<Meeting> findAllMeetingsWhoMatch(Person person, Date date);
+    public long findTotalNumberOfMeetings();
 
 }

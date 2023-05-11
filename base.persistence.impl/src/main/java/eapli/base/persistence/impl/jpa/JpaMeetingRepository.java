@@ -23,6 +23,11 @@ public class JpaMeetingRepository extends JpaAutoTxRepository<Meeting, MeetingId
                 "idMeeting");
     }
     @Override
+    public long findTotalNumberOfMeetings() {
+        return count();
+    }
+
+    @Override
     public Optional<Meeting> findAllMeetingsWhoMatch(Person person, Date date) {
         final Map<String, Object> params = new HashMap<>();
         params.put("person", person);
