@@ -47,7 +47,7 @@ public class Enrollment implements AggregateRoot<EnrollmentId> {
     }
 
     public boolean changeStatus(String newStatus){
-        if(!enrollmentStatus.returnEnrollmentStatusString().equals(newStatus) && enrollmentStatus.returnEnrollmentStatusString().equals("Pending")){
+        if(!enrollmentStatus.returnEnrollmentStatusString().equalsIgnoreCase(newStatus) && enrollmentStatus.returnEnrollmentStatusString().equalsIgnoreCase("Pending")){
             this.enrollmentStatus = new EnrollmentStatus(EnrollmentStatusValue.valueOf(newStatus));
             return true;
         }
