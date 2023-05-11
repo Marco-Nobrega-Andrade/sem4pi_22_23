@@ -4,7 +4,7 @@ package eapli.base.enrollments.domain;
     Pending --> accepted or Pending --> rejected
     */
 public enum EnrollmentStatusValue{
-    PENDING,
-    ACCEPTED,
-    REJECTED
+    PENDING{ @Override public String toString() { return "Pending"; } },
+    ACCEPTED{ @Override public String toString() { return "Accepted"; } },
+    REJECTED{ @Override public String toString() { return "Rejected"; } }
 }
