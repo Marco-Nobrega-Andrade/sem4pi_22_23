@@ -3,10 +3,12 @@ package eapli.base.enrollments.domain;
 import eapli.framework.domain.model.ValueObject;
 
 
+import javax.persistence.Embeddable;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import java.util.Objects;
 
+@Embeddable
 public class EnrollmentStatus implements ValueObject {
 
     @Enumerated(EnumType.STRING)
