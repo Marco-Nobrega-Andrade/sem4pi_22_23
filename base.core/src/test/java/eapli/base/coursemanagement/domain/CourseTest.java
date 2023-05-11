@@ -25,7 +25,7 @@ public class CourseTest {
     @Test
     public void ensureThatCourseStatusCanChangeToNextState(){
         Course course = new Course(new CourseIdentifier("Id1"), new CourseTitle("Title1"), new CourseName("Name1"), new Description("Desciption1"), new EnrollmentLimits(1,5), new CourseStatus(CourseStatusValue.CLOSE), new Teacher());
-        course.changeStatus("OPEN");
+        assertTrue(course.changeStatus("OPEN"));
     }
 
     @Test
@@ -58,4 +58,20 @@ public class CourseTest {
         COURSE_CLOSED_ENROLLMENTS.changeStatus(OPEN_STATUS);
     }
 
+    @Test(expected = IllegalStateException.class)
+    public void ensureEnrollmentsAboveMaxNotAllowed(){
+        Course course = new Course(new CourseIdentifier("Id1"), new CourseTitle("Title1"), new CourseName("Name1"), new Description("Desciption1"), new EnrollmentLimits(1,5), new CourseStatus(CourseStatusValue.CLOSE), new Teacher());
+        course.verifyIfWillExceedEnrollmentLimits(7);
+    }
+    @Test
+    public void ensureEnrollmentsBelowMaxAreAllowed(){
+        Course course = new Course(new CourseIdentifier("Id1"), new CourseTitle("Title1"), new CourseName("Name1"), new Description("Desciption1"), new EnrollmentLimits(1,5), new CourseStatus(CourseStatusValue.CLOSE), new Teacher());
+        assertFalse(course.verifyIfWillExceedEnrollmentLimits(3));
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void ensureEnrollmentsAtMaxAreNotwAllowed(){
+        Course course = new Course(new CourseIdentifier("Id1"), new CourseTitle("Title1"), new CourseName("Name1"), new Description("Desciption1"), new EnrollmentLimits(1,3), new CourseStatus(CourseStatusValue.CLOSE), new Teacher());
+        assertFalse(course.verifyIfWillExceedEnrollmentLimits(3));
+    }
 }
