@@ -114,4 +114,9 @@ public class Course implements AggregateRoot<CourseIdentifier> {
     public boolean verifyIfWillExceedEnrollmentLimits(int enrollmentsAccepted){
         return enrollmentLimits.verifyIfWillExceedEnrollmentLimits(enrollmentsAccepted);
     }
+
+    public boolean addEnrollment(Enrollment newEnrollment) {
+        enrollmentsList.add(newEnrollment);
+        return true;
+    }
 }

@@ -89,4 +89,9 @@ public class Student implements AggregateRoot<MecanographicNumber> {
     public String returnMechanographicNumberString(){
         return mecanographicNumber.toString();
     }
+
+    public boolean addEnrollment(Enrollment newEnrollment) {
+        enrollmentList.add(newEnrollment);
+        return true;
+    }
 }
