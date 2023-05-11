@@ -1,8 +1,7 @@
 package eapli.base.persistence.impl.jpa;
 
 import eapli.base.Application;
-import eapli.base.coursemanagement.repositories.CourseRepository;
-import eapli.base.enrollments.EnrollmentRepository;
+import eapli.base.enrollments.repositories.EnrollmentRepository;
 import eapli.base.enrollments.domain.Enrollment;
 import eapli.base.enrollments.domain.EnrollmentId;
 import eapli.framework.domain.repositories.TransactionalContext;

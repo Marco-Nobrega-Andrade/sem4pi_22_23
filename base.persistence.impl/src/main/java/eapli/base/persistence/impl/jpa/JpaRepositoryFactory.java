@@ -23,7 +23,7 @@ package eapli.base.persistence.impl.jpa;
 import eapli.base.Application;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
 import eapli.base.coursemanagement.repositories.CourseRepository;
-import eapli.base.enrollments.EnrollmentRepository;
+import eapli.base.enrollments.repositories.EnrollmentRepository;
 import eapli.base.infrastructure.persistence.RepositoryFactory;
 import eapli.base.usermanagement.repositories.PersonRepository;
 import eapli.base.usermanagement.repositories.StudentRepository;
