@@ -83,7 +83,7 @@ SERVICE -> ENROLL_REPO : totalEnrollmentsPersisted()
 activate ENROLL_REPO
 ENROLL_REPO --> SERVICE : total
 deactivate ENROLL_REPO
-SERVICE -> ENROLL_FAC : buildEnrollment(enrollmentId,status,course,student)
+SERVICE -> ENROLL_FAC : buildEnrollment(enrollmentId,course,student)
 activate ENROLL_FAC
 ENROLL_FAC -> ENROLL : create(enrollmentId,status,course,student)
 activate ENROLL
