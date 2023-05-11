@@ -5,9 +5,11 @@ import eapli.base.usermanagement.domain.MecanographicNumber;
 import eapli.base.usermanagement.domain.Student;
 import eapli.base.usermanagement.repositories.StudentRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
+import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
 import javax.persistence.TypedQuery;
+import java.util.List;
 
 public class JpaStudentRepository extends JpaAutoTxRepository<Student, MecanographicNumber,MecanographicNumber> implements StudentRepository {
 
@@ -28,5 +30,13 @@ public class JpaStudentRepository extends JpaAutoTxRepository<Student, Mecanogra
         query.setParameter("year", year);
         return Math.toIntExact(query.getSingleResult());
 
+    }
+
+    @Override
+    public List<Student> findStudentBySystemUser(SystemUser systemUser) {
+        TypedQuery<Student> query = createQuery("Select Student from Person.student where Person.SystemUser = :systemUser",
+                Student.class);
+        query.setParameter("systemUser", systemUser);
+        return query.getResultList();
     }
 }

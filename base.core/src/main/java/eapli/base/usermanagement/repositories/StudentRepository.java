@@ -3,6 +3,9 @@ package eapli.base.usermanagement.repositories;
 import eapli.base.usermanagement.domain.MecanographicNumber;
 import eapli.base.usermanagement.domain.Student;
 import eapli.framework.domain.repositories.DomainRepository;
+import eapli.framework.infrastructure.authz.domain.model.SystemUser;
+
+import java.util.List;
 
 public interface StudentRepository extends DomainRepository<MecanographicNumber, Student> {
 
@@ -14,4 +17,6 @@ public interface StudentRepository extends DomainRepository<MecanographicNumber,
      * @return
      */
     int findTotalMecanographicNumberByYear(String year);
+
+    List<Student> findStudentBySystemUser(SystemUser systemUser);
 }

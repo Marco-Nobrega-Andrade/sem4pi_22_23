@@ -2,7 +2,10 @@ package eapli.base.persistence.impl.inmemory;
 
 import eapli.base.usermanagement.domain.*;
 import eapli.base.usermanagement.repositories.StudentRepository;
+import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
+
+import java.util.List;
 
 public class InMemoryStudentRepository extends InMemoryDomainRepository<Student, MecanographicNumber>
         implements StudentRepository {
@@ -16,5 +19,10 @@ public class InMemoryStudentRepository extends InMemoryDomainRepository<Student,
             }
         }
         return  i;
+    }
+
+    @Override
+    public List<Student> findStudentBySystemUser(SystemUser systemUser) {
+        return null;
     }
 }
