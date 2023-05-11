@@ -73,12 +73,9 @@ deactivate UI
 
 MGR -> UI : picks a course
 activate UI
-
-
-UI -> CTRL : listStudentsPendingInCourse(courseDTO)
+UI -> CTRL : verifyIfWillExceedEnrollmentLimits(courseDTO)
 activate CTRL
-
-CTRL -> ARES : listStudentsPendingInCourse(courseDTO)
+CTRL -> ARES : verifyIfWillExceedEnrollmentLimits(courseDTO)
 activate ARES
 ARES -> CI : create(courseDTO.courseIdentifier)
 activate CI
@@ -99,7 +96,19 @@ EL --> C : false
 deactivate EL
 C --> ARES : false
 deactivate C
-ARES -> ER : listStudentsPendingInCourse(course)
+deactivate CTRL
+deactivate ARES
+
+UI -> CTRL : listStudentsPendingInCourse(courseDTO)
+activate CTRL
+
+CTRL -> ARES : listStudentsPendingInCourse(courseDTO)
+activate ARES
+ARES -> CI : create(courseDTO.courseIdentifier)
+activate CI
+deactivate CI
+
+ARES -> ER : listStudentsPendingInCourse(CourseIdentifier)
 activate ER
 ER --> ARES : studentList
 deactivate ER
