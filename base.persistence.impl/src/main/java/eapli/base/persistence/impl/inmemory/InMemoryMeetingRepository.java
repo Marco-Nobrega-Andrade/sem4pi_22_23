@@ -1,22 +1,22 @@
 package eapli.base.persistence.impl.inmemory;
 
-import eapli.base.usermanagement.domain.ID_Person;
+import eapli.base.courseclasses.domain.Date;
+import eapli.base.meetingmanagement.domain.Meeting;
+import eapli.base.meetingmanagement.domain.MeetingIdentifier;
+import eapli.base.meetingmanagement.repositories.MeetingRepository;
 import eapli.base.usermanagement.domain.Person;
-import eapli.base.usermanagement.repositories.PersonRepository;
-import eapli.framework.general.domain.model.EmailAddress;
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
 
 import java.util.Optional;
 
-public class InMemoryMeetingRepository extends InMemoryDomainRepository<Person, ID_Person>
-        implements PersonRepository {
+public class InMemoryMeetingRepository extends InMemoryDomainRepository<Meeting, MeetingIdentifier>
+        implements MeetingRepository {
     @Override
-    public int findTotalNumberOfPerson() {
-        return 0;
-    }
-
-    @Override
-    public Optional<Person> findAllPersonsWhoMatch(EmailAddress email) {
+    public Optional<Meeting> findAllMeetingsWhoMatch(Person person, Date date) {
         return Optional.empty();
+    }
+    @Override
+    public long findTotalNumberOfMeetings() {
+        return 0;
     }
 }

@@ -114,17 +114,32 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
 
     @Override
     public MeetingRepository meetingRepository() {
-        return null;
+        return meetingRepository(null);
+    }
+
+    @Override
+    public MeetingRepository meetingRepository(TransactionalContext autoTx) {
+        return new InMemoryMeetingRepository();
     }
 
     @Override
     public ClassRepository classRepository() {
-        return null;
+        return classRepository(null);
+    }
+
+    @Override
+    public ClassRepository classRepository(TransactionalContext autoTx) {
+        return new InMemoryClassRepository();
     }
 
     @Override
     public ExtraClassRepository extraClassRepository() {
-        return null;
+        return extraClassRepository(null);
+    }
+
+    @Override
+    public ExtraClassRepository extraClassRepository(TransactionalContext autoTx) {
+        return new InMemoryExtraClassRepository();
     }
 
     @Override
