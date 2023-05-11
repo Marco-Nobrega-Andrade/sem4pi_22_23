@@ -85,4 +85,8 @@ public class Student implements AggregateRoot<MecanographicNumber> {
     public boolean hasIdentity(MecanographicNumber id) {
         return AggregateRoot.super.hasIdentity(id);
     }
+
+    public String returnMechanographicNumberString(){
+        return mecanographicNumber.toString();
+    }
 }
