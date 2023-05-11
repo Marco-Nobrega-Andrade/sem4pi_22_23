@@ -41,4 +41,11 @@ public class EnrollmentLimits implements ValueObject {
     public int hashCode() {
         return Objects.hash(minEnrollments, maxEnrollments);
     }
+
+    public boolean verifyIfWillExceedEnrollmentLimits(int enrollmentsAccepted){
+        if(enrollmentsAccepted < maxEnrollments){
+            return false;
+        }
+        throw new IllegalStateException("Maximum number of enrollments has been reached already!");
+    }
 }
