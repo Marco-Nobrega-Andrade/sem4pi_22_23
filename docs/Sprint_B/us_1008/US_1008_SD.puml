@@ -8,6 +8,7 @@ participant AuthorizationService as AUTHZ_SERVICE <<application>>
 participant CourseMapper as COURSE_MAP <<dto>>
 participant Course as COURSE <<domain>>
 participant CourseIdentifier as COURSE_ID <<domain>>
+participant EnrollmentFactory as ENROLL_FAC <<doamin>>
 participant Enrollment as ENROLL <<domain>>
 participant Student as STUDENT <<domain>>
 participant AuthzRegistry as auth <<application>>
@@ -82,9 +83,14 @@ SERVICE -> ENROLL_REPO : totalEnrollmentsPersisted()
 activate ENROLL_REPO
 ENROLL_REPO --> SERVICE : total
 deactivate ENROLL_REPO
-SERVICE -> ENROLL : create(id, status, course , student)
+SERVICE -> ENROLL_FAC : buildEnrollment(enrollmentId,status,course,student)
+activate ENROLL_FAC
+ENROLL_FAC -> ENROLL : create(enrollmentId,status,course,student)
 activate ENROLL
-ENROLL --> SERVICE : newEnrollment
+deactivate ENROLL
+ENROLL_FAC --> SERVICE : newEnrollment
+deactivate ENROLL_FAC
+
 deactivate ENROLL
 SERVICE -> ENROLL_REPO : save(newEnrollment)
 activate ENROLL_REPO
