@@ -23,6 +23,7 @@ package eapli.base.infrastructure.persistence;
 import eapli.base.clientusermanagement.repositories.ClientUserRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
 import eapli.base.coursemanagement.repositories.CourseRepository;
+import eapli.base.enrollments.EnrollmentRepository;
 import eapli.base.usermanagement.repositories.PersonRepository;
 import eapli.base.usermanagement.repositories.StudentRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
@@ -131,5 +132,20 @@ public interface RepositoryFactory {
      * @return
      */
     CourseRepository courseRepository();
+
+    /**
+     *
+     * @param autoTx
+     *            the transactional context to enroll
+     * @return
+     */
+    EnrollmentRepository enrollmentRepository(TransactionalContext autoTx);
+
+    /**
+     * repository will be created in auto transaction mode
+     *
+     * @return
+     */
+    EnrollmentRepository enrollmentRepository();
 
 }
