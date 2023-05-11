@@ -9,18 +9,13 @@ import java.util.Objects;
 
 public class EnrollmentStatus implements ValueObject {
 
-    enum EnrollmentStatusValue{
-        PENDING,
-        ACCEPTED,
-        REJECTED
-    }
     @Enumerated(EnumType.STRING)
     private EnrollmentStatusValue enrollmentStatusValue;
 
     public EnrollmentStatus(EnrollmentStatusValue enrollmentStatusValue) {
         this.enrollmentStatusValue = enrollmentStatusValue;
     }
-
+    
     public EnrollmentStatus() {
     }
 
