@@ -31,4 +31,8 @@ public class EnrollmentStatus implements ValueObject {
     public int hashCode() {
         return Objects.hash(enrollmentStatusValue);
     }
+
+    public String returnEnrollmentStatusString(){
+        return enrollmentStatusValue.toString();
+    }
 }

@@ -46,7 +46,15 @@ public class Enrollment implements AggregateRoot<EnrollmentId> {
         return this.enrollmentId;
     }
 
-    public void changeStatus(String newStatus){
-        this.enrollmentStatus = new EnrollmentStatus(EnrollmentStatusValue.valueOf(newStatus));
+    public boolean changeStatus(String newStatus){
+        if(!enrollmentStatus.returnEnrollmentStatusString().equals(newStatus) && enrollmentStatus.returnEnrollmentStatusString().equals("Pending")){
+            this.enrollmentStatus = new EnrollmentStatus(EnrollmentStatusValue.valueOf(newStatus));
+            return true;
+        }
+        throw new IllegalArgumentException("The status of the enrollment cannot change to that one!");
+    }
+
+    public String returnEnrollmentStatusString(){
+        return enrollmentStatus.returnEnrollmentStatusString();
     }
 }
