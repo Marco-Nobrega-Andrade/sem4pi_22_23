@@ -28,9 +28,13 @@ CONTROLLER -> SERVICE : create()
 activate SERVICE
 note right : Creation of CourseRepository as described in "US_1008_SD_RepositoryCreation"
 deactivate SERVICE
+deactivate CONTROLLER
+
+UI -> CONTROLLER : listAllStudentAvailableCourses()
+activate CONTROLLER
 CONTROLLER -> SERVICE : listAllStudentAvailableCourses()
 activate SERVICE
-SERVICE -> COURSE_REPO : listAllStudentAvailableCourses()
+SERVICE -> COURSE_REPO : listAllCoursesOpenToEnrollments()
 activate COURSE_REPO
 COURSE_REPO --> SERVICE : courseList
 deactivate COURSE_REPO
