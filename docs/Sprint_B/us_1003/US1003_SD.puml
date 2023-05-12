@@ -14,7 +14,7 @@ participant "<<Domain>>\ncourse:Course" as C
 participant "<<Domain>>:\nCourseTitle" as CT
 participant "<<Domain>>:\nCourseIdentifier" as CI
 participant "<<Domain>>:\nCourseStatus" as CS
-participant "<<DTO>>\ncourseDTO:CourseDTO\nWithIdTitleStatus" as cDTO
+participant "<<DTO>>\ncourseDTO:\nCourseDTOWithIdTitleStatus" as cDTO
 
 M -> UI : The manager initializes the process\n of open/close the course enrollments
 activate M
@@ -87,10 +87,10 @@ activate cDTOBuilder
 cDTOBuilder -> cDTO : create()
 cDTOBuilder --> CM : courseDTOWithIdTitleStatus
 deactivate cDTOBuilder
-CM --> OCESv : statusCourseDTO
+CM --> OCESv : courseDTOWithIdTitleStatus
 deactivate CM
 deactivate CM
-OCESv -> cDtoL : add(courseDTO)
+OCESv -> cDtoL : add(courseDTOWithIdTitleStatus)
 activate cDtoL
 deactivate cDtoL
 end loop
