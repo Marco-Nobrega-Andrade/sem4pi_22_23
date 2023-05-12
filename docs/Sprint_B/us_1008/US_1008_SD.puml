@@ -81,9 +81,14 @@ activate COURSE_ID
 deactivate COURSE_ID
 SERVICE -> COURSE_REPO : ofIdentity(courseId)
 activate COURSE_REPO
-deactivate COURSE_REPO
 COURSE_REPO --> SERVICE : course
-SERVICE -> ENROLL_REPO : totalEnrollmentsPersisted()
+deactivate COURSE_REPO
+SERVICE -> ENROLL_REPO : findEnrollmentByCourseIDAndMechNumber(courseId, mechNumber)
+activate ENROLL_REPO
+ENROLL_REPO --> SERVICE : enrollment
+alt if no enrollment found
+deactivate ENROLL_REPO
+SERVICE -> ENROLL_REPO : count()
 activate ENROLL_REPO
 ENROLL_REPO --> SERVICE : total
 deactivate ENROLL_REPO
@@ -94,7 +99,6 @@ activate ENROLL
 deactivate ENROLL
 ENROLL_FAC --> SERVICE : newEnrollment
 deactivate ENROLL_FAC
-
 deactivate ENROLL
 SERVICE -> ENROLL_REPO : save(newEnrollment)
 activate ENROLL_REPO
@@ -111,6 +115,7 @@ deactivate STUDENT
 SERVICE -> STUDENT_REPO : save(student)
 activate STUDENT_REPO
 deactivate STUDENT_REPO
+end alt
 SERVICE --> CONTROLLER : operation success
 deactivate SERVICE
 CONTROLLER --> UI : operation success
