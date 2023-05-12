@@ -47,7 +47,7 @@ public class JpaEnrollmentRepository extends JpaAutoTxRepository<Enrollment, Enr
 
     @Override
     public Enrollment findEnrollmentByCourseIDAndMechNumber(CourseIdentifier courseId, MecanographicNumber mechNumber) {
-        TypedQuery<Enrollment> query = createQuery("Select e from Enrollment e WHERE e.course.courseId =: courseIdentifier AND e.student.mechanographicNumber =: mechNumber", Enrollment.class);
+        TypedQuery<Enrollment> query = createQuery("Select e from Enrollment e WHERE e.course.courseId =: courseIdentifier AND e.student.mecanographicNumber =: mechNumber", Enrollment.class);
         query.setParameter("courseIdentifier", courseId);
         query.setParameter("mechNumber", mechNumber);
         return query.getSingleResult();
