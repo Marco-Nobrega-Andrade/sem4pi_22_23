@@ -25,6 +25,7 @@ package eapli.base.app.user.console.presentation;
 
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
 import eapli.base.app.common.console.presentation.course.ListCourseAction;
+import eapli.base.app.user.console.presentation.enrollment.RequestEnrollmentAction;
 import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
@@ -56,6 +57,9 @@ class MainMenu extends ClientUserBaseUI {
 
     // COURSE MENU
     private static final int LIST_COURSE_OPTION = 1;
+
+    private static final int REQUEST_ENROLLMENT = 2;
+
 
     private final AuthorizationService authz =
             AuthzRegistry.authorizationService();
@@ -97,6 +101,7 @@ class MainMenu extends ClientUserBaseUI {
         final Menu courseMenu = new Menu("Course  >");
 
         courseMenu.addItem(LIST_COURSE_OPTION,"List Course", new ListCourseAction());
+        courseMenu.addItem(REQUEST_ENROLLMENT,"Request Enrollment", new RequestEnrollmentAction());
         courseMenu.addItem(EXIT_OPTION, "Return", Actions.SUCCESS);
 
         return courseMenu;
