@@ -12,7 +12,10 @@ import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
 import javax.persistence.TypedQuery;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 public class JpaEnrollmentRepository extends JpaAutoTxRepository<Enrollment, EnrollmentId, EnrollmentId> implements EnrollmentRepository {
     public JpaEnrollmentRepository(final TransactionalContext autoTx) {
@@ -46,11 +49,11 @@ public class JpaEnrollmentRepository extends JpaAutoTxRepository<Enrollment, Enr
     }
 
     @Override
-    public Enrollment findEnrollmentByCourseIDAndMechNumber(CourseIdentifier courseId, MecanographicNumber mechNumber) {
-        TypedQuery<Enrollment> query = createQuery("Select e from Enrollment e WHERE e.course.courseId =: courseIdentifier AND e.student.mecanographicNumber =: mechNumber", Enrollment.class);
-        query.setParameter("courseIdentifier", courseId);
-        query.setParameter("mechNumber", mechNumber);
-        return query.getSingleResult();
+    public Optional<Enrollment> findEnrollmentByCourseIDAndMechNumber(CourseIdentifier courseId, MecanographicNumber mechNumber) {
+        final Map<String, Object> params = new HashMap<>();
+        params.put("courseIdentifier", courseId);
+        params.put("mechNumber", mechNumber);
+        return matchOne(" e.course.courseId =: courseIdentifier AND e.student.mecanographicNumber =: mechNumber",params);
     }
 
 }

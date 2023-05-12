@@ -9,6 +9,7 @@ import eapli.base.usermanagement.domain.Student;
 import eapli.framework.domain.repositories.DomainRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface EnrollmentRepository extends DomainRepository<EnrollmentId, Enrollment> {
     public List<Course> listCoursesWithEnrollments();
@@ -17,5 +18,5 @@ public interface EnrollmentRepository extends DomainRepository<EnrollmentId, Enr
 
     public List<Student> listStudentsPendingInCourse(CourseIdentifier courseId);
 
-    public Enrollment findEnrollmentByCourseIDAndMechNumber(CourseIdentifier courseId, MecanographicNumber mechNumber);
+    public Optional<Enrollment> findEnrollmentByCourseIDAndMechNumber(CourseIdentifier courseId, MecanographicNumber mechNumber);
 }

@@ -17,6 +17,7 @@ import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class RequestEnrollmentService {
 
@@ -43,6 +44,10 @@ public class RequestEnrollmentService {
 
         CourseIdentifier courseId = new CourseIdentifier(courseDTO.courseIdentifier);
         Course course = courseRepo.ofIdentity(courseId).get();
+
+        if(enrollmentRepo.findEnrollmentByCourseIDAndMechNumber(courseId,student.identity()).isPresent()){
+            throw new IllegalArgumentException("Couldn't create enrollment. You already have requested an enrollment for this course");
+        }
 
         long totalEnrollments = enrollmentRepo.count();
 

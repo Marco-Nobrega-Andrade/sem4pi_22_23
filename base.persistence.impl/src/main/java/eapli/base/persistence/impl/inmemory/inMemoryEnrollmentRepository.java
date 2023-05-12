@@ -10,6 +10,7 @@ import eapli.base.usermanagement.domain.Student;
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public class inMemoryEnrollmentRepository extends InMemoryDomainRepository<Enrollment, EnrollmentId> implements EnrollmentRepository {
     @Override
@@ -28,7 +29,7 @@ public class inMemoryEnrollmentRepository extends InMemoryDomainRepository<Enrol
     }
 
     @Override
-    public Enrollment findEnrollmentByCourseIDAndMechNumber(CourseIdentifier courseId, MecanographicNumber mechNumber) {
+    public Optional<Enrollment> findEnrollmentByCourseIDAndMechNumber(CourseIdentifier courseId, MecanographicNumber mechNumber) {
         return null;
     }
 }

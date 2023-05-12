@@ -40,7 +40,7 @@ public class ApproveRejectEnrollmentService {
     }
 
     public void changeEnrollmentStatus(CourseDTOWithIdTitle courseDTO, StudentDTOWithMechNumber studentDTO, String newStatus){
-        Enrollment enrollment = enrollmentRepository.findEnrollmentByCourseIDAndMechNumber(new CourseIdentifier(courseDTO.courseIdentifier), new MecanographicNumber(studentDTO.mechanographicNumber));
+        Enrollment enrollment = enrollmentRepository.findEnrollmentByCourseIDAndMechNumber(new CourseIdentifier(courseDTO.courseIdentifier), new MecanographicNumber(studentDTO.mechanographicNumber)).get();
         enrollment.changeStatus(newStatus);
         enrollmentRepository.save(enrollment);
     }
