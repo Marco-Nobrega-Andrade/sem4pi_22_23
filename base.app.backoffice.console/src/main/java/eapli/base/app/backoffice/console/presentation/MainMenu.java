@@ -26,6 +26,8 @@ package eapli.base.app.backoffice.console.presentation;
 import eapli.base.app.backoffice.console.presentation.course.CreateCourseAction;
 import eapli.base.app.backoffice.console.presentation.course.OpenCloseCourseAction;
 import eapli.base.app.backoffice.console.presentation.course.OpenCloseCourseEnrollmentsAction;
+import eapli.base.app.backoffice.console.presentation.enrollment.ApproveRejectEnrollmentAction;
+import eapli.base.app.backoffice.console.presentation.enrollment.ApproveRejectEnrollmentUI;
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
 import eapli.base.Application;
 import eapli.base.app.backoffice.console.presentation.authz.AddUserUI;
@@ -71,14 +73,9 @@ public class MainMenu extends AbstractUI {
     private static final int CREATE_COURSE_OPTION = 1;
     private static final int OPEN_CLOSE_COURSE_OPTION = 2;
     private static final int OPEN_CLOSE_COURSE_ENROLLMENTS_OPTION = 3;
-    private static final int LIST_COURSE_OPTION = 4;
-    // DISHES
-    private static final int DISH_REGISTER_OPTION = 5;
-    private static final int DISH_LIST_OPTION = 6;
-    private static final int DISH_REGISTER_DTO_OPTION = 7;
-    private static final int DISH_LIST_DTO_OPTION = 8;
-    private static final int DISH_ACTIVATE_DEACTIVATE_OPTION = 9;
-    private static final int DISH_CHANGE_OPTION = 10;
+    private static final int APPROVE_REJECT_ENROLLMENT = 4;
+    private static final int LIST_COURSE_OPTION = 5;
+
 
     // DISH PROPERTIES
     private static final int CHANGE_DISH_NUTRICIONAL_INFO_OPTION = 1;
@@ -101,10 +98,7 @@ public class MainMenu extends AbstractUI {
     private static final int MY_USER_OPTION = 1;
     private static final int USERS_OPTION = 2;
     private static final int COURSE_OPTION = 3;
-    private static final int SETTINGS_OPTION = 4;
-    private static final int TRACEABILITY_OPTION = 6;
-    private static final int MEALS_OPTION = 7;
-    private static final int REPORTING_DISHES_OPTION = 8;
+    private static final int SETTINGS_OPTION = 4;;
 
     private static final String SEPARATOR_LABEL = "--------------";
 
@@ -172,6 +166,7 @@ public class MainMenu extends AbstractUI {
         menu.addItem(CREATE_COURSE_OPTION,"Create course",new CreateCourseAction());
         menu.addItem(OPEN_CLOSE_COURSE_OPTION, "Open/Close course",new OpenCloseCourseAction());
         menu.addItem(OPEN_CLOSE_COURSE_ENROLLMENTS_OPTION, "Open/Close Course Enrollments", new OpenCloseCourseEnrollmentsAction());
+        menu.addItem(APPROVE_REJECT_ENROLLMENT, "Accept/Reject Enrollment", new ApproveRejectEnrollmentAction());
         menu.addItem(LIST_COURSE_OPTION,"List Course", new ListCourseAction());
         menu.addItem(EXIT_OPTION,RETURN_LABEL,Actions.SUCCESS);
 
@@ -200,9 +195,4 @@ public class MainMenu extends AbstractUI {
 
         return menu;
     }
-
-
-
-
-
 }
