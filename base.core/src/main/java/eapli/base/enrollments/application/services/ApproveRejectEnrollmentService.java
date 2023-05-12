@@ -1,4 +1,4 @@
-package eapli.base.enrollments.application;
+package eapli.base.enrollments.application.services;
 
 import eapli.base.coursemanagement.domain.Course;
 import eapli.base.coursemanagement.domain.CourseIdentifier;
