@@ -1,6 +1,7 @@
 package eapli.base.enrollments.application;
 
 import eapli.base.coursemanagement.dto.CourseDTOWithIdTitle;
+import eapli.base.enrollments.application.services.ApproveRejectEnrollmentService;
 import eapli.base.usermanagement.dto.StudentDTOWithMechNumber;
 
 import java.util.List;
