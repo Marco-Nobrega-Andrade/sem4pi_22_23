@@ -26,28 +26,28 @@ public class JpaEnrollmentRepository extends JpaAutoTxRepository<Enrollment, Enr
 
     @Override
     public List<Course> listCoursesWithEnrollments() {
-        TypedQuery<Course> query = createQuery("Select Distinct e.Course from Enrollment e",
+        TypedQuery<Course> query = createQuery("Select Distinct e.course from Enrollment e",
                 Course.class);
         return query.getResultList();
     }
 
     @Override
     public int getNumberOfEnrollmentsAcceptedByCourse(Course course){
-        TypedQuery<Long> query = createQuery("Select COUNT e from Enrollment e WHERE e.EnrollmentStatus = 'ACCEPTED' AND e.course := courseVariable", Long.class);
+        TypedQuery<Long> query = createQuery("Select COUNT e from Enrollment e WHERE e.enrollmentStatus = 'ACCEPTED' AND e.course =: courseVariable", Long.class);
         query.setParameter("courseVariable", course);
         return Math.toIntExact(query.getSingleResult());
     }
 
     @Override
     public List<Student> listStudentsPendingInCourse(CourseIdentifier courseId) {
-        TypedQuery<Student> query = createQuery("Select e.Student from Enrollment e WHERE e.EnrollmentStatus = 'PENDING' AND e.course.courseId := courseIdentifier", Student.class);
+        TypedQuery<Student> query = createQuery("Select e.student from enrollment e WHERE e.enrollmentStatus = 'PENDING' AND e.course.courseId =: courseIdentifier", Student.class);
         query.setParameter("courseIdentifier", courseId);
         return query.getResultList();
     }
 
     @Override
     public Enrollment findEnrollmentByCourseIDAndMechNumber(CourseIdentifier courseId, MecanographicNumber mechNumber) {
-        TypedQuery<Enrollment> query = createQuery("Select e from Enrollment e WHERE e.course.courseId :=courseIdentifier AND e.Student.mechanographicNumber := mechNumber", Enrollment.class);
+        TypedQuery<Enrollment> query = createQuery("Select e from Enrollment e WHERE e.course.courseId =: courseIdentifier AND e.student.mechanographicNumber =: mechNumber", Enrollment.class);
         query.setParameter("courseIdentifier", courseId);
         query.setParameter("mechNumber", mechNumber);
         return query.getSingleResult();
