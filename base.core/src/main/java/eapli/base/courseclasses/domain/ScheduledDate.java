@@ -21,6 +21,10 @@ public class ScheduledDate implements ValueObject {
         //Only for ORM
     }
 
+    public boolean compareIfScheduleClassIsOneWeekAfter(ScheduledDate scheduledDate){
+        return scheduledDate.duration.equals(duration) && scheduledDate.date.compareDayOfTheWeekAndTime(date);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -2,9 +2,7 @@ package eapli.base.courseclasses.domain;
 
 import eapli.framework.domain.model.ValueObject;
 
-import javax.persistence.Column;
 import javax.persistence.ElementCollection;
-import javax.persistence.Embeddable;
 import java.util.*;
 
 
@@ -14,11 +12,17 @@ public class WeeklyDate implements ValueObject {
     private List<ScheduledDate> scheduledDates;
 
     public WeeklyDate(List<ScheduledDate>  scheduledDates) {
-        if(scheduledDates != null) {
-            this.scheduledDates = scheduledDates;
-        }else{
-            this.scheduledDates = new ArrayList<>();
+        if(scheduledDates == null) {
+            throw new IllegalArgumentException("Schedules list cannot be null");
+        }else if (scheduledDates.isEmpty()){
+            throw new IllegalArgumentException("Schedules list cannot be empty");
         }
+        for(int i = 0; i < scheduledDates.size()-1;i++){
+            if (!scheduledDates.get(i).compareIfScheduleClassIsOneWeekAfter(scheduledDates.get(i+1))){
+                throw new IllegalArgumentException("Schedules dates have to be in the same day of the week and at the same time");
+            }
+        }
+        this.scheduledDates = scheduledDates;
     }
 
     protected WeeklyDate() {
