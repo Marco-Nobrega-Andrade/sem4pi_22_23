@@ -52,9 +52,7 @@ public class Acronym implements ValueObject, Comparable<Acronym> {
 
     @Override
     public String toString() {
-        return "Acronym{" +
-                "acronym='" + acronym + '\'' +
-                '}';
+        return acronym;
     }
 
     @Override
