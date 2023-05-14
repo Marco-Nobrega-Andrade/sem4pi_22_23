@@ -5,7 +5,6 @@ autonumber
 
 participant CreateClassService as service <<application>>
 participant Course as course <<domain>>
-participant WeeklyDate as weeklyDate <<domain>>
 participant ExtraClass as extraClass <<domain>>
 participant ScheduledDate as scheduleDate <<domain>>
 
