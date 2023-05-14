@@ -38,8 +38,12 @@ public class Date implements ValueObject {
         int hour2 = cal2.get(Calendar.HOUR_OF_DAY);
         int minute2 = cal2.get(Calendar.MINUTE);
         return hour1 == hour2 && minute1 == minute2 && dayOfWeek1 == dayOfWeek2;
-
     }
+
+    public java.util.Date returnDate(){
+        return date_time;
+    }
+
 
     @Override
     public boolean equals(Object o) {

@@ -18,6 +18,10 @@ public class Duration implements ValueObject {
         //only for ORM
     }
 
+    public int returnMinutes(){
+        return minDuration;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
