@@ -78,4 +78,8 @@ public class Teacher implements AggregateRoot<Acronym> {
     public boolean hasIdentity(Acronym id) {
         return AggregateRoot.super.hasIdentity(id);
     }
+
+    public String returnAcronymString() {
+        return this.acronym.toString();
+    }
 }
