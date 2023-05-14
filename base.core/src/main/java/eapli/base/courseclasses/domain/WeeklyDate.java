@@ -4,6 +4,7 @@ import eapli.framework.domain.model.ValueObject;
 
 import javax.persistence.ElementCollection;
 import java.util.*;
+import java.util.Date;
 
 
 public class WeeklyDate implements ValueObject {
@@ -27,6 +28,15 @@ public class WeeklyDate implements ValueObject {
 
     protected WeeklyDate() {
         //only for ORM
+    }
+
+    public boolean verifyIfAClassAtTheTime(Date startingDateWithTime, int duration){
+        for (ScheduledDate scheduledDate : scheduledDates ){
+            if (scheduledDate.verifyIfExistAtTheCurrentTime(startingDateWithTime,duration)){
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

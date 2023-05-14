@@ -49,9 +49,6 @@ Manager -> ui: validate the information
 ui-> ctrl: verifyIfExistAClassAtTheTime(startingDateWithTime, duration, courseDTO)
 activate ctrl
 ctrl -> service: create()
-
-
-ctrl -> service: verifyIfExistAClassAtTheTime(startingDateWithTime. duration, courseDTO)
 activate service
 service -> Persistence: repositories()
 activate Persistence
@@ -63,6 +60,10 @@ activate RepFactory
 RepFactory -> courseRep: create
 RepFactory --> service: courseRepository
 deactivate RepFactory
+deactivate service
+
+ctrl -> service: verifyIfExistAClassAtTheTime(startingDateWithTime. duration, courseDTO)
+activate service
 
 service -> courseID : create(courseIdentifier)
 service -> courseRep: ofIdentity(courseId)
@@ -113,6 +114,13 @@ ui -> ctrl: createClass(title, startingDateWithTime, numberOfRecurrence, duratio
 activate ctrl
 ctrl --> service: createClass(title, startingDateWithTime, numberOfRecurrence, duration, courseDTO)
 activate service
+
+service -> courseID : create(courseIdentifier)
+service -> courseRep: ofIdentity(courseId)
+activate courseRep
+courseRep --> service : course
+deactivate courseRep
+
 service -> Persistence: repositories()
 activate Persistence
 Persistence -> RepFactory: create
@@ -135,11 +143,11 @@ service -> builder: build()
 activate builder
 builder -> courseClass: create(title, ListScheduleDates, id)
 activate  courseClass
-courseClass --> builder: class
+courseClass --> builder: courseClass
 deactivate courseClass
-builder --> service: class
+builder --> service: courseClass
 deactivate builder
-service-> course: addClass(class)
+service-> course: addClass(courseClass)
 service-> courseRep: save(course)
 
 service --> ctrl: boolean

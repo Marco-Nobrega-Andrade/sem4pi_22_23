@@ -1,9 +1,9 @@
 package eapli.base.courseclasses.domain;
 
-import eapli.base.coursemanagement.domain.Course;
 import eapli.framework.domain.model.AggregateRoot;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 public class ExtraClass implements AggregateRoot<ExtraClassId> {
@@ -21,6 +21,9 @@ public class ExtraClass implements AggregateRoot<ExtraClassId> {
         //only for ORM
     }
 
+    public boolean verifyIfExistAnExtraClassAtTheTime(Date startingDateWithTime, int duration){
+        return scheduledDate.verifyIfExistAtTheCurrentTime(startingDateWithTime,duration);
+    }
     @Override
     public boolean sameAs(Object other) {
         if (!(other instanceof ExtraClass)) {

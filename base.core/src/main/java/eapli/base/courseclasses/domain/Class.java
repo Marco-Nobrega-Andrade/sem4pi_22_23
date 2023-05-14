@@ -1,8 +1,8 @@
 package eapli.base.courseclasses.domain;
 
-import eapli.base.coursemanagement.domain.Course;
 import eapli.framework.domain.model.AggregateRoot;
 import javax.persistence.*;
+import java.util.Date;
 
 
 @Entity
@@ -15,7 +15,10 @@ public class Class implements AggregateRoot<ClassId> {
     private WeeklyDate weeklyDate;
 
 
-    public Class(ClassId classId, ClassTitle classTitle, WeeklyDate weeklyDate) {
+    public Class( ClassTitle classTitle, WeeklyDate weeklyDate, ClassId classId) {
+        if (classId == null || classTitle == null || weeklyDate == null) {
+            throw new IllegalArgumentException("Class cannot be created with null Objects");
+        }
         this.classId = classId;
         this.classTitle = classTitle;
         this.weeklyDate = weeklyDate;
@@ -23,6 +26,10 @@ public class Class implements AggregateRoot<ClassId> {
 
     protected Class() {
         //only for ORM
+    }
+
+    public boolean verifyIfAClassAtTheTime(Date startingDateWithTime, int duration){
+        return weeklyDate.verifyIfAClassAtTheTime(startingDateWithTime,duration);
     }
 
     @Override

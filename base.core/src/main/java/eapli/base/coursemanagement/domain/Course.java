@@ -8,6 +8,7 @@ import eapli.framework.domain.model.AggregateRoot;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -143,6 +144,24 @@ public class Course implements AggregateRoot<CourseIdentifier> {
     public boolean addTeacherInCharge(Teacher teacherInCharge){
         this.teacherInCharge = teacherInCharge;
         return true;
+    }
+
+    public boolean verifyIfExistAClassAtTheTime(Date startingDateWithTime, int duration){
+        for (Class courseClass: classesList) {
+            if (courseClass.verifyIfAClassAtTheTime(startingDateWithTime,duration)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean verifyIfExistAnExtraClassAtTheTime(Date startingDateWithTime, int duration){
+        for (ExtraClass extraClass: extraClassesList) {
+            if (extraClass.verifyIfExistAnExtraClassAtTheTime(startingDateWithTime,duration)){
+                return true;
+            }
+        }
+        return false;
     }
 
 }
