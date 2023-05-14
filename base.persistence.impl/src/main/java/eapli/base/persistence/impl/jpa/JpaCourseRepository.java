@@ -35,6 +35,11 @@ public class JpaCourseRepository extends JpaAutoTxRepository<Course, CourseIdent
     }
 
     @Override
+    public List<Course> listAllAvailableCourses() {
+        return createQuery("SELECT c FROM Course c WHERE c.courseStatus.courseStatusValue = 'OPEN' OR c.courseStatus.courseStatusValue = 'OPEN_ENROLLMENTS' OR c.courseStatus.courseStatusValue = 'CLOSE_ENROLLMENTS'", Course.class).getResultList();
+    }
+
+    @Override
     public List<Course> findTeacherCourses(SystemUser systemUser) {
         TypedQuery<Course> query = createQuery(
                 "SELECT DISTINCT c FROM Course c JOIN c.teacherInCharge t JOIN Person p ON p.teacher = c.teacherInCharge WHERE p.systemUser = :systemUser " +
@@ -61,5 +66,11 @@ public class JpaCourseRepository extends JpaAutoTxRepository<Course, CourseIdent
     @Override
     public List<Course> listAllCoursesOpenToEnrollments(){
         return createQuery("SELECT c FROM Course c WHERE c.courseStatus.courseStatusValue = 'OPEN_ENROLLMENTS'", Course.class).getResultList();
+    }
+
+    @Override
+    public Course findCourseById(String courseIdentifier) {
+        return createQuery("SELECT c FROM Course c WHERE c.courseId.course_Id = :courseIdentifier", Course.class)
+                .setParameter("courseIdentifier", courseIdentifier).getSingleResult();
     }
 }

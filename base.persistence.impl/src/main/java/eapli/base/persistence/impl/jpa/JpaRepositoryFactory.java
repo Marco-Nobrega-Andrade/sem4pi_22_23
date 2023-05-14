@@ -30,6 +30,7 @@ import eapli.base.infrastructure.persistence.RepositoryFactory;
 import eapli.base.meetingmanagement.repositories.MeetingRepository;
 import eapli.base.usermanagement.repositories.PersonRepository;
 import eapli.base.usermanagement.repositories.StudentRepository;
+import eapli.base.usermanagement.repositories.TeacherRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 import eapli.framework.infrastructure.authz.repositories.impl.jpa.JpaAutoTxUserRepository;
@@ -140,6 +141,16 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     public ExtraClassRepository extraClassRepository(TransactionalContext autoTx) {
         return new JpaExtraClassRepository(autoTx);
 
+    }
+
+    @Override
+    public TeacherRepository teacherRepository() {
+        return new JpaTeacherRepository(Application.settings().getPersistenceUnitName());
+    }
+
+    @Override
+    public TeacherRepository teacherRepository(TransactionalContext autoTx) {
+        return new JpaTeacherRepository(autoTx);
     }
 
     @Override

@@ -12,9 +12,14 @@ public interface CourseRepository extends DomainRepository<CourseIdentifier, Cou
 
     List<Course> listAllOpenCLoseEnrollmentsAvailableCourses();
 
+    List<Course> listAllAvailableCourses();
+
     List<Course> findTeacherCourses(SystemUser systemUser);
 
     List<Course> findStudentCourses(SystemUser systemUser);
 
     List<Course> listAllCoursesOpenToEnrollments();
+
+    Course findCourseById(String courseIdentifier);
+
 }

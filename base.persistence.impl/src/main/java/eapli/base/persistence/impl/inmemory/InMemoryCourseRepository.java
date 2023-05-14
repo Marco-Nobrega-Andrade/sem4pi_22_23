@@ -21,6 +21,11 @@ public class InMemoryCourseRepository extends InMemoryDomainRepository<Course, C
     }
 
     @Override
+    public List<Course> listAllAvailableCourses() {
+        return (List<Course>) match(e -> (e.returnCourseStatusString().equals("Enrollments open") || e.returnCourseStatusString().equals("Open") || e.returnCourseStatusString().equals("Enrollments closed")));
+    }
+
+    @Override
     public List<Course> findTeacherCourses(SystemUser systemUser) {
         return null;
     }
@@ -33,5 +38,10 @@ public class InMemoryCourseRepository extends InMemoryDomainRepository<Course, C
     @Override
     public List<Course> listAllCoursesOpenToEnrollments() {
         return (List<Course>) match(e -> (e.returnCourseStatusString().equals("Enrollments open")));
+    }
+
+    @Override
+    public Course findCourseById(String courseIdentifier) {
+        return matchOne(e -> e.returnCourseIdentifierString().equals(courseIdentifier)).orElse(null);
     }
 }

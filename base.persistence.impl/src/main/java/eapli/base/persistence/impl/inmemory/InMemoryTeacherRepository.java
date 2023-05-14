@@ -1,0 +1,25 @@
+package eapli.base.persistence.impl.inmemory;
+
+import eapli.base.usermanagement.domain.Acronym;
+import eapli.base.usermanagement.domain.Teacher;
+import eapli.base.usermanagement.repositories.TeacherRepository;
+import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
+
+import java.util.Optional;
+
+
+public class InMemoryTeacherRepository extends InMemoryDomainRepository<Teacher, Acronym>  implements TeacherRepository {
+
+    /**
+     * @return the list of Teachers in the system who are teachers
+     */
+    @Override
+    public Iterable<Teacher> findAllTeachers() {
+        return findAll();
+    }
+
+    @Override
+    public Teacher findTeacherByAcronym(String acronym) {
+        return matchOne(e -> e.returnAcronymString().equals(acronym)).orElse(null);
+    }
+}

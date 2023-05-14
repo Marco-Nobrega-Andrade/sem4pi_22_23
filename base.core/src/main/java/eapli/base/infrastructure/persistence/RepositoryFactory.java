@@ -29,6 +29,7 @@ import eapli.base.enrollments.repositories.EnrollmentRepository;
 import eapli.base.meetingmanagement.repositories.MeetingRepository;
 import eapli.base.usermanagement.repositories.PersonRepository;
 import eapli.base.usermanagement.repositories.StudentRepository;
+import eapli.base.usermanagement.repositories.TeacherRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 
@@ -178,5 +179,9 @@ public interface RepositoryFactory {
     ExtraClassRepository extraClassRepository();
 
     ExtraClassRepository extraClassRepository(TransactionalContext autoTx);
+
+    TeacherRepository teacherRepository();
+
+    TeacherRepository teacherRepository(TransactionalContext autoTx);
 
 }
