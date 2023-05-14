@@ -1,0 +1,192 @@
+@startuml
+
+actor Manager as M
+participant "<<Presentation>>\n:BulkEnrollmentsUI" as UI
+control "<<Application>>\n:BulkEnrollmentsController" as CTRL
+participant "<<Service>>\n:BulkEnrollmentsService" as BESv
+participant "<<Persistence>>\n:PersistenceContext" as PC
+participant "<<Factory>>\nfactory:RepositoryFactory" as RF
+database "<<Repository>>\ncourseRepository\n:CourseRepository" as CR
+database "<<Repository>>\nenrollmentRepository\n:EnrollmentRepository" as ER
+database "<<Repository>>\ncstudentRepository\n:StudentRepository" as SR
+participant ":CsvReader" as CsvR
+participant ":studentsIdList\n:List<String>" as SIL
+participant "<<DTO>>\ncourseDTOWithIdTitleList\n:List<CourseDTOWithIdTitle>" as cDtoL
+participant "<<DTO>>\n:CourseMapper" as CM
+participant "<<DTO>>\ncourseDTOBuilder\n:CourseDTOBuilder" as cDTOBuilder
+participant "<<Domain>>\ncourse:Course" as C
+participant "<<Domain>>:\nCourseTitle" as CT
+participant "<<Domain>>:\nCourseIdentifier" as CI
+participant "<<DTO>>\ncourseDTO:\nCourseDTOWithIdTitleStatus" as cDTO
+participant ":<<Domain>\n>EnrollmentLimits" as EL
+participant ":<<Domain>>\nMecanographicNumber" as MN
+participant ":<<Domain>>\nEnrollmentFactory" as EF
+participant ":<<Domain>>\nEnrollment" as E
+participant ":<<Domain>>\nStudent" as S
+
+
+M -> UI : Initialize the proccess of enroll \nstudents in bulk in a course
+activate M
+activate UI
+UI -> CTRL : create()
+activate CTRL
+CTRL -> BESv : create()
+activate BESv
+BESv -> PC : repositories
+activate PC
+PC --> BESv : factory
+deactivate PC
+BESv -> RF : courseRepository()
+activate RF
+RF -> CR : create()
+RF --> BESv: courseRepository
+deactivate RF
+BESv -> RF : enrollmentRepository()
+activate RF
+RF -> ER : create()
+RF --> BESv : enrollmentRepository
+deactivate RF
+BESv -> RF : studentRepository()
+activate RF
+RF -> SR : create()
+RF --> BESv : studentRepository()
+deactivate RF
+deactivate BESv
+deactivate CTRL
+UI --> M : Asks for the csv file name
+deactivate UI
+M -> UI : Inserts file name
+activate UI
+UI -> CTRL : importCsvData(fileName)
+activate CTRL
+CTRL -> BESv : importCsvData(fileName)
+activate BESv
+BESv -> CsvR : importCsvData(fileName)
+activate CsvR
+CsvR ->
+CsvR --> BESv : studentIdList
+deactivate CsvR
+deactivate BESv
+deactivate CTRL
+UI -> CTRL : listAllCoursesOpenToEnrollments()
+activate CTRL
+CTRL -> BESv : listAllCoursesOpenToEnrollments()
+activate BESv
+BESv -> CR : listAllCoursesOpenToEnrollments()
+activate CR
+CR --> BESv : coursesList
+deactivate CR
+BESv -> cDtoL : create()
+loop foreach course from courseList
+BESv -> CM : toDTOWithIdTitleStatus(course)
+activate CM
+CM -> cDTOBuilder : create()
+CM -> C : returnCourseIdentifierString()
+activate C
+C -> CI : returnCourseIdentifierString()
+activate CI
+CI --> C : courseId
+deactivate CI
+C --> CM : courseId
+deactivate C
+CM -> cDTOBuilder : withCourseIdentifier(courseId)
+activate cDTOBuilder
+deactivate cDTOBuilder
+CM -> C : returnCourseTitleString()
+activate C
+C -> CT : returnCourseTitleString()
+activate CT
+CT --> C : courseTitle
+deactivate CT
+C --> CM : courseTitle
+deactivate C
+CM -> cDTOBuilder : withCourseTitle(courseTitle)
+activate cDTOBuilder
+deactivate cDTOBuilder
+deactivate cDTOBuilder
+CM -> cDTOBuilder : buildWithIdTitle()
+activate cDTOBuilder
+cDTOBuilder -> cDTO : create()
+cDTOBuilder --> CM : courseDTOWithIdTitle
+deactivate cDTOBuilder
+CM --> BESv : courseDTOWithIdTitle
+deactivate CM
+deactivate CM
+BESv -> cDtoL : add(courseDTOWithIdTitle)
+activate cDtoL
+deactivate cDtoL
+end loop
+BESv --> CTRL : courseDTOList
+deactivate BESv
+CTRL --> UI : courseDTOList
+deactivate CTRL
+UI --> M : Displays a list of all the \navailable courses
+deactivate UI
+M -> UI : Selects the course where he wants\n to proceed with the bulk enrollment
+activate UI
+UI -> CTRL : enrollStudentsInBulkToCourse(selectedCourseDTO)
+activate CTRL
+CTRL -> BESv : enrollStudentsInBulkToCourse(selectedCourseDTO)
+activate BESv
+BESv -> CI : create(courseDTO.courseIdentifier)
+activate CI
+deactivate CI
+BESv -> CR : ofIdentity(CourseIdentifier)
+activate CR
+CR --> BESv : course
+deactivate CR
+BESv -> BESv : verifyIfWillExceedEnrollmentLimits(course)
+activate BESv
+BESv -> ER : getNumberOfEnrollmentsAcceptedByCourse(course)
+activate ER
+ER --> BESv : numberOfEnrollmentsAccepted
+deactivate ER
+BESv -> SIL : size()
+activate SIL
+SIL --> BESv : numberOfNewEnrollments
+deactivate SIL
+BESv -> C : verifyIfWillExceedEnrollmentLimits(numberOfAcceptedEnrollments, numberOfNewEnrollments)
+activate C
+C -> EL : verifyIfWillExceedEnrollmentLimits(numberOfAcceptedEnrollments, numberOfNewEnrollments)
+activate EL
+deactivate EL
+deactivate BESv
+deactivate C
+loop foreach studentId in studentIdList
+BESv -> MN : create(studentId)
+BESv -> SR : ofIdentity(studentId)
+activate SR
+SR --> BESv : student
+deactivate SR
+BESv -> ER : count()
+activate ER
+ER --> BESv : totalNumberOfEnrollments
+deactivate ER
+BESv -> EF : buildBulkEnrollment(enrollmentId,course,student)
+activate EF
+EF -> E : create()
+EF --> BESv : newEnrollment
+deactivate EF
+BESv -> ER : save(newEnrollment)
+activate ER
+deactivate ER
+BESv -> C : addEnrollment(newEnrollment)
+activate C
+deactivate C
+BESv -> CR : save(course)
+activate CR
+deactivate CR
+BESv -> S : addEnrollment(newEnrollment)
+activate S
+deactivate S
+BESv -> SR : save(student)
+activate SR
+deactivate SR
+end loop
+deactivate BESv
+deactivate CTRL
+UI -> M : Informs the result of the operation
+deactivate UI
+deactivate M
+
+@enduml
