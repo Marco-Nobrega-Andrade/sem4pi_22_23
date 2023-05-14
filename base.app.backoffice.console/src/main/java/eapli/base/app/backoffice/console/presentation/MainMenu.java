@@ -26,6 +26,7 @@ package eapli.base.app.backoffice.console.presentation;
 import eapli.base.app.backoffice.console.presentation.course.CreateCourseAction;
 import eapli.base.app.backoffice.console.presentation.course.OpenCloseCourseAction;
 import eapli.base.app.backoffice.console.presentation.course.OpenCloseCourseEnrollmentsAction;
+import eapli.base.app.backoffice.console.presentation.course.SetTeacherAction;
 import eapli.base.app.backoffice.console.presentation.enrollment.ApproveRejectEnrollmentAction;
 import eapli.base.app.backoffice.console.presentation.enrollment.ApproveRejectEnrollmentUI;
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
@@ -75,6 +76,7 @@ public class MainMenu extends AbstractUI {
     private static final int OPEN_CLOSE_COURSE_ENROLLMENTS_OPTION = 3;
     private static final int APPROVE_REJECT_ENROLLMENT = 4;
     private static final int LIST_COURSE_OPTION = 5;
+    private static final int SET_TEACHER_IN_COURSE = 6;
 
 
     // DISH PROPERTIES
@@ -168,7 +170,9 @@ public class MainMenu extends AbstractUI {
         menu.addItem(OPEN_CLOSE_COURSE_ENROLLMENTS_OPTION, "Open/Close Course Enrollments", new OpenCloseCourseEnrollmentsAction());
         menu.addItem(APPROVE_REJECT_ENROLLMENT, "Accept/Reject Enrollment", new ApproveRejectEnrollmentAction());
         menu.addItem(LIST_COURSE_OPTION,"List Course", new ListCourseAction());
+        menu.addItem(SET_TEACHER_IN_COURSE,"Set Teachers of a Course", new SetTeacherAction());
         menu.addItem(EXIT_OPTION,RETURN_LABEL,Actions.SUCCESS);
+
 
         return menu;
     }
