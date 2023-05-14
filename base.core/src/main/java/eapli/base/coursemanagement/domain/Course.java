@@ -25,10 +25,10 @@ public class Course implements AggregateRoot<CourseIdentifier> {
 
     private CourseStatus courseStatus;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne(cascade = CascadeType.ALL)
     private Teacher teacherInCharge;
 
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Teacher> teachersList = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL)
@@ -119,4 +119,30 @@ public class Course implements AggregateRoot<CourseIdentifier> {
         enrollmentsList.add(newEnrollment);
         return true;
     }
+
+    /**
+     * Method that adds a teacher to a course
+     * @param newTeacher Object of type Teacher that will be added as a teacher of the course
+     * @return boolean
+     */
+
+    public boolean addTeacher(List<Teacher> newTeacher) {
+        for (Teacher teacher : newTeacher) {
+            if (teachersList.contains(teacher)) {
+                return false;
+            }
+            teachersList.add(teacher);
+        }
+        return true;
+    }
+    /**
+     * Method that adds a teacher in charge to a course
+     * @param teacherInCharge Object of type Teacher that will be added as the teacher in charge of the course
+     * @return boolean
+     */
+    public boolean addTeacherInCharge(Teacher teacherInCharge){
+        this.teacherInCharge = teacherInCharge;
+        return true;
+    }
+
 }
