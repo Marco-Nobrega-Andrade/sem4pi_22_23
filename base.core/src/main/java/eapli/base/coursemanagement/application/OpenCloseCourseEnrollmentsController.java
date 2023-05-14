@@ -6,7 +6,7 @@ import eapli.base.coursemanagement.dto.CourseDTOWithIdTitleStatus;
 import java.util.List;
 
 public class OpenCloseCourseEnrollmentsController {
-    OpenCloseCourseEnrollmentsService openCloseEnrollmentsService = new OpenCloseCourseEnrollmentsService();
+    private final OpenCloseCourseEnrollmentsService openCloseEnrollmentsService = new OpenCloseCourseEnrollmentsService();
 
     public List<CourseDTOWithIdTitleStatus> listAllOpenCloseEnrollmentsAvailableCourses(){
         return openCloseEnrollmentsService.listAllOpenCloseEnrollmentsAvailableCourses();
