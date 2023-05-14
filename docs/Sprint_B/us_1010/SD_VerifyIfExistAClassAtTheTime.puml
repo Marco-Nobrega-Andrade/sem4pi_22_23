@@ -6,6 +6,8 @@ participant Course as course <<domain>>
 participant Class as courseClass <<domain>>
 participant WeeklyDate as weeklyDate <<domain>>
 participant ScheduledDate as scheduleDate <<domain>>
+participant Duration as duration <<domain>>
+participant Date as date <<domain>>
 
 activate service
 service -> course: verifyIfExistAClassAtTheTime(startingDateWithTime, duration)
@@ -19,6 +21,15 @@ activate weeklyDate
 loop for each scheduledDate in WeeklyDate or until boolean == true
 weeklyDate -> scheduleDate: verifyIfExistAtTheCurrentTime(startingDateWithTime, duration)
 activate scheduleDate
+scheduleDate -> duration : returnMinutes()
+activate duration
+duration --> scheduleDate : thisDuration
+deactivate duration
+scheduleDate -> date : returnDate()
+activate date
+date --> scheduleDate : data_time
+deactivate date
+
 scheduleDate --> weeklyDate: boolean
 deactivate scheduleDate
 end
