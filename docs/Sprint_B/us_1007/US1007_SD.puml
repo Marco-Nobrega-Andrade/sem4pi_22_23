@@ -1,9 +1,9 @@
 @startuml
 
 actor Manager as M
-participant "<<Presentation>>\n:BulkEnrollmentsUI" as UI
-control "<<Application>>\n:BulkEnrollmentsController" as CTRL
-participant "<<Service>>\n:BulkEnrollmentsService" as BESv
+participant "<<Presentation>>\n:EnrollInBulkUI" as UI
+control "<<Application>>\n:EnrollInBulkController" as CTRL
+participant "<<Service>>\n:EnrollInBulkService" as BESv
 participant "<<Persistence>>\n:PersistenceContext" as PC
 participant "<<Factory>>\nfactory:RepositoryFactory" as RF
 database "<<Repository>>\ncourseRepository\n:CourseRepository" as CR
@@ -122,7 +122,7 @@ CTRL --> UI : courseDTOList
 deactivate CTRL
 UI --> M : Displays a list of all the \navailable courses
 deactivate UI
-M -> UI : Selects the course where he wants\n to proceed with the bulk enrollment
+M -> UI : Selects the course where he wants\n to proceed with the enroll in bulk
 activate UI
 UI -> CTRL : enrollStudentsInBulkToCourse(selectedCourseDTO)
 activate CTRL
