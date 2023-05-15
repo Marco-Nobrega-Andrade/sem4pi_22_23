@@ -40,19 +40,7 @@ public class ScheduledDate implements ValueObject {
         otherDateWithDuration.add(Calendar.MINUTE, duration);
 
         if(thisDate.get(Calendar.DAY_OF_WEEK) == otherDate.get(Calendar.DAY_OF_WEEK) && thisDate.get(Calendar.MONTH) == otherDate.get(Calendar.MONTH) && thisDate.get(Calendar.YEAR) == otherDate.get(Calendar.YEAR)){
-            if (thisDate.before(otherDate) && thisDateWithDuration.after(otherDateWithDuration)){
-                return true;
-            }else if (thisDate.before(otherDate) && thisDateWithDuration.before(otherDateWithDuration)){
-                return true;
-            }else if (thisDate.after(otherDate) && thisDateWithDuration.after(otherDateWithDuration)){
-                return true;
-            }else if (thisDate.after(otherDate) && thisDateWithDuration.before(otherDateWithDuration)){
-                return true;
-            }else if( thisDate.equals(otherDate)){
-                return true;
-            }else if( thisDateWithDuration.equals(otherDateWithDuration)){
-                return true;
-            }
+            return (thisDate.before(otherDateWithDuration) && otherDate.before(thisDateWithDuration));
         }
         return false;
     }
