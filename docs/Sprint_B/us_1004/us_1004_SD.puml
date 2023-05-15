@@ -55,18 +55,6 @@ activate CM
 CM -> CB : create()
 activate CB
 deactivate CB
-CM -> C : returnCourseTitleString()
-activate C
-C -> CT : returnCourseTitleString()
-activate CT
-CT --> C : course_title
-deactivate CT
-C --> CM : course_title
-deactivate C
-CM -> CB : withCourseIdentifier()
-activate CB
-CB --> CM : courseDTOBuilder
-deactivate CB
 CM -> C : returnCourseIdentifierString()
 activate C
 C -> CI : returnCourseIdentifierString()
@@ -75,6 +63,20 @@ CI --> C : course_Id
 deactivate CI
 C --> CM : course_Id
 deactivate C
+CM -> CB : withCourseIdentifier()
+activate CB
+CB --> CM : courseDTOBuilder
+deactivate CB
+CM -> C : returnCourseTitleString()
+activate C
+C -> CT : returnCourseTitleString()
+activate CT
+CT --> C : course_title
+deactivate CT
+C --> CM : course_title
+deactivate C
+
+
 CM -> CB : withCourseTitle()
 activate CB
 CB --> CM : courseDTOBuilder
@@ -96,6 +98,7 @@ activate CB
 CB -> CDTO : create(courseIdentifier, courseTitle, courseStatus)
 activate CDTO
 deactivate CDTO
+CB --> CM : courseDTO
 deactivate CB
 CM --> CSS : courseDTO
 deactivate CM
