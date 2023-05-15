@@ -3,6 +3,7 @@ package eapli.base.courseclasses.domain;
 import eapli.framework.domain.model.AggregateRoot;
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Objects;
 
 
 @Entity
@@ -26,6 +27,19 @@ public class Class implements AggregateRoot<ClassId> {
 
     protected Class() {
         //only for ORM
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Class aClass = (Class) o;
+        return Objects.equals(classId, aClass.classId) && Objects.equals(classTitle, aClass.classTitle) && Objects.equals(weeklyDate, aClass.weeklyDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(classId, classTitle, weeklyDate);
     }
 
     public boolean verifyIfAClassAtTheTime(Date startingDateWithTime, int duration){
