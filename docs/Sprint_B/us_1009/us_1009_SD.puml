@@ -88,9 +88,9 @@ ARES -> ER : getNumberOfEnrollmentsAcceptedByCourse(course)
 activate ER
 ER --> ARES : enrollmentsAccepted
 deactivate ER
-ARES -> C : verifyIfWillExceedEnrollmentLimits(enrollmentsAccepted)
+ARES -> C : verifyIfWillExceedEnrollmentLimits(numberOfAcceptedEnrollments, numberOfNewEnrollments)
 activate C
-C -> EL : verifyIfWillExceedEnrollmentLimits(enrollmentsAccepted)
+C -> EL : verifyIfWillExceedEnrollmentLimits(numberOfAcceptedEnrollments, numberOfNewEnrollments)
 activate EL
 EL --> C : false
 deactivate EL
@@ -182,9 +182,9 @@ ARES -> ER : getNumberOfEnrollmentsAcceptedByCourse(course)
 activate ER
 ER --> ARES : enrollmentsAccepted
 deactivate ER
-ARES -> C : verifyIfWillExceedEnrollmentLimits(enrollmentsAccepted)
+ARES -> C : verifyIfWillExceedEnrollmentLimits(numberOfAcceptedEnrollments, numberOfNewEnrollments)
 activate C
-C -> EL : verifyIfWillExceedEnrollmentLimits(enrollmentsAccepted)
+C -> EL : verifyIfWillExceedEnrollmentLimits(numberOfAcceptedEnrollments, numberOfNewEnrollments)
 activate EL
 EL --> C : false
 deactivate EL
