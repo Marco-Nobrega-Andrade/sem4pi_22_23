@@ -17,10 +17,16 @@ public class CourseBootstrapper extends CourseBootstrapperBase implements Action
         openCourse("courseOpen", "courseOpenTitle");
         results.add(createCourse("courseOpenEnrollments","courseOpenEnrollmentsTitle", "courseOpenEnrollmentsName", "courseOpenEnrollmentsDescription", 20,2));
         openCourse("courseOpenEnrollments", "courseOpenEnrollmentsTitle");
+        openEnrollmentsCourse("courseOpenEnrollments", "courseOpenEnrollmentsTitle");
         results.add(createCourse("courseClosedEnrollments","courseClosedEnrollmentsTitle", "courseClosedEnrollmentsName", "courseClosedEnrollmentsDescription", 20,2));
         openCourse("courseClosedEnrollments", "courseClosedEnrollmentsTitle");
+        openEnrollmentsCourse("courseClosedEnrollments", "courseClosedEnrollmentsTitle");
+        closeEnrollmentsCourse("courseClosedEnrollments", "courseClosedEnrollmentsTitle");
         results.add(createCourse("courseClosed","courseClosedTitle", "courseClosedName", "courseClosedDescription", 20,2));
         openCourse("courseClosed", "courseClosedTitle");
+        openEnrollmentsCourse("courseClosed", "courseClosedTitle");
+        closeEnrollmentsCourse("courseClosed", "courseClosedTitle");
+        closeCourse("courseClosed", "courseClosedTitle");
         for(Boolean result : results){
             if(!result) return false;
         }
@@ -36,5 +42,13 @@ public class CourseBootstrapper extends CourseBootstrapperBase implements Action
     }
     private void closeCourse(final String courseId, final String courseTitle){
         closeCourseBaseBootstrap(courseId, courseTitle);
+    }
+
+    private void openEnrollmentsCourse(final String courseId, final String courseTitle){
+        openEnrollmentsCourseBaseBootstrap(courseId, courseTitle);
+    }
+
+    private void closeEnrollmentsCourse(final String courseId, final String courseTitle){
+        closeEnrollmentsCourseBaseBootstrap(courseId, courseTitle);
     }
 }

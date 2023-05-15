@@ -2,6 +2,7 @@ package eapli.base.infrastructure.bootstrapers;
 
 import eapli.base.coursemanagement.application.CreateCourseController;
 import eapli.base.coursemanagement.application.OpenCloseCourseController;
+import eapli.base.coursemanagement.application.OpenCloseCourseEnrollmentsController;
 import eapli.base.coursemanagement.application.services.OpenCloseCourseService;
 import eapli.base.coursemanagement.domain.Course;
 import eapli.base.coursemanagement.dto.CourseDTOWithIdTitleStatus;
@@ -27,18 +28,7 @@ public class CourseBootstrapperBase {
     final CreateCourseController createCourseController = new CreateCourseController();
     final OpenCloseCourseController openCloseCourseController = new OpenCloseCourseController();
 
-    public CourseBootstrapperBase() {
-        super();
-    }
-
-    /**
-     * @param courseId
-     * @param courseTitle
-     * @param courseName
-     * @param description
-     * @param maxEnrollments
-     * @param minEnrollments
-     */
+    final OpenCloseCourseEnrollmentsController openCloseCourseEnrollmentsController = new OpenCloseCourseEnrollmentsController();
     protected boolean createCourseBaseBootstrap(final String courseId, final String courseTitle, final String courseName, final String description, final int maxEnrollments, final int minEnrollments) {
         return createCourseController.createCourse(courseId, courseTitle, courseName, description, maxEnrollments, minEnrollments);
     }
@@ -49,5 +39,15 @@ public class CourseBootstrapperBase {
     protected void closeCourseBaseBootstrap(final String courseId, final String courseTitle){
         CourseDTOWithIdTitleStatus courseDTO = new CourseDTOWithIdTitleStatus(courseId, courseTitle,"CLOSED_ENROLLMENTS");
         openCloseCourseController.changeCourseStatus(courseDTO, "CLOSED");
+    }
+
+    protected void openEnrollmentsCourseBaseBootstrap(final String courseId, final String courseTitle){
+        CourseDTOWithIdTitleStatus courseDTO = new CourseDTOWithIdTitleStatus(courseId, courseTitle,"OPEN");
+        openCloseCourseEnrollmentsController.changeStatus(courseDTO, "OPEN_ENROLLMENTS");
+    }
+
+    protected void closeEnrollmentsCourseBaseBootstrap(final String courseId, final String courseTitle){
+        CourseDTOWithIdTitleStatus courseDTO = new CourseDTOWithIdTitleStatus(courseId, courseTitle,"OPEN_ENROLLMENTS");
+        openCloseCourseEnrollmentsController.changeStatus(courseDTO, "CLOSED_ENROLLMENTS");
     }
 }
