@@ -30,8 +30,8 @@ activate CONTROLLER
 CONTROLLER -> LIST_SERVICE : create()
 activate LIST_SERVICE
 deactivate LIST_SERVICE
-CONTROLLER -> LIST_SERVICE : listCourse()
-note right: Method listCourse() is represented in diagram \n SD_ListCourse present in the folder us_1006
+CONTROLLER -> LIST_SERVICE : courseList()
+note right: Method courseList() is represented in diagram \n SD_ListCourse present in the folder us_1006
 activate LIST_SERVICE
 LIST_SERVICE --> CONTROLLER : courseDTOList
 deactivate LIST_SERVICE
@@ -47,7 +47,7 @@ UI -> CONTROLLER : verifyScheduleAvailability(dateWithTime. duration, courseDTO,
 activate CONTROLLER
 CONTROLLER -> SERVICE : verifyScheduleAvailability(dateWithTime. duration, courseDTO, studentList)
 activate SERVICE
-note right SERVICE : Creation of CourseRepository as described in "US_1008_SD_RepositoryCreation"
+note right SERVICE : Creation of CourseRepository as described in "US_1011_SD_RepositoryCreation"
 SERVICE -> COURSE_ID : create(courseIdentifier)
 activate COURSE_ID
 deactivate COURSE_ID
@@ -68,13 +68,13 @@ activate COURSE
 note right : Method represented SD_VerifyIfExistAExtraClassAtTheTime (us_1010 folder)
 COURSE --> SERVICE: boolean
 deactivate COURSE
-
-SERVICE -> COURSE_REPO : findAllCoursesRelatedWithStudents(studentList)
+loop for each student in studentList
+SERVICE -> COURSE_REPO : findAllCoursesRelatedWithStudent(student)
 activate COURSE_REPO
-COURSE_REPO --> SERVICE : listCourse
+COURSE_REPO --> SERVICE : courseList
 deactivate COURSE_REPO
 
-loop for each Course in listCourse
+loop for each Course in courseList
 SERVICE -> COURSE: verifyIfExistAClassAtTheTime(dateWithTime, duration)
 activate COURSE
 note right : Method represented SD_VerifyIfExistAClassAtTheTime (us_1010 folder)
@@ -86,6 +86,7 @@ activate COURSE
 note right : Method represented SD_VerifyIfExistAExtraClassAtTheTime (us_1010 folder)
 COURSE --> SERVICE: boolean
 deactivate COURSE
+end
 end
 SERVICE --> CONTROLLER: boolean
 deactivate SERVICE
@@ -101,6 +102,7 @@ UI -> CONTROLLER : createExtraClass(dateWithTime, duration, studentList)
 activate CONTROLLER
 CONTROLLER -> SERVICE : createExtraClass(dateWithTime, duration, studentList)
 activate SERVICE
+note right SERVICE : Creation of ExtraClassRepository as described in "US_1011_SD_RepositoryCreation"
 SERVICE -> EXTRA_CASS_REPO : count()
 activate EXTRA_CASS_REPO
 EXTRA_CASS_REPO --> SERVICE : total
