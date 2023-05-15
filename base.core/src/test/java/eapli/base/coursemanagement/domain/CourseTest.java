@@ -61,17 +61,17 @@ public class CourseTest {
     @Test(expected = IllegalStateException.class)
     public void ensureEnrollmentsAboveMaxNotAllowed(){
         Course course = new Course(new CourseIdentifier("Id1"), new CourseTitle("Title1"), new CourseName("Name1"), new Description("Desciption1"), new EnrollmentLimits(1,5), new CourseStatus(CourseStatusValue.CLOSE), new Teacher());
-        course.verifyIfWillExceedEnrollmentLimits(7);
+        course.verifyIfWillExceedEnrollmentLimits(7,1);
     }
     @Test
     public void ensureEnrollmentsBelowMaxAreAllowed(){
         Course course = new Course(new CourseIdentifier("Id1"), new CourseTitle("Title1"), new CourseName("Name1"), new Description("Desciption1"), new EnrollmentLimits(1,5), new CourseStatus(CourseStatusValue.CLOSE), new Teacher());
-        assertFalse(course.verifyIfWillExceedEnrollmentLimits(3));
+        assertFalse(course.verifyIfWillExceedEnrollmentLimits   (3,1));
     }
 
     @Test(expected = IllegalStateException.class)
     public void ensureEnrollmentsAtMaxAreNotwAllowed(){
         Course course = new Course(new CourseIdentifier("Id1"), new CourseTitle("Title1"), new CourseName("Name1"), new Description("Desciption1"), new EnrollmentLimits(1,3), new CourseStatus(CourseStatusValue.CLOSE), new Teacher());
-        assertFalse(course.verifyIfWillExceedEnrollmentLimits(3));
+        assertFalse(course.verifyIfWillExceedEnrollmentLimits(3,1));
     }
 }

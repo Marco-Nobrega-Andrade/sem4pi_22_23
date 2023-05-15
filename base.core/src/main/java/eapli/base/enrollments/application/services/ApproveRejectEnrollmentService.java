@@ -48,6 +48,6 @@ public class ApproveRejectEnrollmentService {
     public void verifyIfWillExceedEnrollmentLimits(CourseDTOWithIdTitle courseDTO){
         Course course = courseRepository.ofIdentity(new CourseIdentifier(courseDTO.courseIdentifier)).get();
         int enrollmentsAccepted = enrollmentRepository.getNumberOfEnrollmentsAcceptedByCourse(course);
-        course.verifyIfWillExceedEnrollmentLimits(enrollmentsAccepted);
+        course.verifyIfWillExceedEnrollmentLimits(enrollmentsAccepted, 1);
     }
 }

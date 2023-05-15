@@ -112,8 +112,8 @@ public class Course implements AggregateRoot<CourseIdentifier> {
         return this.teacherInCharge != null;
     }
 
-    public boolean verifyIfWillExceedEnrollmentLimits(int enrollmentsAccepted){
-        return enrollmentLimits.verifyIfWillExceedEnrollmentLimits(enrollmentsAccepted);
+    public boolean verifyIfWillExceedEnrollmentLimits(int numberOfAcceptedEnrollments, int numberOfNewEnrollments){
+        return enrollmentLimits.verifyIfWillExceedEnrollmentLimits(numberOfAcceptedEnrollments, numberOfNewEnrollments);
     }
 
     public boolean addEnrollment(Enrollment newEnrollment) {
