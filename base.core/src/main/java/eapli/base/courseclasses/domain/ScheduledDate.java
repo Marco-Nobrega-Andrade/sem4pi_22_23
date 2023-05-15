@@ -48,6 +48,10 @@ public class ScheduledDate implements ValueObject {
                 return true;
             }else if (thisDate.after(otherDate) && thisDateWithDuration.before(otherDateWithDuration)){
                 return true;
+            }else if( thisDate.equals(otherDate)){
+                return true;
+            }else if( thisDateWithDuration.equals(otherDateWithDuration)){
+                return true;
             }
         }
         return false;
