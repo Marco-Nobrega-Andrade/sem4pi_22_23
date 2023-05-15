@@ -63,7 +63,6 @@ CTRL -> BESv : importCsvData(fileName)
 activate BESv
 BESv -> CsvR : importCsvData(fileName)
 activate CsvR
-CsvR ->
 CsvR --> BESv : studentIdList
 deactivate CsvR
 deactivate BESv
