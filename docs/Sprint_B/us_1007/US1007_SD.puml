@@ -161,7 +161,7 @@ BESv -> ER : count()
 activate ER
 ER --> BESv : totalNumberOfEnrollments
 deactivate ER
-BESv -> EF : buildBulkEnrollment(enrollmentId,course,student)
+BESv -> EF : buildEnrollmentFromEnrollInBulk(enrollmentId,course,student)
 activate EF
 EF -> E : create()
 EF --> BESv : newEnrollment
