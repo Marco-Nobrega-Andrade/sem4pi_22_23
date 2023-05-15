@@ -17,7 +17,7 @@ activate CB
 deactivate CB
 CM -> C : returnCourseIdentifierString()
 activate C
-C -> CI : toString()
+C -> CI : returnCourseIdentifierString()
 activate CI
 CI --> C : courseIdentifier
 deactivate CI
@@ -29,7 +29,7 @@ CB --> CM : courseDTOBuilder
 deactivate CB
 CM -> C : returnCourseTitleString()
 activate C
-C -> CT : toString()
+C -> CT : returnCourseTitleString()
 activate CT
 CT --> C : courseTitle
 deactivate CT
