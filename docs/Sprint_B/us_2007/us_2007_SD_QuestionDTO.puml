@@ -1,0 +1,53 @@
+@startuml
+autonumber
+
+participant ": AddUpdateQuestionService" as AUQS <<Service>>
+participant ": QuestionMapper" as QM <<DTO>>
+participant ": QuestionDTOBuilder" as QB <<Builder>>
+participant ": Question" as Q <<Domain>>
+
+participant ": QuestionIdentifier" as CI <<Domain>>
+participant ": Type" as T <<Domain>>
+participant ": QuestionDTOWithIdType" as QDTO <<DTO>>
+
+[o-> QM : toDTOWithIdQuestion(question)
+activate QM
+QM -> QB : create()
+activate QB
+deactivate QB
+QM -> Q : returnQuestionIdentifier()
+activate Q
+Q -> CI : toString()
+activate CI
+CI --> Q : questionIdentifier
+deactivate CI
+Q --> QM : questionIdentifier
+deactivate Q
+QM -> QB : withQuestionIdentifier()
+activate QB
+QB --> QM : questionDTOBuilder
+deactivate QB
+QM -> Q : returnTypeString()
+activate Q
+Q -> T : toString()
+activate T
+T --> Q : type
+deactivate T
+Q --> QM : type
+deactivate Q
+QM -> QB : withType()
+activate QB
+
+QB --> QM : questionDTOBuilder
+deactivate QB
+QM -> QB : buildWithIdType()
+activate QB
+QB -> QDTO : create(questionIdentifier, type)
+activate QDTO
+deactivate QDTO
+QB --> QM : questionDTO
+deactivate QB
+QM -->o[ : questionDTO
+deactivate QM
+
+@enduml

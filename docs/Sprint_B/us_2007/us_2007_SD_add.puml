@@ -1,0 +1,139 @@
+@startuml
+autonumber
+title Add Question
+
+actor "Teacher" as T
+
+participant ": AddUpdateQuestionUI" as UI <<Presentation>>
+control "AddUpdateQuestionController" as CTRL <<Application>>
+participant ": AddUpdateQuestionService" as AUQS <<Service>>
+participant ": PersistenceContext" as PC <<Persistence>>
+participant "factory : RepositoryFactory" as RF <<Factory>>
+participant "AuthzRegistry" as AR <<Application>>
+participant "AuthorizationService" as AS <<Service>>
+participant "UserSession" as US <<Application>>
+
+participant ": CourseMapper" as CM <<DTO>>
+participant ": QuestionBuilder" as QB <<Builder>>
+participant ": Question" as Q <<Domain>>
+participant ": VerifyQuestionService" as VQS <<Service>>
+database CourseRepository as CR <<Repository>>
+database QuestionRepository as QR <<Repository>>
+
+activate T
+T -> UI : asks to add/update an exam question to a repository
+activate UI
+UI -> CTRL  : create()
+activate CTRL
+CTRL -> AUQS  : create()
+
+activate AUQS
+AUQS -> PC : repositories()
+activate PC
+PC -> RF : create()
+activate RF
+deactivate RF
+PC --> AUQS : theFactory
+deactivate PC
+AUQS -> QR : questionRepository()
+activate QR
+QR --> AUQS : questionRepository
+deactivate QR
+
+deactivate AUQS
+deactivate CTRL
+
+
+UI->CTRL : listAllTeacherCourses()
+activate CTRL
+CTRL-> AUQS : listAllTeacherCourses()
+activate AUQS
+AUQS -> AR: authorizationService()
+activate AR
+AR -> AUQS: authz
+deactivate AR
+AUQS -> AS: session()
+activate AS
+AS --> AUQS: userSession
+deactivate AS
+AUQS -> US: authenticatedUser()
+activate US
+US --> AUQS : systemUser
+deactivate US
+AUQS ->CR : courseRepository()
+activate CR
+CR --> AUQS : courseRepository
+deactivate CR
+AUQS -> CR : listAllTeacherCourses(systemUser)
+activate CR
+CR --> AUQS : courseList
+deactivate CR
+deactivate CR
+loop for each course from courseList
+AUQS -> CM : toDTOWithIdTitle(course)
+activate CM
+
+CM --> AUQS : courseDTO
+deactivate CM
+end loop
+AUQS --> CTRL : courseDTOList
+deactivate AUQS
+CTRL --> UI : courseDTOList
+deactivate CTRL
+
+UI --> T : shows all courses and asks \rthe course that the question relates to
+deactivate UI
+
+T -> UI : picks a course
+activate UI
+
+UI --> T : asks if the teacher wants \nto add or update the question
+deactivate UI
+T -> UI : chooses to add
+activate UI
+UI --> T : asks for the path of the \nfile that contains the question
+deactivate UI
+
+T-> UI : inserts the path
+activate UI
+UI -> CTRL : addQuestion(question)
+activate CTRL
+
+CTRL -> AUQS : addQuestion(question)
+activate AUQS
+
+AUQS -> QR : count()
+activate QR
+QR --> AUQS : numberOfQuestions
+deactivate QR
+AUQS -> QB : withStructure()
+activate QB
+QB --> AUQS : questionBuilder
+deactivate QB
+AUQS -> QB : withIdentifier()
+activate QB
+QB --> AUQS : questionBuilder
+deactivate QB
+AUQS -> QB : build()
+activate QB
+
+QB -> Q : create(structure, id)
+activate Q
+Q -> VQS : verifyQuestionType()
+activate VQS
+VQS --> Q : type
+deactivate VQS
+deactivate Q
+QB --> AUQS : question
+deactivate QB
+
+
+AUQS -> QR : save(question)
+activate QR
+deactivate QR
+deactivate AUQS
+deactivate CTRL
+
+UI--> T : informs operation success
+
+@enduml
