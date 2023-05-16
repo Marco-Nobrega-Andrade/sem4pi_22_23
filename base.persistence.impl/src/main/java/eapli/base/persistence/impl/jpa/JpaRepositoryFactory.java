@@ -27,6 +27,7 @@ import eapli.base.courseclasses.repositories.ExtraClassRepository;
 import eapli.base.coursemanagement.repositories.CourseRepository;
 import eapli.base.enrollments.repositories.EnrollmentRepository;
 import eapli.base.infrastructure.persistence.RepositoryFactory;
+import eapli.base.meetingmanagement.repositories.InvitationRepository;
 import eapli.base.meetingmanagement.repositories.MeetingRepository;
 import eapli.base.usermanagement.repositories.PersonRepository;
 import eapli.base.usermanagement.repositories.StudentRepository;
@@ -151,6 +152,16 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     @Override
     public TeacherRepository teacherRepository(TransactionalContext autoTx) {
         return new JpaTeacherRepository(autoTx);
+    }
+
+    @Override
+    public InvitationRepository invitationRepository(TransactionalContext autoTx) {
+        return new JpaInvitationRepository(autoTx);
+    }
+
+    @Override
+    public InvitationRepository invitationRepository() {
+        return new JpaInvitationRepository(Application.settings().getPersistenceUnitName());
     }
 
     @Override

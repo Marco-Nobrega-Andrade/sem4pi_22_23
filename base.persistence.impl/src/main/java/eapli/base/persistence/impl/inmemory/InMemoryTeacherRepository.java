@@ -3,6 +3,7 @@ package eapli.base.persistence.impl.inmemory;
 import eapli.base.usermanagement.domain.Acronym;
 import eapli.base.usermanagement.domain.Teacher;
 import eapli.base.usermanagement.repositories.TeacherRepository;
+import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
 
 import java.util.Optional;
@@ -21,5 +22,10 @@ public class InMemoryTeacherRepository extends InMemoryDomainRepository<Teacher,
     @Override
     public Teacher findTeacherByAcronym(String acronym) {
         return matchOne(e -> e.returnAcronymString().equals(acronym)).orElse(null);
+    }
+
+    @Override
+    public Teacher findTeacherBySystemUser(SystemUser systemUser) {
+        return null;
     }
 }

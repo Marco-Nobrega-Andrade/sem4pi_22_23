@@ -5,6 +5,7 @@ import eapli.base.usermanagement.domain.Acronym;
 import eapli.base.usermanagement.domain.Teacher;
 import eapli.base.usermanagement.repositories.TeacherRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
+import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
 public class JpaTeacherRepository extends JpaAutoTxRepository<Teacher, Acronym, Acronym> implements TeacherRepository {
@@ -24,5 +25,11 @@ public class JpaTeacherRepository extends JpaAutoTxRepository<Teacher, Acronym, 
     public Teacher findTeacherByAcronym(String acronym) {
         return createQuery("SELECT t FROM Teacher t WHERE t.acronym.acronym = :acronym", Teacher.class)
                 .setParameter("acronym", acronym).getSingleResult();
+    }
+
+    @Override
+    public Teacher findTeacherBySystemUser(SystemUser systemUser) {
+        return createQuery("SELECT t FROM Teacher t JOIN Person p ON p.teacher = t WHERE p.systemUser = :systemUser", Teacher.class)
+                .setParameter("systemUser", systemUser).getSingleResult();
     }
 }

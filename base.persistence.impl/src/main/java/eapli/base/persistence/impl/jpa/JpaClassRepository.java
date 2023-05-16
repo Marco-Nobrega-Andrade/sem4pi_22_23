@@ -5,11 +5,16 @@ import eapli.base.courseclasses.domain.Class;
 import eapli.base.courseclasses.domain.ClassId;
 import eapli.base.courseclasses.domain.Date;
 import eapli.base.courseclasses.repositories.ClassRepository;
+import eapli.base.coursemanagement.domain.Course;
 import eapli.base.usermanagement.domain.Person;
+import eapli.base.usermanagement.domain.Teacher;
 import eapli.framework.domain.repositories.TransactionalContext;
+import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
+import javax.persistence.TypedQuery;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -28,6 +33,27 @@ public class JpaClassRepository extends JpaAutoTxRepository<Class, ClassId,Class
         params.put("person", person);
         params.put("date", date);
         return matchOne("e.person=:person AND e.date=:date", params);
+    }
+
+    @Override
+    public Class findById(long id) {
+        return createQuery("SELECT c FROM Class c WHERE c.classId.class_Id = :id", Class.class)
+                .setParameter("id", id).getSingleResult();
+    }
+
+    /**
+     * Finds all classes of a teacher
+     * @param user teacher user
+     * @return list of classes
+     */
+    @Override
+    public List<Class> findAll(Teacher user) {
+        //query string search all classes in a course where the teacher is in list of teachers
+        return  createQuery("SELECT c FROM Class c WHERE c " +
+                "IN (SELECT co FROM Course co JOIN co.classesList cl WHERE :user " +
+                        "IN (SELECT co FROM Course co JOIN co.teachersList))"
+                , Class.class).
+                setParameter("user", user).getResultList();
     }
 
 }
