@@ -24,12 +24,30 @@ participant ClassBuilder as builder <<builder>>
 participant Class as courseClass <<domain>>
 
 database CourseRepository as courseRep <<repository>>
+database TeacherRepository as teaRep <<repository>>
+database StudentRepository as stdRep <<repository>>
 database ClassRepository as classRep <<repository>>
 
 activate Manager
 Manager -> ui:  selects option to create a class
 activate ui
 ui -> ctrl: create()
+activate ctrl
+ctrl -> service: create()
+activate service
+service -> Persistence: repositories()
+activate Persistence
+Persistence -> RepFactory: create
+Persistence --> service: factory
+deactivate Persistence
+service -> RepFactory: courseRepository()
+activate RepFactory
+RepFactory -> courseRep: create
+RepFactory --> service: courseRepository
+deactivate RepFactory
+deactivate service
+deactivate ctrl
+
 ui -> ctrl: listCourse()
 activate ctrl
 ctrl -> listservice : create ()
@@ -48,19 +66,6 @@ ui --> Manager: show information inserted and ask for confirmation
 Manager -> ui: validate the information
 ui-> ctrl: verifyIfExistAClassAtTheTime(startingDateWithTime, duration, courseDTO)
 activate ctrl
-ctrl -> service: create()
-activate service
-service -> Persistence: repositories()
-activate Persistence
-Persistence -> RepFactory: create
-Persistence --> service: factory
-deactivate Persistence
-service -> RepFactory: courseRepository()
-activate RepFactory
-RepFactory -> courseRep: create
-RepFactory --> service: courseRepository
-deactivate RepFactory
-deactivate service
 
 ctrl -> service: verifyIfExistAClassAtTheTime(startingDateWithTime. duration, courseDTO)
 activate service
@@ -84,7 +89,37 @@ note right : Check The SD_VerifyIfExistAExtraClassAtTheTime \n for more informat
 course --> service: boolean
 deactivate course
 
-service -> courseRep : findAllCourseRelatedWithTheMembersOfAGivenCourse(course)
+service -> Persistence: repositories()
+activate Persistence
+Persistence -> RepFactory: create
+Persistence --> service: factory
+deactivate Persistence
+service -> RepFactory: teacherRepository()
+activate RepFactory
+RepFactory -> teaRep: create
+RepFactory --> service: teacherRepository
+deactivate RepFactory
+service -> teaRep : findTeachersInACourse(course)
+activate teaRep
+teaRep --> service : listTeacher
+deactivate teaRep
+
+service -> Persistence: repositories()
+activate Persistence
+Persistence -> RepFactory: create
+Persistence --> service: factory
+deactivate Persistence
+service -> RepFactory: studentRepository()
+activate RepFactory
+RepFactory -> stdRep: create
+RepFactory --> service: studentRepository
+deactivate RepFactory
+service -> stdRep : findStudentsInACourse(course)
+activate stdRep
+stdRep --> service : listStudent
+deactivate stdRep
+
+service -> courseRep : findAllCourseRelatedWithTheMembersOfAGivenCourse(listStudent,listTeacher)
 activate courseRep
 courseRep --> service : listCourse
 deactivate courseRep
@@ -147,6 +182,7 @@ courseClass --> builder: courseClass
 deactivate courseClass
 builder --> service: courseClass
 deactivate builder
+service->classRepository: save(courseClass)
 service-> course: addClass(courseClass)
 service-> courseRep: save(course)
 
