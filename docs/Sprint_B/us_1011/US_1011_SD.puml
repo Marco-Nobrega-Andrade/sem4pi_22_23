@@ -13,6 +13,8 @@ participant ExtraClassFactory as EX_CLASS_FAC <<doamin>>
 participant ExtraClass as EX_CLASS <<domain>>
 database CourseRepository as COURSE_REPO <<repository>>
 database ExtraClassRepository as EXTRA_CASS_REPO <<repository>>
+database EnrollmentRepository as ENROLL_REPO <<repository>>
+database StudentRepository as STUD_REPO <<repository>>
 autonumber
 
 
@@ -43,11 +45,14 @@ UI --> ACTOR : System ask for extra class information
 ACTOR -> UI : Teacher inserts information
 UI --> ACTOR : System ask for confirmation
 ACTOR -> UI : Teacher confirms
-UI -> CONTROLLER : verifyScheduleAvailability(dateWithTime. duration, courseDTO, studentList)
+UI -> CONTROLLER : verifyScheduleAvailability(dateWithTime. duration, courseDTO, studentMechNumList)
 activate CONTROLLER
-CONTROLLER -> SERVICE : verifyScheduleAvailability(dateWithTime. duration, courseDTO, studentList)
+CONTROLLER -> SERVICE : verifyScheduleAvailability(dateWithTime. duration, courseDTO, studentMechNumList)
 activate SERVICE
 note right SERVICE : Creation of CourseRepository as described in "US_1011_SD_RepositoryCreation"
+note right SERVICE : Creation of EnrollmentRepository as described in "US_1011_SD_RepositoryCreation"
+note right SERVICE : Creation of StudentRepository as described in "US_1011_SD_RepositoryCreation"
+
 SERVICE -> COURSE_ID : create(courseIdentifier)
 activate COURSE_ID
 deactivate COURSE_ID
@@ -55,7 +60,18 @@ SERVICE -> COURSE_REPO: ofIdentity(courseId)
 activate COURSE_REPO
 COURSE_REPO --> SERVICE : course
 deactivate COURSE_REPO
+loop for each mechanographic number in studentMechNumList
+SERVICE -> STUD_REPO : ofIdentity(studentMechNum)
+activate STUD_REPO
+STUD_REPO-->SERVICE : student
+deactivate STUD_REPO
+end
 
+loop for each student in studentList
+SERVICE -> ENROLL_REPO : checkIfStudentIsEnrolledInCourse(student,Course)
+activate ENROLL_REPO
+deactivate ENROLL_REPO
+end
 
 SERVICE -> COURSE: verifyIfExistAClassAtTheTime(dateWithTime, duration)
 activate COURSE
@@ -68,8 +84,7 @@ activate COURSE
 note right : Method represented SD_VerifyIfExistAExtraClassAtTheTime (us_1010 folder)
 COURSE --> SERVICE: boolean
 deactivate COURSE
-loop for each student in studentList
-SERVICE -> COURSE_REPO : findAllCoursesRelatedWithStudent(student)
+SERVICE -> COURSE_REPO : findAllCourseRelatedWithTheMembersOfAGivenCourse(studentList,teacherList)
 activate COURSE_REPO
 COURSE_REPO --> SERVICE : courseList
 deactivate COURSE_REPO
@@ -87,7 +102,7 @@ note right : Method represented SD_VerifyIfExistAExtraClassAtTheTime (us_1010 fo
 COURSE --> SERVICE: boolean
 deactivate COURSE
 end
-end
+
 SERVICE --> CONTROLLER: boolean
 deactivate SERVICE
 CONTROLLER --> UI : boolean
@@ -98,16 +113,16 @@ ACTOR -> UI : Teacher decides if still wants to create extra-class
 
 end alt
 
-UI -> CONTROLLER : createExtraClass(dateWithTime, duration, studentList)
+UI -> CONTROLLER : createExtraClass(dateWithTime, duration, studentMechNumList)
 activate CONTROLLER
-CONTROLLER -> SERVICE : createExtraClass(dateWithTime, duration, studentList)
+CONTROLLER -> SERVICE : createExtraClass(dateWithTime, duration, studentMechNumList)
 activate SERVICE
 note right SERVICE : Creation of ExtraClassRepository as described in "US_1011_SD_RepositoryCreation"
 SERVICE -> EXTRA_CASS_REPO : count()
 activate EXTRA_CASS_REPO
 EXTRA_CASS_REPO --> SERVICE : total
 deactivate EXTRA_CASS_REPO
-SERVICE -> EX_CLASS_FAC : buildExtraClass(extraClassId, dateWithTime, duration, studentList)
+SERVICE -> EX_CLASS_FAC : buildExtraClass(extraClassId, dateWithTime, duration, studentMechNumList)
 activate EX_CLASS_FAC
 EX_CLASS_FAC -> EX_CLASS : create(extraClassId, dateWithTime, duration, studentList)
 activate EX_CLASS
