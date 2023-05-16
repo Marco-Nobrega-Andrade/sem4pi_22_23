@@ -14,4 +14,10 @@ public class EnrollmentFactory {
         EnrollmentStatus status = new EnrollmentStatus(EnrollmentStatusValue.PENDING);
         return new Enrollment(id,status,course,student);
     }
+
+    public Enrollment buildEnrollmentFromEnrollInBulk(Long enrollmentId, Course course, Student student){
+        EnrollmentId id = new EnrollmentId(enrollmentId);
+        EnrollmentStatus status = new EnrollmentStatus(EnrollmentStatusValue.ACCEPTED);
+        return new Enrollment(id,status,course,student);
+    }
 }
