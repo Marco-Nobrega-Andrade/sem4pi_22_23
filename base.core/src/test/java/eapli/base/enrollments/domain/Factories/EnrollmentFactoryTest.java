@@ -6,8 +6,10 @@ import eapli.base.enrollments.domain.Enrollment;
 import eapli.base.enrollments.domain.EnrollmentStatus;
 import eapli.base.usermanagement.domain.Student;
 import eapli.base.usermanagement.domain.builder.StudentBuilder;
+import eapli.base.utils.CsvReader;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import static org.junit.Assert.*;
@@ -26,6 +28,16 @@ public class EnrollmentFactoryTest {
         Enrollment instance = fac.buildEnrollment((long) 1,dummyCourse,dummyStudent);
         assertEquals("Pending",instance.returnEnrollmentStatusString());
     }
+
+    @Test
+    public void ensureEnrollmentStatusIsAcceptedInEnrollInBulk() {
+        EnrollmentFactory fac = new EnrollmentFactory();
+        Enrollment instance = fac.buildEnrollmentFromEnrollInBulk((long) 1,dummyCourse,dummyStudent);
+        CsvReader csvReader = new CsvReader();
+        csvReader.importCsvData("C:\\Users\\windows\\Documents\\sem4pi-22-23-24\\a.csv", new ArrayList<>());
+        assertEquals("Accepted",instance.returnEnrollmentStatusString());
+    }
+
 
 
 }
