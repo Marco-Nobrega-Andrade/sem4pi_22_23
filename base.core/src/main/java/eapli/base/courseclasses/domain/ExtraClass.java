@@ -1,9 +1,11 @@
 package eapli.base.courseclasses.domain;
 
+import eapli.base.usermanagement.domain.Student;
 import eapli.framework.domain.model.AggregateRoot;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class ExtraClass implements AggregateRoot<ExtraClassId> {
@@ -12,9 +14,13 @@ public class ExtraClass implements AggregateRoot<ExtraClassId> {
 
     private ScheduledDate scheduledDate;
 
-    public ExtraClass(ExtraClassId extraClassId, ScheduledDate scheduledDate) {
+    @OneToMany
+    private List<Student> participatingStudents;
+
+    ExtraClass(ExtraClassId extraClassId, ScheduledDate scheduledDate, List<Student> participatingStudents) {
         this.extraClassId = extraClassId;
         this.scheduledDate = scheduledDate;
+        this.participatingStudents = participatingStudents;
     }
 
     protected ExtraClass() {
@@ -32,7 +38,7 @@ public class ExtraClass implements AggregateRoot<ExtraClassId> {
 
         final ExtraClass that = (ExtraClass) other;
 
-        return extraClassId.equals(that.extraClassId) && scheduledDate.equals(that.scheduledDate);
+        return extraClassId.equals(that.extraClassId) && scheduledDate.equals(that.scheduledDate) && participatingStudents.equals(that.participatingStudents);
     }
 
     @Override
