@@ -2,6 +2,8 @@ package eapli.base.coursemanagement.repositories;
 
 import eapli.base.coursemanagement.domain.Course;
 import eapli.base.coursemanagement.domain.CourseIdentifier;
+import eapli.base.usermanagement.domain.Student;
+import eapli.base.usermanagement.domain.Teacher;
 import eapli.framework.domain.repositories.DomainRepository;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 
@@ -22,4 +24,5 @@ public interface CourseRepository extends DomainRepository<CourseIdentifier, Cou
 
     Course findCourseById(String courseIdentifier);
 
+    List<Course> findAllCourseRelatedWithTheMembersOfAGivenCourse(List<Student> students,List<Teacher> teachers);
 }

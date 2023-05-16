@@ -1,5 +1,6 @@
 package eapli.base.usermanagement.repositories;
 
+import eapli.base.coursemanagement.domain.Course;
 import eapli.base.usermanagement.domain.MecanographicNumber;
 import eapli.base.usermanagement.domain.Student;
 import eapli.framework.domain.repositories.DomainRepository;
@@ -19,4 +20,6 @@ public interface StudentRepository extends DomainRepository<MecanographicNumber,
     int findTotalMecanographicNumberByYear(String year);
 
     Student findStudentBySystemUser(SystemUser systemUser);
+
+    List<Student> findStudentsInACourse(Course course);
 }

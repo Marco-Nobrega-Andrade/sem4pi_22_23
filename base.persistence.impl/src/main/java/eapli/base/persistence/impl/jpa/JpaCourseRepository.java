@@ -4,6 +4,8 @@ import eapli.base.Application;
 import eapli.base.coursemanagement.domain.Course;
 import eapli.base.coursemanagement.domain.CourseIdentifier;
 import eapli.base.coursemanagement.repositories.CourseRepository;
+import eapli.base.usermanagement.domain.Student;
+import eapli.base.usermanagement.domain.Teacher;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
@@ -73,4 +75,32 @@ public class JpaCourseRepository extends JpaAutoTxRepository<Course, CourseIdent
         return createQuery("SELECT c FROM Course c WHERE c.courseId.course_Id = :courseIdentifier", Course.class)
                 .setParameter("courseIdentifier", courseIdentifier).getSingleResult();
     }
+
+    @Override
+    public List<Course> findAllCourseRelatedWithTheMembersOfAGivenCourse(List<Student> students, List<Teacher> teachers) {
+        TypedQuery<Course> query;
+        if (students.isEmpty() && !teachers.isEmpty()) {
+             query = createQuery(
+                    "SELECT DISTINCT c FROM Course c "
+                            + "WHERE (:teachers IN (SELECT t FROM c.teachersList e JOIN Teacher t ON t = e)) OR (c.teacherInCharge IN (:teachers))",
+                    // +" (:students IN (Select s from Student s Join c.enrollmentsList e ON e.student = s))",
+                    Course.class);
+            //query.setParameter("students", students);
+            query.setParameter("teachers", teachers);
+            return query.getResultList();
+        }else{
+            query = createQuery(
+                    "SELECT DISTINCT c FROM Course c " +
+                            "LEFT JOIN c.enrollmentsList e On e.course = c "
+                            + "WHERE (:teachers IN (SELECT t FROM c.teachersList e JOIN Teacher t ON t = e)) OR (c.teacherInCharge IN (:teachers))"
+                            + "OR (:students IN (e.student) and e.enrollmentStatus.enrollmentStatusValue = 'ACCEPTED')",
+                    Course.class);
+            query.setParameter("students", students);
+            query.setParameter("teachers", teachers);
+        }
+
+        return query.getResultList();
+    }
+
+
 }

@@ -3,6 +3,8 @@ package eapli.base.persistence.impl.inmemory;
 import eapli.base.coursemanagement.domain.Course;
 import eapli.base.coursemanagement.domain.CourseIdentifier;
 import eapli.base.coursemanagement.repositories.CourseRepository;
+import eapli.base.usermanagement.domain.Student;
+import eapli.base.usermanagement.domain.Teacher;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
 
@@ -44,4 +46,11 @@ public class InMemoryCourseRepository extends InMemoryDomainRepository<Course, C
     public Course findCourseById(String courseIdentifier) {
         return matchOne(e -> e.returnCourseIdentifierString().equals(courseIdentifier)).orElse(null);
     }
+
+    @Override
+    public List<Course> findAllCourseRelatedWithTheMembersOfAGivenCourse(List<Student> students, List<Teacher> teachers) {
+        return null;
+    }
+
+
 }

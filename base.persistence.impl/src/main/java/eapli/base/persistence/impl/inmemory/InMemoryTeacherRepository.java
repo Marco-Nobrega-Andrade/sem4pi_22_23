@@ -1,12 +1,13 @@
 package eapli.base.persistence.impl.inmemory;
 
+import eapli.base.coursemanagement.domain.Course;
 import eapli.base.usermanagement.domain.Acronym;
 import eapli.base.usermanagement.domain.Teacher;
 import eapli.base.usermanagement.repositories.TeacherRepository;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
 
-import java.util.Optional;
+import java.util.List;
 
 
 public class InMemoryTeacherRepository extends InMemoryDomainRepository<Teacher, Acronym>  implements TeacherRepository {
@@ -28,4 +29,10 @@ public class InMemoryTeacherRepository extends InMemoryDomainRepository<Teacher,
     public Teacher findTeacherBySystemUser(SystemUser systemUser) {
         return null;
     }
+
+    @Override
+    public List<Teacher> findTeachersInACourse(Course course) {
+        return null;
+    }
+
 }

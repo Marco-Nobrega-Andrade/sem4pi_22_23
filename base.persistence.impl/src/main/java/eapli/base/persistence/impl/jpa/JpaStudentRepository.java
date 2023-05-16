@@ -1,6 +1,7 @@
 package eapli.base.persistence.impl.jpa;
 
 import eapli.base.Application;
+import eapli.base.coursemanagement.domain.Course;
 import eapli.base.usermanagement.domain.MecanographicNumber;
 import eapli.base.usermanagement.domain.Student;
 import eapli.base.usermanagement.repositories.StudentRepository;
@@ -38,5 +39,14 @@ public class JpaStudentRepository extends JpaAutoTxRepository<Student, Mecanogra
                 Student.class);
         query.setParameter("systemUser", systemUser);
         return query.getSingleResult();
+    }
+
+    @Override
+    public List<Student> findStudentsInACourse(Course course) {
+        TypedQuery<Student> query = createQuery("SELECT s FROM Student s " +
+                        "JOIN Enrollment e on e.student = s WHERE e.course = :course and e.enrollmentStatus.enrollmentStatusValue = 'ACCEPTED'",
+                Student.class);
+        query.setParameter("course", course);
+        return query.getResultList();
     }
 }

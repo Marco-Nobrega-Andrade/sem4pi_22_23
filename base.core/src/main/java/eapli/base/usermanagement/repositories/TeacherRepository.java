@@ -1,5 +1,6 @@
 package eapli.base.usermanagement.repositories;
 
+import eapli.base.coursemanagement.domain.Course;
 import eapli.base.usermanagement.domain.Acronym;
 import eapli.base.usermanagement.domain.Teacher;
 import eapli.framework.domain.repositories.DomainRepository;
@@ -31,5 +32,7 @@ public interface TeacherRepository extends DomainRepository<Acronym, Teacher> {
      * @return Teacher with the given systemUser
      */
     Teacher findTeacherBySystemUser(SystemUser systemUser);
+
+    List<Teacher> findTeachersInACourse(Course course);
 
 }

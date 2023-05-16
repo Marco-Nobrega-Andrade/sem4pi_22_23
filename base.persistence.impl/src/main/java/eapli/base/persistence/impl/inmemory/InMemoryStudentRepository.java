@@ -1,5 +1,6 @@
 package eapli.base.persistence.impl.inmemory;
 
+import eapli.base.coursemanagement.domain.Course;
 import eapli.base.usermanagement.domain.*;
 import eapli.base.usermanagement.repositories.StudentRepository;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
@@ -23,6 +24,11 @@ public class InMemoryStudentRepository extends InMemoryDomainRepository<Student,
 
     @Override
     public Student findStudentBySystemUser(SystemUser systemUser) {
+        return null;
+    }
+
+    @Override
+    public List<Student> findStudentsInACourse(Course course) {
         return null;
     }
 }
