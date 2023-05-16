@@ -38,4 +38,8 @@ public class ClassId implements Comparable<ClassId>, ValueObject {
     public int hashCode() {
         return Objects.hash(class_Id);
     }
+
+    public long returnId() {
+        return class_Id;
+    }
 }

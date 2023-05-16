@@ -3,6 +3,7 @@ package eapli.base.courseclasses.domain;
 import eapli.framework.domain.model.AggregateRoot;
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -60,5 +61,27 @@ public class Class implements AggregateRoot<ClassId> {
     @Override
     public ClassId identity() {
         return classId;
+    }
+
+    public List<Date> returnDates(){
+        return weeklyDate.returnDates();
+    }
+
+
+    public List<Integer> returnDuration() {
+        return weeklyDate.returnDuration();
+    }
+
+    public long returnId() {
+        return classId.returnId();
+    }
+
+    public String returnTittle() {
+        return classTitle.returnTittle();
+    }
+
+    public boolean reschedule(WeeklyDate weeklyDate) {
+        this.weeklyDate = weeklyDate;
+        return true;
     }
 }

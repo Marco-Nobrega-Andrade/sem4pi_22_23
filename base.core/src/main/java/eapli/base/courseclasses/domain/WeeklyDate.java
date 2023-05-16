@@ -3,10 +3,11 @@ package eapli.base.courseclasses.domain;
 import eapli.framework.domain.model.ValueObject;
 
 import javax.persistence.ElementCollection;
+import javax.persistence.Embeddable;
 import java.util.*;
 import java.util.Date;
 
-
+@Embeddable
 public class WeeklyDate implements ValueObject {
 
     @ElementCollection
@@ -58,5 +59,21 @@ public class WeeklyDate implements ValueObject {
     @Override
     public int hashCode() {
         return Objects.hash(scheduledDates);
+    }
+
+    public List<Date> returnDates() {
+        List<Date> dates = new ArrayList<>();
+        for (ScheduledDate scheduledDate : scheduledDates){
+            dates.add(scheduledDate.returnDate());
+        }
+        return dates;
+    }
+
+    public List<Integer> returnDuration() {
+        List<Integer> durations = new ArrayList<>();
+        for (ScheduledDate scheduledDate : scheduledDates){
+            durations.add(scheduledDate.returnDuration());
+        }
+        return durations;
     }
 }

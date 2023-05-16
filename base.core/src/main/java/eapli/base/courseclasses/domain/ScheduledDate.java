@@ -49,6 +49,15 @@ public class ScheduledDate implements ValueObject {
         return scheduledDate.duration.equals(duration) && scheduledDate.date.compareDayOfTheWeekAndTime(date);
     }
 
+    public java.util.Date returnDate() {
+        return date.returnDate();
+    }
+
+    public Integer returnDuration() {
+        return duration.returnMinutes();
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -35,4 +35,9 @@ public class ClassTitle implements ValueObject {
     public int hashCode() {
         return Objects.hash(class_tile);
     }
+
+    public String returnTittle() {
+        return class_tile;
+    }
+
 }
