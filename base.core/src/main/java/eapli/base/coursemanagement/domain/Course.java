@@ -26,10 +26,10 @@ public class Course implements AggregateRoot<CourseIdentifier> {
 
     private CourseStatus courseStatus;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     private Teacher teacherInCharge;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.REFRESH)
     private List<Teacher> teachersList = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL)
