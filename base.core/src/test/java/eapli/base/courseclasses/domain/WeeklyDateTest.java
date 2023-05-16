@@ -16,7 +16,7 @@ public class WeeklyDateTest {
         List<ScheduledDate> list = new ArrayList<>();
         list.add(scheduledDate1);
         list.add(scheduledDate2);
-        WeeklyDate weeklyDate = new WeeklyDate(list);
+        WeeklyDate weeklyDate = new WeeklyDate(list,true);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -26,7 +26,7 @@ public class WeeklyDateTest {
         List<ScheduledDate> list = new ArrayList<>();
         list.add(scheduledDate1);
         list.add(scheduledDate2);
-        WeeklyDate weeklyDate = new WeeklyDate(list);
+        WeeklyDate weeklyDate = new WeeklyDate(list,true);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -36,12 +36,12 @@ public class WeeklyDateTest {
         List<ScheduledDate> list = new ArrayList<>();
         list.add(scheduledDate1);
         list.add(scheduledDate2);
-        WeeklyDate weeklyDate = new WeeklyDate(list);
+        WeeklyDate weeklyDate = new WeeklyDate(list,true);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void ensuresThatWeeklyDateCannotBeNull() {
-        WeeklyDate weeklyDate = new WeeklyDate(null);
+        WeeklyDate weeklyDate = new WeeklyDate(null,true);
     }
 
 
@@ -52,7 +52,7 @@ public class WeeklyDateTest {
         List<ScheduledDate> list = new ArrayList<>();
         list.add(scheduledDate1);
         list.add(scheduledDate2);
-        WeeklyDate weeklyDate = new WeeklyDate(list);
+        WeeklyDate weeklyDate = new WeeklyDate(list,true);
 
         java.util.Date testData1 = new java.util.Date(1000,10,9,10,10,0);
         assertTrue(weeklyDate.verifyIfAClassAtTheTime(testData1,30));
