@@ -11,10 +11,12 @@ import java.util.Optional;
 
 public class InMemoryMeetingRepository extends InMemoryDomainRepository<Meeting, MeetingIdentifier>
         implements MeetingRepository {
+
     @Override
-    public Optional<Meeting> findAllMeetingsWhoMatch(Person person, Date date) {
+    public Optional<Meeting> findAllMeetingsWhoMatch(Person person, Date date, int duration) {
         return Optional.empty();
     }
+
     @Override
     public long findTotalNumberOfMeetings() {
         return 0;

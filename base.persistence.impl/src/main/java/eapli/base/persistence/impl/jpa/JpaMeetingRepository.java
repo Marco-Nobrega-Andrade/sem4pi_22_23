@@ -22,16 +22,15 @@ public class JpaMeetingRepository extends JpaAutoTxRepository<Meeting, MeetingId
         super(puname, Application.settings().getExtendedPersistenceProperties(),
                 "idMeeting");
     }
+
     @Override
-    public long findTotalNumberOfMeetings() {
-        return count();
+    public Optional<Meeting> findAllMeetingsWhoMatch(Person person, Date date, int duration) {
+        return createQuery("SELECT m FROM Meeting m JOIN Person p WHERE p.Invitatio", Meeting.class)
+                .setParameter("person", person).setParameter("date", date).setParameter("duration", duration).getResultStream().findFirst();
     }
 
     @Override
-    public Optional<Meeting> findAllMeetingsWhoMatch(Person person, Date date) {
-        final Map<String, Object> params = new HashMap<>();
-        params.put("person", person);
-        params.put("date", date);
-        return matchOne("e.person=:person AND e.date=:date", params);
+    public long findTotalNumberOfMeetings() {
+        return count();
     }
 }
