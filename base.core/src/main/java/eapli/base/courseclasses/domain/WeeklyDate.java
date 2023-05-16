@@ -12,15 +12,23 @@ public class WeeklyDate implements ValueObject {
     @ElementCollection
     private List<ScheduledDate> scheduledDates;
 
-    public WeeklyDate(List<ScheduledDate>  scheduledDates) {
+    /**
+     * Constructor of WeeklyDate
+     * @param scheduledDates list of scheduled dates
+     * @param flag if true, verifies if the dates are in the same day of the week and at the same time
+     */
+
+    public WeeklyDate(List<ScheduledDate>  scheduledDates, boolean flag) {
         if(scheduledDates == null) {
             throw new IllegalArgumentException("Schedules list cannot be null");
         }else if (scheduledDates.isEmpty()){
             throw new IllegalArgumentException("Schedules list cannot be empty");
         }
-        for(int i = 0; i < scheduledDates.size()-1;i++){
-            if (!scheduledDates.get(i).compareIfScheduleClassIsOneWeekAfter(scheduledDates.get(i+1))){
-                throw new IllegalArgumentException("Schedules dates have to be in the same day of the week and at the same time");
+        if (flag) {
+            for(int i = 0; i < scheduledDates.size()-1;i++){
+                if (!scheduledDates.get(i).compareIfScheduleClassIsOneWeekAfter(scheduledDates.get(i+1))){
+                    throw new IllegalArgumentException("Schedules dates have to be in the same day of the week and at the same time");
+                }
             }
         }
         this.scheduledDates = scheduledDates;
