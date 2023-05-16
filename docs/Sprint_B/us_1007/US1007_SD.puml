@@ -9,8 +9,8 @@ participant "<<Factory>>\nfactory:RepositoryFactory" as RF
 database "<<Repository>>\ncourseRepository\n:CourseRepository" as CR
 database "<<Repository>>\nenrollmentRepository\n:EnrollmentRepository" as ER
 database "<<Repository>>\ncstudentRepository\n:StudentRepository" as SR
+participant "studentIdList\n:List<String>" as SIL
 participant ":CsvReader" as CsvR
-participant ":studentsIdList\n:List<String>" as SIL
 participant "<<DTO>>\ncourseDTOWithIdTitleList\n:List<CourseDTOWithIdTitle>" as cDtoL
 participant "<<DTO>>\n:CourseMapper" as CM
 participant "<<DTO>>\ncourseDTOBuilder\n:CourseDTOBuilder" as cDTOBuilder
@@ -61,12 +61,16 @@ UI -> CTRL : importCsvData(fileName)
 activate CTRL
 CTRL -> BESv : importCsvData(fileName)
 activate BESv
-BESv -> CsvR : importCsvData(fileName)
+BESv -> SIL : create()
+BESv -> CsvR : importCsvData(fileName, studentIdList)
 activate CsvR
 CsvR --> BESv : studentIdList
 deactivate CsvR
+BESv --> CTRL : boolean
 deactivate BESv
+CTRL --> UI : boolean
 deactivate CTRL
+UI --> M : Shows import result
 UI -> CTRL : listAllCoursesOpenToEnrollments()
 activate CTRL
 CTRL -> BESv : listAllCoursesOpenToEnrollments()
@@ -148,7 +152,9 @@ BESv -> C : verifyIfWillExceedEnrollmentLimits(numberOfAcceptedEnrollments, numb
 activate C
 C -> EL : verifyIfWillExceedEnrollmentLimits(numberOfAcceptedEnrollments, numberOfNewEnrollments)
 activate EL
+EL --> C : boolean
 deactivate EL
+C --> BESv : boolean
 deactivate BESv
 deactivate C
 loop foreach studentId in studentIdList
