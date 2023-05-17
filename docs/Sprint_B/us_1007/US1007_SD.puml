@@ -4,6 +4,7 @@ actor Manager as M
 participant "<<Presentation>>\n:EnrollInBulkUI" as UI
 control "<<Application>>\n:EnrollInBulkController" as CTRL
 participant "<<Service>>\n:EnrollInBulkService" as BESv
+control ":RequestEnrollmentController" as CONTROLLER <<Application>>
 participant "<<Persistence>>\n:PersistenceContext" as PC
 participant "<<Factory>>\nfactory:RepositoryFactory" as RF
 database "<<Repository>>\ncourseRepository\n:CourseRepository" as CR
@@ -73,54 +74,8 @@ deactivate CTRL
 UI --> M : Shows import result
 UI -> CTRL : listAllCoursesOpenToEnrollments()
 activate CTRL
-CTRL -> BESv : listAllCoursesOpenToEnrollments()
-activate BESv
-BESv -> CR : listAllCoursesOpenToEnrollments()
-activate CR
-CR --> BESv : coursesList
-deactivate CR
-BESv -> cDtoL : create()
-loop foreach course from courseList
-BESv -> CM : toDTOWithIdTitleStatus(course)
-activate CM
-CM -> cDTOBuilder : create()
-CM -> C : returnCourseIdentifierString()
-activate C
-C -> CI : returnCourseIdentifierString()
-activate CI
-CI --> C : courseId
-deactivate CI
-C --> CM : courseId
-deactivate C
-CM -> cDTOBuilder : withCourseIdentifier(courseId)
-activate cDTOBuilder
-deactivate cDTOBuilder
-CM -> C : returnCourseTitleString()
-activate C
-C -> CT : returnCourseTitleString()
-activate CT
-CT --> C : courseTitle
-deactivate CT
-C --> CM : courseTitle
-deactivate C
-CM -> cDTOBuilder : withCourseTitle(courseTitle)
-activate cDTOBuilder
-deactivate cDTOBuilder
-deactivate cDTOBuilder
-CM -> cDTOBuilder : buildWithIdTitle()
-activate cDTOBuilder
-cDTOBuilder -> cDTO : create()
-cDTOBuilder --> CM : courseDTOWithIdTitle
-deactivate cDTOBuilder
-CM --> BESv : courseDTOWithIdTitle
-deactivate CM
-deactivate CM
-BESv -> cDtoL : add(courseDTOWithIdTitle)
-activate cDtoL
-deactivate cDtoL
-end loop
-BESv --> CTRL : courseDTOList
-deactivate BESv
+CTRL -> CONTROLLER : listAllCoursesOpenToEnrollments()
+note right : The rest of the flow is in US_1008_SD
 CTRL --> UI : courseDTOList
 deactivate CTRL
 UI --> M : Displays a list of all the \navailable courses
