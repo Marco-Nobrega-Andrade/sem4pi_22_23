@@ -44,8 +44,8 @@ public class JpaCourseRepository extends JpaAutoTxRepository<Course, CourseIdent
     @Override
     public List<Course> findTeacherCourses(SystemUser systemUser) {
         TypedQuery<Course> query = createQuery(
-                "SELECT DISTINCT c FROM Course c JOIN c.teacherInCharge t JOIN Person p ON p.teacher = c.teacherInCharge WHERE p.systemUser = :systemUser " +
-                        "OR (:systemUser IN (SELECT p.systemUser FROM c.teachersList t JOIN Person p ON t = p.teacher))",
+                "SELECT DISTINCT c FROM Course c JOIN c.teacherInCharge t JOIN Person p ON p.teacher = c.teacherInCharge WHERE p.systemUser = :systemUser AND c.courseStatus.courseStatusValue <> 'CLOSED' " +
+                        "OR (:systemUser IN (SELECT p.systemUser FROM c.teachersList t JOIN Person p ON t = p.teacher where c.courseStatus.courseStatusValue <> 'CLOSED'))",
                 Course.class);
         query.setParameter("systemUser", systemUser);
         return query.getResultList();
@@ -60,7 +60,7 @@ public class JpaCourseRepository extends JpaAutoTxRepository<Course, CourseIdent
                         + "WHERE (c.courseStatus.courseStatusValue = 'OPEN_ENROLLMENTS' AND NOT (:systemUser IN (SELECT p.systemUser FROM c.enrollmentsList e JOIN Person p ON p.student = e.student "
                         + "Where (e.enrollmentStatus.enrollmentStatusValue = 'REJECTED')))) "
                         + "OR (:systemUser IN (SELECT p.systemUser FROM c.enrollmentsList e JOIN Person p ON p.student = e.student "
-                        + "Where (e.enrollmentStatus.enrollmentStatusValue = 'ACCEPTED' OR e.enrollmentStatus.enrollmentStatusValue = 'PENDING')))",
+                        + "Where ((e.enrollmentStatus.enrollmentStatusValue = 'ACCEPTED' OR e.enrollmentStatus.enrollmentStatusValue = 'PENDING') AND c.courseStatus.courseStatusValue <> 'CLOSED')))",
                 Course.class);
         query.setParameter("systemUser", systemUser);
         return query.getResultList();
