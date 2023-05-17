@@ -28,16 +28,6 @@ public class EnrollInBulkService {
         return importResult;
     }
 
-    public List<CourseDTOWithIdTitle> listAllStudentAvailableCourses(){
-        ArrayList<CourseDTOWithIdTitle> courseDTOList = new ArrayList<>();
-
-        for (Course course : courseRepository.listAllCoursesOpenToEnrollments()) {
-            courseDTOList.add(CourseMapper.toDTOWithIdTitle(course));
-        }
-
-        return courseDTOList;
-    }
-
     public void enrollStudentsInBulkToCourse(CourseDTOWithIdTitle selectedCourse){
         Course course = courseRepository.ofIdentity(new CourseIdentifier(selectedCourse.courseIdentifier)).get();
 
