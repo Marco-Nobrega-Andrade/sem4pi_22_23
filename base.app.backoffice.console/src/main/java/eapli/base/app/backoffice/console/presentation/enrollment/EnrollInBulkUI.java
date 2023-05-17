@@ -21,6 +21,7 @@ public class EnrollInBulkUI extends AbstractUI {
         boolean importResult = enrollInBulkController.importCsvData(fileName);
 
         if(importResult) {
+
             System.out.println("Going to import the data...\n");
             System.out.println("Data imported.\n");
 
@@ -32,13 +33,15 @@ public class EnrollInBulkUI extends AbstractUI {
 
             System.out.println("0. Return\n");
             int idx = Console.readOption(1, size, 0);
+
             if(idx != 0){
                 System.out.println("Starting the enroll in bulk process...\n");
                 enrollInBulkController.enrollStudentsInBulkToCourse(courseDTOWithIdTitleList.get(idx-1));
-                System.out.println("All students enrolled in the selected course!\n");
+                System.out.println("The process is done!\n");
             }
 
         }
+
         return true;
     }
 
