@@ -27,6 +27,7 @@ import eapli.base.app.common.console.presentation.authz.MyUserMenu;
 import eapli.base.Application;
 import eapli.base.app.common.console.presentation.course.ListCourseAction;
 import eapli.base.app.other.console.presentation.courseClass.CreateClassAction;
+import eapli.base.app.other.console.presentation.courseclasses.RescheduleClassAction;
 import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
@@ -61,6 +62,8 @@ public class MainMenu extends AbstractUI {
     // COURSE MENU
     private static final int LIST_COURSE_OPTION = 1;
     private static final int CREATE_CLASS = 2;
+
+    private static final int RESCHEDULE_CLASS_OPTION = 3;
 
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
 
@@ -129,6 +132,7 @@ public class MainMenu extends AbstractUI {
 
         courseMenu.addItem(LIST_COURSE_OPTION,"List Course", new ListCourseAction());
         courseMenu.addItem(CREATE_CLASS,"Create Class", new CreateClassAction());
+        courseMenu.addItem(RESCHEDULE_CLASS_OPTION,"Reschedule Class", new RescheduleClassAction());
         courseMenu.addItem(EXIT_OPTION, "Return", Actions.SUCCESS);
 
         return courseMenu;
