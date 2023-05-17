@@ -9,7 +9,7 @@ import java.util.Objects;
 
 @Entity
 public class Class implements AggregateRoot<ClassId> {
-    @Id
+    @EmbeddedId
     private ClassId classId;
 
     private ClassTitle classTitle;
