@@ -1,0 +1,65 @@
+@startuml
+
+control VerifyScheduleAvailabilityController as CONTROLLER <<application>>
+participant VerifyScheduleAvailabilityService as SERVICE <<application>>
+participant Course as COURSE <<domain>>
+participant CourseId as COURSE_ID <<domain>>
+participant CourseIdentifier as COURSE_ID <<domain>>
+database CourseRepository as COURSE_REPO <<repository>>
+database EnrollmentRepository as ENROLL_REPO <<repository>>
+database StudentRepository as STUD_REPO <<repository>>
+
+
+activate CONTROLLER
+CONTROLLER -> SERVICE : verifyScheduleAvailability(dateWithTime. duration, courseDTO, studentMechNumList)
+activate SERVICE
+SERVICE -> COURSE_ID : create(courseIdentifier)
+activate COURSE_ID
+deactivate COURSE_ID
+SERVICE -> COURSE_REPO: ofIdentity(courseId)
+activate COURSE_REPO
+COURSE_REPO --> SERVICE : course
+deactivate COURSE_REPO
+loop for each mechanographic number in studentMechNumList
+SERVICE -> STUD_REPO : ofIdentity(studentMechNum)
+activate STUD_REPO
+STUD_REPO-->SERVICE : student
+deactivate STUD_REPO
+SERVICE -> ENROLL_REPO : findEnrollmentByCourseIDAndMechNumber(courseId,mechNum)
+activate ENROLL_REPO
+ENROLL_REPO --> SERVICE : enrollment
+deactivate ENROLL_REPO
+end
+
+activate SERVICE
+SERVICE -> COURSE: verifyIfExistAClassAtTheTime(dateWithTime, duration)
+activate COURSE
+note right : Method represented in SD_VerifyIfExistAClassAtTheTime (us_1010 folder)
+COURSE --> SERVICE: boolean
+deactivate COURSE
+SERVICE -> COURSE: verifyIfExistAnExtraClassAtTheTime(dateWithTime, duration)
+activate COURSE
+note right : Method represented SD_VerifyIfExistAExtraClassAtTheTime (us_1010 folder)
+COURSE --> SERVICE: boolean
+deactivate COURSE
+SERVICE -> COURSE_REPO : findAllCourseRelatedWithTheMembersOfAGivenCourse(studentList,teacherList)
+activate COURSE_REPO
+COURSE_REPO --> SERVICE : courseList
+deactivate COURSE_REPO
+
+loop for each Course in courseList
+SERVICE -> COURSE: verifyIfExistAClassAtTheTime(dateWithTime, duration)
+activate COURSE
+note right : Method represented SD_VerifyIfExistAClassAtTheTime (us_1010 folder)
+COURSE --> SERVICE: boolean
+deactivate COURSE
+
+SERVICE -> COURSE: verifyIfExistAnExtraClassAtTheTime(dateWithTime, duration)
+activate COURSE
+note right : Method represented SD_VerifyIfExistAExtraClassAtTheTime (us_1010 folder)
+COURSE --> SERVICE: boolean
+deactivate COURSE
+end
+SERVICE --> CONTROLLER: boolean
+deactivate SERVICE
+@enduml
