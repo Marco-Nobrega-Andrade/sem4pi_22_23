@@ -40,16 +40,23 @@ public class EnrollInBulkService {
 
     public void enrollStudentsInBulkToCourse(CourseDTOWithIdTitle selectedCourse){
         Course course = courseRepository.ofIdentity(new CourseIdentifier(selectedCourse.courseIdentifier)).get();
+
         if(!verifyIfWillExceedEnrollmentLimits(course, studentIdList.size())){
             for (String studentId : studentIdList) {
-                Student student = studentRepository.ofIdentity(new MecanographicNumber(studentId)).get();
-                long totalNumberOfEnrollments = enrollmentRepository.count();
-                Enrollment newEnrollment = new EnrollmentFactory().buildEnrollmentFromEnrollInBulk(totalNumberOfEnrollments+1,course,student);
-                enrollmentRepository.save(newEnrollment);
-                course.addEnrollment(newEnrollment);
-                courseRepository.save(course);
-                student.addEnrollment(newEnrollment);
-                studentRepository.save(student);
+                Student student;
+
+                try{
+                    student = studentRepository.ofIdentity(new MecanographicNumber(studentId)).get();
+                    long totalNumberOfEnrollments = enrollmentRepository.count();
+                    Enrollment newEnrollment = new EnrollmentFactory().buildEnrollmentFromEnrollInBulk(totalNumberOfEnrollments+1,course,student);
+                    enrollmentRepository.save(newEnrollment);
+                    course.addEnrollment(newEnrollment);
+                    courseRepository.save(course);
+                    student.addEnrollment(newEnrollment);
+                    studentRepository.save(student);
+                }catch (Exception e){
+                    System.out.printf("The mechanographic number %s doesn't exist in the data base!\n\n", studentId);
+                }
             }
         }
 
