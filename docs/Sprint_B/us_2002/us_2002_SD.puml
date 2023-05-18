@@ -5,76 +5,59 @@ actor "Student" as S
 participant ": ListFutureExamsUI" as UI <<Presentation>>
 control "ListFutureExamsController" as CTRL <<Application>>
 participant ": ListFutureExamsService" as FESS <<Service>>
-participant ": PersistenceContext" as PC <<Persistence>>
-participant "factory : RepositoryFactory" as RF <<Factory>>
+
+participant " : AuthzRegistry" as AR <<Application>>
 participant " : AuthorizationService" as AS <<Service>>
-database EnrollmentRepository as EnR <<Repository>>
+participant " : UserSession" as US <<Application>>
+database CourseRepository as CR <<Repository>>
 database ExamRepository as ER <<Repository>>
-participant ": ExamMapper" as EM <<DTO>>
-participant ": ExamDTO" as EDTO <<DTO>>
+participant ": ExamDTOWithDatesCourseIdMapper" as EM <<DTO>>
+
 
 activate S
 S -> UI : Student asks to list its own exams
 activate UI
-UI -> CTRL : create()
-activate CTRL
-CTRL -> FESS : create()
-activate FESS
-FESS -> PC : repositories()
-activate PC
-PC -> RF : create()
-activate RF
-deactivate RF
-PC --> FESS : factory
-deactivate PC
-
-
-FESS -> EnR : enrollmentRepository()
-activate EnR
-EnR --> FESS : enrollmentRepository
-deactivate EnR
-
-FESS -> ER : examRepository()
-activate ER
-ER --> FESS : examRepository
-deactivate ER
-
-deactivate FESS
-deactivate CTRL
-
-
 UI->CTRL : listFutureExams()
 activate CTRL
 CTRL-> FESS : listFutureExams()
 activate FESS
-FESS -> AS : session()
+
+FESS -> AR: authorizationService()
+activate AR
+AR -> FESS: authz
+deactivate AR
+FESS -> AS: session()
 activate AS
-AS --> FESS : student
+AS --> FESS: userSession
 deactivate AS
-FESS --> EnR : listAcceptedCoursesByStudent(student)
-activate EnR
-EnR --> FESS : acceptedCourseList
-deactivate EnR
-FESS -> ER : listFutureExamsByCourseList(acceptedCourseList)
+FESS -> US: authenticatedUser()
+activate US
+US --> FESS : systemUser
+deactivate US
+FESS --> CR : listAcceptedCoursesByStudent(user)
+activate CR
+CR --> FESS : courseList
+deactivate CR
+loop foreach course in courseList
+FESS -> ER : listFutureExamsByCourse(course)
 activate ER
 ER --> FESS : futureExamsList
 deactivate ER
 deactivate ER
 loop foreach exam from futureExamList
-FESS -> EM : toDTO(exam)
+FESS -> EM : toDTO(exam, course)
 activate EM
-EM -> EDTO : create()
-activate EDTO
-deactivate EDTO
+
 EM --> FESS : examDTO
 deactivate EM
+end loop
 end loop
 FESS --> CTRL : examDTOList
 deactivate FESS
 CTRL --> UI : examDTOList
 deactivate CTRL
 
-UI --> S : shows all exams referent to the Student
+UI --> S : shows all future exams referent to the Student
 deactivate UI
 deactivate S
 
