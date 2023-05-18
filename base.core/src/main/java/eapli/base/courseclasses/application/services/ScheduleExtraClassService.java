@@ -11,7 +11,10 @@ import eapli.base.coursemanagement.repositories.CourseRepository;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.usermanagement.domain.MecanographicNumber;
 import eapli.base.usermanagement.domain.Student;
+import eapli.base.usermanagement.domain.Teacher;
 import eapli.base.usermanagement.repositories.StudentRepository;
+import eapli.base.usermanagement.repositories.TeacherRepository;
+import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +25,9 @@ public class ScheduleExtraClassService {
         CourseRepository courseRepo = PersistenceContext.repositories().courseRepository();
         StudentRepository studentRepo = PersistenceContext.repositories().studentRepository();
         ExtraClassRepository extraClassRepo = PersistenceContext.repositories().extraClassRepository();
+        TeacherRepository teacherRepo = PersistenceContext.repositories().teacherRepository();
+        Teacher teacher = teacherRepo.findTeacherBySystemUser(AuthzRegistry.authorizationService().session().get().authenticatedUser());
+
 
         List<Student> studentList = new ArrayList<>();
 
@@ -29,7 +35,7 @@ public class ScheduleExtraClassService {
             studentList.add(studentRepo.ofIdentity(new MecanographicNumber(mecNumString)).get());
         }
 
-        ExtraClass newExtraClass = new ExtraClassFactory().buildExtraClass(extraClassRepo.count()+1,dateWithTime,duration,studentList);
+        ExtraClass newExtraClass = new ExtraClassFactory().buildExtraClass(extraClassRepo.count()+1,dateWithTime,duration,studentList,teacher);
 
         CourseIdentifier courseId = new CourseIdentifier(courseDTO.courseIdentifier);
         Course course = courseRepo.ofIdentity(courseId).get();

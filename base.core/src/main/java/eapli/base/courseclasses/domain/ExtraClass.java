@@ -1,6 +1,7 @@
 package eapli.base.courseclasses.domain;
 
 import eapli.base.usermanagement.domain.Student;
+import eapli.base.usermanagement.domain.Teacher;
 import eapli.framework.domain.model.AggregateRoot;
 
 import javax.persistence.*;
@@ -17,10 +18,14 @@ public class ExtraClass implements AggregateRoot<ExtraClassId> {
     @OneToMany
     private List<Student> participatingStudents;
 
-    ExtraClass(ExtraClassId extraClassId, ScheduledDate scheduledDate, List<Student> participatingStudents) {
+    @ManyToOne
+    private Teacher teacher;
+
+    ExtraClass(ExtraClassId extraClassId, ScheduledDate scheduledDate, List<Student> participatingStudents, Teacher teacher) {
         this.extraClassId = extraClassId;
         this.scheduledDate = scheduledDate;
         this.participatingStudents = participatingStudents;
+        this.teacher = teacher;
     }
 
     protected ExtraClass() {
