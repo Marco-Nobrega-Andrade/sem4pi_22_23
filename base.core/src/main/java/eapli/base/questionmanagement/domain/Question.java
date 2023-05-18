@@ -26,7 +26,7 @@ public class Question implements AggregateRoot<QuestionId> {
         return null;
     }
 
-    public String returnQuestionIdentifier(){
-        return question_Id.toString();
+    public long returnQuestionIdentifier(){
+        return question_Id.returnQuestionId();
     }
 }
