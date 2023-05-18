@@ -18,14 +18,14 @@ public class ExtraClass implements AggregateRoot<ExtraClassId> {
     @OneToMany
     private List<Student> participatingStudents;
 
-    @ManyToOne
-    private Teacher teacher;
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    private Teacher extraClassTeacher;
 
     ExtraClass(ExtraClassId extraClassId, ScheduledDate scheduledDate, List<Student> participatingStudents, Teacher teacher) {
         this.extraClassId = extraClassId;
         this.scheduledDate = scheduledDate;
         this.participatingStudents = participatingStudents;
-        this.teacher = teacher;
+        this.extraClassTeacher = teacher;
     }
 
     protected ExtraClass() {
@@ -43,7 +43,8 @@ public class ExtraClass implements AggregateRoot<ExtraClassId> {
 
         final ExtraClass that = (ExtraClass) other;
 
-        return extraClassId.equals(that.extraClassId) && scheduledDate.equals(that.scheduledDate) && participatingStudents.equals(that.participatingStudents);
+        return extraClassId.equals(that.extraClassId) && scheduledDate.equals(that.scheduledDate)
+                && participatingStudents.equals(that.participatingStudents) && extraClassTeacher.equals(that.extraClassTeacher);
     }
 
     @Override

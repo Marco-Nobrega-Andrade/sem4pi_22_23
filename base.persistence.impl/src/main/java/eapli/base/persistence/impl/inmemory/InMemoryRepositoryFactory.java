@@ -30,6 +30,7 @@ import eapli.base.infrastructure.bootstrapers.BaseBootstrapper;
 import eapli.base.infrastructure.persistence.RepositoryFactory;
 import eapli.base.meetingmanagement.repositories.InvitationRepository;
 import eapli.base.meetingmanagement.repositories.MeetingRepository;
+import eapli.base.questionmanagement.repositories.QuestionRepository;
 import eapli.base.usermanagement.repositories.PersonRepository;
 import eapli.base.usermanagement.repositories.StudentRepository;
 import eapli.base.usermanagement.repositories.TeacherRepository;
@@ -114,6 +115,14 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
         return enrollmentRepository(null);
     }
 
+    @Override
+    public QuestionRepository questionRepository(){
+        return questionRepository(null);
+    }
+    @Override
+    public QuestionRepository questionRepository(TransactionalContext autoTx){
+        return new InMemoryQuestionRepository();
+    }
     @Override
     public MeetingRepository meetingRepository() {
         return meetingRepository(null);

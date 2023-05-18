@@ -34,8 +34,7 @@ public class QuestionId implements ValueObject, Comparable<QuestionId> {
         return Objects.hash(question_Id);
     }
 
-    @Override
-    public String toString() {
-        return question_Id.toString();
+    public long returnQuestionId() {
+        return question_Id;
     }
 }

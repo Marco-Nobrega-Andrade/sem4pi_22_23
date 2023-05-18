@@ -28,6 +28,7 @@ import eapli.base.coursemanagement.repositories.CourseRepository;
 import eapli.base.enrollments.repositories.EnrollmentRepository;
 import eapli.base.meetingmanagement.repositories.InvitationRepository;
 import eapli.base.meetingmanagement.repositories.MeetingRepository;
+import eapli.base.questionmanagement.repositories.QuestionRepository;
 import eapli.base.usermanagement.repositories.PersonRepository;
 import eapli.base.usermanagement.repositories.StudentRepository;
 import eapli.base.usermanagement.repositories.TeacherRepository;
@@ -186,6 +187,9 @@ public interface RepositoryFactory {
     TeacherRepository teacherRepository(TransactionalContext autoTx);
 
     InvitationRepository invitationRepository(TransactionalContext autoTx);
+
+    QuestionRepository questionRepository(TransactionalContext autoTx);
+    QuestionRepository questionRepository();
 
     InvitationRepository invitationRepository();
 }
