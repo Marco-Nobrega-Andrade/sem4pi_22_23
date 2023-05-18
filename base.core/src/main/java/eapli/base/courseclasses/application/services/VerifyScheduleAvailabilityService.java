@@ -30,7 +30,7 @@ public class VerifyScheduleAvailabilityService {
         for (String mecNumString : studentMechNumList){
             MecanographicNumber mecNum =  new MecanographicNumber(mecNumString);
 
-            if (studentRepo.containsOfIdentity(mecNum)){
+            if (!studentRepo.containsOfIdentity(mecNum)){
                 throw new IllegalArgumentException(String.format("Mecanographic number %s does not match any of the existing students",mecNumString));
             }
 
