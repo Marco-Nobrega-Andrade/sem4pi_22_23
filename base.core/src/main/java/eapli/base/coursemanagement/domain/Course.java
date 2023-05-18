@@ -3,6 +3,7 @@ package eapli.base.coursemanagement.domain;
 import eapli.base.courseclasses.domain.Class;
 import eapli.base.courseclasses.domain.ExtraClass;
 import eapli.base.enrollments.domain.Enrollment;
+import eapli.base.questionmanagement.domain.Question;
 import eapli.base.usermanagement.domain.Teacher;
 import eapli.framework.domain.model.AggregateRoot;
 
@@ -25,6 +26,8 @@ public class Course implements AggregateRoot<CourseIdentifier> {
     private EnrollmentLimits enrollmentLimits;
 
     private CourseStatus courseStatus;
+    @OneToMany(cascade = CascadeType.REFRESH)
+    private List<Question> questionList = new ArrayList<>();
 
     @ManyToOne(cascade = CascadeType.REFRESH)
     private Teacher teacherInCharge;
