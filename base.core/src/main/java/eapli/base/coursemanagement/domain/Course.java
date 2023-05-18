@@ -1,5 +1,6 @@
 package eapli.base.coursemanagement.domain;
 
+import eapli.base.exams.domain.Exam;
 import eapli.base.courseclasses.domain.Class;
 import eapli.base.courseclasses.domain.ExtraClass;
 import eapli.base.enrollments.domain.Enrollment;
@@ -26,7 +27,7 @@ public class Course implements AggregateRoot<CourseIdentifier> {
     private EnrollmentLimits enrollmentLimits;
 
     private CourseStatus courseStatus;
-    @OneToMany(cascade = CascadeType.REFRESH)
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Question> questionList = new ArrayList<>();
 
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -44,10 +45,9 @@ public class Course implements AggregateRoot<CourseIdentifier> {
     @OneToMany(cascade = CascadeType.ALL)
     private List<Class> classesList = new ArrayList<>();
 
-    /*
-    @OneToMany(mappedBy="course", cascade = CascadeType.ALL)
-    private List<Exam> examsList;
-    */
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Exam> examsList = new ArrayList<>();
+
     public Course(CourseIdentifier courseId, CourseTitle courseTitle, CourseName courseName, Description description, EnrollmentLimits enrollmentLimits, CourseStatus courseStatus, Teacher teacherInCharge) {
         this.courseId = courseId;
         this.courseTitle = courseTitle;
