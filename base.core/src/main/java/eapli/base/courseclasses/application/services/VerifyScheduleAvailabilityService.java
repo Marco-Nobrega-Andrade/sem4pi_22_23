@@ -9,8 +9,11 @@ import eapli.base.enrollments.repositories.EnrollmentRepository;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.usermanagement.domain.MecanographicNumber;
 import eapli.base.usermanagement.domain.Student;
+import eapli.base.usermanagement.domain.Teacher;
 import eapli.base.usermanagement.repositories.StudentRepository;
 import eapli.base.usermanagement.repositories.TeacherRepository;
+import eapli.framework.infrastructure.authz.application.AuthzRegistry;
+import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +25,8 @@ public class VerifyScheduleAvailabilityService {
         EnrollmentRepository enrollmentRepo = PersistenceContext.repositories().enrollmentRepository();
         StudentRepository studentRepo = PersistenceContext.repositories().studentRepository();
         TeacherRepository teacherRepo = PersistenceContext.repositories().teacherRepository();
+        Teacher teacher = teacherRepo.findTeacherBySystemUser(AuthzRegistry.authorizationService().session().get().authenticatedUser());
+
 
         CourseIdentifier courseId = new CourseIdentifier(courseDTO.courseIdentifier);
         Course course = courseRepo.ofIdentity(courseId).get();
@@ -48,8 +53,10 @@ public class VerifyScheduleAvailabilityService {
         if(course.verifyIfExistAnExtraClassAtTheTime(dateWithTime,duration)){
             throw new IllegalArgumentException("There already exists an extra class scheduled for this time");
         }
+        List<Teacher> teacherList = new ArrayList<>();
+        teacherList.add(teacher);
 
-        for (Course c: courseRepo.findAllCourseRelatedWithTheMembersOfAGivenCourse(studentList,teacherRepo.findTeachersInACourse(course))) {
+        for (Course c: courseRepo.findAllCourseRelatedWithTheMembersOfAGivenCourse(studentList,teacherList)) {
             if (c.verifyIfExistAClassAtTheTime(dateWithTime,duration)){
                 return false;
             }
