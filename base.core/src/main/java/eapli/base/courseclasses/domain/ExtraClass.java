@@ -19,13 +19,13 @@ public class ExtraClass implements AggregateRoot<ExtraClassId> {
     private List<Student> participatingStudents;
 
     @ManyToOne
-    private Teacher teacher;
+    private Teacher extraClassTeacher;
 
     ExtraClass(ExtraClassId extraClassId, ScheduledDate scheduledDate, List<Student> participatingStudents, Teacher teacher) {
         this.extraClassId = extraClassId;
         this.scheduledDate = scheduledDate;
         this.participatingStudents = participatingStudents;
-        this.teacher = teacher;
+        this.extraClassTeacher = teacher;
     }
 
     protected ExtraClass() {
