@@ -1,13 +1,12 @@
 @startuml
 autonumber
 
-participant ": AddUpdateQuestionService" as AUQS <<Service>>
+participant ": ListQuestionsService" as AUQS <<Service>>
 participant ": QuestionDTOWithIdMapper" as QM <<DTO>>
 participant ": QuestionDTOWithIdBuilder" as QB <<Builder>>
 participant ": Question" as Q <<Domain>>
 
 participant ": QuestionIdentifier" as CI <<Domain>>
-participant ": Type" as T <<Domain>>
 participant ": QuestionDTOWithId" as QDTO <<DTO>>
 
 [o-> QM : toDTO(question)
