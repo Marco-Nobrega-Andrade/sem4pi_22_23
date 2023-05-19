@@ -60,4 +60,12 @@ public class Exam implements AggregateRoot<ExamId>  {
     public boolean hasIdentity(ExamId id) {
         return AggregateRoot.super.hasIdentity(id);
     }
+
+    public String returnInitialDateString(){
+        return dateInterval.toStringInitialDate();
+    }
+    public String returnFinalDateString(){
+        return dateInterval.toStringFinalDate();
+    }
+
 }

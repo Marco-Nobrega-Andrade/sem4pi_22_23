@@ -5,6 +5,8 @@ import eapli.framework.domain.model.ValueObject;
 import javax.persistence.Embeddable;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
@@ -45,5 +47,15 @@ public class DateInterval implements ValueObject {
     @Override
     public int hashCode() {
         return Objects.hash(initialDate, finalDate);
+    }
+
+    public String toStringInitialDate(){
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        return dateFormat.format(this.initialDate);
+    }
+
+    public String toStringFinalDate(){
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        return dateFormat.format(this.finalDate);
     }
 }
