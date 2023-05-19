@@ -5,14 +5,35 @@ participant VerifyScheduleAvailabilityService as SERVICE <<application>>
 participant Course as COURSE <<domain>>
 participant CourseId as COURSE_ID <<domain>>
 participant CourseIdentifier as COURSE_ID <<domain>>
+participant AuthzRegistry as auth <<application>>
+participant AuthorizationService as authSV <<application>>
+participant UserSession as userSe <<Domain>>
 database CourseRepository as COURSE_REPO <<repository>>
 database EnrollmentRepository as ENROLL_REPO <<repository>>
+database TeacherRepository as TEACHER_REPO <<repository>>
 database StudentRepository as STUD_REPO <<repository>>
 
 
 activate CONTROLLER
 CONTROLLER -> SERVICE : verifyScheduleAvailability(dateWithTime. duration, courseDTO, studentMechNumList)
 activate SERVICE
+note right SERVICE : Creation of CourseRepository, EnrollmentRepository, StudentRepository and TeacherRepository as described in "US_1008_SD_RepositoryCreation" (us_1008 folder)
+SERVICE -> auth: authorizationService()
+activate auth
+auth -> SERVICE: authz
+deactivate auth
+SERVICE -> authSV: session()
+activate authSV
+authSV --> SERVICE: userSession
+deactivate authSV
+SERVICE -> userSe: authenticatedUser()
+activate userSe
+userSe --> SERVICE : systemUser
+deactivate userSe
+SERVICE -> TEACHER_REPO : findTeacherBySystemUser(systemUser)
+activate TEACHER_REPO
+TEACHER_REPO --> SERVICE : teacher
+deactivate TEACHER_REPO
 SERVICE -> COURSE_ID : create(courseIdentifier)
 activate COURSE_ID
 deactivate COURSE_ID
@@ -21,9 +42,9 @@ activate COURSE_REPO
 COURSE_REPO --> SERVICE : course
 deactivate COURSE_REPO
 loop for each mechanographic number in studentMechNumList
-SERVICE -> STUD_REPO : ofIdentity(studentMechNum)
+SERVICE -> STUD_REPO : containsOfIdentity(mecNum)
 activate STUD_REPO
-STUD_REPO-->SERVICE : student
+STUD_REPO-->SERVICE : boolean
 deactivate STUD_REPO
 SERVICE -> ENROLL_REPO : findEnrollmentByCourseIDAndMechNumber(courseId,mechNum)
 activate ENROLL_REPO
