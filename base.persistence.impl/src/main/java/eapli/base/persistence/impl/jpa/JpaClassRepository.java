@@ -49,9 +49,7 @@ public class JpaClassRepository extends JpaAutoTxRepository<Class, ClassId,Class
     @Override
     public List<Class> findAll(Teacher user) {
         //query string search all classes in a course where the teacher is in list of teachers
-        return  createQuery("SELECT c FROM Class c WHERE c " +
-                "IN (SELECT cl FROM Course co JOIN co.classesList cl WHERE :user " +
-                        "IN (SELECT t FROM Course co JOIN co.teachersList t))"
+        return  createQuery("SELECT c FROM Class c WHERE c.classTeacher = :user"
                 , Class.class).
                 setParameter("user", user).getResultList();
     }
