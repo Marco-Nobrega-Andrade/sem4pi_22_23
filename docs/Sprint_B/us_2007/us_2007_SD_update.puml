@@ -13,6 +13,7 @@ participant ": AddUpdateQuestionService" as AUQS <<Service>>
 participant ": Question" as Q <<Domain>>
 participant ": QuestionId" as QI <<Domain>>
 participant ": VerifyQuestionService" as VQS <<Service>>
+participant ": Structure" as St <<Domain>>
 database QuestionRepository as QR <<Repository>>
 
 activate T
@@ -61,15 +62,16 @@ AUQS -> QR : ofIdentity(QuestionId)
 activate QR
 QR --> AUQS : question
 deactivate QR
-AUQS -> Q : changeQuestion(updatedQuestion)
-activate Q
-Q -> VQS : verifyQuestion(updatedQuestion)
+AUQS -> VQS : verifyQuestion(updatedQuestion)
 activate VQS
-VQS --> Q : true
+VQS --> AUQS : true
 deactivate VQS
-Q --> AUQS : true
+AUQS -> St : create(updatedQuestion)
+activate St
+deactivate St
+AUQS -> Q : changeQuestion(Structure)
+activate Q
 deactivate Q
-
 
 
 AUQS -> QR : save(question)
