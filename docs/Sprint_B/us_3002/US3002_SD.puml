@@ -6,8 +6,11 @@ participant "<<Service>>\n:CreateBoardService" as CBSv
 participant "<<Persistence>>\n:PersistenceContext" as PC
 participant "<<Factory>>\nfactory:RepositoryFactory" as RF
 database "<<Repository>>\nboardRepository\n:BoardRepository" as BR
-participant "<<Domain>>\n:BoardFactory" as BF
-participant "<<Domain>>\nboard:Board" as B
+participant "<<Domain>>\n:BoardBuilder" as BB
+participant "<<Domain>>\n:List<Cell>" as CL
+participant "<<Domain>>\n:CellBuilder" as CB
+participant "<<Domain>>\n:Cell" as C
+participant "<<Domain>>\nboard\n:Board" as B
 
 U -> UI : The user initializes the \nprocess of creating a board
 activate U
@@ -39,13 +42,30 @@ UI -> CTRL : createBoard(title, rowNumber, columnNumber)
 activate CTRL
 CTRL -> CBSv : createBoard(title, rowNumber, columnNumber)
 activate CBSv
-CBSv -> BF : create()
-CBSv -> BF : buildBoard(title, rowNumber, columnNumber)
-activate BF
-BF -> B : create(title, cellList)
-BF --> CBSv : board
-deactivate BF
-CBSv -> BR : save(board)
+CBSv -> BR : ofIdentify(title)
+activate BR
+BR --> CBSv : board
+deactivate BR
+alt if no board was found with the inserted title
+CBSv -> BB : create()
+CBSv -> BB : buildBoard(title, rowNumber, columnNumber)
+activate BB
+BB -> CL : create()
+loop for rowNumber x columnNumber times
+BB -> CB : buildCell(id)
+activate CB
+CB -> C : create(id)
+CB --> BB : cell
+deactivate CB
+BB -> CL : add()
+activate CL
+deactivate CL
+end loop
+BB -> B : create(title, cellList)
+BB --> CBSv : board
+deactivate BB
+CBSv -> BR : save
+end
 activate BR
 deactivate BR
 deactivate CBSv
