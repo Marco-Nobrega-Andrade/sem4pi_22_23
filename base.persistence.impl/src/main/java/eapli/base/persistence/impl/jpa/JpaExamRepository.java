@@ -1,0 +1,30 @@
+package eapli.base.persistence.impl.jpa;
+
+import eapli.base.Application;
+import eapli.base.coursemanagement.domain.Course;
+import eapli.base.exams.domain.Exam;
+import eapli.base.exams.domain.ExamId;
+import eapli.base.exams.repositories.ExamRepository;
+import eapli.framework.domain.repositories.TransactionalContext;
+import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
+
+import java.util.Date;
+import java.util.List;
+
+public class JpaExamRepository extends JpaAutoTxRepository<Exam, ExamId, ExamId> implements ExamRepository {
+
+    public JpaExamRepository(final TransactionalContext autoTx) {
+        super(autoTx, "examId");
+    }
+
+    public JpaExamRepository(final String puname) {
+        super(puname, Application.settings().getExtendedPersistenceProperties(),
+                "examId");
+    }
+    @Override
+    public List<Exam> listFutureExamsByCourse(Course course, Date currentDate){
+        return  createQuery("SELECT e from Exam e  WHERE e IN (SELECT e FROM Course c JOIN c.examsList WHERE c =: course) AND e.dateInterval.initialDate > :currentDate)"
+                , Exam.class).
+                setParameter("course", course).setParameter("currentDate", currentDate).getResultList();
+    }
+}

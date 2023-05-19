@@ -10,7 +10,7 @@ import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import java.util.List;
 
 public interface CourseRepository extends DomainRepository<CourseIdentifier, Course> {
-    public List<Course> listOpenableClosableCourses();
+    List<Course> listOpenableClosableCourses();
 
     List<Course> listAllOpenCLoseEnrollmentsAvailableCourses();
 
@@ -25,4 +25,6 @@ public interface CourseRepository extends DomainRepository<CourseIdentifier, Cou
     Course findCourseById(String courseIdentifier);
 
     List<Course> findAllCourseRelatedWithTheMembersOfAGivenCourse(List<Student> students,List<Teacher> teachers);
+
+    List<Course> listAcceptedCoursesByStudent(SystemUser systemUser);
 }

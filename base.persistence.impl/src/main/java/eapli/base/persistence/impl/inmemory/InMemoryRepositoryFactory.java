@@ -26,6 +26,7 @@ import eapli.base.courseclasses.repositories.ClassRepository;
 import eapli.base.courseclasses.repositories.ExtraClassRepository;
 import eapli.base.coursemanagement.repositories.CourseRepository;
 import eapli.base.enrollments.repositories.EnrollmentRepository;
+import eapli.base.exams.repositories.ExamRepository;
 import eapli.base.infrastructure.bootstrapers.BaseBootstrapper;
 import eapli.base.infrastructure.persistence.RepositoryFactory;
 import eapli.base.meetingmanagement.repositories.InvitationRepository;
@@ -33,6 +34,7 @@ import eapli.base.meetingmanagement.repositories.MeetingRepository;
 import eapli.base.questionmanagement.repositories.QuestionRepository;
 import eapli.base.usermanagement.repositories.PersonRepository;
 import eapli.base.usermanagement.repositories.StudentRepository;
+import eapli.base.exams.repositories.ExamRepository;
 import eapli.base.usermanagement.repositories.TeacherRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
@@ -119,6 +121,17 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
     public QuestionRepository questionRepository(){
         return questionRepository(null);
     }
+
+    @Override
+    public ExamRepository examRepository() {
+        return examRepository(null);
+    }
+
+    @Override
+    public ExamRepository examRepository(TransactionalContext autoTx) {
+        return new InMemoryExamRepository();
+    }
+
     @Override
     public QuestionRepository questionRepository(TransactionalContext autoTx){
         return new InMemoryQuestionRepository();

@@ -51,6 +51,8 @@ public class InMemoryCourseRepository extends InMemoryDomainRepository<Course, C
     public List<Course> findAllCourseRelatedWithTheMembersOfAGivenCourse(List<Student> students, List<Teacher> teachers) {
         return null;
     }
-
-
+    @Override
+    public List<Course> listAcceptedCoursesByStudent(SystemUser systemUser){
+        return null;
+    }
 }
