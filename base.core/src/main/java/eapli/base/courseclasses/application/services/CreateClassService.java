@@ -10,6 +10,10 @@ import eapli.base.coursemanagement.repositories.CourseRepository;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.usermanagement.domain.Student;
 import eapli.base.usermanagement.domain.Teacher;
+import eapli.base.usermanagement.repositories.TeacherRepository;
+import eapli.framework.infrastructure.authz.application.AuthorizationService;
+import eapli.framework.infrastructure.authz.application.AuthzRegistry;
+import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 
 import java.util.Date;
 import java.util.List;
@@ -17,41 +21,21 @@ import java.util.List;
 public class CreateClassService {
 
     private CourseRepository courseRepository = PersistenceContext.repositories().courseRepository();
+    private ClassRepository classRepository = PersistenceContext.repositories().classRepository();
+    private TeacherRepository teacherRepository = PersistenceContext.repositories().teacherRepository();
 
-    public boolean verifyIfExistAClassAtTheTime(Date startingDateWithTime, int duration,CourseDTOWithIdTitle courseDTO) {
-        Course course = courseRepository.ofIdentity(new CourseIdentifier(courseDTO.courseIdentifier)).get();
-        if (course.verifyIfExistAClassAtTheTime(startingDateWithTime,duration)){
-            throw new IllegalArgumentException("Exist already a class during that time in this Course");
-        }
-        if (course.verifyIfExistAnExtraClassAtTheTime(startingDateWithTime,duration)){
-            throw new IllegalArgumentException("Exist already an extra class during that time in this Course");
-        }
-        List<Teacher> listTeacher = PersistenceContext.repositories().teacherRepository().findTeachersInACourse(course);
-        List<Student> listStudent = PersistenceContext.repositories().studentRepository().findStudentsInACourse(course);
-
-        List<Course> listCourse;
-        listCourse = courseRepository.findAllCourseRelatedWithTheMembersOfAGivenCourse(listStudent,listTeacher);
-        for (Course c: listCourse) {
-            if (c.verifyIfExistAClassAtTheTime(startingDateWithTime,duration)){
-                return true;
-            }
-            if (c.verifyIfExistAnExtraClassAtTheTime(startingDateWithTime,duration)){
-                return true;
-            }
-        }
-
-        return false;
-    }
 
     public boolean createClass(String title, Date startingDateWithTime, int numberOfRecurrence, int duration, CourseDTOWithIdTitle courseDTO){
 
         Course course = courseRepository.ofIdentity(new CourseIdentifier(courseDTO.courseIdentifier)).get();
 
-        ClassRepository classRepository = PersistenceContext.repositories().classRepository();
-        Long numberOfClasses = classRepository.count();
 
+        Long numberOfClasses = classRepository.count();
+        AuthorizationService authz = AuthzRegistry.authorizationService();
+        SystemUser systemUser = authz.session().get().authenticatedUser();
+        Teacher teacher = teacherRepository.findTeacherBySystemUser(systemUser);
         ClassBuilder builder= new ClassBuilder();
-        builder.withTitleDateWithTimeNumberOfClassDurationID(title,startingDateWithTime,numberOfRecurrence,duration,numberOfClasses+1);
+        builder.withTitleDateWithTimeNumberOfClassDurationID(title,startingDateWithTime,numberOfRecurrence,duration,numberOfClasses+1,teacher);
         Class courseClass = builder.build();
         classRepository.save(courseClass);
         course.addClass(courseClass);

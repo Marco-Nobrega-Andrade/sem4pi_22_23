@@ -2,6 +2,7 @@ package eapli.base.courseclasses.domain.builder;
 
 import eapli.base.courseclasses.domain.*;
 import eapli.base.courseclasses.domain.Class;
+import eapli.base.usermanagement.domain.Teacher;
 import eapli.framework.domain.model.DomainFactory;
 
 
@@ -17,10 +18,14 @@ public class ClassBuilder implements  DomainFactory<Class>{
 
     private WeeklyDate weeklyDate;
 
-    public ClassBuilder withTitleDateWithTimeNumberOfClassDurationID(String title,Date startingDateWithTime,int numberOfRecurrence,int duration,Long id){
+    private Teacher teacher;
+
+
+    public ClassBuilder withTitleDateWithTimeNumberOfClassDurationID(String title,Date startingDateWithTime,int numberOfRecurrence,int duration,Long id, Teacher teacher){
         withClassTitle(title);
         withClassId(id);
         withWeeklyDate(startingDateWithTime,duration, numberOfRecurrence);
+        withTeacher(teacher);
         return this;
     }
 
@@ -49,9 +54,14 @@ public class ClassBuilder implements  DomainFactory<Class>{
         return this;
     }
 
+    public ClassBuilder withTeacher(Teacher teacher){
+        this.teacher = teacher;
+        return this;
+    }
+
     @Override
     public Class build() {
-        return new Class(classTitle,weeklyDate, classId);
+        return new Class(classTitle,weeklyDate, classId,teacher);
     }
 
 }

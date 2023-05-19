@@ -1,5 +1,6 @@
 package eapli.base.courseclasses.domain;
 
+import eapli.base.usermanagement.domain.Teacher;
 import eapli.framework.domain.model.AggregateRoot;
 import javax.persistence.*;
 import java.util.Date;
@@ -16,14 +17,18 @@ public class Class implements AggregateRoot<ClassId> {
 
     private WeeklyDate weeklyDate;
 
+    @ManyToOne
+    private Teacher classTeacher;
 
-    public Class( ClassTitle classTitle, WeeklyDate weeklyDate, ClassId classId) {
-        if (classId == null || classTitle == null || weeklyDate == null) {
+
+    public Class( ClassTitle classTitle, WeeklyDate weeklyDate, ClassId classId,Teacher teacher) {
+        if (classId == null || classTitle == null || weeklyDate == null || teacher == null) {
             throw new IllegalArgumentException("Class cannot be created with null Objects");
         }
         this.classId = classId;
         this.classTitle = classTitle;
         this.weeklyDate = weeklyDate;
+        this.classTeacher=teacher;
     }
 
     protected Class() {
@@ -35,7 +40,7 @@ public class Class implements AggregateRoot<ClassId> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Class aClass = (Class) o;
-        return Objects.equals(classId, aClass.classId) && Objects.equals(classTitle, aClass.classTitle) && Objects.equals(weeklyDate, aClass.weeklyDate);
+        return Objects.equals(classId, aClass.classId) && Objects.equals(classTitle, aClass.classTitle) && Objects.equals(weeklyDate, aClass.weeklyDate) && Objects.equals(classTeacher, aClass.classTeacher);
     }
 
     @Override
@@ -55,7 +60,7 @@ public class Class implements AggregateRoot<ClassId> {
 
         final Class that = (Class) other;
 
-        return classId.equals(that.classId) && classTitle.equals(that.classTitle) && weeklyDate.equals(that.weeklyDate);
+        return classId.equals(that.classId) && classTitle.equals(that.classTitle) && weeklyDate.equals(that.weeklyDate) && classTeacher.equals(that.classTeacher);
     }
 
     @Override

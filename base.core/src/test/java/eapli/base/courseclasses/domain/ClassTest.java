@@ -1,13 +1,11 @@
 package eapli.base.courseclasses.domain;
 
 import eapli.base.courseclasses.domain.builder.ClassBuilder;
-import eapli.base.usermanagement.domain.ID_Person;
-import eapli.base.usermanagement.domain.Person;
-import eapli.base.usermanagement.domain.builder.PersonBuilder;
+import eapli.base.usermanagement.domain.Teacher;
+import eapli.base.usermanagement.domain.builder.TeacherBuilder;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 
 import static org.junit.Assert.*;
 
@@ -20,16 +18,20 @@ public class ClassTest {
 
     @Test
     public void ensureClassEqualsPassesForTheSameID() {
-        Class courseClass = new ClassBuilder().withTitleDateWithTimeNumberOfClassDurationID("title",new java.util.Date(1000,10,2,10,0,0),30,3,1L).build();
-        Class anotherCourseClass = new ClassBuilder().withTitleDateWithTimeNumberOfClassDurationID("title",new java.util.Date(1000,10,2,10,0,0),30,3,1L).build();
+        Teacher aTeacher = new TeacherBuilder().withAcronym("BCC")
+                .withDateOfBirth(new Date(100,10,2)).withTaxPayerNumber(111111111).build();
+        Class courseClass = new ClassBuilder().withTitleDateWithTimeNumberOfClassDurationID("title",new java.util.Date(1000,10,2,10,0,0),30,3,1L,aTeacher).build();
+        Class anotherCourseClass = new ClassBuilder().withTitleDateWithTimeNumberOfClassDurationID("title",new java.util.Date(1000,10,2,10,0,0),30,3,1L,aTeacher).build();
 
         assertTrue(courseClass.equals(anotherCourseClass));
     }
 
     @Test
     public void ensureClassEqualsFailsForDifferenteID()  {
-        Class courseClass = new ClassBuilder().withTitleDateWithTimeNumberOfClassDurationID("title",new java.util.Date(1000,10,2,10,0,0),30,3,1L).build();
-        Class anotherCourseClass = new ClassBuilder().withTitleDateWithTimeNumberOfClassDurationID("title",new java.util.Date(1000,10,2,10,0,0),30,3,2L).build();
+        Teacher aTeacher = new TeacherBuilder().withAcronym("BCC")
+                .withDateOfBirth(new Date(100,10,2)).withTaxPayerNumber(111111111).build();
+        Class courseClass = new ClassBuilder().withTitleDateWithTimeNumberOfClassDurationID("title",new java.util.Date(1000,10,2,10,0,0),30,3,1L,aTeacher).build();
+        Class anotherCourseClass = new ClassBuilder().withTitleDateWithTimeNumberOfClassDurationID("title",new java.util.Date(1000,10,2,10,0,0),30,3,2L,aTeacher).build();
 
         assertFalse(courseClass.equals(anotherCourseClass));
     }
@@ -50,22 +52,28 @@ public class ClassTest {
 
     @Test
     public void ensureClassIsTheSameAsItsInstance() {
-        Class courseClass = new ClassBuilder().withTitleDateWithTimeNumberOfClassDurationID("title",new java.util.Date(1000,10,2,10,0,0),30,3,1L).build();
+        Teacher aTeacher = new TeacherBuilder().withAcronym("BCC")
+                .withDateOfBirth(new Date(100,10,2)).withTaxPayerNumber(111111111).build();
+        Class courseClass = new ClassBuilder().withTitleDateWithTimeNumberOfClassDurationID("title",new java.util.Date(1000,10,2,10,0,0),30,3,1L,aTeacher).build();
 
         assertTrue(courseClass.sameAs(courseClass));
     }
 
     @Test
     public void ensureTwoClassWithDifferentIDAreNotTheSame()  {
-        Class courseClass = new ClassBuilder().withTitleDateWithTimeNumberOfClassDurationID("title",new java.util.Date(1000,10,2,10,0,0),30,3,1L).build();
-        Class anotherCourseClass = new ClassBuilder().withTitleDateWithTimeNumberOfClassDurationID("title",new java.util.Date(1000,10,2,10,0,0),30,3,2L).build();
+        Teacher aTeacher = new TeacherBuilder().withAcronym("BCC")
+                .withDateOfBirth(new Date(100,10,2)).withTaxPayerNumber(111111111).build();
+        Class courseClass = new ClassBuilder().withTitleDateWithTimeNumberOfClassDurationID("title",new java.util.Date(1000,10,2,10,0,0),30,3,1L,aTeacher).build();
+        Class anotherCourseClass = new ClassBuilder().withTitleDateWithTimeNumberOfClassDurationID("title",new java.util.Date(1000,10,2,10,0,0),30,3,2L,aTeacher).build();
 
         assertFalse(courseClass.sameAs(anotherCourseClass));
     }
 
     @Test
     public void verifyIfAClassAtTheTime()  {
-        Class courseClass = new ClassBuilder().withTitleDateWithTimeNumberOfClassDurationID("title",new java.util.Date(1000,10,2,10,0,0),3,30,1L).build();
+        Teacher aTeacher = new TeacherBuilder().withAcronym("BCC")
+                .withDateOfBirth(new Date(100,10,2)).withTaxPayerNumber(111111111).build();
+        Class courseClass = new ClassBuilder().withTitleDateWithTimeNumberOfClassDurationID("title",new java.util.Date(1000,10,2,10,0,0),3,30,1L,aTeacher).build();
 
         java.util.Date testData1 = new java.util.Date(1000,10,9,10,10,0);
         assertTrue(courseClass.verifyIfAClassAtTheTime(testData1,30));
