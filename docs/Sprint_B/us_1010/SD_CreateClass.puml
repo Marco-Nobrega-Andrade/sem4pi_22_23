@@ -8,7 +8,8 @@ actor Manager
 
 participant "CreateClassUI" as ui <<presentation>>
 participant "CreateClassController" as ctrl <<application>>
-participant ListCourseService as listservice <<application>>
+participant ListCourseController as listController <<application>>
+participant "VerifyIfExistAClassAtTheTimeForClassController" as ctrlVer <<application>>
 
 
 
@@ -18,6 +19,13 @@ participant RepositoryFactory as RepFactory <<factory>>
 participant CourseIdentifier as courseID <<domain>>
 
 
+participant AuthzRegistry as auth <<application>>
+participant AuthorizationService as authSV <<application>>
+participant UserSession as userSe <<Domain>>
+
+
+
+
 participant Course as course <<domain>>
 
 participant ClassBuilder as builder <<builder>>
@@ -25,7 +33,6 @@ participant Class as courseClass <<domain>>
 
 database CourseRepository as courseRep <<repository>>
 database TeacherRepository as teaRep <<repository>>
-database StudentRepository as stdRep <<repository>>
 database ClassRepository as classRep <<repository>>
 
 activate Manager
@@ -45,17 +52,37 @@ activate RepFactory
 RepFactory -> courseRep: create
 RepFactory --> service: courseRepository
 deactivate RepFactory
+service -> Persistence: repositories()
+activate Persistence
+Persistence -> RepFactory: create
+Persistence --> service: factory
+deactivate Persistence
+service -> RepFactory: classRepository()
+activate RepFactory
+RepFactory -> classRep: create
+RepFactory --> service: classRepository
+deactivate RepFactory
+service -> Persistence: repositories()
+activate Persistence
+Persistence -> RepFactory: create
+Persistence --> service: factory
+deactivate Persistence
+service -> RepFactory: TeacherRepository()
+activate RepFactory
+RepFactory -> teaRep: create
+RepFactory --> service: TeacherRepository
+deactivate RepFactory
 deactivate service
 deactivate ctrl
 
 ui -> ctrl: listCourse()
 activate ctrl
-ctrl -> listservice : create ()
-ctrl -> listservice : listCourse()
-activate  listservice
+ctrl -> listController : create ()
+ctrl -> listController : listCourse()
+activate  listController
 note right: For more information about the function listCourse check \n SD_ListCourse present in the folder us_1006
-listservice --> ctrl : listCourseDto
-deactivate listservice
+listController --> ctrl : listCourseDto
+deactivate listController
 ctrl --> ui: listCourseDto
 deactivate ctrl
 ui --> Manager: shows list of courses the teacher teaches
@@ -67,78 +94,13 @@ Manager -> ui: validate the information
 ui-> ctrl: verifyIfExistAClassAtTheTime(startingDateWithTime, duration, courseDTO)
 activate ctrl
 
-ctrl -> service: verifyIfExistAClassAtTheTime(startingDateWithTime. duration, courseDTO)
-activate service
+ctrl -> ctrlVer : create ()
+ctrl -> ctrlVer: verifyIfExistAClassAtTheTime(startingDateWithTime. duration, courseDTO)
+activate ctrlVer
+note right: For more information check \n SD_VerifyIfExistAClassAtTheTimeForClass
+ctrlVer --> ctrl: boolean
+deactivate
 
-service -> courseID : create(courseIdentifier)
-service -> courseRep: ofIdentity(courseId)
-activate courseRep
-courseRep --> service : course
-deactivate courseRep
-
-
-service -> course: verifyIfExistAClassAtTheTime(startingDateWithTime, duration)
-activate course
-note right : Check The SD_VerifyIfExistAClassAtTheTime \n for more information
-course --> service: boolean
-deactivate course
-
-service -> course: verifyIfExistAnExtraClassAtTheTime(startingDateWithTime, duration)
-activate course
-note right : Check The SD_VerifyIfExistAExtraClassAtTheTime \n for more information
-course --> service: boolean
-deactivate course
-
-service -> Persistence: repositories()
-activate Persistence
-Persistence -> RepFactory: create
-Persistence --> service: factory
-deactivate Persistence
-service -> RepFactory: teacherRepository()
-activate RepFactory
-RepFactory -> teaRep: create
-RepFactory --> service: teacherRepository
-deactivate RepFactory
-service -> teaRep : findTeachersInACourse(course)
-activate teaRep
-teaRep --> service : listTeacher
-deactivate teaRep
-
-service -> Persistence: repositories()
-activate Persistence
-Persistence -> RepFactory: create
-Persistence --> service: factory
-deactivate Persistence
-service -> RepFactory: studentRepository()
-activate RepFactory
-RepFactory -> stdRep: create
-RepFactory --> service: studentRepository
-deactivate RepFactory
-service -> stdRep : findStudentsInACourse(course)
-activate stdRep
-stdRep --> service : listStudent
-deactivate stdRep
-
-service -> courseRep : findAllCourseRelatedWithTheMembersOfAGivenCourse(listStudent,listTeacher)
-activate courseRep
-courseRep --> service : listCourse
-deactivate courseRep
-
-loop for each Course in listCourse
-service -> course: verifyIfExistAClassAtTheTime(startingDateWithTime, duration)
-activate course
-note right : Check The SD_VerifyIfExistAClassAtTheTime \n for more information
-course --> service: boolean
-deactivate course
-
-service -> course: verifyIfExistAnExtraClassAtTheTime(startingDateWithTime, duration)
-activate course
-note right : Check The SD_VerifyIfExistAExtraClassAtTheTime \n for more information
-course --> service: boolean
-deactivate course
-end
-service --> ctrl: boolean
-deactivate service
 ctrl --> ui: boolean
 deactivate ctrl
 alt boolean == true
@@ -156,33 +118,43 @@ activate courseRep
 courseRep --> service : course
 deactivate courseRep
 
-service -> Persistence: repositories()
-activate Persistence
-Persistence -> RepFactory: create
-Persistence --> service: factory
-deactivate Persistence
-service -> RepFactory: classRepository()
-activate RepFactory
-RepFactory -> classRep: create
-RepFactory --> service: classRepository
-deactivate RepFactory
+
 
 service -> classRep: count()
 activate classRep
 classRep --> service: numberOfClasses
 deactivate classRep
 
-service -> builder: withTitleDateWithTimeNumberOfClassDurationID(title, startingDateWithTime, numberOfRecurrence, duration, id)
+
+service -> auth: authorizationService()
+activate auth
+auth -> service: authz
+deactivate auth
+service -> authSV: session()
+activate authSV
+authSV --> service: userSession
+deactivate authSV
+service -> userSe: authenticatedUser()
+activate userSe
+userSe --> service : systemUser
+deactivate userSe
+
+service -> teaRep : findTeacherBySystemUser(systemUser)
+activate teaRep
+teaRep --> service : teacher
+deactivate teaRep
+
+service -> builder: withTitleDateWithTimeNumberOfClassDurationIDTeacher(title, startingDateWithTime, numberOfRecurrence, duration, id, teacher)
 
 service -> builder: build()
 activate builder
-builder -> courseClass: create(title, ListScheduleDates, id)
+builder -> courseClass: create(title, ListScheduleDates, id,teacher)
 activate  courseClass
 courseClass --> builder: courseClass
 deactivate courseClass
 builder --> service: courseClass
 deactivate builder
-service->classRepository: save(courseClass)
+service->classRep: save(courseClass)
 service-> course: addClass(courseClass)
 service-> courseRep: save(course)
 
