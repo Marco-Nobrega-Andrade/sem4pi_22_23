@@ -26,6 +26,7 @@ package eapli.base.app.user.console.presentation;
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
 import eapli.base.app.common.console.presentation.course.ListCourseAction;
 import eapli.base.app.user.console.presentation.enrollment.RequestEnrollmentAction;
+import eapli.base.app.user.console.presentation.exams.ListFutureExamsAction;
 import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
@@ -54,13 +55,17 @@ class MainMenu extends ClientUserBaseUI {
 
     private static final int COURSE_OPTION = 2;
 
+    private static final int EXAM_OPTION = 3;
+
 
     // COURSE MENU
     private static final int LIST_COURSE_OPTION = 1;
 
     private static final int REQUEST_ENROLLMENT = 2;
 
+    // EXAM MENU
 
+    private static final int LIST_FUTURE_EXAMS_OPTION = 1;
     private final AuthorizationService authz =
             AuthzRegistry.authorizationService();
 
@@ -90,6 +95,8 @@ class MainMenu extends ClientUserBaseUI {
         if (authz.isAuthenticatedUserAuthorizedTo(BaseRoles.STUDENT)) {
             final Menu courseMenu = buildCourseMenu();
             mainMenu.addSubMenu(COURSE_OPTION, courseMenu);
+            final Menu examMenu = buildExamMenu();
+            mainMenu.addSubMenu(EXAM_OPTION, examMenu);
         }
 
         mainMenu.addItem(EXIT_OPTION, "Exit", new ExitWithMessageAction("Bye, Bye"));
@@ -105,5 +112,12 @@ class MainMenu extends ClientUserBaseUI {
         courseMenu.addItem(EXIT_OPTION, "Return", Actions.SUCCESS);
 
         return courseMenu;
+    }
+    private Menu buildExamMenu(){
+        final Menu examMenu = new Menu("Exam  >");
+
+        examMenu.addItem(LIST_FUTURE_EXAMS_OPTION, "List Future Exams", new ListFutureExamsAction());
+        examMenu.addItem(EXIT_OPTION, "Return", Actions.SUCCESS);
+        return examMenu;
     }
 }
