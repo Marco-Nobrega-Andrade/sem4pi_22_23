@@ -33,8 +33,6 @@ public class EnrollmentFactoryTest {
     public void ensureEnrollmentStatusIsAcceptedInEnrollInBulk() {
         EnrollmentFactory fac = new EnrollmentFactory();
         Enrollment instance = fac.buildEnrollmentFromEnrollInBulk((long) 1,dummyCourse,dummyStudent);
-        CsvReader csvReader = new CsvReader();
-        csvReader.importCsvData("C:\\Users\\windows\\Documents\\sem4pi-22-23-24\\a.csv", new ArrayList<>());
         assertEquals("Accepted",instance.returnEnrollmentStatusString());
     }
 
