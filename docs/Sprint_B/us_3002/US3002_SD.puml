@@ -1,0 +1,56 @@
+@startuml
+actor User as U
+participant "<<Presentation>>\n:CreateBoardUI" as UI
+control "<<Application>>\n:CreateBoardController" as CTRL
+participant "<<Service>>\n:CreateBoardService" as CBSv
+participant "<<Persistence>>\n:PersistenceContext" as PC
+participant "<<Factory>>\nfactory:RepositoryFactory" as RF
+database "<<Repository>>\nboardRepository\n:BoardRepository" as BR
+participant "<<Domain>>\n:BoardFactory" as BF
+participant "<<Domain>>\nboard:Board" as B
+
+U -> UI : The user initializes the \nprocess of creating a board
+activate U
+activate UI
+UI -> CTRL : create()
+activate CTRL
+CTRL -> CBSv : create()
+activate CBSv
+CBSv -> PC : repositories
+activate PC
+PC --> CBSv : factory
+deactivate PC
+CBSv -> RF : courseRepository()
+activate RF
+RF -> BR : create()
+RF --> CBSv: courseRepository
+deactivate RF
+deactivate CBSv
+deactivate CTRL
+UI --> U : The system requests \nthe board relevant data\n(title, rowNumber, columnNumber)
+deactivate UI
+U -> UI : The user inserts the requested data\n(title, rowNumber, columnNumber)
+activate UI
+UI --> U : The system shows the inserted data \nand asks for confirmation
+deactivate UI
+U -> UI : The user confirms
+activate UI
+UI -> CTRL : createBoard(title, rowNumber, columnNumber)
+activate CTRL
+CTRL -> CBSv : createBoard(title, rowNumber, columnNumber)
+activate CBSv
+CBSv -> BF : create()
+CBSv -> BF : buildBoard(title, rowNumber, columnNumber)
+activate BF
+BF -> B : create(title, cellList)
+BF --> CBSv : board
+deactivate BF
+CBSv -> BR : save(board)
+activate BR
+deactivate BR
+deactivate CBSv
+deactivate CTRL
+UI --> U : The system shows the operation\n success
+deactivate UI
+deactivate U
+@enduml
