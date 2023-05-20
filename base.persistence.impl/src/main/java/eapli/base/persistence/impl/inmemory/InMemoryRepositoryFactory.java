@@ -28,6 +28,7 @@ import eapli.base.courseclasses.repositories.ExtraClassRepository;
 import eapli.base.coursemanagement.repositories.CourseRepository;
 import eapli.base.enrollments.repositories.EnrollmentRepository;
 import eapli.base.exams.repositories.ExamRepository;
+import eapli.base.formativeexams.repositories.FormativeExamRepository;
 import eapli.base.infrastructure.bootstrapers.BaseBootstrapper;
 import eapli.base.infrastructure.persistence.RepositoryFactory;
 import eapli.base.meetingmanagement.repositories.InvitationRepository;
@@ -197,6 +198,15 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
     @Override
     public InvitationRepository invitationRepository() {
         return invitationRepository(null);
+    }
+
+    @Override
+    public FormativeExamRepository formativeExamRepository() {
+        return formativeExamRepository(null);
+    }
+    @Override
+    public FormativeExamRepository formativeExamRepository(TransactionalContext autoTx) {
+        return new InMemoryFormativeExamRepository();
     }
 
     @Override

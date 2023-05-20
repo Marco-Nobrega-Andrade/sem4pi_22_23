@@ -28,6 +28,7 @@ import eapli.base.courseclasses.repositories.ExtraClassRepository;
 import eapli.base.coursemanagement.repositories.CourseRepository;
 import eapli.base.enrollments.repositories.EnrollmentRepository;
 import eapli.base.exams.repositories.ExamRepository;
+import eapli.base.formativeexams.repositories.FormativeExamRepository;
 import eapli.base.infrastructure.persistence.RepositoryFactory;
 import eapli.base.meetingmanagement.repositories.InvitationRepository;
 import eapli.base.meetingmanagement.repositories.MeetingRepository;
@@ -194,6 +195,15 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     @Override
     public InvitationRepository invitationRepository() {
         return new JpaInvitationRepository(Application.settings().getPersistenceUnitName());
+    }
+
+    @Override
+    public FormativeExamRepository formativeExamRepository() {
+        return new JpaFormativeExamRepository(Application.settings().getPersistenceUnitName());
+    }
+    @Override
+    public FormativeExamRepository formativeExamRepository(TransactionalContext autoTx) {
+        return new JpaFormativeExamRepository(autoTx);
     }
 
     @Override
