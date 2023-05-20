@@ -1,7 +1,8 @@
 grammar QuestionGrammar;
 prog: matching_type_question
       | select_missing_words
-      | true_false_question;
+      | true_false_question
+      | multiple_choice_question;
 
 phrase: ANY_CHAR* (SPACE* (WORD | INT) (SPACE* ANY_CHAR+)*)+
     ;
@@ -17,11 +18,15 @@ list: (topic_list)+
 topic_list : (NEWLINE)+ DASH phrase
             ;
 /////////////////////////
-multiple_choice_question : 'Multiple Choice' NEWLINE+ phrase NEWLINE+ list_with_title NEWLINE+ phrase NEWLINE+ INT
+multiple_choice_question : 'Multiple Choice' NEWLINE+ points NEWLINE+ phrase NEWLINE+ list_with_title NEWLINE+ multiple_choice_solution (NEWLINE+ feedback)?
 ;
-matching_type_question : 'Matching Type' NEWLINE+ phrase NEWLINE+ list_with_title NEWLINE+ list_with_title NEWLINE+ phrase DASH phrase NEWLINE+ INT
+multiple_choice_solution : 'Solution: ' phrase
 ;
-
+/////////////////////////
+matching_type_question : 'Matching Type' NEWLINE+ points NEWLINE+ phrase NEWLINE+ list_with_title NEWLINE+ list_with_title NEWLINE+ matching_type_solution NEWLINE+
+;
+matching_type_solution : 'Solution:' (NEWLINE phrase DASH phrase)+
+;
 //////////////////////////
 true_false_question : 'True/False Question' NEWLINE+ points NEWLINE+ phrase NEWLINE+ true_false_solution (NEWLINE+ feedback)?
 ;
