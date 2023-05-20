@@ -6,7 +6,9 @@ import eapli.base.courseclasses.domain.ClassId;
 import eapli.base.courseclasses.domain.Date;
 import eapli.base.courseclasses.repositories.ClassRepository;
 import eapli.base.coursemanagement.domain.Course;
+import eapli.base.meetingmanagement.domain.Meeting;
 import eapli.base.usermanagement.domain.Person;
+import eapli.base.usermanagement.domain.Student;
 import eapli.base.usermanagement.domain.Teacher;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
@@ -27,12 +29,13 @@ public class JpaClassRepository extends JpaAutoTxRepository<Class, ClassId,Class
         super(puname, Application.settings().getExtendedPersistenceProperties(),
                 "classId");
     }
+
+
     @Override
-    public Optional<Class> findAllClassesWhoMatch(Person person, Date date) {
-        final Map<String, Object> params = new HashMap<>();
-        params.put("person", person);
-        params.put("date", date);
-        return matchOne("e.person=:person AND e.date=:date", params);
+    public List<Class> findAllClassesByTeacher(List<Person> teachers) {
+        return createQuery("SELECT c FROM Class c WHERE c.classTeacher IN ( :teachers ) ",
+                Class.class)
+                .setParameter("teachers", teachers).getResultList();
     }
 
     @Override
@@ -52,6 +55,13 @@ public class JpaClassRepository extends JpaAutoTxRepository<Class, ClassId,Class
         return  createQuery("SELECT c FROM Class c WHERE c.classTeacher = :user"
                 , Class.class).
                 setParameter("user", user).getResultList();
+    }
+
+    @Override
+    public List<Class> findClassesInACourse(Course course) {
+        return  createQuery("SELECT c FROM Class c WHERE c IN ( :course.classesList )"
+                , Class.class).
+                setParameter("course", course).getResultList();
     }
 
 }

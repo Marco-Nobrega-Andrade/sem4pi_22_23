@@ -5,21 +5,25 @@ control "<<Application>>\n:ListAllExamsOfCourseController" as CTRL
 participant "<<Service>>\n:ListAllExamsOfCourseService" as LECSv
 participant "<<Persistence>>\n:PersistenceContext" as PC
 participant "<<Factory>>\nfactory:RepositoryFactory" as RF
-participant "<<DTO>>\ncourseDTOWithIdTitleStatusList\n:List<CourseDTOWithIdTitleStatus>" as cDtoL
+participant "<<DTO>>\ncourseDTOWithIdTitleList\n:List<CourseDTOWithIdTitleStatus>" as cDtoL
 participant "<<DTO>>\n:CourseMapper" as CM
 database "<<Repository>>\ncourseRepository\n:CourseRepository" as CR
 database "<<Repository>>\nexamRepository\n:ExamRepository" as ER
+database "<<Repository>>\nformativeExamRepository\n:FormativeExamRepository" as FER
 participant "<<Domain>>\ncourseList\n:List<Course>" as CL
 participant "<<DTO>>\ncourseDTOBuilder\n:CourseDTOBuilder" as cDTOBuilder
 participant "<<Domain>>\ncourse:Course" as C
 participant "<<Domain>>:\nCourseTitle" as CT
 participant "<<Domain>>:\nCourseIdentifier" as CI
-participant "<<Domain>>:\nCourseStatus" as CS
-participant "<<DTO>>\ncourseDTO:CourseDTO\nWithIdTitleStatus" as cDTO
+participant "<<DTO>>\ncourseDTO:CourseDTO\nWithIdTitle" as cDTO
 participant "<<Domain>>\nexamsFromCourseList\n:List<Exam>" as EL
 participant "<<DTO>>\nexamDTOList\n:List<ExamDTO>" as eDtoL
 participant "<<DTO>>\n:ExamMapper" as EM
 participant "<<DTO>>\nexamDTOBuilder\n:ExamDTOBuilder" as eDTOBuilder
+participant "<<Domain>>\nformativeExamsFromCourseList\n:List<FormativeExam>" as FEL
+participant "<<DTO>>\nformativeExamDTOList\n:List<FormativeExamDTO>" as feDtoL
+participant "<<DTO>>\n:FormativeExamMapper" as FEM
+participant "<<DTO>>\nexamDTOBuilder\n:FormativeExamDTOBuilder" as feDTOBuilder
 
 T -> UI : The teacher initializes the process\n of viewing all exams in a course
 activate T
@@ -42,6 +46,11 @@ activate RF
 RF -> ER : create()
 RF --> LECSv: examRepository
 deactivate RF
+LECSv -> RF : formativeExamRepository()
+activate RF
+RF -> FER : create()
+RF --> LECSv : formativeExamRepository
+deactivate RF
 deactivate LECSv
 deactivate CTRL
 UI -> CTRL : listAllCourses()
@@ -55,7 +64,7 @@ CR --> LECSv : courseList
 deactivate CR
 LECSv -> cDtoL : create()
 loop foreach course from courseList
-LECSv -> CM : toDTOWithIdTitleStatus(course)
+LECSv -> CM : toDTOWithIdTitle(course)
 activate CM
 CM -> cDTOBuilder : create()
 CM -> C : returnCourseIdentifierString()
@@ -80,22 +89,11 @@ deactivate C
 CM -> cDTOBuilder : withCourseTitle(courseTitle)
 activate cDTOBuilder
 deactivate cDTOBuilder
-CM -> C : returnCourseStatusString()
-activate C
-C -> CS : returnCourseStatusString()
-activate CS
-CS -> CS : name()
-CS --> C : courseStatus
-deactivate CS
-C --> CM : courseStatus
-deactivate C
-CM -> cDTOBuilder : withCourseStatus(courseStatus)
-activate cDTOBuilder
-deactivate cDTOBuilder
-CM -> cDTOBuilder : buildWithIdTitleStatus()
+
+CM -> cDTOBuilder : buildWithIdTitle()
 activate cDTOBuilder
 cDTOBuilder -> cDTO : create()
-cDTOBuilder --> CM : courseDTOWithIdTitleStatus
+cDTOBuilder --> CM : courseDTOWithIdTitle
 deactivate cDTOBuilder
 CM --> LECSv : courseDTO
 deactivate CM
@@ -126,7 +124,15 @@ loop foreach exam from examsFromCourseList
 LECSv -> EM : toDTO(exam)
 activate EM
 EM -> eDTOBuilder : create()
-EM -> eDTOBuilder : build()
+EM -> eDTOBuilder : withExamId
+activate eDTOBuilder
+eDTOBuilder --> EM : examId
+deactivate eDTOBuilder
+EM -> eDTOBuilder : withDateInterval
+activate eDTOBuilder
+eDTOBuilder --> EM : dateInterval
+deactivate eDTOBuilder
+EM -> eDTOBuilder : build(examId, dateInterval)
 activate eDTOBuilder
 eDTOBuilder --> EM : examDTO()
 deactivate eDTOBuilder
@@ -142,6 +148,40 @@ deactivate LECSv
 CTRL --> UI : examDTOList
 deactivate CTRL
 UI --> T : The system presents the list of exams\n from the selected Course
+UI -> CTRL : listFormativeExamsFromCourse(selectedCourseDTO)
+activate CTRL
+CTRL -> LECSv : listFormativeExamsFromCourse(selectedCourseDTO)
+activate LECSv
+LECSv -> FER : findFormativeExamsFromCourse(courseId)
+activate FER
+FER -> FEL : create()
+FER --> LECSv : formativeExamsFromCourseList
+deactivate FER
+LECSv -> feDtoL : create()
+loop foreach formative exam from examsFromCourseList
+LECSv -> FEM : toDTO(formativeExam)
+activate FEM
+FEM -> feDTOBuilder : create()
+FEM -> feDTOBuilder : withFormativeExamId
+activate feDTOBuilder
+feDTOBuilder --> FEM : formativeExamId
+deactivate feDTOBuilder
+FEM -> feDTOBuilder : build(formativeExamId)
+activate feDTOBuilder
+feDTOBuilder --> FEM : examDTO()
+deactivate feDTOBuilder
+FEM --> LECSv : examDTO
+deactivate FEM
+LECSv -> feDtoL : add(formativeExamDTO)
+activate feDtoL
+deactivate feDtoL
+deactivate FEM
+end loop
+LECSv --> CTRL : formativeExamDTOList
+deactivate LECSv
+CTRL --> UI : formativeExamDTOList
+deactivate CTRL
+UI --> T : The system presents the list of formative exams\n from the selected Course
 deactivate UI
 deactivate T
 @enduml

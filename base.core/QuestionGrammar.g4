@@ -22,10 +22,10 @@ topic_list : (NEWLINE)+ DASH phrase
 /////////////////////////
 multiple_choice_question : 'Multiple Choice' NEWLINE+ points NEWLINE+ phrase NEWLINE+ list_with_title NEWLINE+ multiple_choice_solution (NEWLINE+ feedback)?
 ;
-multiple_choice_solution : 'Solution: ' phrase
+multiple_choice_solution : 'Solution: ' list_phrases
 ;
 /////////////////////////
-matching_type_question : 'Matching Type' NEWLINE+ points NEWLINE+ phrase NEWLINE+ list_with_title NEWLINE+ list_with_title NEWLINE+ matching_type_solution NEWLINE+
+matching_type_question : 'Matching Type' NEWLINE+ points NEWLINE+ phrase NEWLINE+ list_with_title NEWLINE+ list_with_title NEWLINE+ matching_type_solution NEWLINE+ (NEWLINE+ feedback)?
 ;
 matching_type_solution : 'Solution:' (NEWLINE phrase DASH phrase)+
 ;
@@ -62,7 +62,7 @@ points:'(' INT 'pts)'
 feedback: 'Feedback: ' phrase
 ;
 
-NEWLINE : [\r\n]+ ;
+NEWLINE : [\r\n]+;
 SPACE: ' ';
 WORD: [A-Za-z]+;
 COLON : ':' ;

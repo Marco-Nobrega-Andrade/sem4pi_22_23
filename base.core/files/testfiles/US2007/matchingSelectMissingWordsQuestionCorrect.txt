@@ -1,0 +1,12 @@
+Select Missing Words
+(10pts)
+Please select the correct missing words.
+The best island in Portugal is ||WORD||
+
+WORD:
+-Madeira
+-Porto Santo
+-Berlengas
+-Ilhéu da Pontinha
+
+Solution: Berlengas

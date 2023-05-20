@@ -2,9 +2,14 @@ package eapli.base.formativeexams.domain;
 
 import eapli.framework.domain.model.AggregateRoot;
 
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+
+@Entity
 public class FormativeExam implements AggregateRoot<FormativeExamID> {
 
     private FormativeStructure formativeStructure;
+   @EmbeddedId
     private FormativeExamID formativeExamID;
 
     public FormativeExam(FormativeStructure formativeStructure, FormativeExamID formativeExamID) {

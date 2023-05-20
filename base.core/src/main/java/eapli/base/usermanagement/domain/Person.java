@@ -113,4 +113,7 @@ public class Person implements AggregateRoot<ID_Person> {
                 ", systemUser=" + systemUser +
                 '}';
     }
+    public boolean isATeacher() {
+        return this.teacher != null;
+    }
 }

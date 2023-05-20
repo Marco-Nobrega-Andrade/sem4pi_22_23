@@ -2,12 +2,15 @@ package eapli.base.persistence.impl.jpa;
 
 import eapli.base.Application;
 import eapli.base.courseclasses.domain.*;
+import eapli.base.courseclasses.domain.Class;
 import eapli.base.courseclasses.repositories.ExtraClassRepository;
+import eapli.base.coursemanagement.domain.Course;
 import eapli.base.usermanagement.domain.Person;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -21,10 +24,25 @@ public class JpaExtraClassRepository extends JpaAutoTxRepository<ExtraClass, Ext
                 "extraClassId");
     }
     @Override
-    public Optional<ExtraClass> findAllClassesWhoMatch(Person person, Date date) {
-        final Map<String, Object> params = new HashMap<>();
-        params.put("person", person);
-        params.put("date", date);
-        return matchOne("e.person=:person AND e.date=:date", params);
+    public List<ExtraClass> findAllClassesWhoMatch(List<Person> people) {
+       return createQuery("SELECT c FROM ExtraClass c JOIN Person p WHERE c.extraClassTeacher " +
+               "IN ( :people ) OR SELECT s FROM Student s IN ( c.participatingStudents ) " +
+               "WHERE s IN ( :people )", ExtraClass.class)
+               .setParameter("people", people)
+               .getResultList();
+    }
+
+    @Override
+    public List<ExtraClass> findExtraClassesInACourse(Course course) {
+        return  createQuery("SELECT c FROM ExtraClass c WHERE c IN ( :course.extraClassesList )"
+                , ExtraClass.class).
+                setParameter("course", course).getResultList();
+    }
+
+    @Override
+    public List<ExtraClass> findAllClassesByTeacher(List<Person> teachers) {
+        return createQuery("SELECT c FROM ExtraClass c WHERE c.extraClassTeacher IN ( :teachers ) ",
+                ExtraClass.class)
+                .setParameter("teachers", teachers).getResultList();
     }
 }

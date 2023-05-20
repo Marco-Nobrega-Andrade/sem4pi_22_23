@@ -9,6 +9,7 @@ import eapli.framework.general.domain.model.EmailAddress;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -30,10 +31,9 @@ public class JpaPersonRepository extends JpaAutoTxRepository<Person, ID_Person,I
     }
 
     @Override
-    public Optional<Person> findAllPersonsWhoMatch(EmailAddress email) {
-        final Map<String, Object> params = new HashMap<>();
-        params.put("email", email);
-        return matchOne("e.email=:email",params);
+    public List<Person> findAllPersonsWhoMatch(List<EmailAddress> email) {
+        return createQuery("SELECT p FROM Person p WHERE p.systemUser.email IN ( :email )", Person.class)
+                .setParameter("email", email).getResultList();
     }
 
 
