@@ -32,4 +32,7 @@ public class Question implements AggregateRoot<QuestionId> {
     public void changeQuestion(Structure structure){
         this.structure = structure;
     }
+    public String returnStructureToString(){
+        return structure.toString();
+    }
 }
