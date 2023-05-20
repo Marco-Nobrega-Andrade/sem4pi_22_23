@@ -12,8 +12,8 @@ public class AddQuestionController {
         return controller.listCourse();
     }
 
-    public void addQuestion(String questionStructure){
+    public void addQuestion(CourseDTOWithIdTitle courseDTO, String questionStructure){
         AddUpdateQuestionService service = new AddUpdateQuestionService();
-        service.addQuestion(questionStructure);
+        service.addQuestion(courseDTO, questionStructure);
     }
 }

@@ -13,8 +13,12 @@ public class UpdateQuestionController {
         return controller.listCourse();
     }
 
-    public void updateQuestion(QuestionDTOWithId questionDTO, String updatedQuestion){
+    public List<QuestionDTOWithId> listCourseQuestions(CourseDTOWithIdTitle courseDTO){
+        ListCourseQuestionsController controller = new ListCourseQuestionsController();
+        return controller.listCourseQuestions(courseDTO);
+    }
+    public void updateQuestion(CourseDTOWithIdTitle courseDTO, QuestionDTOWithId questionDTO, String updatedQuestion){
         AddUpdateQuestionService service = new AddUpdateQuestionService();
-        service.updateQuestion(questionDTO, updatedQuestion);
+        service.updateQuestion(courseDTO, questionDTO, updatedQuestion);
     }
 }
