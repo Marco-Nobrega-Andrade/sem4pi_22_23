@@ -2,7 +2,6 @@ package eapli.base.usermanagement.domain;
 
 import eapli.framework.domain.model.ValueObject;
 
-import javax.persistence.Embeddable;
 import java.util.Objects;
 
 public class ID_Person implements ValueObject, Comparable<ID_Person>{
