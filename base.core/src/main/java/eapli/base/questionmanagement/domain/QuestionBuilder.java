@@ -10,6 +10,8 @@ public class QuestionBuilder {
 
     public QuestionBuilder withStructure(String structure){
         this.structure = new Structure(structure);
+        VerifyQuestionService verifyQuestionService = new VerifyQuestionService();
+        verifyQuestionService.verifyQuestion(structure);
         return this;
     }
 

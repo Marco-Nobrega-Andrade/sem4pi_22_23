@@ -35,6 +35,7 @@ import eapli.base.app.backoffice.console.presentation.authz.AddUserUI;
 import eapli.base.app.backoffice.console.presentation.authz.DeactivateUserAction;
 import eapli.base.app.backoffice.console.presentation.authz.ListUsersAction;
 import eapli.base.app.backoffice.console.presentation.clientuser.AcceptRefuseSignupRequestAction;
+import eapli.base.app.common.console.presentation.board.CreateBoardAction;
 import eapli.base.app.common.console.presentation.course.ListCourseAction;
 import eapli.base.app.common.console.presentation.meeting.ScheduleMeetingAction;
 import eapli.base.usermanagement.domain.BaseRoles;
@@ -84,6 +85,8 @@ public class MainMenu extends AbstractUI {
 
     // MEETING
     private static final int SCHEDULE_MEETING_OPTION = 1;
+    //BOARD
+    private static final int CREATE_BOARD = 1;
 
     // MAIN MENU
     private static final int MY_USER_OPTION = 1;
@@ -91,8 +94,8 @@ public class MainMenu extends AbstractUI {
     private static final int COURSE_OPTION = 3;
     private static final int SETTINGS_OPTION = 4;
     private static final int ENROLLMENT_OPTION = 5;
-
     private static final int MEETING_OPTION  = 6;
+    private static final int BOARD_OPTION = 7;
 
     private static final String SEPARATOR_LABEL = "--------------";
 
@@ -147,6 +150,8 @@ public class MainMenu extends AbstractUI {
             mainMenu.addSubMenu(ENROLLMENT_OPTION, enrollmentMenu);
             final Menu meetingMenu = buildMeetingMenu();
             mainMenu.addSubMenu(MEETING_OPTION, meetingMenu);
+            final Menu boardMenu = buildBoardMenu();
+            mainMenu.addSubMenu(BOARD_OPTION, boardMenu);
         }
 
         if (!Application.settings().isMenuLayoutHorizontal()) {
@@ -186,6 +191,16 @@ public class MainMenu extends AbstractUI {
         final Menu menu = new Menu("Enrollments >");
 
         menu.addItem(ENROLL_IN_BULK,"Enroll in Bulk",new EnrollInBulkAction());
+        menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
+
+        return menu;
+    }
+
+    private Menu buildBoardMenu(){
+        final Menu menu = new Menu("Boards >");
+
+        menu.addItem(CREATE_BOARD, "Create Board", new CreateBoardAction());
+        menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 
         return menu;
     }

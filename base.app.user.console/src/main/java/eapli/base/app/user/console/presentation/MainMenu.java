@@ -24,6 +24,7 @@
 package eapli.base.app.user.console.presentation;
 
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
+import eapli.base.app.common.console.presentation.board.CreateBoardAction;
 import eapli.base.app.common.console.presentation.course.ListCourseAction;
 import eapli.base.app.common.console.presentation.meeting.ScheduleMeetingAction;
 import eapli.base.app.user.console.presentation.enrollment.RequestEnrollmentAction;
@@ -60,6 +61,8 @@ class MainMenu extends ClientUserBaseUI {
 
     private static final int MEETING_OPTION = 4;
 
+    private static final int BOARD_OPTION = 5;
+
 
     // COURSE MENU
     private static final int LIST_COURSE_OPTION = 1;
@@ -73,8 +76,10 @@ class MainMenu extends ClientUserBaseUI {
             AuthzRegistry.authorizationService();
 
     // MEETING MENU
-
     private static final int SCHEDULE_MEETING_OPTION = 1;
+
+    //BOARD MENU
+    private static final int CREATE_BOARD_OPTION = 1;
 
     @Override
     public boolean show() {
@@ -108,6 +113,9 @@ class MainMenu extends ClientUserBaseUI {
             mainMenu.addSubMenu(MEETING_OPTION, meetingMenu);
         }
 
+        final Menu boardMenu = builBoardMenu();
+        mainMenu.addSubMenu(BOARD_OPTION, boardMenu);
+
         mainMenu.addItem(EXIT_OPTION, "Exit", new ExitWithMessageAction("Bye, Bye"));
 
         return mainMenu;
@@ -137,5 +145,14 @@ class MainMenu extends ClientUserBaseUI {
         examMenu.addItem(LIST_FUTURE_EXAMS_OPTION, "List Future Exams", new ListFutureExamsAction());
         examMenu.addItem(EXIT_OPTION, "Return", Actions.SUCCESS);
         return examMenu;
+    }
+
+    private Menu builBoardMenu(){
+        final Menu boardMenu = new Menu("Board  >");
+
+        boardMenu.addItem(CREATE_BOARD_OPTION, "Create Board", new CreateBoardAction());
+        boardMenu.addItem(EXIT_OPTION, "Return", Actions.SUCCESS);
+
+        return boardMenu;
     }
 }

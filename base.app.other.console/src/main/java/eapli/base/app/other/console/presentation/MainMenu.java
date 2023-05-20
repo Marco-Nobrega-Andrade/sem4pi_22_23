@@ -25,6 +25,7 @@ package eapli.base.app.other.console.presentation;
 
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
 import eapli.base.Application;
+import eapli.base.app.common.console.presentation.board.CreateBoardAction;
 import eapli.base.app.common.console.presentation.course.ListCourseAction;
 import eapli.base.app.common.console.presentation.meeting.ScheduleMeetingAction;
 import eapli.base.app.other.console.presentation.courseClass.CreateClassAction;
@@ -60,6 +61,7 @@ public class MainMenu extends AbstractUI {
     private static final int COURSE_OPTION = 2;
 
     private static final int MEETING_OPTION = 3;
+    private static final int BOARD_OPTION = 4;
 
     // COURSE MENU
     private static final int LIST_COURSE_OPTION = 1;
@@ -69,9 +71,10 @@ public class MainMenu extends AbstractUI {
     private static final int SCHEDULE_EXTRA_CLASS = 4;
 
     // MEETING MENU
-
     private static final int SCHEDULE_MEETING = 1;
 
+    //BOARD MENU
+    private static final int CREATE_BOARD_OPTION = 1;
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
 
     private final Menu menu;
@@ -127,6 +130,9 @@ public class MainMenu extends AbstractUI {
             mainMenu.addSubMenu(MEETING_OPTION, meetingMenu);
         }
 
+        final Menu boardMenu = buildBoardMenu();
+        mainMenu.addSubMenu(BOARD_OPTION, boardMenu);
+
         if (!Application.settings().isMenuLayoutHorizontal()) {
             mainMenu.addItem(MenuItem.separator(SEPARATOR_LABEL));
         }
@@ -151,10 +157,18 @@ public class MainMenu extends AbstractUI {
     private Menu buildMeetingMenu() {
         final Menu meetingMenu = new Menu("Meeting  >");
 
-        meetingMenu.addItem(SCHEDULE_MEETING,"Schedule Meeting", new ScheduleMeetingAction());
+        meetingMenu.addItem(SCHEDULE_MEETING, "Schedule Meeting", new ScheduleMeetingAction());
         meetingMenu.addItem(EXIT_OPTION, "Return", Actions.SUCCESS);
 
         return meetingMenu;
+    }
+    private Menu buildBoardMenu(){
+        final Menu boardMenu = new Menu("Board  >");
+
+        boardMenu.addItem(CREATE_BOARD_OPTION, "Create board", new CreateBoardAction());
+        boardMenu.addItem(EXIT_OPTION, "Return", Actions.SUCCESS);
+
+        return boardMenu;
     }
 
 }

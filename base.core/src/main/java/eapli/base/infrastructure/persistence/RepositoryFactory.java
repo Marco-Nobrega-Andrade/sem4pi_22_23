@@ -20,6 +20,7 @@
  */
 package eapli.base.infrastructure.persistence;
 
+import eapli.base.board.repositories.BoardRepository;
 import eapli.base.clientusermanagement.repositories.ClientUserRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
 import eapli.base.courseclasses.repositories.ClassRepository;
@@ -133,6 +134,7 @@ public interface RepositoryFactory {
      */
     CourseRepository courseRepository(TransactionalContext autoTx);
 
+
     /**
      * repository will be created in auto transaction mode
      *
@@ -140,6 +142,9 @@ public interface RepositoryFactory {
      */
     CourseRepository courseRepository();
 
+    BoardRepository boardRepository(TransactionalContext autoTx);
+
+    BoardRepository boardRepository();
     /**
      *
      * @param autoTx
