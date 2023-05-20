@@ -67,6 +67,6 @@ public class Exam implements AggregateRoot<ExamId>  {
     public String returnFinalDateString(){
         return dateInterval.toStringFinalDate();
     }
-
     public String returnExamIdString(){return examId.toString();}
+
 }
