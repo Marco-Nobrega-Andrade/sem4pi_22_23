@@ -176,4 +176,9 @@ public class Course implements AggregateRoot<CourseIdentifier> {
         extraClassesList.add(extraClass);
         return true;
     }
+
+    public boolean addQuestion(Question question){
+        questionList.add(question);
+        return true;
+    }
 }
