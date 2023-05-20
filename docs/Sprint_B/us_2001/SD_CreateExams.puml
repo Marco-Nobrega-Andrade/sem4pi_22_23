@@ -8,7 +8,7 @@ actor "Teacher" as t
 participant "CreateExamsUI" as ui <<Presentation>>
 participant "CreateExamsController" as ctrl <<Application>>
 participant "ListCourseController" as ctrlList <<Application>>
-participant "CreateExamsService" as service <<Service>>
+participant "CreateUpdateExamService" as service <<Service>>
 
 
 participant AuthzRegistry as auth <<application>>
@@ -57,6 +57,43 @@ ui-> ctrl: createExam(structure,courseDto,initialDate,finalDate)
 
 activate ctrl
 ctrl -> service : create()
+activate service
+
+
+service -> persistence: repositories()
+activate persistence
+persistence -> repFactory: create
+persistence --> service: factory
+deactivate persistence
+service -> repFactory: teacherRepository()
+activate repFactory
+repFactory -> examRep: create
+repFactory --> service: teacherRepository
+deactivate repFactory
+service -> persistence: repositories()
+activate persistence
+persistence -> repFactory: create
+persistence --> service: factory
+deactivate persistence
+service -> repFactory: examRepository()
+activate repFactory
+repFactory -> examRep: create
+repFactory --> service: examRepository
+deactivate repFactory
+service -> persistence: repositories()
+activate persistence
+persistence -> repFactory: create
+persistence --> service: factory
+deactivate persistence
+service -> repFactory: courseRepository()
+activate repFactory
+repFactory -> courseRep: create
+repFactory --> service: courseRep
+deactivate repFactory
+
+
+deactivate persistence
+deactivate service
 ctrl -> service : createExam(structure,courseDto,initialDate,finalDate)
 activate service
 
@@ -76,22 +113,12 @@ deactivate userSe
 
 
 
-service -> persistence: repositories()
-activate persistence
-persistence -> repFactory: create
-persistence --> service: factory
-deactivate persistence
-
 service -> teaRep : findTeacherBySystemUser(systemUser)
 activate teaRep
 teaRep --> service: teacher
 deactivate teaRep
 
-service -> repFactory: examRepository()
-activate repFactory
-repFactory -> examRep: create
-repFactory --> service: examRepository
-deactivate repFactory
+
 
 service -> examRep: count()
 activate examRep
@@ -118,13 +145,6 @@ exam --> builder: exam
 deactivate exam
 builder --> service: exam
 deactivate builder
-
-
-service -> repFactory: courseRepository()
-activate repFactory
-repFactory -> courseRep: create
-repFactory --> service: courseRep
-deactivate repFactory
 
 
 service -> courseID : create(courseIdentifier)
