@@ -31,6 +31,7 @@ import eapli.base.app.common.console.presentation.meeting.ScheduleMeetingAction;
 import eapli.base.app.other.console.presentation.courseClass.CreateClassAction;
 import eapli.base.app.other.console.presentation.courseClass.ScheduleExtraClassAction;
 import eapli.base.app.other.console.presentation.courseclasses.RescheduleClassAction;
+import eapli.base.app.other.console.presentation.exam.CreateExamAction;
 import eapli.base.app.other.console.presentation.question.AddQuestionAction;
 import eapli.base.app.other.console.presentation.exam.ListAllExamsOfCourseAction;
 import eapli.base.usermanagement.domain.BaseRoles;
@@ -82,9 +83,11 @@ public class MainMenu extends AbstractUI {
     //BOARD MENU
     private static final int CREATE_BOARD_OPTION = 1;
 
-    //FORMATIVE EXAM
+    //EXAM
 
     private static final int ADD_QUESTION = 1;
+
+    private static final int CREATE_EXAM = 2;
     private static final int UPDATE_QUESTION = 2;
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
 
@@ -189,6 +192,7 @@ public class MainMenu extends AbstractUI {
         final Menu examMenu = new Menu("Exam  >");
 
         examMenu.addItem(ADD_QUESTION, "Add Question", new AddQuestionAction());
+        examMenu.addItem(CREATE_EXAM, "Create Exam", new CreateExamAction());
         examMenu.addItem(EXIT_OPTION, "Return", Actions.SUCCESS);
 
         return examMenu;
