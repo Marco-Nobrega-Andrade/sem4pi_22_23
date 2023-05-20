@@ -27,6 +27,10 @@ public class DateInterval implements ValueObject {
             throw new IllegalArgumentException(
                     "Final date mus be greater than initial date");
         }
+        if (initialDate.before(new Date())){
+            throw new IllegalArgumentException(
+                    "Dates must be in the future");
+        }
 
         this.initialDate = initialDate;
         this.finalDate = finalDate;

@@ -1,0 +1,74 @@
+Header: oaskoakso
+
+Section: 1
+Section description: section1
+
+(10pts)
+Match the Capital with the Country
+
+Capital:
+-Ottawa
+-Rome
+-Tokyo
+
+Country:
+- Canada
+- Italy
+- Japan
+
+Solution:
+Tokyo-Japan
+Italy-Rome
+Canada-Ottawa
+Feedback: Well Done.
+
+(10pts)
+Exam banger?
+Solution: T
+Feedback: Nice.
+
+Section: 2
+
+(10pts)
+Capital of Brazil length?
+Solution: 222,22 km
+Feedback: Very good
+
+(10pts)
+Please select the correct missing words.
+The best island in Portugal is ||WORD||
+
+WORD:
+-Madeira
+-Porto Santo
+-Berlengas
+-Ilhéu da Pontinha
+
+Solution: Berlengas
+
+Section: 3
+
+(10pts)
+Capital of Brazil?
+Solution: Brasilia
+Feedback: Very good
+
+(20pts)
+What is the Capital of Japan?
+Select one option:
+-Seoul
+-Ottawa
+-Rome
+-Tokyo
+Solution: Tokyo
+
+(20pts)
+Which states cities are from the United States?
+Select multiple options:
+-Seoul
+-Ottawa
+-Rome
+-New York
+-Lisbon
+-Los Angeles
+Solution: New York, Los Angeles
