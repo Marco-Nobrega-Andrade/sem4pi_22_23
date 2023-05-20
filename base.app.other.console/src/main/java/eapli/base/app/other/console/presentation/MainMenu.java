@@ -31,6 +31,7 @@ import eapli.base.app.common.console.presentation.meeting.ScheduleMeetingAction;
 import eapli.base.app.other.console.presentation.courseClass.CreateClassAction;
 import eapli.base.app.other.console.presentation.courseClass.ScheduleExtraClassAction;
 import eapli.base.app.other.console.presentation.courseclasses.RescheduleClassAction;
+import eapli.base.app.other.console.presentation.question.AddQuestionAction;
 import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
@@ -63,6 +64,8 @@ public class MainMenu extends AbstractUI {
     private static final int MEETING_OPTION = 3;
     private static final int BOARD_OPTION = 4;
 
+    private static final int EXAM = 5;
+
     // COURSE MENU
     private static final int LIST_COURSE_OPTION = 1;
     private static final int CREATE_CLASS = 2;
@@ -75,6 +78,11 @@ public class MainMenu extends AbstractUI {
 
     //BOARD MENU
     private static final int CREATE_BOARD_OPTION = 1;
+
+    //FORMATIVE EXAM
+
+    private static final int ADD_QUESTION = 1;
+    private static final int UPDATE_QUESTION = 2;
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
 
     private final Menu menu;
@@ -132,6 +140,8 @@ public class MainMenu extends AbstractUI {
 
         final Menu boardMenu = buildBoardMenu();
         mainMenu.addSubMenu(BOARD_OPTION, boardMenu);
+        final Menu examMenu = buildExamMenu();
+        mainMenu.addSubMenu(EXAM, examMenu);
 
         if (!Application.settings().isMenuLayoutHorizontal()) {
             mainMenu.addItem(MenuItem.separator(SEPARATOR_LABEL));
@@ -169,6 +179,15 @@ public class MainMenu extends AbstractUI {
         boardMenu.addItem(EXIT_OPTION, "Return", Actions.SUCCESS);
 
         return boardMenu;
+    }
+
+    private Menu buildExamMenu(){
+        final Menu examMenu = new Menu("Exam  >");
+
+        examMenu.addItem(ADD_QUESTION, "Add Question", new AddQuestionAction());
+        examMenu.addItem(EXIT_OPTION, "Return", Actions.SUCCESS);
+
+        return examMenu;
     }
 
 }
