@@ -6,9 +6,9 @@ import java.util.Objects;
 
 public class ExamId implements ValueObject, Comparable<ExamId> {
 
-    private int exam_id;
+    private Long exam_id;
 
-    public ExamId(int exam_id) {
+    public ExamId(long exam_id) {
         if (exam_id <= 0 ) {
             throw new IllegalArgumentException(
                     "Id number must be greater than 0");
@@ -35,6 +35,6 @@ public class ExamId implements ValueObject, Comparable<ExamId> {
 
     @Override
     public int compareTo(ExamId o) {
-        return Integer.compare(exam_id,o.exam_id);
+        return Long.compare(exam_id,o.exam_id);
     }
 }

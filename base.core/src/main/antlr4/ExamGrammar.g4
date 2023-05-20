@@ -1,6 +1,6 @@
 grammar ExamGrammar;
 
-prog: header (NEWLINE NEWLINE+ section (NEWLINE NEWLINE+ question)+)+ NEWLINE*;
+prog: header (NEWLINE+ section (NEWLINE+ question)+)+ NEWLINE*;
 
 header: 'Header: ' phrase;
 
@@ -37,7 +37,7 @@ multiple_choice_solution : 'Solution: ' list_phrases
 /////////////////////////
 matching_type_question : points NEWLINE+ phrase NEWLINE+ list_with_title NEWLINE+ list_with_title NEWLINE+ matching_type_solution (NEWLINE+ feedback)?
 ;
-matching_type_solution : 'Solution: ' (NEWLINE phrase DASH phrase)+
+matching_type_solution : 'Solution:' (NEWLINE phrase DASH phrase)+
 ;
 //////////////////////////
 true_false_question : points NEWLINE+ phrase NEWLINE+ true_false_solution (NEWLINE+ feedback)?
@@ -72,7 +72,7 @@ points:'(' INT 'pts)'
 feedback: 'Feedback: ' phrase
 ;
 
-NEWLINE : [\r\n];
+NEWLINE : [\r\n]+;
 SPACE: ' ';
 WORD: [A-Za-z]+;
 COLON : ':' ;
