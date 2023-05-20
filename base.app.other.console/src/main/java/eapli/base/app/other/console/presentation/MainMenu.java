@@ -25,6 +25,7 @@ package eapli.base.app.other.console.presentation;
 
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
 import eapli.base.Application;
+import eapli.base.app.common.console.presentation.board.CreateBoardAction;
 import eapli.base.app.common.console.presentation.course.ListCourseAction;
 import eapli.base.app.other.console.presentation.courseClass.CreateClassAction;
 import eapli.base.app.other.console.presentation.courseClass.ScheduleExtraClassAction;
@@ -58,6 +59,8 @@ public class MainMenu extends AbstractUI {
 
     private static final int COURSE_OPTION = 2;
 
+    private static final int BOARD_OPTION = 3;
+
     private static final int RECHARGE_USER_CARD_OPTION = 1;
 
     // COURSE MENU
@@ -67,6 +70,8 @@ public class MainMenu extends AbstractUI {
     private static final int RESCHEDULE_CLASS_OPTION = 3;
     private static final int SCHEDULE_EXTRA_CLASS = 4;
 
+    //BOARD MENU
+    private static final int CREATE_BOARD_OPTION = 1;
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
 
     private final Menu menu;
@@ -120,6 +125,9 @@ public class MainMenu extends AbstractUI {
             mainMenu.addSubMenu(COURSE_OPTION, courseMenu);
         }
 
+        final Menu boardMenu = buildBoardMenu();
+        mainMenu.addSubMenu(BOARD_OPTION, boardMenu);
+
         if (!Application.settings().isMenuLayoutHorizontal()) {
             mainMenu.addItem(MenuItem.separator(SEPARATOR_LABEL));
         }
@@ -139,6 +147,15 @@ public class MainMenu extends AbstractUI {
         courseMenu.addItem(EXIT_OPTION, "Return", Actions.SUCCESS);
 
         return courseMenu;
+    }
+
+    private Menu buildBoardMenu(){
+        final Menu boardMenu = new Menu("Board  >");
+
+        boardMenu.addItem(CREATE_BOARD_OPTION, "Create board", new CreateBoardAction());
+        boardMenu.addItem(EXIT_OPTION, "Return", Actions.SUCCESS);
+
+        return boardMenu;
     }
 
 }
