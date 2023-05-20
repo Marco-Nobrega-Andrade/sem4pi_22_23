@@ -47,7 +47,7 @@ QR --> AUQS : numberOfQuestions
 deactivate QR
 AUQS -> QB : withStructure(questionStructure)
 activate QB
-QB -> VQS : verifyQuestion(structure.ToString())
+QB -> VQS : verifyQuestion(structure)
 activate VQS
 VQS --> QB : true
 deactivate VQS
