@@ -1,10 +1,19 @@
 -----------------Short Answer Question-----------------
 
+Numerical
+(numberOfPoints pts)
 Question
+Solution: numericalValue unit
+Feedback: phrase
+
 
 --------------------------------------------------------
 ----------------Short Answer Question Example-----------
 
-What is the capital of Brazil?
+Numerical
+(3pts)
+Capital of Brazil length?
+Solution: 222,22 km
+Feedback: Very good
 
 --------------------------------------------------------
