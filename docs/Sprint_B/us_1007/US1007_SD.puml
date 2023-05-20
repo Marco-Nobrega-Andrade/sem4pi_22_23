@@ -118,6 +118,11 @@ BESv -> SR : ofIdentity(studentId)
 activate SR
 SR --> BESv : student
 deactivate SR
+BESv -> ER : findEnrollmentByCourseIDAndMechNumber(courseId, mechNumber)
+activate ER
+ER --> BESv : enrollment
+deactivate ER
+alt if enrollment doesn't already exist
 BESv -> ER : count()
 activate ER
 ER --> BESv : totalNumberOfEnrollments
@@ -140,6 +145,7 @@ BESv -> S : addEnrollment(newEnrollment)
 activate S
 deactivate S
 BESv -> SR : save(student)
+end
 activate SR
 deactivate SR
 end loop
