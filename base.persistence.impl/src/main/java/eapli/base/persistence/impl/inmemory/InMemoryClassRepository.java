@@ -4,7 +4,9 @@ import eapli.base.courseclasses.domain.Class;
 import eapli.base.courseclasses.domain.ClassId;
 import eapli.base.courseclasses.domain.Date;
 import eapli.base.courseclasses.repositories.ClassRepository;
+import eapli.base.coursemanagement.domain.Course;
 import eapli.base.usermanagement.domain.Person;
+import eapli.base.usermanagement.domain.Student;
 import eapli.base.usermanagement.domain.Teacher;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
@@ -14,9 +16,11 @@ import java.util.Optional;
 
 public class InMemoryClassRepository extends InMemoryDomainRepository<Class, ClassId>
         implements ClassRepository {
+
+
     @Override
-    public Optional<Class> findAllClassesWhoMatch(Person person, Date date) {
-        return Optional.empty();
+    public List<Class> findAllClassesByTeacher(List<Person> teacher) {
+        return null;
     }
 
     @Override
@@ -26,6 +30,11 @@ public class InMemoryClassRepository extends InMemoryDomainRepository<Class, Cla
 
     @Override
     public List<Class> findAll(Teacher teacher) {
+        return null;
+    }
+
+    @Override
+    public List<Class> findClassesInACourse(Course course) {
         return null;
     }
 

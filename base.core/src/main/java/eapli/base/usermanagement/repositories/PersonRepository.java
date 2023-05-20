@@ -5,6 +5,7 @@ import eapli.base.usermanagement.domain.Person;
 import eapli.framework.domain.repositories.DomainRepository;
 import eapli.framework.general.domain.model.EmailAddress;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface PersonRepository extends DomainRepository<ID_Person, Person> {
@@ -21,5 +22,5 @@ public interface PersonRepository extends DomainRepository<ID_Person, Person> {
  * @return
  */
 
-    Optional<Person> findAllPersonsWhoMatch(EmailAddress email);
+    List<Person> findAllPersonsWhoMatch(List<EmailAddress> email);
 }

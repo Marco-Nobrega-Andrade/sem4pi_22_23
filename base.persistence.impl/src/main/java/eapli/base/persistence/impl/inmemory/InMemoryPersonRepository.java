@@ -7,6 +7,7 @@ import eapli.framework.general.domain.model.EmailAddress;
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -19,7 +20,7 @@ public class InMemoryPersonRepository extends InMemoryDomainRepository<Person, I
     }
 
     @Override
-    public Optional<Person> findAllPersonsWhoMatch(EmailAddress email) {
+    public List<Person> findAllPersonsWhoMatch(List<EmailAddress> email) {
         return null;
     }
 
