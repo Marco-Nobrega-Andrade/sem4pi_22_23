@@ -1,6 +1,6 @@
 grammar ExamGrammar;
 
-prog: header (NEWLINE+ section (NEWLINE+ question)+)+ NEWLINE*;
+prog: header (NEWLINE+ section (NEWLINE question)+)+ ;
 
 header: 'Header: ' phrase;
 
