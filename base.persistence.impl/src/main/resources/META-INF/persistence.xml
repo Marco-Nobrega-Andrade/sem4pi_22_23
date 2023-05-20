@@ -23,6 +23,8 @@
     <class>eapli.base.meetingmanagement.domain.Invitation</class>
     <class>eapli.base.exams.domain.Exam</class>
     <class>eapli.base.questionmanagement.domain.Question</class>
+    <class>eapli.base.board.domain.Board</class>
+    <class>eapli.base.board.domain.Cell</class>
     <properties>
       <!--<property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/base"/>-->
       <property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://vsgate-s2.dei.isep.ipp.pt:10747/base;MV_STORE=FALSE;AUTO_SERVER=true;"/>
