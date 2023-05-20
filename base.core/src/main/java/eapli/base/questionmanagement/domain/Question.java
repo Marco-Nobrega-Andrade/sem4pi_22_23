@@ -29,4 +29,7 @@ public class Question implements AggregateRoot<QuestionId> {
     public long returnQuestionIdentifier(){
         return question_Id.returnQuestionId();
     }
+    public void changeQuestion(Structure structure){
+        this.structure = structure;
+    }
 }
