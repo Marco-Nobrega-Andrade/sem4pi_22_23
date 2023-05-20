@@ -7,6 +7,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import java.util.Objects;
 
 @Entity
 public class Exam implements AggregateRoot<ExamId>  {
@@ -33,6 +34,18 @@ public class Exam implements AggregateRoot<ExamId>  {
         //Only for ORM
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Exam exam = (Exam) o;
+        return Objects.equals(examId, exam.examId) && Objects.equals(dateInterval, exam.dateInterval) && Objects.equals(examSpecification, exam.examSpecification) && Objects.equals(examTeacher, exam.examTeacher);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(examId, dateInterval, examSpecification, examTeacher);
+    }
 
     @Override
     public boolean sameAs(Object other) {
@@ -42,7 +55,7 @@ public class Exam implements AggregateRoot<ExamId>  {
 
         final Exam that = (Exam) other;
 
-        return examId.equals(that.examId) && dateInterval.equals(that.dateInterval) && examSpecification.equals(examSpecification)
+        return examId.equals(that.examId) && dateInterval.equals(that.dateInterval) && examSpecification.equals(that.examSpecification)
                 && examTeacher.equals(that.examTeacher);
     }
 
