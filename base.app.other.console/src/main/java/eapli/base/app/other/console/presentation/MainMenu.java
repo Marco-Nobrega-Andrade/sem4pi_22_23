@@ -26,6 +26,7 @@ package eapli.base.app.other.console.presentation;
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
 import eapli.base.Application;
 import eapli.base.app.common.console.presentation.course.ListCourseAction;
+import eapli.base.app.common.console.presentation.meeting.ScheduleMeetingAction;
 import eapli.base.app.other.console.presentation.courseClass.CreateClassAction;
 import eapli.base.app.other.console.presentation.courseClass.ScheduleExtraClassAction;
 import eapli.base.app.other.console.presentation.courseclasses.RescheduleClassAction;
@@ -58,7 +59,7 @@ public class MainMenu extends AbstractUI {
 
     private static final int COURSE_OPTION = 2;
 
-    private static final int RECHARGE_USER_CARD_OPTION = 1;
+    private static final int MEETING_OPTION = 3;
 
     // COURSE MENU
     private static final int LIST_COURSE_OPTION = 1;
@@ -66,6 +67,10 @@ public class MainMenu extends AbstractUI {
 
     private static final int RESCHEDULE_CLASS_OPTION = 3;
     private static final int SCHEDULE_EXTRA_CLASS = 4;
+
+    // MEETING MENU
+
+    private static final int SCHEDULE_MEETING = 1;
 
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
 
@@ -118,6 +123,8 @@ public class MainMenu extends AbstractUI {
         if (authz.isAuthenticatedUserAuthorizedTo(BaseRoles.TEACHER)) {
             final Menu courseMenu = buildCourseMenu();
             mainMenu.addSubMenu(COURSE_OPTION, courseMenu);
+            final Menu meetingMenu = buildMeetingMenu();
+            mainMenu.addSubMenu(MEETING_OPTION, meetingMenu);
         }
 
         if (!Application.settings().isMenuLayoutHorizontal()) {
@@ -139,6 +146,15 @@ public class MainMenu extends AbstractUI {
         courseMenu.addItem(EXIT_OPTION, "Return", Actions.SUCCESS);
 
         return courseMenu;
+    }
+
+    private Menu buildMeetingMenu() {
+        final Menu meetingMenu = new Menu("Meeting  >");
+
+        meetingMenu.addItem(SCHEDULE_MEETING,"Schedule Meeting", new ScheduleMeetingAction());
+        meetingMenu.addItem(EXIT_OPTION, "Return", Actions.SUCCESS);
+
+        return meetingMenu;
     }
 
 }
