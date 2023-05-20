@@ -28,7 +28,6 @@ import eapli.base.app.backoffice.console.presentation.course.OpenCloseCourseActi
 import eapli.base.app.backoffice.console.presentation.course.OpenCloseCourseEnrollmentsAction;
 import eapli.base.app.backoffice.console.presentation.course.SetTeacherAction;
 import eapli.base.app.backoffice.console.presentation.enrollment.ApproveRejectEnrollmentAction;
-import eapli.base.app.backoffice.console.presentation.enrollment.ApproveRejectEnrollmentUI;
 import eapli.base.app.backoffice.console.presentation.enrollment.EnrollInBulkAction;
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
 import eapli.base.Application;
@@ -38,6 +37,7 @@ import eapli.base.app.backoffice.console.presentation.authz.ListUsersAction;
 import eapli.base.app.backoffice.console.presentation.clientuser.AcceptRefuseSignupRequestAction;
 import eapli.base.app.common.console.presentation.board.CreateBoardAction;
 import eapli.base.app.common.console.presentation.course.ListCourseAction;
+import eapli.base.app.common.console.presentation.meeting.ScheduleMeetingAction;
 import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
@@ -83,25 +83,10 @@ public class MainMenu extends AbstractUI {
     //ENROLLMENT
     private static final int ENROLL_IN_BULK = 1;
 
+    // MEETING
+    private static final int SCHEDULE_MEETING_OPTION = 1;
     //BOARD
     private static final int CREATE_BOARD = 1;
-
-    // DISH PROPERTIES
-    private static final int CHANGE_DISH_NUTRICIONAL_INFO_OPTION = 1;
-    private static final int CHANGE_DISH_PRICE_OPTION = 2;
-
-    // MATERIALS
-    private static final int MATERIAL_REGISTER_OPTION = 1;
-    private static final int MATERIAL_LIST_OPTION = 2;
-
-    // REPORTING
-    private static final int REPORTING_DISHES_PER_DISHTYPE_OPTION = 1;
-    private static final int REPORTING_HIGH_CALORIES_DISHES_OPTION = 2;
-    private static final int REPORTING_DISHES_PER_CALORIC_CATEGORY_OPTION = 3;
-
-    // MEALS
-    private static final int LIST_MEALS_OPTION = 1;
-    private static final int MEAL_REGISTER_OPTION = 2;
 
     // MAIN MENU
     private static final int MY_USER_OPTION = 1;
@@ -109,7 +94,8 @@ public class MainMenu extends AbstractUI {
     private static final int COURSE_OPTION = 3;
     private static final int SETTINGS_OPTION = 4;
     private static final int ENROLLMENT_OPTION = 5;
-    private static final int BOARD_OPTION = 6;
+    private static final int MEETING_OPTION  = 6;
+    private static final int BOARD_OPTION = 7;
 
     private static final String SEPARATOR_LABEL = "--------------";
 
@@ -162,6 +148,8 @@ public class MainMenu extends AbstractUI {
             mainMenu.addSubMenu(SETTINGS_OPTION, settingsMenu);
             final Menu enrollmentMenu = buildEnrollmentMenu();
             mainMenu.addSubMenu(ENROLLMENT_OPTION, enrollmentMenu);
+            final Menu meetingMenu = buildMeetingMenu();
+            mainMenu.addSubMenu(MEETING_OPTION, meetingMenu);
             final Menu boardMenu = buildBoardMenu();
             mainMenu.addSubMenu(BOARD_OPTION, boardMenu);
         }
@@ -186,6 +174,15 @@ public class MainMenu extends AbstractUI {
         menu.addItem(SET_TEACHER_IN_COURSE,"Set Teachers of a Course", new SetTeacherAction());
         menu.addItem(EXIT_OPTION,RETURN_LABEL,Actions.SUCCESS);
 
+
+        return menu;
+    }
+
+    private  Menu buildMeetingMenu() {
+        final Menu menu = new Menu("Meetings >");
+
+        menu.addItem(SCHEDULE_MEETING_OPTION, "Schedule Meeting", new ScheduleMeetingAction());
+        menu.addItem(EXIT_OPTION, "Return", Actions.SUCCESS);
 
         return menu;
     }

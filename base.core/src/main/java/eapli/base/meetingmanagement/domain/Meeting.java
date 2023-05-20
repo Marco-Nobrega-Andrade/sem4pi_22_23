@@ -3,16 +3,17 @@ import eapli.base.courseclasses.domain.ScheduledDate;
 import eapli.framework.domain.model.AggregateRoot;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Meeting implements AggregateRoot<MeetingIdentifier> {
     @EmbeddedId
     private MeetingIdentifier idMeeting;
     private ScheduledDate scheduledDate;
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Invitation invitation;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Invitation> invitation;
 
-    public Meeting(MeetingIdentifier idMeeting, ScheduledDate scheduledDate, Invitation invitation) {
+    public Meeting(MeetingIdentifier idMeeting, ScheduledDate scheduledDate, List<Invitation> invitation) {
         this.idMeeting = idMeeting;
         this.scheduledDate = scheduledDate;
         this.invitation = invitation;
@@ -20,6 +21,10 @@ public class Meeting implements AggregateRoot<MeetingIdentifier> {
 
     protected Meeting() {
         //for ORM
+    }
+
+    public boolean verifyIfIsTheMeetingDate(java.util.Date startingDateWithTime, int duration){
+        return scheduledDate.verifyIfExistAtTheCurrentTime(startingDateWithTime,duration);
     }
 
     @Override
