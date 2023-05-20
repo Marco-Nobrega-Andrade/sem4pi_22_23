@@ -31,6 +31,7 @@ import eapli.base.app.common.console.presentation.meeting.ScheduleMeetingAction;
 import eapli.base.app.other.console.presentation.courseClass.CreateClassAction;
 import eapli.base.app.other.console.presentation.courseClass.ScheduleExtraClassAction;
 import eapli.base.app.other.console.presentation.courseclasses.RescheduleClassAction;
+import eapli.base.app.other.console.presentation.exam.ListAllExamsOfCourseAction;
 import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
@@ -69,6 +70,8 @@ public class MainMenu extends AbstractUI {
 
     private static final int RESCHEDULE_CLASS_OPTION = 3;
     private static final int SCHEDULE_EXTRA_CLASS = 4;
+
+    private static final int LIST_ALL_EXAMS_OF_COURSE = 5;
 
     // MEETING MENU
     private static final int SCHEDULE_MEETING = 1;
@@ -149,6 +152,7 @@ public class MainMenu extends AbstractUI {
         courseMenu.addItem(CREATE_CLASS,"Create Class", new CreateClassAction());
         courseMenu.addItem(RESCHEDULE_CLASS_OPTION,"Reschedule Class", new RescheduleClassAction());
         courseMenu.addItem(SCHEDULE_EXTRA_CLASS,"Schedule extra class", new ScheduleExtraClassAction());
+        courseMenu.addItem(LIST_ALL_EXAMS_OF_COURSE,"List all exams of Course", new ListAllExamsOfCourseAction());
         courseMenu.addItem(EXIT_OPTION, "Return", Actions.SUCCESS);
 
         return courseMenu;
