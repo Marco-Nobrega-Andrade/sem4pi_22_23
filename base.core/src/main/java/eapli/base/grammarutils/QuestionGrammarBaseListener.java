@@ -1,4 +1,4 @@
-// Generated from C:/Users/Marco/Desktop/MinhaPasta/Universidade/Ano2/SEM4PI/sem4pi-22-23-24/base.core\QuestionGrammar.g4 by ANTLR 4.12.0
+// Generated from C:/Users/windows/Documents/sem4pi-22-23-24/base.core\QuestionGrammar.g4 by ANTLR 4.12.0
 package eapli.base.grammarutils;
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -113,6 +113,18 @@ public class QuestionGrammarBaseListener implements QuestionGrammarListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterMultiple_choice_solution(QuestionGrammarParser.Multiple_choice_solutionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMultiple_choice_solution(QuestionGrammarParser.Multiple_choice_solutionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterMatching_type_question(QuestionGrammarParser.Matching_type_questionContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -120,6 +132,18 @@ public class QuestionGrammarBaseListener implements QuestionGrammarListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitMatching_type_question(QuestionGrammarParser.Matching_type_questionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterMatching_type_solution(QuestionGrammarParser.Matching_type_solutionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMatching_type_solution(QuestionGrammarParser.Matching_type_solutionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -192,6 +216,54 @@ public class QuestionGrammarBaseListener implements QuestionGrammarListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitList_phrases(QuestionGrammarParser.List_phrasesContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterShort_answer_question(QuestionGrammarParser.Short_answer_questionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitShort_answer_question(QuestionGrammarParser.Short_answer_questionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterShort_answer_solution(QuestionGrammarParser.Short_answer_solutionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitShort_answer_solution(QuestionGrammarParser.Short_answer_solutionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterNumerical_question(QuestionGrammarParser.Numerical_questionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitNumerical_question(QuestionGrammarParser.Numerical_questionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterNumerical_answer(QuestionGrammarParser.Numerical_answerContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitNumerical_answer(QuestionGrammarParser.Numerical_answerContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

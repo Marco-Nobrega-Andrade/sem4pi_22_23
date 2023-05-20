@@ -1,4 +1,4 @@
-// Generated from C:/Users/Marco/Desktop/MinhaPasta/Universidade/Ano2/SEM4PI/sem4pi-22-23-24/base.core\QuestionGrammar.g4 by ANTLR 4.12.0
+// Generated from C:/Users/windows/Documents/sem4pi-22-23-24/base.core\QuestionGrammar.g4 by ANTLR 4.12.0
 package eapli.base.grammarutils;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -88,6 +88,16 @@ public interface QuestionGrammarListener extends ParseTreeListener {
 	 */
 	void exitMultiple_choice_question(QuestionGrammarParser.Multiple_choice_questionContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link QuestionGrammarParser#multiple_choice_solution}.
+	 * @param ctx the parse tree
+	 */
+	void enterMultiple_choice_solution(QuestionGrammarParser.Multiple_choice_solutionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link QuestionGrammarParser#multiple_choice_solution}.
+	 * @param ctx the parse tree
+	 */
+	void exitMultiple_choice_solution(QuestionGrammarParser.Multiple_choice_solutionContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link QuestionGrammarParser#matching_type_question}.
 	 * @param ctx the parse tree
 	 */
@@ -97,6 +107,16 @@ public interface QuestionGrammarListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitMatching_type_question(QuestionGrammarParser.Matching_type_questionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link QuestionGrammarParser#matching_type_solution}.
+	 * @param ctx the parse tree
+	 */
+	void enterMatching_type_solution(QuestionGrammarParser.Matching_type_solutionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link QuestionGrammarParser#matching_type_solution}.
+	 * @param ctx the parse tree
+	 */
+	void exitMatching_type_solution(QuestionGrammarParser.Matching_type_solutionContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link QuestionGrammarParser#true_false_question}.
 	 * @param ctx the parse tree
@@ -157,6 +177,46 @@ public interface QuestionGrammarListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitList_phrases(QuestionGrammarParser.List_phrasesContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link QuestionGrammarParser#short_answer_question}.
+	 * @param ctx the parse tree
+	 */
+	void enterShort_answer_question(QuestionGrammarParser.Short_answer_questionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link QuestionGrammarParser#short_answer_question}.
+	 * @param ctx the parse tree
+	 */
+	void exitShort_answer_question(QuestionGrammarParser.Short_answer_questionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link QuestionGrammarParser#short_answer_solution}.
+	 * @param ctx the parse tree
+	 */
+	void enterShort_answer_solution(QuestionGrammarParser.Short_answer_solutionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link QuestionGrammarParser#short_answer_solution}.
+	 * @param ctx the parse tree
+	 */
+	void exitShort_answer_solution(QuestionGrammarParser.Short_answer_solutionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link QuestionGrammarParser#numerical_question}.
+	 * @param ctx the parse tree
+	 */
+	void enterNumerical_question(QuestionGrammarParser.Numerical_questionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link QuestionGrammarParser#numerical_question}.
+	 * @param ctx the parse tree
+	 */
+	void exitNumerical_question(QuestionGrammarParser.Numerical_questionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link QuestionGrammarParser#numerical_answer}.
+	 * @param ctx the parse tree
+	 */
+	void enterNumerical_answer(QuestionGrammarParser.Numerical_answerContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link QuestionGrammarParser#numerical_answer}.
+	 * @param ctx the parse tree
+	 */
+	void exitNumerical_answer(QuestionGrammarParser.Numerical_answerContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link QuestionGrammarParser#points}.
 	 * @param ctx the parse tree

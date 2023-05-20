@@ -1,4 +1,4 @@
-// Generated from C:/Users/Marco/Desktop/MinhaPasta/Universidade/Ano2/SEM4PI/sem4pi-22-23-24/base.core\QuestionGrammar.g4 by ANTLR 4.12.0
+// Generated from C:/Users/windows/Documents/sem4pi-22-23-24/base.core\QuestionGrammar.g4 by ANTLR 4.12.0
 package eapli.base.grammarutils;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -59,11 +59,23 @@ public interface QuestionGrammarVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitMultiple_choice_question(QuestionGrammarParser.Multiple_choice_questionContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link QuestionGrammarParser#multiple_choice_solution}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMultiple_choice_solution(QuestionGrammarParser.Multiple_choice_solutionContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link QuestionGrammarParser#matching_type_question}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitMatching_type_question(QuestionGrammarParser.Matching_type_questionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link QuestionGrammarParser#matching_type_solution}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMatching_type_solution(QuestionGrammarParser.Matching_type_solutionContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link QuestionGrammarParser#true_false_question}.
 	 * @param ctx the parse tree
@@ -100,6 +112,30 @@ public interface QuestionGrammarVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitList_phrases(QuestionGrammarParser.List_phrasesContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link QuestionGrammarParser#short_answer_question}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitShort_answer_question(QuestionGrammarParser.Short_answer_questionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link QuestionGrammarParser#short_answer_solution}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitShort_answer_solution(QuestionGrammarParser.Short_answer_solutionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link QuestionGrammarParser#numerical_question}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNumerical_question(QuestionGrammarParser.Numerical_questionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link QuestionGrammarParser#numerical_answer}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNumerical_answer(QuestionGrammarParser.Numerical_answerContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link QuestionGrammarParser#points}.
 	 * @param ctx the parse tree
