@@ -1,6 +1,7 @@
 package eapli.base.persistence.impl.inmemory;
 
 import eapli.base.coursemanagement.domain.Course;
+import eapli.base.coursemanagement.domain.CourseIdentifier;
 import eapli.base.exams.domain.Exam;
 import eapli.base.exams.domain.ExamId;
 import eapli.base.exams.repositories.ExamRepository;
@@ -14,6 +15,11 @@ public class InMemoryExamRepository extends InMemoryDomainRepository<Exam, ExamI
 
     @Override
     public List<Exam> listFutureExamsByCourse(Course course, Date currentDate) {
+        return null;
+    }
+
+    @Override
+    public List<Exam> findExamsFromCourse(CourseIdentifier courseId) {
         return null;
     }
 }

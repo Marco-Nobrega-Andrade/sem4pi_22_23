@@ -2,12 +2,14 @@ package eapli.base.persistence.impl.jpa;
 
 import eapli.base.Application;
 import eapli.base.coursemanagement.domain.Course;
+import eapli.base.coursemanagement.domain.CourseIdentifier;
 import eapli.base.exams.domain.Exam;
 import eapli.base.exams.domain.ExamId;
 import eapli.base.exams.repositories.ExamRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
+import javax.persistence.TypedQuery;
 import java.util.Date;
 import java.util.List;
 
@@ -26,5 +28,12 @@ public class JpaExamRepository extends JpaAutoTxRepository<Exam, ExamId, ExamId>
         return  createQuery("SELECT e from Exam e  WHERE e IN (SELECT e FROM Course c JOIN c.examsList WHERE c =: course) AND e.dateInterval.initialDate > :currentDate)"
                 , Exam.class).
                 setParameter("course", course).setParameter("currentDate", currentDate).getResultList();
+    }
+
+    @Override
+    public List<Exam> findExamsFromCourse(CourseIdentifier courseId){
+        TypedQuery<Exam> query = createQuery("SELECT e FROM Course c JOIN c.examsList e WHERE c.courseId =: courseIdentifier", Exam.class);
+        query.setParameter("courseIdentifier", courseId);
+        return query.getResultList();
     }
 }
