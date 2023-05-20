@@ -11,6 +11,8 @@ participant ": AddUpdateQuestionService" as AUQS <<Service>>
 participant ": QuestionBuilder" as QB <<Builder>>
 participant ": VerifyQuestionService" as VQS <<Service>>
 participant ": Question" as Q <<Domain>>
+participant ": Course" as C <<Domain>>
+database ": CourseRepository" as CR <<Domain>>
 database QuestionRepository as QR <<Repository>>
 
 activate T
@@ -35,10 +37,10 @@ deactivate UI
 T -> UI : picks a course, chooses to add a question \rand inserts the path of the file
 activate UI
 
-UI -> CTRL : addQuestion(questionStructure)
+UI -> CTRL : addQuestion(questionDTO, questionStructure)
 activate CTRL
 
-CTRL -> AUQS : addQuestion(questionStructure)
+CTRL -> AUQS : addQuestion(questionDTO, questionStructure)
 activate AUQS
 
 AUQS -> QR : count()
@@ -66,11 +68,20 @@ activate Q
 deactivate Q
 QB --> AUQS : question
 deactivate QB
-
-
+AUQS -> CR : findCourseByCourseId(courseDTO.courseIdentifier)
+activate CR
+CR --> AUQS : course
+deactivate CR
+AUQS -> C : addQuestion(question)
+activate C
+C --> AUQS : true
+deactivate C
 AUQS -> QR : save(question)
 activate QR
 deactivate QR
+AUQS -> CR : save(course)
+activate CR
+deactivate CR
 deactivate AUQS
 deactivate CTRL
 
