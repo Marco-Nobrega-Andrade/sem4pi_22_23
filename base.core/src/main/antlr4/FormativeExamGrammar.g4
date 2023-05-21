@@ -1,8 +1,6 @@
 grammar FormativeExamGrammar;
 
-prog: header (NEWLINE+ question) NEWLINE*;
-
-header: 'Header: ' phrase;
+prog:  question NEWLINE*;
 
 points : '(' INT 'pts)' ;
 
@@ -20,12 +18,12 @@ feedback : 'Feedback: ' phrase ;
 
 
 
-question : matching_type_question + NEWLINE matching_type_solution +
-                 | select_missing_words + NEWLINE missing_word_solution +
-                 | true_false_question + NEWLINE true_false_solution +
-                 | multiple_choice_question + NEWLINE multiple_choice_solution +
-                 | short_answer_question + NEWLINE short_answer_solution +
-                 | numerical_question + NEWLINE numerical_answer +
+question : matching_type_question +
+                 | select_missing_words +
+                 | true_false_question +
+                 | multiple_choice_question +
+                 | short_answer_question +
+                 | numerical_question +
                  ;
 
 /////////////////////////
