@@ -24,13 +24,6 @@ public class FormativeExamGrammarBaseVisitor<T> extends AbstractParseTreeVisitor
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitHeader(FormativeExamGrammarParser.HeaderContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
 	@Override public T visitPoints(FormativeExamGrammarParser.PointsContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}

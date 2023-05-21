@@ -16,12 +16,6 @@ public interface FormativeExamGrammarVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitProg(FormativeExamGrammarParser.ProgContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link FormativeExamGrammarParser#header}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitHeader(FormativeExamGrammarParser.HeaderContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link FormativeExamGrammarParser#points}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

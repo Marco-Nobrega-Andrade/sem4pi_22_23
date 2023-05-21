@@ -28,18 +28,6 @@ public class FormativeExamGrammarBaseListener implements FormativeExamGrammarLis
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterHeader(FormativeExamGrammarParser.HeaderContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitHeader(FormativeExamGrammarParser.HeaderContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterPoints(FormativeExamGrammarParser.PointsContext ctx) { }
 	/**
 	 * {@inheritDoc}
