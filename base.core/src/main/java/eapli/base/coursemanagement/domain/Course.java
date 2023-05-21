@@ -137,7 +137,7 @@ public class Course implements AggregateRoot<CourseIdentifier> {
      * @return boolean
      */
 
-    public boolean addTeacher(List<Teacher> newTeacher) {
+    public boolean addTeachersToList(List<Teacher> newTeacher) {
         for (Teacher teacher : newTeacher) {
             if (teachersList.contains(teacher)) {
                 return false;
