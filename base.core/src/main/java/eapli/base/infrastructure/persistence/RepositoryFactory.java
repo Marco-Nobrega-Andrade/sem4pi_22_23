@@ -44,8 +44,6 @@ import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
  */
 public interface RepositoryFactory {
 
-    FormativeExamRepository formativeExamRepository(TransactionalContext autoTx);
-
     /**
      * factory method to create a transactional context to use in the repositories
      *
@@ -207,4 +205,5 @@ public interface RepositoryFactory {
     InvitationRepository invitationRepository();
 
     FormativeExamRepository formativeExamRepository();
+    FormativeExamRepository formativeExamRepository(TransactionalContext autoTx);
 }

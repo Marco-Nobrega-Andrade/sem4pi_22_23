@@ -9,8 +9,12 @@ import java.util.List;
 
 public class MeetingOwnerFactory {
     public MeetingOwner build(long id_MeetingOwner , List<Meeting> meetingList, Person person){
+
+        if (meetingList==null){
+            throw new IllegalArgumentException("Parameters cannot be null");
+        }
         if(meetingList.isEmpty()){
-            throw new IllegalArgumentException("There is not is empty");
+            throw new IllegalArgumentException("Meeting Owner cannot have no meeting associated");
         }
         if(person == null){
             throw new IllegalArgumentException("Parameters can't be null");

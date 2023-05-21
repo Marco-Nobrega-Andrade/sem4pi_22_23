@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class InvitationIdentifier implements Comparable<InvitationIdentifier>, ValueObject {
 
-    long invitationId;
+    private long invitationId;
 
     public InvitationIdentifier(long invitationId) {
         if (invitationId <= 0) {
@@ -37,7 +37,7 @@ public class InvitationIdentifier implements Comparable<InvitationIdentifier>, V
         return Objects.hash(invitationId);
     }
 
-    public Long returnCourseIdentifierString(){
+    public Long returnInvitationIdentifier(){
         return invitationId;
     }
 

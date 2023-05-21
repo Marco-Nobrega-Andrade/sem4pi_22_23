@@ -17,7 +17,7 @@ public class Invitation implements AggregateRoot<InvitationIdentifier> {
         if (idInvitation == null || status == null || person == null) {
             throw new IllegalArgumentException("Parameters can't be null");
         }
-        if (idInvitation.invitationId < 0) {
+        if (idInvitation.returnInvitationIdentifier() < 0) {
             throw new IllegalArgumentException("Id must be positive");
         }
         this.idInvitation = idInvitation;
@@ -39,7 +39,7 @@ public class Invitation implements AggregateRoot<InvitationIdentifier> {
         }
         final Invitation that = (Invitation) other;
 
-        return idInvitation.equals(that.idInvitation) && status.equals(that.status);
+        return idInvitation.equals(that.idInvitation) && status.equals(that.status) && person.equals(that.person);
     }
 
     @Override
