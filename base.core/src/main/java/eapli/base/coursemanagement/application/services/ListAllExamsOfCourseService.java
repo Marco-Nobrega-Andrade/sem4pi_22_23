@@ -8,6 +8,11 @@ import eapli.base.coursemanagement.repositories.CourseRepository;
 import eapli.base.exams.domain.Exam;
 import eapli.base.exams.dto.*;
 import eapli.base.exams.repositories.ExamRepository;
+import eapli.base.formativeexams.domain.FormativeExam;
+import eapli.base.formativeexams.dto.FormativeExamDTOWithBuilder;
+import eapli.base.formativeexams.dto.FormativeExamDTOWithId;
+import eapli.base.formativeexams.dto.FormativeExamDTOWithIdMapper;
+import eapli.base.formativeexams.repositories.FormativeExamRepository;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 
 import java.util.ArrayList;
@@ -17,7 +22,7 @@ public class ListAllExamsOfCourseService {
 
     private final CourseRepository courseRepository = PersistenceContext.repositories().courseRepository();
     private final ExamRepository examRepository = PersistenceContext.repositories().examRepository();
-    //private final FormativeExamRepository formativeExamRepository = PersistenceContext.repositories().formativeExamRepository();
+    private final FormativeExamRepository formativeExamRepository = PersistenceContext.repositories().formativeExamRepository();
 
     public List<CourseDTOWithIdTitle> listAllCourses(){
         List<CourseDTOWithIdTitle> courseDTOList = new ArrayList<>();
@@ -47,4 +52,20 @@ public class ListAllExamsOfCourseService {
 
         return examDTOList;
     }
+
+    public List<FormativeExamDTOWithId> listFormativeExamsFromCourse(CourseDTOWithIdTitle selectedCourseDTO){
+        List<FormativeExamDTOWithId> examDTOList = new ArrayList<>();
+        FormativeExamDTOWithIdMapper formativeExamDTOWithBuilder = new FormativeExamDTOWithIdMapper();
+        List<FormativeExam> formativeExamList = formativeExamRepository.findFormativeExamsFromCourse(new CourseIdentifier(selectedCourseDTO.courseIdentifier));
+        if(formativeExamList.isEmpty()){
+            throw new IllegalArgumentException("There no exams in the selected course.");
+        }
+        for (FormativeExam formativeExam : formativeExamList) {
+            FormativeExamDTOWithId formativeExamDTOWithId = formativeExamDTOWithBuilder.toDto(formativeExam);
+            examDTOList.add(formativeExamDTOWithId);
+        }
+
+        return examDTOList;
+    }
+
 }
