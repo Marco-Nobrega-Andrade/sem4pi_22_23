@@ -1,4 +1,4 @@
-package eapli.base.usermanagement.application.services;
+package eapli.base.coursemanagement.application.services;
 
 import eapli.base.coursemanagement.domain.Course;
 import eapli.base.coursemanagement.dto.CourseDTOWithIdTitle;
