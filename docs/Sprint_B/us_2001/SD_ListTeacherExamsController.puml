@@ -17,6 +17,7 @@ participant UserSession as userSe <<Domain>>
 
 database "TeacherRepository" as teaRep <<Repository>>
 database ExamRepository as examRep <<Repository>>
+database CourseRepository as courseRep <<Repository>>
 
 participant "ExamDTOWithDatesExamIdCourseIdMapper" as em <<DTO>>
 participant "ExamDTOWithDatesExamIdCourseIdBuilder" as builder <<DTO>>
@@ -36,7 +37,7 @@ persistence --> service: factory
 deactivate persistence
 service -> repFactory: teacherRepository()
 activate repFactory
-repFactory -> examRep: create
+repFactory -> teaRep: create
 repFactory --> service: teacherRepository
 deactivate repFactory
 service -> persistence: repositories()
@@ -48,6 +49,16 @@ service -> repFactory: examRepository()
 activate repFactory
 repFactory -> examRep: create
 repFactory --> service: examRepository
+deactivate repFactory
+service -> persistence: repositories()
+activate persistence
+persistence -> repFactory: create
+persistence --> service: factory
+deactivate persistence
+service -> repFactory: courseRepository()
+activate repFactory
+repFactory -> courseRep: create
+repFactory --> service: courseRepository
 deactivate repFactory
 deactivate service
 
@@ -69,7 +80,7 @@ service -> teaRep : findTeacherBySystemUser(systemUser)
 activate teaRep
 teaRep --> service: teacher
 deactivate teaRep
-service -> examRep: findTeacherExams()
+service -> examRep: findTeacherExams(teacher)
 activate examRep
 examRep -> service: listExams
 deactivate examRep
@@ -78,7 +89,7 @@ loop foreach exam from listExams
 service -> em : toDTO(exam, course)
 activate em
 em -> builder: create()
-em -> builder: withDatesExamIdCourseIdBuilder(initialDate,finalDate,ExamId,courseID)
+em -> builder: withDatesExamIdCourseId(initialDate,finalDate,ExamId,courseID)
 em -> builder: build()
 activate builder
 builder -> dto: create(initialDate,finalDate,ExamId,courseID)

@@ -5,8 +5,8 @@ autonumber
 
 actor "Teacher" as t
 
-participant "UpdateExamsUI" as ui <<Presentation>>
-participant "UpdateController" as ctrl <<Application>>
+participant "UpdateExamUI" as ui <<Presentation>>
+participant "UpdateExamController" as ctrl <<Application>>
 participant "ListTeacherExamsController" as ctrlList <<Application>>
 participant "CreateUpdateExamService" as service <<Service>>
 
