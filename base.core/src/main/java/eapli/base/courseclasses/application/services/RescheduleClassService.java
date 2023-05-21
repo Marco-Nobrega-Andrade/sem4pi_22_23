@@ -30,6 +30,9 @@ public class RescheduleClassService {
         SystemUser user = authz.session().get().authenticatedUser();
         Teacher teacher = teacherRepository.findTeacherBySystemUser(user);
         Iterable<Class> classes = classRepository.findAll(teacher);
+        if (classes==null||!classes.iterator().hasNext()){
+            throw new IllegalArgumentException("There is no classes to reschedule");
+        }
         List<ClassWithWeeklyDateDTO> listDTO = new ArrayList<>();
         List<ClassWithIdAndTittleDTO> listDTO2 = new ArrayList<>();
         for (Class c : classes) {
