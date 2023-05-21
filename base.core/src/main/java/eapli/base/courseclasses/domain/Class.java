@@ -89,4 +89,7 @@ public class Class implements AggregateRoot<ClassId> {
         this.weeklyDate = weeklyDate;
         return true;
     }
+    public boolean verifyIfWeeklyDateIsTheSame(WeeklyDate weeklyDate){
+        return this.weeklyDate.equals(weeklyDate);
+    }
 }
