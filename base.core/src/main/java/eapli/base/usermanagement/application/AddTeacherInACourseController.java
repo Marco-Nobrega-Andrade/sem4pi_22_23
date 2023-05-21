@@ -6,9 +6,9 @@ import eapli.base.usermanagement.dto.TeacherDTOWithAcronym;
 
 import java.util.List;
 
-public class AddTeacherController {
+public class AddTeacherInACourseController {
     private final SetTeacherService theService = new SetTeacherService();
-    public boolean addTeacher(List<TeacherDTOWithAcronym> teacherDTO, CourseDTOWithIdTitle courseDTO) {
+    public boolean addTeacherInACourse(List<TeacherDTOWithAcronym> teacherDTO, CourseDTOWithIdTitle courseDTO) {
         return this.theService.addTeacher(teacherDTO, courseDTO);
     }
 }

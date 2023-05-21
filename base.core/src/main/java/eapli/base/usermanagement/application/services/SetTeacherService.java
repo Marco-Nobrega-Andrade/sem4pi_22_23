@@ -43,7 +43,7 @@ public class SetTeacherService {
         }
         Course course = courseRepository.findCourseById(courseDTO.courseIdentifier);
 
-        if (course.addTeacher(teachers)) {
+        if (course.addTeachersToList(teachers)) {
             return courseRepository.save(course) != null;
         }
         else {
