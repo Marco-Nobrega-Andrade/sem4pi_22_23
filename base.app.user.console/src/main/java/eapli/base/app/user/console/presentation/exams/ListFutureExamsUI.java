@@ -14,7 +14,7 @@ public class ListFutureExamsUI extends AbstractUI {
         if(!examDTOList.isEmpty()) {
             System.out.println("Here's a list of your future exams : ");
             for (ExamDTOWithDatesCourseId examDTO : examDTOList) {
-                System.out.printf("Course : %s, Starting at : %s and ending at %s", examDTO.courseId, examDTO.initialDate, examDTO.finalDate);
+                System.out.printf("\nCourse : %s, Starting at : %s and Ending at : %s\n\n", examDTO.courseId, examDTO.initialDate, examDTO.finalDate);
             }
         }else{
             System.out.println("There are no future exams.");
