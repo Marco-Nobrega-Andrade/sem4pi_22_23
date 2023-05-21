@@ -4,8 +4,8 @@ import eapli.base.coursemanagement.domain.Course;
 import eapli.base.coursemanagement.domain.CourseIdentifier;
 import eapli.base.coursemanagement.dto.CourseDTOWithIdTitle;
 import eapli.base.coursemanagement.repositories.CourseRepository;
-import eapli.base.exams.domain.Exam;
-import eapli.base.exams.domain.ExamBuilder;
+import eapli.base.exams.domain.*;
+import eapli.base.exams.dto.ExamDTOWithDatesExamIdCourseId;
 import eapli.base.exams.repositories.ExamRepository;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.usermanagement.domain.Teacher;
@@ -37,6 +37,20 @@ public class CreateUpdateExamService {
         examRepository.save(exam);
         courseRepository.save(course);
 
+        return true;
+    }
+
+    public boolean updateQuestion(String structure, Date initialDate, Date finalDate, ExamDTOWithDatesExamIdCourseId examDTO){
+        Exam exam = examRepository.ofIdentity(new ExamId(Long.parseLong(examDTO.examId))).get();
+        if (structure!= null){
+            ExamSpecification specification = new ExamSpecification(structure);
+            new VerifyExamSpecificationService().verifyExamSpecification(structure);
+            exam.updateExamSpecification(specification);
+        }else if (initialDate != null && finalDate != null){
+            DateInterval dateInterval = new DateInterval(initialDate,finalDate);
+            exam.updateDateInterval(dateInterval);
+        }
+        examRepository.save(exam);
         return true;
     }
 }
