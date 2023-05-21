@@ -25,6 +25,8 @@ public class FormativeService {
     private final String selectMissingWords = "Select Missing Words";
     private final String trueOrFalse = "True/False Question";
 
+    private final VerifyGrammarService verifyGrammarService = new VerifyGrammarService();
+
     private final QuestionRepository questionRepository = PersistenceContext.repositories().questionRepository();
 
     private final FormativeExamRepository formativeExamRepository = PersistenceContext.repositories().formativeExamRepository();
@@ -62,7 +64,7 @@ public class FormativeService {
                 structure = structure + matchingQuestionStructures.get(randomInRange) + "\n";
             }
 
-            if(verifyGrammar(structure)){
+            if(verifyGrammarService.verifyGrammar(structure)){
                 FormativeExamFactory formativeExamFactory = new FormativeExamFactory();
                 FormativeExam formativeExam= formativeExamFactory.build(formativeExamRepository.count()+1,structure);
                 formativeExamRepository.save(formativeExam);
@@ -71,19 +73,6 @@ public class FormativeService {
             return false;
         }
         throw new IllegalArgumentException("The provided type is not matching with the possibles types of questions in the system");
-    }
-
-    public boolean verifyGrammar(String questions){
-        FormativeExamGrammarLexer lexer;
-        lexer = new FormativeExamGrammarLexer(CharStreams.fromString(questions));
-        CommonTokenStream tokens = new CommonTokenStream(lexer);
-        FormativeExamGrammarParser parser = new FormativeExamGrammarParser(tokens);
-        ParseTree parseTree = parser.prog();
-        if(parser.getNumberOfSyntaxErrors() == 0){
-            return true;
-        }else{
-            throw new IllegalArgumentException("The question you have submitted doesn't follow any type of question.");
-        }
     }
 
 }
