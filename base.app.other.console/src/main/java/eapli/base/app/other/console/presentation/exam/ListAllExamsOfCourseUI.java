@@ -4,6 +4,7 @@ import eapli.base.coursemanagement.application.ListAllExamsOfCourseController;
 import eapli.base.coursemanagement.dto.CourseDTOWithIdTitle;
 import eapli.base.coursemanagement.dto.CourseDTOWithIdTitleStatus;
 import eapli.base.exams.dto.ExamDTOWithExamIdDateInterval;
+import eapli.base.formativeexams.dto.FormativeExamDTOWithId;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 
@@ -36,9 +37,14 @@ public class ListAllExamsOfCourseUI extends AbstractUI {
         if (idx != 0){
             try {
                 List<ExamDTOWithExamIdDateInterval> examDTOWithExamIdDateIntervalList = listAllExamsOfCourseController.listAllExamsFromCourse(courseDTOWithIdList.get(idx - 1));
-                System.out.println("------------Exams List------------");
+                System.out.println("----------------Exams List---------------");
                 for (ExamDTOWithExamIdDateInterval examDTOWithExamIdDateInterval : examDTOWithExamIdDateIntervalList) {
                     System.out.println(examDTOWithExamIdDateInterval);
+                }
+                List<FormativeExamDTOWithId> formativeExamDTOWithIdList = listAllExamsOfCourseController.listFormativeExamsFromCourse(courseDTOWithIdList.get(idx - 1));
+                System.out.println("---------Formative Exams List------------");
+                for (FormativeExamDTOWithId formativeExamDTOWithId : formativeExamDTOWithIdList) {
+                    System.out.println(formativeExamDTOWithId);
                 }
             }catch (Exception e){
                 System.out.println(e.getMessage());
