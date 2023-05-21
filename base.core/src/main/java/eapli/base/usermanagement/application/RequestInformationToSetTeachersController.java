@@ -7,19 +7,12 @@ import org.springframework.data.util.Pair;
 
 import java.util.List;
 
-public class SetTeacherController {
+public class RequestInformationToSetTeachersController {
+
     private final SetTeacherService theService = new SetTeacherService();
 
     public Pair<List<TeacherDTOWithAcronym>, List<CourseDTOWithIdTitle>> requestInformation() {
         return this.theService.requestInformation();
-    }
-
-    public boolean addTeacher(List<TeacherDTOWithAcronym> teacherDTO, CourseDTOWithIdTitle courseDTO) {
-        return this.theService.addTeacher(teacherDTO, courseDTO);
-    }
-
-    public boolean addTeacherInCharge(TeacherDTOWithAcronym teacherDTO, CourseDTOWithIdTitle courseDTO) {
-        return this.theService.addTeacherInCharge(teacherDTO, courseDTO);
     }
 
 }
