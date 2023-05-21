@@ -1,9 +1,9 @@
 package eapli.base.app.backoffice.console.presentation.course;
 
 import eapli.base.coursemanagement.dto.CourseDTOWithIdTitle;
-import eapli.base.usermanagement.application.AddTeacherController;
-import eapli.base.usermanagement.application.AddTeacherInChargeController;
-import eapli.base.usermanagement.application.RequestInformationToSetTeachersController;
+import eapli.base.coursemanagement.application.AddTeacherInACourseController;
+import eapli.base.coursemanagement.application.AddTeacherInChargeInACourseController;
+import eapli.base.coursemanagement.application.RequestInformationToSetTeachersController;
 import eapli.base.usermanagement.dto.TeacherDTOWithAcronym;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
@@ -15,8 +15,8 @@ import java.util.List;
 
 public class SetTeacherUI extends AbstractUI  {
     private final RequestInformationToSetTeachersController requestInformationToSetTeachersController = new RequestInformationToSetTeachersController();
-    private final AddTeacherController  addTeacherController = new AddTeacherController();
-    private final AddTeacherInChargeController addTeacherInChargeController = new AddTeacherInChargeController();
+    private final AddTeacherInACourseController addTeacherInACourseController = new AddTeacherInACourseController();
+    private final AddTeacherInChargeInACourseController addTeacherInChargeInACourseController = new AddTeacherInChargeInACourseController();
 
     @Override
     protected boolean doShow() {
@@ -84,7 +84,7 @@ public class SetTeacherUI extends AbstractUI  {
 
 
             // Set the teacher in charge
-            if (addTeacherController.addTeacher(selectedTeachers, selectedCourse)) {
+            if (addTeacherInACourseController.addTeacherInACourse(selectedTeachers, selectedCourse)) {
                 System.out.println("Teachers added successfully");
             } else {
                 System.out.println("Error adding teachers");
@@ -113,7 +113,7 @@ public class SetTeacherUI extends AbstractUI  {
             TeacherDTOWithAcronym teacherInCharge = teachers.get(option-1);
 
             // Set the teachers
-            if(addTeacherInChargeController.addTeacherInCharge(teacherInCharge, selectedCourse)) {
+            if(addTeacherInChargeInACourseController.addTeacherInCharge(teacherInCharge, selectedCourse)) {
                 System.out.println("Teacher in charge added successfully");
             } else {
                 System.out.println("Error adding teacher in charge");
