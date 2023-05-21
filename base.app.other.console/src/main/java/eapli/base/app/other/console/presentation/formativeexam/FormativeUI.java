@@ -12,12 +12,16 @@ public class FormativeUI extends AbstractUI {
     protected boolean doShow() {
         String type = Console.readLine("Insert the type of questions of the formative exam:");
         int integer = Console.readInteger("Insert the number of questions of the formative exam:");
-        theController.createFormativeExam(type, integer);
+        try {
+            theController.createFormativeExam(type, integer);
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
         return false;
     }
 
     @Override
     public String headline() {
-        return null;
+        return "Create a formative exam";
     }
 }
