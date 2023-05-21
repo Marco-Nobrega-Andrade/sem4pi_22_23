@@ -30,6 +30,8 @@
         <module>base.core</module>
         <module>base.infrastructure.application</module>
         <module>base.persistence.impl</module>
+		<module>base.app.sharedboardServer</module>
+		<module>base.app.sharedboardClient</module>
 		<module>eCourse.util.ci</module>
     </modules>
 
