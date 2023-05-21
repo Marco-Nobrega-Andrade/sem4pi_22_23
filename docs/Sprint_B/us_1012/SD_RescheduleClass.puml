@@ -10,8 +10,8 @@ participant "RescheduleClassController" as Controller <<application>>
 participant "RescheduleClassService" as Service <<application>>
 
 
-participant "Class Builder" as Builder <<builder>>
-participant "WeeklyDate" as Date <<domain>>
+participant "ScheduleDate" as Date <<domain>>
+participant "WeeklyDate" as Weekly <<domain>>
 participant "Class" as Class <<domain>>
 participant "PersistenceContext" as Persistence <<persistence>>
 participant "RepositoryFactory" as Factory <<factory>>
@@ -21,73 +21,26 @@ database "ClassRepository" as Repository <<repository>>
 activate Teacher
 activate UI
 
-Teacher -> UI : wants to reschedule a class
-UI -> Controller : requestInformation()
+Teacher -> UI : input from teacher
+
+UI -> Controller : reeschedule(List<Weekly>, List<Integer>, ClassWithIdAndTittleDTO)
 activate Controller
-Controller -> Service : requestInformation()
+Controller -> Service : reeschedule(List<Weekly>, List<Integer>, ClassWithIdAndTittleDTO)
 activate Service
-Service -> Persistence: repositories()
-activate Persistence
-Persistence -> Factory: create
-Persistence -> Service: factory
-deactivate Persistence
-Service -> Factory: classes()
-activate Factory
-Factory -> Repository: create
-Factory -> Service: userRepository
-deactivate Factory
+loop for each date
+Service -> Date : create
+end
 
-Service -> Repository : getListOfClasses()
-Repository -> Service : classesList
-Service -> Class : showWeeklyDate()
-Class -> Service : weeklyDate
-Service -> Date : getListScheduleDates()
-Date -> Service : list<ScheduleDate>
-Service -> ClassMapper : map(classesList)
-activate ClassMapper
-ClassMapper -> BuilderDTOClass : build(classesList)
-activate BuilderDTOClass
-BuilderDTOClass -> ClassDTO : build(classesList)
-ClassDTO -> BuilderDTOClass : classDTO
-BuilderDTOClass -> ClassMapper : classDTO
-deactivate BuilderDTOClass
-ClassMapper -> Service : classListDTO
-deactivate ClassMapper
-Service -> Controller : classListDTO
+Service -> Weekly : create
 
-deactivate Service
-Controller -> UI : classesListDTO
-deactivate Controller
-
-
-
-
-
-
-UI -> Teacher : ask to choose a class to reeschedule
-Teacher -> UI : select class
-UI -> Teacher : ask choose date to be reescheduled
-Teacher -> UI : select date
-UI -> Teacher : ask to enter the new date
-Teacher -> UI : enters new date
-
-
-
-UI -> Controller : reeschedule(Date)
-activate Controller
-Controller -> Service : reeschedule(Date)
-activate Service
-Service -> Builder: buildWeeklyDate(newListDates<ScheduledDate>)
-activate Builder
-Builder -> Date : create
-Date -> Builder : weeklyDate
-Builder -> Service : weeklyDate
-deactivate Builder
+Service -> Repository : findById(classDTO.id)
+Repository -> Service : class
 
 Service -> Class : reeschedule(WeeklyDate)
+
 Class -> Service : returns true
 
-Service -> Repository : update(Class)
+Service -> Repository : save(class)
 
 Repository -> Service : returns true
 
