@@ -40,7 +40,7 @@ ui -> t: shows list of exams the teacher created
 t -> ui: select one exam
 ui -> t: what do you which to update, and for the specific information
 t-> ui: inserts information
-ui -> ctrl: updateQuestion(structure,initialDate,finalDate,examDto)
+ui -> ctrl: updateExam(structure,initialDate,finalDate,examDto)
 activate ctrl
 ctrl -> service: create()
 activate service
@@ -56,7 +56,7 @@ repFactory -> examRep: create
 repFactory --> service: examRepository
 deactivate repFactory
 deactivate service
-ctrl->service: updateQuestion(structure,initialDate,finalDate,examDto)
+ctrl->service: updateExam(structure,initialDate,finalDate,examDto)
 
 
 activate service
