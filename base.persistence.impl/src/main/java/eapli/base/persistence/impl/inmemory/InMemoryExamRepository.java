@@ -5,6 +5,7 @@ import eapli.base.coursemanagement.domain.CourseIdentifier;
 import eapli.base.exams.domain.Exam;
 import eapli.base.exams.domain.ExamId;
 import eapli.base.exams.repositories.ExamRepository;
+import eapli.base.usermanagement.domain.Teacher;
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
 
 import java.util.Date;
@@ -20,6 +21,11 @@ public class InMemoryExamRepository extends InMemoryDomainRepository<Exam, ExamI
 
     @Override
     public List<Exam> findExamsFromCourse(CourseIdentifier courseId) {
+        return null;
+    }
+
+    @Override
+    public List<Exam> findTeacherExams(Teacher teacher) {
         return null;
     }
 }

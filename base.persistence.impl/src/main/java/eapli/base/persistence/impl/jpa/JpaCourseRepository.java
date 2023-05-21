@@ -4,6 +4,7 @@ import eapli.base.Application;
 import eapli.base.coursemanagement.domain.Course;
 import eapli.base.coursemanagement.domain.CourseIdentifier;
 import eapli.base.coursemanagement.repositories.CourseRepository;
+import eapli.base.exams.domain.Exam;
 import eapli.base.usermanagement.domain.Student;
 import eapli.base.usermanagement.domain.Teacher;
 import eapli.framework.domain.repositories.TransactionalContext;
@@ -120,6 +121,14 @@ public class JpaCourseRepository extends JpaAutoTxRepository<Course, CourseIdent
                         + "Where (e.enrollmentStatus.enrollmentStatusValue = 'ACCEPTED'))))", Course.class);
         query.setParameter("systemUser", systemUser);
         return query.getResultList();
+    }
+
+    @Override
+    public Course findCourseByExam(Exam exam) {
+        TypedQuery<Course> query = createQuery(
+                "SELECT c FROM Course c JOIN c.examsList e WHERE e = :exam", Course.class);
+        query.setParameter("exam", exam);
+        return query.getSingleResult();
     }
 
 }
