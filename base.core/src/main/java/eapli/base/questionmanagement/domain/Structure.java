@@ -26,4 +26,9 @@ public class Structure implements ValueObject {
     public int hashCode() {
         return Objects.hash(structure);
     }
+
+    @Override
+    public String toString() {
+        return structure;
+    }
 }

@@ -10,9 +10,6 @@ import java.util.List;
 
 public class RescheduleClassController {
     private final RescheduleClassService theService = new RescheduleClassService();
-    public Pair<List<ClassWithWeeklyDateDTO>, List<ClassWithIdAndTittleDTO>> requestInformation() {
-        return theService.requestInformation();
-    }
 
     public boolean rescheduleClass(List<Date> dates, List<Integer> durations, ClassWithIdAndTittleDTO selectedClass) {
         return theService.rescheduleClass(dates, durations, selectedClass);

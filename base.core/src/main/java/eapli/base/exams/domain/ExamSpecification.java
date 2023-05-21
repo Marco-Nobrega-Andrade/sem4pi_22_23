@@ -3,12 +3,14 @@ package eapli.base.exams.domain;
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.util.StringPredicates;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.util.Objects;
 
 @Embeddable
 public class ExamSpecification implements ValueObject {
 
+    @Column(length = 10000)
     private String specification;
 
     public ExamSpecification(String specification) {

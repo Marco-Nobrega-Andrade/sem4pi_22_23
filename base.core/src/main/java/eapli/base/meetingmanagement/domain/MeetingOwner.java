@@ -13,17 +13,20 @@ public class MeetingOwner implements eapli.framework.domain.model.DomainEntity<M
     private MeetingOwnerIdentifier id_MeetingOwner;
 
     @OneToMany(cascade = CascadeType.ALL)
-    List<Meeting> meetingList;
+    private List<Meeting> meetingList;
 
     @OneToOne(cascade = CascadeType.ALL)
-    Person person;
+    private Person person;
 
     public MeetingOwner(MeetingOwnerIdentifier id_MeetingOwner ,List<Meeting> meetingList, Person person){
+        if (meetingList==null){
+            throw new IllegalArgumentException("Parameters cannot be null");
+        }
         if(meetingList.isEmpty()){
-            throw new IllegalArgumentException("There is not is empty");
+            throw new IllegalArgumentException("Meeting Owner cannot have no meeting associated");
         }
         if(person == null | id_MeetingOwner == null){
-            throw new IllegalArgumentException("Parameters can't be null");
+            throw new IllegalArgumentException("Parameters cannot be null");
         }
         this.id_MeetingOwner = id_MeetingOwner;
         this.meetingList = meetingList;
@@ -42,8 +45,7 @@ public class MeetingOwner implements eapli.framework.domain.model.DomainEntity<M
 
         final MeetingOwner that = (MeetingOwner) other;
 
-        return id_MeetingOwner.equals(that.id_MeetingOwner) && meetingList.equals(that.meetingList)
-                && person.equals(that.person);
+        return id_MeetingOwner.equals(that.id_MeetingOwner) && person.equals(that.person);
     }
 
     public boolean hasIdentity(MeetingOwnerIdentifier id) {
@@ -62,5 +64,9 @@ public class MeetingOwner implements eapli.framework.domain.model.DomainEntity<M
 
     public void addMeeting(Meeting meeting) {
         meetingList.add(meeting);
+    }
+
+    public boolean hasMeeting(Meeting meeting) {
+        return meetingList.contains(meeting);
     }
 }

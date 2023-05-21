@@ -21,6 +21,9 @@ public class Teacher implements AggregateRoot<Acronym> {
     private TaxPayerNumber taxPayerNumber;
 
     public Teacher( Acronym acronym, DateOfBirth date, TaxPayerNumber taxPayerNumber) {
+        if(acronym==null||date==null||taxPayerNumber==null){
+            throw new IllegalArgumentException("parameters cannot be null");
+        }
         this.acronym = acronym;
         this.date = date;
         this.taxPayerNumber = taxPayerNumber;

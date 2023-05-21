@@ -34,7 +34,7 @@ public class FormativeExam implements AggregateRoot<FormativeExamID> {
 
         final FormativeExam that = (FormativeExam) other;
 
-        return formativeStructure.equals(that.formativeStructure) && formativeExamID.equals(that.formativeExamID);
+        return formativeExamID.equals(that.formativeExamID);
     }
 
     @Override

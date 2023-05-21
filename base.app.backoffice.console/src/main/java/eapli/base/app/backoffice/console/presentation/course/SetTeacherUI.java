@@ -1,7 +1,9 @@
 package eapli.base.app.backoffice.console.presentation.course;
 
 import eapli.base.coursemanagement.dto.CourseDTOWithIdTitle;
-import eapli.base.usermanagement.application.SetTeacherController;
+import eapli.base.usermanagement.application.AddTeacherController;
+import eapli.base.usermanagement.application.AddTeacherInChargeController;
+import eapli.base.usermanagement.application.RequestInformationToSetTeachersController;
 import eapli.base.usermanagement.dto.TeacherDTOWithAcronym;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
@@ -12,13 +14,16 @@ import java.util.HashSet;
 import java.util.List;
 
 public class SetTeacherUI extends AbstractUI  {
-    private final SetTeacherController theController = new SetTeacherController();
+    private final RequestInformationToSetTeachersController requestInformationToSetTeachersController = new RequestInformationToSetTeachersController();
+    private final AddTeacherController  addTeacherController = new AddTeacherController();
+    private final AddTeacherInChargeController addTeacherInChargeController = new AddTeacherInChargeController();
 
     @Override
     protected boolean doShow() {
 
         // Declaration of variables to get the information from the system
-        Pair<List<TeacherDTOWithAcronym>,List<CourseDTOWithIdTitle>> pair = theController.requestInformation();
+        Pair<List<TeacherDTOWithAcronym>,List<CourseDTOWithIdTitle>> pair =
+                requestInformationToSetTeachersController.requestInformation();
         List<TeacherDTOWithAcronym> teachers = pair.getFirst();
         List<CourseDTOWithIdTitle> courses = pair.getSecond();
 
@@ -28,7 +33,7 @@ public class SetTeacherUI extends AbstractUI  {
         System.out.println("Select one of the following courses:");
         for (CourseDTOWithIdTitle course : courses) {
             i++;
-            System.out.println(i+". "+course.courseIdentifier+" | "+course.courseTitle);
+            System.out.println(i+". CourseID:"+course.courseIdentifier+" - Tittle:"+course.courseTitle);
         }
         System.out.println(i+1+". Cancel");
 
@@ -38,60 +43,75 @@ public class SetTeacherUI extends AbstractUI  {
         // Get the selected course
         CourseDTOWithIdTitle selectedCourse = courses.get(option-1);
 
-        // Show teachers
-        i = 0;
-        System.out.println("Select the following teachers:");
-        for (TeacherDTOWithAcronym teacher : teachers) {
-            i++;
-               System.out.println(i+". Acronym: "+teacher.acronym);
-        }
-        System.out.println(i+1+". Cancel");
+        boolean opT = Console.readBoolean("You want to set all teachers of the course (Y/N)");
+        boolean opTC = Console.readBoolean("You want to set the teacher in charge (Y/N)");
 
-        // Select teachers
-        option=0;
-        HashSet<Integer> options = new HashSet<>();
-        while (option!=teachers.size()+1) {
-            option = Console.readOption(1,teachers.size(),teachers.size()+1);
-            if (option!=teachers.size()+1) {
-                options.add(option);
+
+        if (opT) {
+            i = 0;
+            // Show teachers
+            System.out.println("Select from the following teachers:");
+            for (TeacherDTOWithAcronym teacher : teachers) {
+                i++;
+                   System.out.println(i+". Acronym: "+teacher.acronym);
+            }
+            System.out.println(i+1+". Cancel");
+
+            // Select teachers
+            option=0;
+            HashSet<Integer> options = new HashSet<>();
+            while (option!=teachers.size()+1) {
+                System.out.println("Select an option (if you want to exit please select the cancel option):");
+                option = Console.readOption(1,teachers.size(),teachers.size()+1);
+                if (option!=teachers.size()+1) {
+                    options.add(option);
+                }
+            }
+            i=0;
+
+            // Get the selected teachers
+            List<TeacherDTOWithAcronym> selectedTeachers = new ArrayList<>();
+            for (Integer integer : options) {
+                selectedTeachers.add(teachers.get(integer-1));
+            }
+
+
+            // Set the teacher in charge
+            if (addTeacherController.addTeacher(selectedTeachers, selectedCourse)) {
+                System.out.println("Teachers added successfully");
+            } else {
+                System.out.println("Error adding teachers");
+                return false;
             }
         }
-        i=0;
-
-        // Get the selected teachers
-        List<TeacherDTOWithAcronym> selectedTeachers = new ArrayList<>();
-        for (Integer integer : options) {
-            selectedTeachers.add(teachers.get(integer-1));
-        }
 
 
-        // Set the teacher in charge
-        if (theController.addTeacher(selectedTeachers, selectedCourse)) {
-            System.out.println("Teachers added successfully");
-        } else {
-            System.out.println("Error adding teachers");
-            return false;
-        }
+        if (opTC) {
+            i = 0;
+            // Show teachers
+            System.out.println("Select the teacher in charge: ");
+            for (TeacherDTOWithAcronym teacher : teachers) {
+                i++;
+                System.out.println(i+". Acronym: "+teacher.acronym);
+            }
 
-        // Select teacher in charge
-        System.out.println("Select the teacher in charge: ");
+            option = Console.readInteger("Select an option:");
+            if (option>teachers.size()||option<1){
+                do {
+                    option = Console.readInteger("Please select a valid option from the list of teachers");
+                }while (option>teachers.size()||option<1);
+            }
 
-        option = Console.readInteger("Select an option:");
-        if (option>teachers.size()||option<1){
-            do {
-                option = Console.readInteger("Please select a valid option from the list of teachers");
-            }while (option>teachers.size()||option<1);
-        }
+            // Get the teacher in charge
+            TeacherDTOWithAcronym teacherInCharge = teachers.get(option-1);
 
-        // Get the teacher in charge
-        TeacherDTOWithAcronym teacherInCharge = teachers.get(option-1);
-
-        // Set the teachers
-        if(theController.addTeacherInCharge(teacherInCharge, selectedCourse)) {
-            System.out.println("Teacher in charge added successfully");
-        } else {
-            System.out.println("Error adding teacher in charge");
-            return false;
+            // Set the teachers
+            if(addTeacherInChargeController.addTeacherInCharge(teacherInCharge, selectedCourse)) {
+                System.out.println("Teacher in charge added successfully");
+            } else {
+                System.out.println("Error adding teacher in charge");
+                return false;
+            }
         }
 
         return true;

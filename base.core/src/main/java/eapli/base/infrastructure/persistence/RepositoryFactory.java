@@ -28,6 +28,7 @@ import eapli.base.courseclasses.repositories.ExtraClassRepository;
 import eapli.base.coursemanagement.repositories.CourseRepository;
 import eapli.base.enrollments.repositories.EnrollmentRepository;
 import eapli.base.exams.repositories.ExamRepository;
+import eapli.base.formativeexams.repositories.FormativeExamRepository;
 import eapli.base.meetingmanagement.repositories.InvitationRepository;
 import eapli.base.meetingmanagement.repositories.MeetingRepository;
 import eapli.base.questionmanagement.repositories.QuestionRepository;
@@ -202,4 +203,7 @@ public interface RepositoryFactory {
     ExamRepository examRepository(TransactionalContext autoTx);
 
     InvitationRepository invitationRepository();
+
+    FormativeExamRepository formativeExamRepository();
+    FormativeExamRepository formativeExamRepository(TransactionalContext autoTx);
 }

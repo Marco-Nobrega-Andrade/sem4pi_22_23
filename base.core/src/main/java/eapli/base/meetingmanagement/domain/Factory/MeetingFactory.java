@@ -14,6 +14,10 @@ public class MeetingFactory  {
 
     public Meeting build(long idMeeting, List<Long> idInvitations, int minDuration, java.util.Date date_time, List<Person> people) {
 
+        if (idInvitations==null | people==null){
+            throw new IllegalArgumentException("The invitations or people can't be null");
+        }
+
         if (idInvitations.size()!=people.size()){
             throw new IllegalArgumentException("The number of invitations and people must be the same");
         }
@@ -28,6 +32,9 @@ public class MeetingFactory  {
         }
         if (idMeeting<=0){
             throw new IllegalArgumentException("The id must be greater than 0");
+        }
+        if (date_time.before(new java.util.Date())){
+            throw new IllegalArgumentException("The date can't be before the current date");
         }
 
         List<Invitation> invitations = new ArrayList<>();
