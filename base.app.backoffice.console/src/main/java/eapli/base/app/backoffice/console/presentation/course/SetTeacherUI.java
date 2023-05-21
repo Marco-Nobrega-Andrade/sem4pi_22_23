@@ -39,7 +39,9 @@ public class SetTeacherUI extends AbstractUI  {
 
         // Select course
         option = Console.readOption(1,courses.size(),courses.size()+1);
-
+        if (option==courses.size()+1){
+            return false;
+        }
         // Get the selected course
         CourseDTOWithIdTitle selectedCourse = courses.get(option-1);
 
@@ -71,8 +73,13 @@ public class SetTeacherUI extends AbstractUI  {
 
             // Get the selected teachers
             List<TeacherDTOWithAcronym> selectedTeachers = new ArrayList<>();
-            for (Integer integer : options) {
-                selectedTeachers.add(teachers.get(integer-1));
+            if (!options.isEmpty()) {
+                for (Integer integer : options) {
+                    selectedTeachers.add(teachers.get(integer-1));
+                }
+            }
+            else {
+                return false;
             }
 
 
