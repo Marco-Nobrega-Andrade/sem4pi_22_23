@@ -199,10 +199,10 @@ public class MainMenu extends AbstractUI {
         final Menu examMenu = new Menu("Exam  >");
 
         examMenu.addItem(CREATE_EXAM, "Create Exam", new CreateExamAction());
-        examMenu.addItem(CREATE_FORMATIVE_EXAM_OPTION,"Create Formative Exam", new FormativeAction());
+        examMenu.addItem(UPDATE_EXAM, "Update Exam", new UpdateExamAction());
         examMenu.addItem(ADD_QUESTION, "Add Question", new AddQuestionAction());
         examMenu.addItem(UPDATE_QUESTION, "Update Question", new UpdateQuestionAction());
-        examMenu.addItem(UPDATE_EXAM, "Update Exam", new UpdateExamAction());
+        examMenu.addItem(CREATE_FORMATIVE_EXAM_OPTION,"Create Formative Exam", new FormativeAction());
         examMenu.addItem(EXIT_OPTION, "Return", Actions.SUCCESS);
         return examMenu;
     }

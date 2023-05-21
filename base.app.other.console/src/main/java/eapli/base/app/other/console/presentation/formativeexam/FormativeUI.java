@@ -14,6 +14,8 @@ public class FormativeUI extends AbstractUI {
         int integer = Console.readInteger("Insert the number of questions of the formative exam:");
         try {
             theController.createFormativeExam(type, integer);
+            System.out.println("Formative exam created successfully!");
+            return true;
         } catch (Exception e){
             System.out.println(e.getMessage());
         }
