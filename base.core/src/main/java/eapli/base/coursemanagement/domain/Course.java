@@ -118,6 +118,9 @@ public class Course implements AggregateRoot<CourseIdentifier> {
     public boolean hasTeacherInCharge(){
         return this.teacherInCharge != null;
     }
+    public boolean hasThisTeacherInCharge(Teacher teacher){
+        return this.teacherInCharge.sameAs(teacher);
+    }
 
     public boolean verifyIfWillExceedEnrollmentLimits(int numberOfAcceptedEnrollments, int numberOfNewEnrollments){
         return enrollmentLimits.verifyIfWillExceedEnrollmentLimits(numberOfAcceptedEnrollments, numberOfNewEnrollments);
@@ -187,5 +190,9 @@ public class Course implements AggregateRoot<CourseIdentifier> {
     public boolean addExam(Exam exam){
         examsList.add(exam);
         return true;
+    }
+
+    public boolean hasTeacherInList(List<Teacher> teacherList) {
+        return this.teachersList.equals(teacherList);
     }
 }
