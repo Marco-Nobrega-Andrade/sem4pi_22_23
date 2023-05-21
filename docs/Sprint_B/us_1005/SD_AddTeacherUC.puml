@@ -6,25 +6,11 @@ autonumber
 actor Manager
 
 participant "SetTeacherUI" as UI <<presentation>>
-participant "SetTeacherController" as Controller <<application>>
+participant "AddTeacherInACourseController" as Controller <<application>>
 participant "SetTeacherService" as Service <<application>>
 
-participant "ListTeacherService" as ListTeacherService <<application>>
-participant "ListCoursesService" as ListCourseService <<application>>
-
-participant "TeacherMapper" as TeacherMapper <<Mapper>>
-participant "CourseMapper" as CourseMapper <<Mapper>>
-
-participant "TeacherToDTOBuilder" as TeacherToDTOBuilder
-participant "CourseToDTOBuilder" as CourseToDTOBuilder
-
-participant "TeacherWithFullNameAndAcronymDTO" as TeacherDTO
-participant "CourseWithNameAndIdentifier" as CourseDTO
-
-
 participant "Course" as Course <<domain>>
-participant "PersistenceContext" as Persistence <<persistence>>
-participant "RepositoryFactory" as Factory <<factory>>
+
 
 database "TeacherRepository" as TeacherRepository <<repository>>
 database "CourseRepository" as CourseRepository <<repository>>
@@ -32,122 +18,29 @@ database "CourseRepository" as CourseRepository <<repository>>
 activate Manager
 activate UI
 
-Manager -> UI: wants to set a teacher
+Manager -> UI: select data
 
 
 
-UI -> Controller : requestInformation()
+UI -> Controller : addTeacherInACourse(List<TeacherDTOWithAcronym>, CourseDTOWithIdTitle )
 activate Controller
-Controller -> Service : requestInformation()
+
+Controller -> Service : addTeacherInACourse(List<TeacherDTOWithAcronym>, CourseDTOWithIdTitle)
+
+loop for each teacher selected by the manager
 activate Service
-Service -> ListTeacherService : getListOfTeachers()
-activate ListTeacherService
-
-
-
-ListTeacherService -> Persistence: repositories()
-activate Persistence
-Persistence -> Factory: create
-Persistence -> ListTeacherService: factory
-deactivate Persistence
-ListTeacherService -> Factory: teachers()
-activate Factory
-Factory -> TeacherRepository: create
-Factory -> ListTeacherService: teacherRepository
-deactivate Factory
-ListTeacherService -> TeacherRepository: findAllTeachers()
-TeacherRepository -> ListTeacherService: teacherList
-ListTeacherService -> Service : teacherList
-deactivate ListTeacherService
-
-
-
-Service -> ListCourseService : getListOfCourses()
-activate ListCourseService
-
-
-
-ListCourseService -> Persistence: repositories()
-activate Persistence
-Persistence -> Factory: create
-Persistence -> ListCourseService: factory
-deactivate Persistence
-ListCourseService -> Factory: courses()
-activate Factory
-Factory -> CourseRepository: create
-Factory -> ListCourseService: courseRepository
-deactivate Factory
-ListCourseService -> CourseRepository: findAllCourses()
-CourseRepository -> ListCourseService: coursesList
-ListCourseService -> Service : coursesList
-deactivate ListCourseService
-
-
-
-Service -> TeacherMapper : teacherWithFullNameAndAcronymToDTO(Teacher)
-activate TeacherMapper
-
-TeacherMapper -> TeacherToDTOBuilder: buildWithFullName()
-TeacherMapper -> TeacherToDTOBuilder: buildWithAcronym()
-TeacherMapper -> TeacherToDTOBuilder : build()
-activate TeacherToDTOBuilder
-TeacherToDTOBuilder -> TeacherDTO : create
-TeacherToDTOBuilder -> TeacherMapper : teacherWithFullNameAndAcronymDTO
-deactivate TeacherToDTOBuilder
-TeacherMapper -> Service : teacherWithFullNameAndAcronymDTO
-
-deactivate TeacherMapper
-
-
-
-Service -> CourseMapper : courseWithCourseIdentifierAndCourseNameToDTO(Teacher)
-activate CourseMapper
-
-CourseMapper -> CourseToDTOBuilder: buildWithName()
-CourseMapper -> CourseToDTOBuilder: buildWithIdentifier()
-CourseMapper -> CourseToDTOBuilder : build()
-activate CourseToDTOBuilder
-CourseToDTOBuilder -> CourseDTO : create
-CourseToDTOBuilder -> CourseMapper : courseWithNameAndIdentifier
-deactivate CourseToDTOBuilder
-CourseMapper -> Service : courseWithNameAndIdentifier
-
-deactivate CourseMapper
-
-
-
-Service -> Controller : return Pair<List<DTO>,List<DTO>>
-
-deactivate Service
-
-Controller -> UI : return Pair<List<DTO>,List<DTO>>
-
-deactivate Controller
-
-
-
-UI -> Manager : show list of available courses and ask to choose one
-Manager -> UI : select course
-loop until manager doesn't want to set more teachers in a course
-UI -> Manager : show list of teachers and ask one to be setted in a course
-Manager -> UI : select teacher
-UI -> Manager : ask if manager wants to add more participants
-Manager -> UI : enters yes or no
+Service -> TeacherRepository : findTeacherByAcronym(acronym)
+TeacherRepository -> Service : teacher
+Service -> Service : teacherList.add(teacher)
 end
 
+Service->CourseRepository : findCourseById(courseIdentifier)
 
+CourseRepository -> Service : course
 
-UI -> Controller : setTeachers(data)
-activate Controller
-Controller -> Service : setTeachers(data)
-activate Service
+Service -> Course : addTeachersToList(teacherList)
 
-Service -> Course : setTeachers(List<Teacher>)
-Service -> Course : setTeacherInCharge(Teacher)
-
-loop for each course in map
-Service -> CourseRepository : save(Course)
-end
+Service -> CourseRepository : save(course)
 
 Service -> Controller : return true
 
