@@ -33,6 +33,7 @@ import eapli.base.app.other.console.presentation.courseClass.ScheduleExtraClassA
 import eapli.base.app.other.console.presentation.courseclasses.RescheduleClassAction;
 import eapli.base.app.other.console.presentation.question.AddQuestionAction;
 import eapli.base.app.other.console.presentation.exam.ListAllExamsOfCourseAction;
+import eapli.base.app.other.console.presentation.question.UpdateQuestionAction;
 import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
@@ -189,8 +190,8 @@ public class MainMenu extends AbstractUI {
         final Menu examMenu = new Menu("Exam  >");
 
         examMenu.addItem(ADD_QUESTION, "Add Question", new AddQuestionAction());
+        examMenu.addItem(UPDATE_QUESTION, "Update Question", new UpdateQuestionAction());
         examMenu.addItem(EXIT_OPTION, "Return", Actions.SUCCESS);
-
         return examMenu;
     }
 
