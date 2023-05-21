@@ -29,13 +29,18 @@ public class FormativeService {
 
     private final FormativeExamRepository formativeExamRepository = PersistenceContext.repositories().formativeExamRepository();
 
-    public boolean createFormativeExam(String type, int number){
+    public boolean createFormativeExam(String type, int number) {
         // TODO
         if (type.equals(matching)||type.equals(multipleChoice)||type.equals(shortAnswer)||
                 type.equals(numerical)||type.equals(selectMissingWords)||type.equals(trueOrFalse)) {
 
             Iterable<Question> questions = questionRepository.findAll();
             List<String> structureList = new ArrayList<>();
+
+            if (questions == null || !questions.iterator().hasNext()) {
+                throw new IllegalArgumentException("There are no questions in the system");
+            }
+
             for (Question question : questions) {
                 structureList.add(question.returnStructureToString());
             }
