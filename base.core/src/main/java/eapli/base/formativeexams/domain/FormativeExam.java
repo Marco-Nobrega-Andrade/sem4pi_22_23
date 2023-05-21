@@ -50,4 +50,7 @@ public class FormativeExam implements AggregateRoot<FormativeExamID> {
         return AggregateRoot.super.compareTo(other);
     }
 
+    public String returnFormativeExamId(){
+        return formativeExamID.toString();
+    }
 }

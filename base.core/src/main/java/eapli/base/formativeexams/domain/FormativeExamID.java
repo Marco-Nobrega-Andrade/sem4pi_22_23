@@ -37,4 +37,9 @@ public class FormativeExamID implements Comparable<FormativeExamID>, ValueObject
         FormativeExamID that = (FormativeExamID) obj;
         return Objects.equals(formativeExam_Id, that.formativeExam_Id);
     }
+
+    @Override
+    public String toString() {
+        return "formativeExam_Id=" + formativeExam_Id;
+    }
 }
