@@ -67,7 +67,7 @@ persistence --> service: factory
 deactivate persistence
 service -> repFactory: teacherRepository()
 activate repFactory
-repFactory -> examRep: create
+repFactory -> teaRep: create
 repFactory --> service: teacherRepository
 deactivate repFactory
 service -> persistence: repositories()

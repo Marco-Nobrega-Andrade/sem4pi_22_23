@@ -3,6 +3,7 @@ package eapli.base.persistence.impl.inmemory;
 import eapli.base.coursemanagement.domain.Course;
 import eapli.base.coursemanagement.domain.CourseIdentifier;
 import eapli.base.coursemanagement.repositories.CourseRepository;
+import eapli.base.exams.domain.Exam;
 import eapli.base.usermanagement.domain.Student;
 import eapli.base.usermanagement.domain.Teacher;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
@@ -58,6 +59,11 @@ public class InMemoryCourseRepository extends InMemoryDomainRepository<Course, C
     }
     @Override
     public List<Course> listAcceptedCoursesByStudent(SystemUser systemUser){
+        return null;
+    }
+
+    @Override
+    public Course findCourseByExam(Exam exam) {
         return null;
     }
 }

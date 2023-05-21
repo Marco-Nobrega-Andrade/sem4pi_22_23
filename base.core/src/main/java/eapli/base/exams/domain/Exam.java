@@ -82,4 +82,15 @@ public class Exam implements AggregateRoot<ExamId>  {
     }
     public String returnExamIdString(){return examId.toString();}
 
+    public boolean updateExamSpecification(ExamSpecification specification){
+        this.examSpecification = specification;
+        return true;
+    }
+
+    public boolean updateDateInterval(DateInterval dateInterval){
+        this.dateInterval = dateInterval;
+        return true;
+    }
+
+
 }

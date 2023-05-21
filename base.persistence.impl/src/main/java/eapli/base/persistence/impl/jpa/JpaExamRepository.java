@@ -6,6 +6,7 @@ import eapli.base.coursemanagement.domain.CourseIdentifier;
 import eapli.base.exams.domain.Exam;
 import eapli.base.exams.domain.ExamId;
 import eapli.base.exams.repositories.ExamRepository;
+import eapli.base.usermanagement.domain.Teacher;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
@@ -34,6 +35,13 @@ public class JpaExamRepository extends JpaAutoTxRepository<Exam, ExamId, ExamId>
     public List<Exam> findExamsFromCourse(CourseIdentifier courseId){
         TypedQuery<Exam> query = createQuery("SELECT e FROM Course c JOIN c.examsList e WHERE c.courseId =: courseIdentifier", Exam.class);
         query.setParameter("courseIdentifier", courseId);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Exam> findTeacherExams(Teacher teacher) {
+        TypedQuery<Exam> query = createQuery("SELECT e FROM Exam e Where e.examTeacher=:teacher", Exam.class);
+        query.setParameter("teacher", teacher);
         return query.getResultList();
     }
 }
