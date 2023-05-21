@@ -5,7 +5,9 @@ import eapli.base.usermanagement.domain.Teacher;
 import eapli.base.usermanagement.domain.builder.TeacherBuilder;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -81,5 +83,22 @@ public class ClassTest {
         java.util.Date testData2 = new java.util.Date(1000,10,9,11,30,0);
         assertFalse(courseClass.verifyIfAClassAtTheTime(testData2,30));
 
+    }
+
+    @Test
+    public void verifyIfWeeklyDateWasUpdated(){
+        Teacher aTeacher = new TeacherBuilder().withAcronym("BCC")
+                .withDateOfBirth(new Date(100,10,2)).withTaxPayerNumber(111111111).build();
+        Class courseClass = new ClassBuilder().withTitleDateWithTimeNumberOfClassDurationID("title",
+                new java.util.Date(1000,10,2,10,0,0),3,30,1L,aTeacher).build();
+
+        ScheduledDate scheduledDate1 = new ScheduledDate(new Duration(60),new eapli.base.courseclasses.domain.Date(new java.util.Date(1100,10,2,10,0,0)));
+        ScheduledDate scheduledDate2 = new ScheduledDate(new Duration(60),new eapli.base.courseclasses.domain.Date(new java.util.Date(1200,10,9,10,0,0)));
+        List<ScheduledDate> list = new ArrayList<>();
+        list.add(scheduledDate1);
+        list.add(scheduledDate2);
+        WeeklyDate weeklyDate = new WeeklyDate(list,false);
+        courseClass.reschedule(weeklyDate);
+        assertTrue(courseClass.verifyIfWeeklyDateIsTheSame(weeklyDate));
     }
 }
