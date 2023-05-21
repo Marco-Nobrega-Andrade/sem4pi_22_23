@@ -12,77 +12,47 @@ participant "formativeService" as Service <<application>>
 participant "PersistenceContext" as Persistence <<persistence>>
 participant "RepositoryFactory" as Factory <<factory>>
 
-participant "TypeQuestionMapper" as Mapper <<Mapper>>
-participant "TypeQuestionToDTOBuilder" as BuilderDTO <<Builder>>
-participant "TypeQuestionDTO" as DTO
+participant "FormativeExamFactory" as FormativeExamFactory <<factory>>
 
-participant "FormativeExamsBuilder" as Builder <<Builder>>
-
-participant "TypeQuestion" as TypeQuestion <<domain>>
+participant "Question" as Question <<domain>>
 participant "FormativeExams" as FormativeExams <<domain>>
 
-
-database "TypeQuestionRepository" as TypeQuestionRepository <<repository>>
+database "QuestionRepository" as QuestionRepository <<repository>>
 database "FormativeExamsRepository" as FormativeExamsRepository <<repository>>
 
 activate Teacher
 activate UI
 
-Teacher -> UI: wants to create/update a formative exam
-
-
-
-UI -> Controller : requestInformation()
+Teacher -> UI: wants to create a formative exam
+UI -> Controller: createFormativeExam(String questions, int number)
 activate Controller
-Controller -> Service : requestInformation()
+Controller -> Service: createFormativeExam(String questions, int number)
 activate Service
-
-
 Service -> Persistence: repositories()
 activate Persistence
 Persistence -> Factory: create
 Persistence -> Service: factory
 deactivate Persistence
-Service -> Factory: typeQuestions()
+Service -> Factory: questions()
 activate Factory
-Factory -> TypeQuestionRepository: create
-Factory -> Service: typeQuestionsRepository
+Factory -> QuestionRepository : create
+Factory -> Service: questionsRepository
 deactivate Factory
-Service -> TypeQuestionRepository: findAllTypeQuestions()
-TypeQuestionRepository -> Service: typeQuestionsList
-Service -> Mapper : toDTO(typeQuestionsList)
-activate Mapper
-Mapper -> BuilderDTO : build()
-activate BuilderDTO
-BuilderDTO -> DTO : create
-BuilderDTO -> Mapper : typeQuestionListDTO
-deactivate BuilderDTO
-Mapper -> Service : typeQuestionListDTO
-deactivate Mapper
-Service -> Controller : typeQuestionListDTO
+Service -> QuestionRepository: findAll()
+Service -> Service : verify question types
+Service -> FormativeExamFactory: build(data)
+activate FormativeExamFactory
+FormativeExamFactory -> FormativeExams: create
+FormativeExams -> FormativeExamFactory: formativeExam
+FormativeExamFactory -> Service: formativeExam
+deactivate FormativeExamFactory
+Service -> FormativeExamsRepository: save(formativeExam)
+Service -> Controller: true
 deactivate Service
-Controller -> UI : typeQuestionListDTO
+Controller -> UI: true
 deactivate Controller
-UI -> Teacher : show typeQuestionListDTO
-Teacher -> UI : select typeQuestion
-UI -> Controller : createFormativeExam(typeQuestion)
-activate Controller
-Controller -> Service : createFormativeExam(typeQuestion)
-activate Service
-Service -> Builder : buildWithTypeQuestion(typeQuestion)
-Service -> Builder : build()
-activate Builder
-Builder -> FormativeExams : create
-FormativeExams -> Builder : formativeExams
-Builder -> Service : formativeExams
-deactivate Builder
-Service -> FormativeExamsRepository : save(formativeExams)
-FormativeExamsRepository -> Service : true
-Service -> Controller : true
-deactivate Service
-Controller -> UI : true
-deactivate Controller
-UI -> Teacher : show success message
+UI-> Teacher: success message
+deactivate UI
 
 
 
