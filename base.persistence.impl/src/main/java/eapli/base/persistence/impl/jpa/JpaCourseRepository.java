@@ -39,7 +39,7 @@ public class JpaCourseRepository extends JpaAutoTxRepository<Course, CourseIdent
 
     @Override
     public List<Course> listAllAvailableCourses() {
-        return createQuery("SELECT c FROM Course c WHERE c.courseStatus.courseStatusValue = 'OPEN' OR c.courseStatus.courseStatusValue = 'OPEN_ENROLLMENTS' OR c.courseStatus.courseStatusValue = 'CLOSE_ENROLLMENTS'", Course.class).getResultList();
+        return createQuery("SELECT c FROM Course c WHERE c.courseStatus.courseStatusValue = 'OPEN' OR c.courseStatus.courseStatusValue = 'OPEN_ENROLLMENTS' OR c.courseStatus.courseStatusValue = 'CLOSED_ENROLLMENTS'", Course.class).getResultList();
     }
 
     @Override
