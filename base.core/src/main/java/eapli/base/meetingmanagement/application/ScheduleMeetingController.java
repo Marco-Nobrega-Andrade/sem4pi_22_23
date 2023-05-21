@@ -8,11 +8,7 @@ import java.util.List;
 public class ScheduleMeetingController {
 
     ScheduleMeetingService theService = new ScheduleMeetingService();
-    public boolean verifyMeeting(List<String> emails, Date date, int duration) {
-        // TODO
-        return theService.verifyMeeting(emails, date, duration);
 
-    }
     public void scheduledMeeting(List<String> emails, Date date, int duration) {
         // TODO
         theService.scheduledMeeting(emails, date, duration);
