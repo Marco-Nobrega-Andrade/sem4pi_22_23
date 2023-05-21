@@ -40,7 +40,7 @@ public class CreateUpdateExamService {
         return true;
     }
 
-    public boolean updateQuestion(String structure, Date initialDate, Date finalDate, ExamDTOWithDatesExamIdCourseId examDTO){
+    public boolean updateExam(String structure, Date initialDate, Date finalDate, ExamDTOWithDatesExamIdCourseId examDTO){
         Exam exam = examRepository.ofIdentity(new ExamId(Long.parseLong(examDTO.examId))).get();
         if (structure!= null){
             ExamSpecification specification = new ExamSpecification(structure);

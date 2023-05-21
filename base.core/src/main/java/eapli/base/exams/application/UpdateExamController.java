@@ -12,7 +12,7 @@ public class UpdateExamController {
             return new ListTeacherExamsController().listTeacherExams();
         }
 
-        public boolean updateQuestion(String structure, Date initialDate, Date finalDate, ExamDTOWithDatesExamIdCourseId examDTO){
-            return new CreateUpdateExamService().updateQuestion(structure,initialDate,finalDate,examDTO);
+        public boolean updateExam(String structure, Date initialDate, Date finalDate, ExamDTOWithDatesExamIdCourseId examDTO){
+            return new CreateUpdateExamService().updateExam(structure,initialDate,finalDate,examDTO);
         }
 }
