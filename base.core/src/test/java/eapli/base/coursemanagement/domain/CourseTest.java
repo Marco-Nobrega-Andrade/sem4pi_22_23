@@ -106,7 +106,7 @@ public class CourseTest {
         List<Teacher> teacherList = new ArrayList<>();
         teacherList.add(new Teacher(new Acronym("LOL"),new DateOfBirth(new Date()),new TaxPayerNumber(100002000)));
         teacherList.add(new Teacher(new Acronym("WOW"),new DateOfBirth(new Date()),new TaxPayerNumber(100002200)));
-        course.addTeacher(teacherList);
+        course.addTeachersToList(teacherList);
         assertTrue(course.hasTeacherInList(teacherList));
     }
 
@@ -118,7 +118,7 @@ public class CourseTest {
         List<Teacher> teacherList = new ArrayList<>();
         teacherList.add(new Teacher(new Acronym("LOL"),new DateOfBirth(new Date()),new TaxPayerNumber(100002000)));
         teacherList.add(new Teacher(new Acronym("WOW"),new DateOfBirth(new Date()),new TaxPayerNumber(100002200)));
-        course.addTeacher(teacherList);
+        course.addTeachersToList(teacherList);
         teacherList.add(new Teacher(new Acronym("GEN"),new DateOfBirth(new Date()),new TaxPayerNumber(100002300)));
         assertFalse(course.hasTeacherInList(teacherList));
     }
