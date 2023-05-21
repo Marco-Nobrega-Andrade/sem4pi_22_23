@@ -1,33 +1,40 @@
 package eapli.base.questionmanagement.domain;
 
+import eapli.base.coursemanagement.domain.Course;
 import eapli.framework.domain.model.AggregateRoot;
 
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
+
 @Entity
-public class Question implements AggregateRoot<QuestionId> {
-    @Id
-    private QuestionId question_Id;
+public class Question implements AggregateRoot<QuestionIdentifier> {
+    @EmbeddedId
+    private QuestionIdentifier questionId;
     private Structure structure;
 
-    protected Question(QuestionId question_Id, Structure structure){
-        this.question_Id = question_Id;
+    protected Question(QuestionIdentifier question_Id, Structure structure){
+        this.questionId = question_Id;
         this.structure = structure;
     }
 
     protected Question(){}
     @Override
     public boolean sameAs(Object other) {
-        return false;
+        if (!(other instanceof Question)) {
+            return false;
+        }
+        final Question that = (Question) other;
+
+        return questionId.equals(that.questionId) && structure.equals(that.structure);
     }
 
     @Override
-    public QuestionId identity() {
-        return null;
+    public QuestionIdentifier identity() {
+        return questionId;
     }
 
     public long returnQuestionIdentifier(){
-        return question_Id.returnQuestionId();
+        return questionId.returnQuestionId();
     }
     public void changeQuestion(Structure structure){
         this.structure = structure;

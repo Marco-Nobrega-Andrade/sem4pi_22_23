@@ -22,14 +22,11 @@ public class AddUpdateQuestionService {
         courseRepository.save(course);
     }
 
-    public void updateQuestion(CourseDTOWithIdTitle courseDTO, QuestionDTOWithId questionDTO, String updatedQuestion){
+    public void updateQuestion(QuestionDTOWithId questionDTO, String updatedQuestion){
         VerifyQuestionService verifyQuestionService = new VerifyQuestionService();
-        Question question = questionRepository.ofIdentity(new QuestionId(questionDTO.questionIdentifier)).get();
+        Question question = questionRepository.ofIdentity(new QuestionIdentifier(questionDTO.questionIdentifier)).get();
         verifyQuestionService.verifyQuestion(updatedQuestion);
         question.changeQuestion(new Structure(updatedQuestion));
-        Course course = courseRepository.findCourseById(courseDTO.courseIdentifier);
-        course.addQuestion(question);
         questionRepository.save(question);
-        courseRepository.save(course);
     }
 }

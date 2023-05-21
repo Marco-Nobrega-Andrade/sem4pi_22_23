@@ -1,10 +1,10 @@
 package eapli.base.questionmanagement.domain;
 
 public class QuestionBuilder {
-    private QuestionId question_id;
+    private QuestionIdentifier question_id;
     private Structure structure;
     public QuestionBuilder withIdentifier(long question_id){
-        this.question_id = new QuestionId(question_id);
+        this.question_id = new QuestionIdentifier(question_id);
         return this;
     }
 
