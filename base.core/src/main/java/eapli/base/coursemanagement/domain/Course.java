@@ -1,9 +1,10 @@
 package eapli.base.coursemanagement.domain;
 
-import eapli.base.exams.domain.Exam;
 import eapli.base.courseclasses.domain.Class;
 import eapli.base.courseclasses.domain.ExtraClass;
 import eapli.base.enrollments.domain.Enrollment;
+import eapli.base.exams.domain.Exam;
+import eapli.base.formativeexams.domain.FormativeExam;
 import eapli.base.questionmanagement.domain.Question;
 import eapli.base.usermanagement.domain.Teacher;
 import eapli.framework.domain.model.AggregateRoot;
@@ -47,6 +48,9 @@ public class Course implements AggregateRoot<CourseIdentifier> {
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Exam> examsList = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<FormativeExam> formativeExams = new ArrayList<>();
 
     public Course(CourseIdentifier courseId, CourseTitle courseTitle, CourseName courseName, Description description, EnrollmentLimits enrollmentLimits, CourseStatus courseStatus, Teacher teacherInCharge) {
         this.courseId = courseId;
