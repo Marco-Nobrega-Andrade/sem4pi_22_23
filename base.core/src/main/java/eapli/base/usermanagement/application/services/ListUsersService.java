@@ -20,4 +20,15 @@ public class ListUsersService {
         }
         return listUsersDTO;
     }
+
+    public Iterable<GeneralDTO> listActiveUsers() {
+
+        UserManagementService userSvc = AuthzRegistry.userService();
+        Iterable<SystemUser> users = userSvc.activeUsers();
+        List<GeneralDTO> listUsersDTO = new ArrayList<>();
+        for (SystemUser user : users) {
+            listUsersDTO.add(user.toDTO());
+        }
+        return listUsersDTO;
+    }
 }
