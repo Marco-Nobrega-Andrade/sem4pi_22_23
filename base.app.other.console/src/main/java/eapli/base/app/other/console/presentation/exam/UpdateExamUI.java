@@ -49,7 +49,7 @@ public class UpdateExamUI extends AbstractUI {
                 finalDate = Console.readDate("Final Date (YYYY/MM/DD)");
             }
 
-            if(controller.updateQuestion(structure,initialDate,finalDate,selectedExam))System.out.println("Exam updated with success");
+            if(controller.updateExam(structure,initialDate,finalDate,selectedExam))System.out.println("Exam updated with success");
         }catch (IOException e){
             System.out.println("File not found");
         }catch (Exception e) {
