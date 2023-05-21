@@ -1,4 +1,4 @@
-package eapli.base.usermanagement.application.services;
+package eapli.base.coursemanagement.application.services;
 
 import eapli.base.coursemanagement.domain.Course;
 import eapli.base.coursemanagement.dto.CourseDTOWithIdTitle;
@@ -43,7 +43,7 @@ public class SetTeacherService {
         }
         Course course = courseRepository.findCourseById(courseDTO.courseIdentifier);
 
-        if (course.addTeacher(teachers)) {
+        if (course.addTeachersToList(teachers)) {
             return courseRepository.save(course) != null;
         }
         else {

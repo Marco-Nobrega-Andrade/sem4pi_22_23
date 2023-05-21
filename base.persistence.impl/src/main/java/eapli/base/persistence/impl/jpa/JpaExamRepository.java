@@ -26,7 +26,7 @@ public class JpaExamRepository extends JpaAutoTxRepository<Exam, ExamId, ExamId>
     }
     @Override
     public List<Exam> listFutureExamsByCourse(Course course, Date currentDate){
-        return  createQuery("SELECT e from Exam e  WHERE e IN (SELECT e FROM Course c JOIN c.examsList WHERE c =: course) AND e.dateInterval.initialDate > :currentDate)"
+        return  createQuery("SELECT e from Exam e  WHERE e IN (SELECT e FROM Course c JOIN c.examsList WHERE c =: course) AND e.dateInterval.initialDate > :currentDate"
                 , Exam.class).
                 setParameter("course", course).setParameter("currentDate", currentDate).getResultList();
     }
