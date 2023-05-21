@@ -35,7 +35,7 @@ public class Meeting implements AggregateRoot<MeetingIdentifier> {
 
         final Meeting that = (Meeting) other;
 
-        return idMeeting.equals(that.idMeeting) && scheduledDate.equals(that.scheduledDate) && invitation.equals(that.invitation);
+        return idMeeting.equals(that.idMeeting);
     }
 
     public boolean hasIdentity(MeetingIdentifier id) {
