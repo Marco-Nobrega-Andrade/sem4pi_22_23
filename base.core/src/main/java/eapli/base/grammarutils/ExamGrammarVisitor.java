@@ -17,59 +17,11 @@ public interface ExamGrammarVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitProg(ExamGrammarParser.ProgContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link ExamGrammarParser#header}.
+	 * Visit a parse tree produced by {@link ExamGrammarParser#question_type}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitHeader(ExamGrammarParser.HeaderContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link ExamGrammarParser#section}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitSection(ExamGrammarParser.SectionContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link ExamGrammarParser#phrase}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitPhrase(ExamGrammarParser.PhraseContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link ExamGrammarParser#middle_phrase}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitMiddle_phrase(ExamGrammarParser.Middle_phraseContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link ExamGrammarParser#list_with_title}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitList_with_title(ExamGrammarParser.List_with_titleContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link ExamGrammarParser#title_list}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitTitle_list(ExamGrammarParser.Title_listContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link ExamGrammarParser#list}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitList(ExamGrammarParser.ListContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link ExamGrammarParser#topic_list}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitTopic_list(ExamGrammarParser.Topic_listContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link ExamGrammarParser#question}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitQuestion(ExamGrammarParser.QuestionContext ctx);
+	T visitQuestion_type(ExamGrammarParser.Question_typeContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link ExamGrammarParser#multiple_choice_question}.
 	 * @param ctx the parse tree
@@ -113,11 +65,11 @@ public interface ExamGrammarVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitSelect_missing_words(ExamGrammarParser.Select_missing_wordsContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link ExamGrammarParser#missing_word_question}.
+	 * Visit a parse tree produced by {@link ExamGrammarParser#missing_word_phrase}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitMissing_word_question(ExamGrammarParser.Missing_word_questionContext ctx);
+	T visitMissing_word_phrase(ExamGrammarParser.Missing_word_phraseContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link ExamGrammarParser#missing_word_solution}.
 	 * @param ctx the parse tree
@@ -155,6 +107,12 @@ public interface ExamGrammarVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitNumerical_answer(ExamGrammarParser.Numerical_answerContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link ExamGrammarParser#question}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitQuestion(ExamGrammarParser.QuestionContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link ExamGrammarParser#points}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -166,4 +124,46 @@ public interface ExamGrammarVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitFeedback(ExamGrammarParser.FeedbackContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ExamGrammarParser#phrase}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPhrase(ExamGrammarParser.PhraseContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ExamGrammarParser#list_with_title}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitList_with_title(ExamGrammarParser.List_with_titleContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ExamGrammarParser#title_list}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTitle_list(ExamGrammarParser.Title_listContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ExamGrammarParser#list}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitList(ExamGrammarParser.ListContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ExamGrammarParser#topic_list}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTopic_list(ExamGrammarParser.Topic_listContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ExamGrammarParser#header}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitHeader(ExamGrammarParser.HeaderContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ExamGrammarParser#section}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSection(ExamGrammarParser.SectionContext ctx);
 }

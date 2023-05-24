@@ -18,95 +18,15 @@ public interface ExamGrammarListener extends ParseTreeListener {
 	 */
 	void exitProg(ExamGrammarParser.ProgContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ExamGrammarParser#header}.
+	 * Enter a parse tree produced by {@link ExamGrammarParser#question_type}.
 	 * @param ctx the parse tree
 	 */
-	void enterHeader(ExamGrammarParser.HeaderContext ctx);
+	void enterQuestion_type(ExamGrammarParser.Question_typeContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ExamGrammarParser#header}.
+	 * Exit a parse tree produced by {@link ExamGrammarParser#question_type}.
 	 * @param ctx the parse tree
 	 */
-	void exitHeader(ExamGrammarParser.HeaderContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ExamGrammarParser#section}.
-	 * @param ctx the parse tree
-	 */
-	void enterSection(ExamGrammarParser.SectionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ExamGrammarParser#section}.
-	 * @param ctx the parse tree
-	 */
-	void exitSection(ExamGrammarParser.SectionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ExamGrammarParser#phrase}.
-	 * @param ctx the parse tree
-	 */
-	void enterPhrase(ExamGrammarParser.PhraseContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ExamGrammarParser#phrase}.
-	 * @param ctx the parse tree
-	 */
-	void exitPhrase(ExamGrammarParser.PhraseContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ExamGrammarParser#middle_phrase}.
-	 * @param ctx the parse tree
-	 */
-	void enterMiddle_phrase(ExamGrammarParser.Middle_phraseContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ExamGrammarParser#middle_phrase}.
-	 * @param ctx the parse tree
-	 */
-	void exitMiddle_phrase(ExamGrammarParser.Middle_phraseContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ExamGrammarParser#list_with_title}.
-	 * @param ctx the parse tree
-	 */
-	void enterList_with_title(ExamGrammarParser.List_with_titleContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ExamGrammarParser#list_with_title}.
-	 * @param ctx the parse tree
-	 */
-	void exitList_with_title(ExamGrammarParser.List_with_titleContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ExamGrammarParser#title_list}.
-	 * @param ctx the parse tree
-	 */
-	void enterTitle_list(ExamGrammarParser.Title_listContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ExamGrammarParser#title_list}.
-	 * @param ctx the parse tree
-	 */
-	void exitTitle_list(ExamGrammarParser.Title_listContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ExamGrammarParser#list}.
-	 * @param ctx the parse tree
-	 */
-	void enterList(ExamGrammarParser.ListContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ExamGrammarParser#list}.
-	 * @param ctx the parse tree
-	 */
-	void exitList(ExamGrammarParser.ListContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ExamGrammarParser#topic_list}.
-	 * @param ctx the parse tree
-	 */
-	void enterTopic_list(ExamGrammarParser.Topic_listContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ExamGrammarParser#topic_list}.
-	 * @param ctx the parse tree
-	 */
-	void exitTopic_list(ExamGrammarParser.Topic_listContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ExamGrammarParser#question}.
-	 * @param ctx the parse tree
-	 */
-	void enterQuestion(ExamGrammarParser.QuestionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ExamGrammarParser#question}.
-	 * @param ctx the parse tree
-	 */
-	void exitQuestion(ExamGrammarParser.QuestionContext ctx);
+	void exitQuestion_type(ExamGrammarParser.Question_typeContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ExamGrammarParser#multiple_choice_question}.
 	 * @param ctx the parse tree
@@ -178,15 +98,15 @@ public interface ExamGrammarListener extends ParseTreeListener {
 	 */
 	void exitSelect_missing_words(ExamGrammarParser.Select_missing_wordsContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ExamGrammarParser#missing_word_question}.
+	 * Enter a parse tree produced by {@link ExamGrammarParser#missing_word_phrase}.
 	 * @param ctx the parse tree
 	 */
-	void enterMissing_word_question(ExamGrammarParser.Missing_word_questionContext ctx);
+	void enterMissing_word_phrase(ExamGrammarParser.Missing_word_phraseContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ExamGrammarParser#missing_word_question}.
+	 * Exit a parse tree produced by {@link ExamGrammarParser#missing_word_phrase}.
 	 * @param ctx the parse tree
 	 */
-	void exitMissing_word_question(ExamGrammarParser.Missing_word_questionContext ctx);
+	void exitMissing_word_phrase(ExamGrammarParser.Missing_word_phraseContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ExamGrammarParser#missing_word_solution}.
 	 * @param ctx the parse tree
@@ -248,6 +168,16 @@ public interface ExamGrammarListener extends ParseTreeListener {
 	 */
 	void exitNumerical_answer(ExamGrammarParser.Numerical_answerContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link ExamGrammarParser#question}.
+	 * @param ctx the parse tree
+	 */
+	void enterQuestion(ExamGrammarParser.QuestionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ExamGrammarParser#question}.
+	 * @param ctx the parse tree
+	 */
+	void exitQuestion(ExamGrammarParser.QuestionContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link ExamGrammarParser#points}.
 	 * @param ctx the parse tree
 	 */
@@ -267,4 +197,74 @@ public interface ExamGrammarListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitFeedback(ExamGrammarParser.FeedbackContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ExamGrammarParser#phrase}.
+	 * @param ctx the parse tree
+	 */
+	void enterPhrase(ExamGrammarParser.PhraseContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ExamGrammarParser#phrase}.
+	 * @param ctx the parse tree
+	 */
+	void exitPhrase(ExamGrammarParser.PhraseContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ExamGrammarParser#list_with_title}.
+	 * @param ctx the parse tree
+	 */
+	void enterList_with_title(ExamGrammarParser.List_with_titleContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ExamGrammarParser#list_with_title}.
+	 * @param ctx the parse tree
+	 */
+	void exitList_with_title(ExamGrammarParser.List_with_titleContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ExamGrammarParser#title_list}.
+	 * @param ctx the parse tree
+	 */
+	void enterTitle_list(ExamGrammarParser.Title_listContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ExamGrammarParser#title_list}.
+	 * @param ctx the parse tree
+	 */
+	void exitTitle_list(ExamGrammarParser.Title_listContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ExamGrammarParser#list}.
+	 * @param ctx the parse tree
+	 */
+	void enterList(ExamGrammarParser.ListContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ExamGrammarParser#list}.
+	 * @param ctx the parse tree
+	 */
+	void exitList(ExamGrammarParser.ListContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ExamGrammarParser#topic_list}.
+	 * @param ctx the parse tree
+	 */
+	void enterTopic_list(ExamGrammarParser.Topic_listContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ExamGrammarParser#topic_list}.
+	 * @param ctx the parse tree
+	 */
+	void exitTopic_list(ExamGrammarParser.Topic_listContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ExamGrammarParser#header}.
+	 * @param ctx the parse tree
+	 */
+	void enterHeader(ExamGrammarParser.HeaderContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ExamGrammarParser#header}.
+	 * @param ctx the parse tree
+	 */
+	void exitHeader(ExamGrammarParser.HeaderContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ExamGrammarParser#section}.
+	 * @param ctx the parse tree
+	 */
+	void enterSection(ExamGrammarParser.SectionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ExamGrammarParser#section}.
+	 * @param ctx the parse tree
+	 */
+	void exitSection(ExamGrammarParser.SectionContext ctx);
 }
