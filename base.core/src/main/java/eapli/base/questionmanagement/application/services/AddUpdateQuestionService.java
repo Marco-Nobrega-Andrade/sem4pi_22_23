@@ -13,9 +13,9 @@ public class AddUpdateQuestionService {
     private final CourseRepository courseRepository = PersistenceContext.repositories().courseRepository();
 
     public void addQuestion(CourseDTOWithIdTitle courseDTO, String structure){
-        long numberOfQuestions = questionRepository.count();
+        long maxId = questionRepository.findMaxId();
         QuestionBuilder builder = new QuestionBuilder();
-        Question question = builder.withStructure(structure).withIdentifier(numberOfQuestions + 1).build();
+        Question question = builder.withStructure(structure).withIdentifier(maxId + 1).build();
         Course course = courseRepository.findCourseById(courseDTO.courseIdentifier);
         course.addQuestion(question);
         questionRepository.save(question);
