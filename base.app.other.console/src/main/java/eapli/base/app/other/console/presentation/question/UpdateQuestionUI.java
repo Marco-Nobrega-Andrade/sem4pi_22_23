@@ -1,7 +1,9 @@
 package eapli.base.app.other.console.presentation.question;
 
+import eapli.base.coursemanagement.application.ListCourseController;
 import eapli.base.coursemanagement.dto.CourseDTOWithIdTitle;
 import eapli.base.questionmanagement.application.AddQuestionController;
+import eapli.base.questionmanagement.application.ListCourseQuestionsController;
 import eapli.base.questionmanagement.application.UpdateQuestionController;
 import eapli.base.questionmanagement.dto.QuestionDTOWithId;
 import eapli.framework.presentation.console.AbstractUI;
@@ -19,8 +21,10 @@ public class UpdateQuestionUI extends AbstractUI {
 
     @Override
     protected boolean doShow() {
-        UpdateQuestionController controller = new UpdateQuestionController();
-        List<CourseDTOWithIdTitle> courseDTOList = controller.listCourse();
+        UpdateQuestionController updateQuestionController = new UpdateQuestionController();
+        ListCourseController listCourseController = new ListCourseController();
+        ListCourseQuestionsController listCourseQuestionsController = new ListCourseQuestionsController();
+        List<CourseDTOWithIdTitle> courseDTOList = listCourseController.listCourse();
         if(!courseDTOList.isEmpty()) {
             System.out.println("To which course would you like to add the question?");
             int i;
@@ -44,7 +48,7 @@ public class UpdateQuestionUI extends AbstractUI {
                     optionInt1 = -1;
                 }
             } while (optionInt1 < 0 || optionInt1 > courseDTOList.size());
-            List<QuestionDTOWithId> questionDTOList = controller.listCourseQuestions(courseDTOList.get(optionInt1-1));
+            List<QuestionDTOWithId> questionDTOList = listCourseQuestionsController.listCourseQuestions(courseDTOList.get(optionInt1-1));
             if(!questionDTOList.isEmpty()){
                 SelectWidget<QuestionDTOWithId> selected = new SelectWidget<>("Select a question to update.", questionDTOList, new QuestionDTOWithIdPrinter());
                 selected.show();
@@ -58,7 +62,7 @@ public class UpdateQuestionUI extends AbstractUI {
                         String optionString = read.nextLine();
                         Path path = Paths.get(optionString);
                         byte[] fileBytes = Files.readAllBytes(path);
-                        controller.updateQuestion(questionDTOWithId, new String(fileBytes));
+                        updateQuestionController.updateQuestion(questionDTOWithId, new String(fileBytes));
                         System.out.println("Your Question was updated with success!");
                     } catch (IOException e) {
                         System.out.println("The path you have entered isn't correct.");

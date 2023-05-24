@@ -1,5 +1,6 @@
 package eapli.base.app.other.console.presentation.question;
 
+import eapli.base.coursemanagement.application.ListCourseController;
 import eapli.base.coursemanagement.dto.CourseDTOWithIdTitle;
 import eapli.base.questionmanagement.application.AddQuestionController;
 import eapli.framework.presentation.console.AbstractUI;
@@ -13,8 +14,9 @@ import java.util.Scanner;
 
 public class AddQuestionUI extends AbstractUI {
     public boolean doShow() {
-        AddQuestionController controller = new AddQuestionController();
-        List<CourseDTOWithIdTitle> courseDTOList = controller.listCourse();
+        AddQuestionController addQuestionController = new AddQuestionController();
+        ListCourseController listCourseController = new ListCourseController();
+        List<CourseDTOWithIdTitle> courseDTOList = listCourseController.listCourse();
         if(!courseDTOList.isEmpty()){
             System.out.println("To which course would you like to add the question?");
             int i;
@@ -48,7 +50,7 @@ public class AddQuestionUI extends AbstractUI {
                         String optionString = read.nextLine();
                         Path path = Paths.get(optionString);
                         byte[] fileBytes = Files.readAllBytes(path);
-                        controller.addQuestion(courseDTOList.get(optionInt1 - 1), new String(fileBytes));
+                        addQuestionController.addQuestion(courseDTOList.get(optionInt1 - 1), new String(fileBytes));
                         System.out.println("Your Question was created with success!");
                     } catch (IOException e) {
                         System.out.println("The path you have entered isn't correct.");
