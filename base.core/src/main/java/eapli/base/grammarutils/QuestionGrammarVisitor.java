@@ -1,4 +1,4 @@
-// Generated from C:/Users/Marco/Desktop/MinhaPasta/Universidade/Ano2/SEM4PI/sem4pi-22-23-24/base.core\QuestionGrammar.g4 by ANTLR 4.12.0
+// Generated from C:/Users/Marco/Desktop/MinhaPasta/Universidade/Ano2/SEM4PI/sem4pi-22-23-24/base.core/src/main/antlr4\QuestionGrammar.g4 by ANTLR 4.12.0
 package eapli.base.grammarutils;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -16,42 +16,6 @@ public interface QuestionGrammarVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitProg(QuestionGrammarParser.ProgContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link QuestionGrammarParser#phrase}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitPhrase(QuestionGrammarParser.PhraseContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link QuestionGrammarParser#middle_phrase}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitMiddle_phrase(QuestionGrammarParser.Middle_phraseContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link QuestionGrammarParser#list_with_title}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitList_with_title(QuestionGrammarParser.List_with_titleContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link QuestionGrammarParser#title_list}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitTitle_list(QuestionGrammarParser.Title_listContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link QuestionGrammarParser#list}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitList(QuestionGrammarParser.ListContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link QuestionGrammarParser#topic_list}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitTopic_list(QuestionGrammarParser.Topic_listContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link QuestionGrammarParser#multiple_choice_question}.
 	 * @param ctx the parse tree
@@ -95,11 +59,11 @@ public interface QuestionGrammarVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitSelect_missing_words(QuestionGrammarParser.Select_missing_wordsContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link QuestionGrammarParser#missing_word_question}.
+	 * Visit a parse tree produced by {@link QuestionGrammarParser#missing_word_phrase}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitMissing_word_question(QuestionGrammarParser.Missing_word_questionContext ctx);
+	T visitMissing_word_phrase(QuestionGrammarParser.Missing_word_phraseContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link QuestionGrammarParser#missing_word_solution}.
 	 * @param ctx the parse tree
@@ -137,6 +101,12 @@ public interface QuestionGrammarVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitNumerical_answer(QuestionGrammarParser.Numerical_answerContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link QuestionGrammarParser#question}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitQuestion(QuestionGrammarParser.QuestionContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link QuestionGrammarParser#points}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -148,4 +118,34 @@ public interface QuestionGrammarVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitFeedback(QuestionGrammarParser.FeedbackContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link QuestionGrammarParser#phrase}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPhrase(QuestionGrammarParser.PhraseContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link QuestionGrammarParser#list_with_title}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitList_with_title(QuestionGrammarParser.List_with_titleContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link QuestionGrammarParser#title_list}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTitle_list(QuestionGrammarParser.Title_listContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link QuestionGrammarParser#list}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitList(QuestionGrammarParser.ListContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link QuestionGrammarParser#topic_list}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTopic_list(QuestionGrammarParser.Topic_listContext ctx);
 }
