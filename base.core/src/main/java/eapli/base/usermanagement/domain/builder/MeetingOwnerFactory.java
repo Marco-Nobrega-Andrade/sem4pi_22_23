@@ -1,8 +1,8 @@
 package eapli.base.meetingmanagement.domain.Factory;
 
 import eapli.base.meetingmanagement.domain.Meeting;
-import eapli.base.meetingmanagement.domain.MeetingOwner;
-import eapli.base.meetingmanagement.domain.MeetingOwnerIdentifier;
+import eapli.base.usermanagement.domain.MeetingOwner;
+import eapli.base.usermanagement.domain.MeetingOwnerIdentifier;
 import eapli.base.usermanagement.domain.Person;
 
 import java.util.List;
