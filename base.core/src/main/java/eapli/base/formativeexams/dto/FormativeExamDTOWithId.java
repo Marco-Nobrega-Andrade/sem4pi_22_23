@@ -7,4 +7,9 @@ public class FormativeExamDTOWithId {
     protected FormativeExamDTOWithId(String formativeExamId){
         this.formativeExamId = formativeExamId;
     }
+
+    @Override
+    public String toString() {
+        return formativeExamId;
+    }
 }
