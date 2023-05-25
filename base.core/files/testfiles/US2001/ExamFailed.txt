@@ -1,10 +1,10 @@
-Header: oaskoakso
+#Header: oaskoakso
 
-Section: 1
-Section description: section1
+#Section: 1
+#Section description: section1
 
-(10pts)
-Match the Capital with the Country
+#Points: 10
+#Question: Match the Capital with the Country
 
 Capital:
 -Ottawa
@@ -16,25 +16,26 @@ Country:
 - Italy
 - Japan
 
-Solution:
+#Solution:
 Tokyo-Japan
 Italy-Rome
 Canada-Ottawa
-Feedback: Well Done.
+#Feedback: Well Done.
 
-Exam banger?
-Solution: T
-Feedback: Nice.
+#Points: 10
+#Question: Exam banger?
+#Solution: T
+#Feedback: Nice.
 
-Section: 2
+#Section: 2
 
-(10pts)
-Capital of Brazil length?
-Solution: 222,22 km
-Feedback: Very good
+#Points: 10
+#Question: Capital of Brazil length?
+#Solution: 222,22 km
+#Feedback: Very good
 
-(10pts)
-Please select the correct missing words.
+#Points: 10
+#Question: Please select the correct missing words.
 The best island in Portugal is ||WORD||
 
 WORD:
@@ -43,26 +44,26 @@ WORD:
 -Berlengas
 -Ilhéu da Pontinha
 
-Solution: Berlengas
+#Solution: Berlengas
 
-Section: 3
+#Section: 3
 
-(10pts)
-Capital of Brazil?
-Solution: Brasilia
-Feedback: Very good
+#Points: 10
+#Question: Capital of Brazil?
+#Solution: Brasilia
+#Feedback: Very good
 
-(20pts)
-What is the Capital of Japan?
+#Points: 20
+#Question: What is the Capital of Japan?
 Select one option:
 -Seoul
 -Ottawa
 -Rome
 -Tokyo
-Solution: Tokyo
+#Solution: Tokyo
 
-(20pts)
-Which states cities are from the United States?
+Points: 20
+#Question: Which states cities are from the United States?
 Select multiple options:
 -Seoul
 -Ottawa
@@ -70,4 +71,4 @@ Select multiple options:
 -New York
 -Lisbon
 -Los Angeles
-Solution: New York, Los Angeles
+#Solution: New York, Los Angeles

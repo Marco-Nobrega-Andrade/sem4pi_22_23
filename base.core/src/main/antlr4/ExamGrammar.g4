@@ -1,79 +1,90 @@
 grammar ExamGrammar;
 
-prog: header (NEWLINE+ section (NEWLINE question)+)+ ;
-
-header: 'Header: ' phrase;
-
-section: 'Section: ' phrase (NEWLINE+ 'Section description: ' phrase)?;
-
-phrase: ANY_CHAR* (SPACE* (WORD | INT) (SPACE* ANY_CHAR+)*)+
-    ;
-
-middle_phrase: phrase SPACE
-;
-list_with_title: title_list list?
-                ;
-title_list: SPACE* phrase SPACE* COLON SPACE*
-           ;
-list: (topic_list)+
-    ;
-topic_list : (NEWLINE)+ DASH phrase
-    ;
+prog: header (NEWLINE+ section (question_type)+)+;
 
 
-question : matching_type_question
+question_type : matching_type_question
                  | select_missing_words
                  | true_false_question
                  | multiple_choice_question
                  | short_answer_question
                  | numerical_question
                  ;
-
 /////////////////////////
-multiple_choice_question : points NEWLINE+ phrase NEWLINE+ list_with_title NEWLINE+ multiple_choice_solution (NEWLINE+ feedback)?
-;
-multiple_choice_solution : 'Solution: ' list_phrases
-;
+multiple_choice_question : points question list_with_title multiple_choice_solution (feedback)?
+                         ;
+multiple_choice_solution : SOLUTION_ENTRY list_phrases
+                         ;
 /////////////////////////
-matching_type_question : points NEWLINE+ phrase NEWLINE+ list_with_title NEWLINE+ list_with_title NEWLINE+ matching_type_solution (NEWLINE+ feedback)?
-;
-matching_type_solution : 'Solution:' (NEWLINE phrase DASH phrase)+
-;
+matching_type_question : points question list_with_title list_with_title matching_type_solution (feedback)?
+                       ;
+matching_type_solution : SOLUTION_ENTRY (NEWLINE phrase DASH phrase)+
+                       ;
 //////////////////////////
-true_false_question : points NEWLINE+ phrase NEWLINE+ true_false_solution (NEWLINE+ feedback)?
-;
+true_false_question : points question true_false_solution (feedback)?
+                    ;
 
-true_false_solution: 'Solution: ' ('T' |'F'|'t'| 'f')
-;
+true_false_solution: SOLUTION_ENTRY TRUE_FALSE_RESPONSES
+                   ;
 ////////////////////////////
-select_missing_words : points NEWLINE+ phrase NEWLINE+ missing_word_question NEWLINE+ list_with_title+ NEWLINE+ missing_word_solution (NEWLINE+ feedback)?
-;
-missing_word_question : MISSING_WORD phrase
-                        | middle_phrase? MISSING_WORD (SPACE MISSING_WORD)* (middle_phrase(MISSING_WORD (SPACE MISSING_WORD)*)?)* phrase?
-;
-missing_word_solution: 'Solution: ' list_phrases
-;
-list_phrases: phrase (',' phrase)*
-;
-
+select_missing_words : points question missing_word_phrase list_with_title+ missing_word_solution (feedback)?
+                     ;
+missing_word_phrase : NEWLINE+ phrase? (MISSING_WORD phrase)+ MISSING_WORD?
+                    | NEWLINE+ MISSING_WORD? (phrase MISSING_WORD)+ phrase?
+                    ;
+missing_word_solution: SOLUTION_ENTRY list_phrases
+                    ;
+list_phrases: phrase (COMMA phrase)*
+            ;
 //////////////////////
-short_answer_question: points NEWLINE+ phrase NEWLINE+ short_answer_solution (NEWLINE+ feedback)?
-;
-short_answer_solution: 'Solution: ' phrase
-;
+short_answer_question: points question short_answer_solution (feedback)?
+                     ;
+short_answer_solution: SOLUTION_ENTRY phrase
+                     ;
 ////////////////////
-numerical_question: points NEWLINE+ phrase NEWLINE+ numerical_answer (NEWLINE+ feedback)?
-;
-numerical_answer: 'Solution: ' INT(','INT)? SPACE WORD
-;
+numerical_question: points question numerical_answer (feedback)?
+                  ;
+numerical_answer: SOLUTION_ENTRY INT(COMMA INT)? WORD
+                ;
+/////////////////////
+question: NEWLINE+ QUESTION_ENTRY phrase
+        ;
+points: NEWLINE+ POINTS_ENTRY INT
+      ;
+feedback: NEWLINE+ FEEDBACK_ENTRY phrase
+        ;
+phrase: ANY_CHAR* ( (WORD | INT) ( ANY_CHAR+)*)+
+ ;
 
-points:'(' INT 'pts)'
-;
-feedback: 'Feedback: ' phrase
-;
+list_with_title: NEWLINE+ title_list list?
+               ;
+title_list: phrase COLON
+        ;
+list: (topic_list)+
+ ;
+topic_list : (NEWLINE)+ DASH phrase
+             ;
 
+
+header: HEADER_ENTRY phrase;
+
+section: SECTION_ENTRY phrase (NEWLINE+ SECTION_DESCRIPTION_ENTRY phrase)?;
+
+
+/////////////////////////
+SOLUTION_ENTRY : NEWLINE+ HASH 'Solution:';
+TRUE_FALSE_RESPONSES : ('T' |'F'|'t'| 'f');
+HEADER_ENTRY : HASH 'Header:';
+SECTION_ENTRY : HASH 'Section:';
+SECTION_DESCRIPTION_ENTRY: HASH 'Section description:';
+FEEDBACK_ENTRY : HASH 'Feedback:';
+QUESTION_ENTRY : HASH 'Question:';
+POINTS_ENTRY : HASH 'Points:';
+
+COMMA : ',';
+WS : [ \t]+ -> skip;
+HASH : '#';
 NEWLINE : [\r\n]+;
-SPACE: ' ';
 WORD: [A-Za-z]+;
 COLON : ':' ;
 DASH : '-';

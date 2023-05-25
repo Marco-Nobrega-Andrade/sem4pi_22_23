@@ -5,8 +5,8 @@ title Add Question
 actor "Teacher" as T
 
 participant ": AddQuestionUI" as UI <<Presentation>>
-control "AddQuestionController" as CTRL <<Application>>
-control "ListCourseController" as LCCTRL <<Application>>
+control "ListCourseController" as CTRL <<Application>>
+participant "ListCourseService" as LCS <<Application>>
 participant ": AddUpdateQuestionService" as AUQS <<Service>>
 participant ": QuestionBuilder" as QB <<Builder>>
 participant ": VerifyQuestionService" as VQS <<Service>>
@@ -16,36 +16,18 @@ database ": CourseRepository" as CR <<Domain>>
 database QuestionRepository as QR <<Repository>>
 
 activate T
-T -> UI : asks to add/update an exam question to a repository
+T -> UI : chooses the course, and the question path file
 activate UI
 
-
-UI -> CTRL : listCourse()
-activate CTRL
-CTRL->LCCTRL : listCourse()
-note right: the continuation of this Use Case is in SD_ListCourses
-activate LCCTRL
-LCCTRL --> CTRL : courseDTOList
-deactivate LCCTRL
-CTRL --> UI :courseDTOList
-deactivate CTRL
-
-
-UI --> T : shows all courses and that a question can relate to
-deactivate UI
-
-T -> UI : picks a course, chooses to add a question \rand inserts the path of the file
-activate UI
-
-UI -> CTRL : addQuestion(questionDTO, questionStructure)
+UI -> CTRL : addQuestion(courseDTO, questionStructure)
 activate CTRL
 
-CTRL -> AUQS : addQuestion(questionDTO, questionStructure)
+CTRL -> AUQS : addQuestion(courseDTO, questionStructure)
 activate AUQS
 
-AUQS -> QR : count()
+AUQS -> QR : findMaxId()
 activate QR
-QR --> AUQS : numberOfQuestions
+QR --> AUQS : maxId
 deactivate QR
 AUQS -> QB : withStructure(questionStructure)
 activate QB

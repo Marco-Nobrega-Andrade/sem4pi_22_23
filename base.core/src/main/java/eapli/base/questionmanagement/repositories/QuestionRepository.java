@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface QuestionRepository extends DomainRepository<QuestionIdentifier, Question> {
     List<Question> listQuestionsByCourseId(String courseId);
+
+    Long findMaxId();
 }

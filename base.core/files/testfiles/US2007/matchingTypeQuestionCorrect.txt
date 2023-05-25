@@ -1,7 +1,7 @@
-Matching Type
-(20pts)
+#Matching Type
+#Points: 20
 
-Please match the elements of the two lists.
+#Question: Please match the elements of the two lists.
 List1:
 -object1A
 -object2A
@@ -12,8 +12,8 @@ List:
 -object2B
 -object3B
 
-Solution:
+#Solution:
 object1A-object1B
 object2A-object2B
 
-Feedback: Here's the feedback.
+#Feedback: Here's the feedback.

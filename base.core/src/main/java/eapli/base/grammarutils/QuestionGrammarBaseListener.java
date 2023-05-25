@@ -1,4 +1,4 @@
-// Generated from C:/Users/Marco/Desktop/MinhaPasta/Universidade/Ano2/SEM4PI/sem4pi-22-23-24/base.core\QuestionGrammar.g4 by ANTLR 4.12.0
+// Generated from C:/Users/Marco/Desktop/MinhaPasta/Universidade/Ano2/SEM4PI/sem4pi-22-23-24/base.core/src/main/antlr4\QuestionGrammar.g4 by ANTLR 4.12.0
 package eapli.base.grammarutils;
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -24,78 +24,6 @@ public class QuestionGrammarBaseListener implements QuestionGrammarListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitProg(QuestionGrammarParser.ProgContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterPhrase(QuestionGrammarParser.PhraseContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitPhrase(QuestionGrammarParser.PhraseContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterMiddle_phrase(QuestionGrammarParser.Middle_phraseContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitMiddle_phrase(QuestionGrammarParser.Middle_phraseContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterList_with_title(QuestionGrammarParser.List_with_titleContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitList_with_title(QuestionGrammarParser.List_with_titleContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterTitle_list(QuestionGrammarParser.Title_listContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitTitle_list(QuestionGrammarParser.Title_listContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterList(QuestionGrammarParser.ListContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitList(QuestionGrammarParser.ListContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterTopic_list(QuestionGrammarParser.Topic_listContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitTopic_list(QuestionGrammarParser.Topic_listContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -185,13 +113,13 @@ public class QuestionGrammarBaseListener implements QuestionGrammarListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterMissing_word_question(QuestionGrammarParser.Missing_word_questionContext ctx) { }
+	@Override public void enterMissing_word_phrase(QuestionGrammarParser.Missing_word_phraseContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitMissing_word_question(QuestionGrammarParser.Missing_word_questionContext ctx) { }
+	@Override public void exitMissing_word_phrase(QuestionGrammarParser.Missing_word_phraseContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -269,6 +197,18 @@ public class QuestionGrammarBaseListener implements QuestionGrammarListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterQuestion(QuestionGrammarParser.QuestionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitQuestion(QuestionGrammarParser.QuestionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterPoints(QuestionGrammarParser.PointsContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -288,6 +228,66 @@ public class QuestionGrammarBaseListener implements QuestionGrammarListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitFeedback(QuestionGrammarParser.FeedbackContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterPhrase(QuestionGrammarParser.PhraseContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPhrase(QuestionGrammarParser.PhraseContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterList_with_title(QuestionGrammarParser.List_with_titleContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitList_with_title(QuestionGrammarParser.List_with_titleContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterTitle_list(QuestionGrammarParser.Title_listContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTitle_list(QuestionGrammarParser.Title_listContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterList(QuestionGrammarParser.ListContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitList(QuestionGrammarParser.ListContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterTopic_list(QuestionGrammarParser.Topic_listContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTopic_list(QuestionGrammarParser.Topic_listContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

@@ -12,4 +12,9 @@ public class InMemoryQuestionRepository extends InMemoryDomainRepository<Questio
     public List<Question> listQuestionsByCourseId(String courseId) {
         return null;
     }
+
+    @Override
+    public Long findMaxId() {
+        return 0L;
+    }
 }

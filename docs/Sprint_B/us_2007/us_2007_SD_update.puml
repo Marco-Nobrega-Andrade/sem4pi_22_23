@@ -4,10 +4,8 @@ title Update Question
 
 actor "Teacher" as T
 
-participant ": AddUpdateQuestionUI" as UI <<Presentation>>
-control "AddUpdateQuestionController" as CTRL <<Application>>
-control "ListCourseController" as LCCTRL <<Application>>
-control "ListCourseQuestionsController" as LCQCTRL <<Application>>
+participant ": UpdateQuestionUI" as UI <<Presentation>>
+control "UpdateQuestionController" as CTRL <<Application>>
 participant ": AddUpdateQuestionService" as AUQS <<Service>>
 
 participant ": Question" as Q <<Domain>>
@@ -17,37 +15,7 @@ participant ": Structure" as St <<Domain>>
 database QuestionRepository as QR <<Repository>>
 
 activate T
-T -> UI : asks to add/update an exam question to a repository
-activate UI
-
-UI->CTRL : listCourse()
-activate CTRL
-CTRL -> LCCTRL : listCourse()
-note right: the continuation of this Use Case is in SD_ListCourses
-activate LCCTRL
-LCCTRL --> CTRL : courseDTOList
-deactivate LCCTRL
-CTRL --> UI : courseDTOList
-deactivate CTRL
-UI --> T : shows all courses and that a question can relate to
-deactivate UI
-
-T -> UI : picks a course and asks to update a question
-activate UI
-
-
-UI -> CTRL : listCourseQuestions(courseDTO)
-activate CTRL
-CTRL -> LCQCTRL : listCourseQuestions(courseDTO)
-note right: the continuation of this Use Case is in SD_listCourseQuestion
-activate LCQCTRL
-LCQCTRL --> CTRL : courseDTOList
-deactivate LCQCTRL
-CTRL --> UI : questionDTOList
-deactivate CTRL
-UI --> T : shows all questions
-deactivate UI
-T -> UI : chooses a question and insert the \npath of the new version
+T -> UI : chooses a question and inserts the \npath of the new version
 activate UI
 
 UI -> CTRL : updateQuestion(questionDTO, updatedQuestion)

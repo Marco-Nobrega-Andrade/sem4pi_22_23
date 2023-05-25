@@ -7,11 +7,6 @@ import eapli.base.questionmanagement.application.services.AddUpdateQuestionServi
 import java.util.List;
 
 public class AddQuestionController {
-    public List<CourseDTOWithIdTitle> listCourse(){
-        ListCourseController controller = new ListCourseController();
-        return controller.listCourse();
-    }
-
     public void addQuestion(CourseDTOWithIdTitle courseDTO, String questionStructure){
         AddUpdateQuestionService service = new AddUpdateQuestionService();
         service.addQuestion(courseDTO, questionStructure);
