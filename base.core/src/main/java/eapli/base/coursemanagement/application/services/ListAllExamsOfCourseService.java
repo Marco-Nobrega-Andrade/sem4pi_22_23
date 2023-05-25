@@ -58,7 +58,7 @@ public class ListAllExamsOfCourseService {
         FormativeExamDTOWithIdMapper formativeExamDTOWithBuilder = new FormativeExamDTOWithIdMapper();
         List<FormativeExam> formativeExamList = formativeExamRepository.findFormativeExamsFromCourse(new CourseIdentifier(selectedCourseDTO.courseIdentifier));
         if(formativeExamList.isEmpty()){
-            throw new IllegalArgumentException("There no exams in the selected course.");
+            throw new IllegalArgumentException("There no formative exams in the selected course.");
         }
         for (FormativeExam formativeExam : formativeExamList) {
             FormativeExamDTOWithId formativeExamDTOWithId = formativeExamDTOWithBuilder.toDto(formativeExam);
