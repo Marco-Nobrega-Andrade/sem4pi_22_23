@@ -34,6 +34,6 @@ class CellId implements Comparable<CellId>, ValueObject {
 
     @Override
     public int compareTo(CellId o) {
-        return 0;
+        return (int)(cell_Id-o.cell_Id);
     }
 }

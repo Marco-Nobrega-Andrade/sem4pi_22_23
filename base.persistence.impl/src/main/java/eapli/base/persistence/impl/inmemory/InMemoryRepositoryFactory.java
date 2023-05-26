@@ -20,7 +20,7 @@
  */
 package eapli.base.persistence.impl.inmemory;
 
-import eapli.base.board.repositories.BoardOwnerRepository;
+import eapli.base.usermanagement.repositories.BoardOwnerRepository;
 import eapli.base.board.repositories.BoardRepository;
 import eapli.base.clientusermanagement.repositories.ClientUserRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
@@ -37,7 +37,6 @@ import eapli.base.meetingmanagement.repositories.MeetingRepository;
 import eapli.base.questionmanagement.repositories.QuestionRepository;
 import eapli.base.usermanagement.repositories.PersonRepository;
 import eapli.base.usermanagement.repositories.StudentRepository;
-import eapli.base.exams.repositories.ExamRepository;
 import eapli.base.usermanagement.repositories.TeacherRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
