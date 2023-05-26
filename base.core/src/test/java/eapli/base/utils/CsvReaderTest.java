@@ -7,7 +7,7 @@ import java.util.List;
 
 class CsvReaderTest {
 
-    private final String VALID_PATH = "C:\\Users\\windows\\Documents\\sem4pi-22-23-24\\a.csv";
+    private final String VALID_PATH = "files/testfiles/US3002/a.csv";
     private final String INVALID_PATH = "a";
 
     @Test
