@@ -1,4 +1,4 @@
-package eapli.base.board.domain;
+package eapli.base.usermanagement.domain;
 
 import eapli.framework.domain.model.ValueObject;
 
@@ -34,7 +34,7 @@ public class BoardOwnerId implements Comparable<BoardOwnerId>, ValueObject {
 
     @Override
     public int compareTo(BoardOwnerId o){
-        return 0;
+        return (int)(boardOwner_Id-o.boardOwner_Id);
     }
 
 }
