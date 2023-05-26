@@ -1,5 +1,6 @@
 package eapli.base.meetingmanagement.domain;
 import eapli.base.courseclasses.domain.ScheduledDate;
+import eapli.base.usermanagement.domain.MeetingOwner;
 import eapli.framework.domain.model.AggregateRoot;
 
 import javax.persistence.*;
@@ -12,11 +13,15 @@ public class Meeting implements AggregateRoot<MeetingIdentifier> {
     private ScheduledDate scheduledDate;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Invitation> invitation;
+    @OneToOne(cascade = CascadeType.ALL)
+    private MeetingOwner meetingOwner;
 
-    public Meeting(MeetingIdentifier idMeeting, ScheduledDate scheduledDate, List<Invitation> invitation) {
+    public Meeting(MeetingIdentifier idMeeting, ScheduledDate scheduledDate, MeetingOwner meetingOwner,
+                   List<Invitation> invitation) {
         this.idMeeting = idMeeting;
         this.scheduledDate = scheduledDate;
         this.invitation = invitation;
+        this.meetingOwner = meetingOwner;
     }
 
     protected Meeting() {
@@ -52,4 +57,7 @@ public class Meeting implements AggregateRoot<MeetingIdentifier> {
         return AggregateRoot.super.compareTo(other);
     }
 
+    public boolean isMeetingOwner(MeetingOwner meetingOwner) {
+        return this.meetingOwner.sameAs(meetingOwner);
+    }
 }

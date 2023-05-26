@@ -1,6 +1,6 @@
-package eapli.base.meetingmanagement.domain;
+package eapli.base.usermanagement.domain;
 
-import eapli.base.usermanagement.domain.Person;
+import eapli.base.meetingmanagement.domain.Meeting;
 import eapli.framework.domain.model.DomainEntity;
 
 import javax.persistence.*;
@@ -11,25 +11,15 @@ public class MeetingOwner implements eapli.framework.domain.model.DomainEntity<M
 
     @EmbeddedId
     private MeetingOwnerIdentifier id_MeetingOwner;
-
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Meeting> meetingList;
-
     @OneToOne(cascade = CascadeType.ALL)
     private Person person;
 
-    public MeetingOwner(MeetingOwnerIdentifier id_MeetingOwner ,List<Meeting> meetingList, Person person){
-        if (meetingList==null){
-            throw new IllegalArgumentException("Parameters cannot be null");
-        }
-        if(meetingList.isEmpty()){
-            throw new IllegalArgumentException("Meeting Owner cannot have no meeting associated");
-        }
+    public MeetingOwner(MeetingOwnerIdentifier id_MeetingOwner, Person person){
+
         if(person == null | id_MeetingOwner == null){
             throw new IllegalArgumentException("Parameters cannot be null");
         }
         this.id_MeetingOwner = id_MeetingOwner;
-        this.meetingList = meetingList;
         this.person = person;
     }
 
@@ -62,11 +52,4 @@ public class MeetingOwner implements eapli.framework.domain.model.DomainEntity<M
         return DomainEntity.super.compareTo(other);
     }
 
-    public void addMeeting(Meeting meeting) {
-        meetingList.add(meeting);
-    }
-
-    public boolean hasMeeting(Meeting meeting) {
-        return meetingList.contains(meeting);
-    }
 }
