@@ -71,4 +71,8 @@ public class Meeting implements AggregateRoot<MeetingIdentifier> {
     public long returnMeetingIdentifier(){
         return idMeeting.returnCourseIdentifierString();
     }
+
+    public String returnScheduledDateString(){
+        return scheduledDate.returnDateString();
+    }
 }

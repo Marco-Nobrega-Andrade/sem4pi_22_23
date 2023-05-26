@@ -3,6 +3,8 @@ package eapli.base.courseclasses.domain;
 import eapli.framework.domain.model.ValueObject;
 
 import javax.persistence.Embeddable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Objects;
 
@@ -57,7 +59,10 @@ public class ScheduledDate implements ValueObject {
         return duration.returnMinutes();
     }
 
-
+    public String returnDateString(){
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        return dateFormat.format(this.date);
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
