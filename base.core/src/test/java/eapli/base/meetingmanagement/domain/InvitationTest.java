@@ -34,8 +34,8 @@ public class InvitationTest {
         Person kingOfAces = new PersonBuilder().withID(1)
                 .withSystemUser(getNewDummyUser()).withfullName("Aurelion").build();
 
-        Invitation invitationA = new Invitation(new InvitationIdentifier(1), new ResponseStatus(false), botDiff);
-        Invitation invitationB = new Invitation(new InvitationIdentifier(1), new ResponseStatus(false), kingOfAces);
+        Invitation invitationA = new Invitation(new InvitationIdentifier(1), new ResponseStatus(ResponseStatusValue.REJECTED), botDiff);
+        Invitation invitationB = new Invitation(new InvitationIdentifier(1), new ResponseStatus(ResponseStatusValue.REJECTED), kingOfAces);
 
         assertFalse(invitationA.sameAs(invitationB)); //cause the invitation is the same but the person is different
     }
@@ -46,8 +46,8 @@ public class InvitationTest {
         Person midDiff = new PersonBuilder().withID(1)
                 .withSystemUser(getNewDummyUser()).withfullName("Sylas").build();
 
-        Invitation invitationA = new Invitation(new InvitationIdentifier(1), new ResponseStatus(false), midDiff);
-        Invitation invitationB = new Invitation(new InvitationIdentifier(1), new ResponseStatus(true), midDiff);
+        Invitation invitationA = new Invitation(new InvitationIdentifier(1), new ResponseStatus(ResponseStatusValue.REJECTED), midDiff);
+        Invitation invitationB = new Invitation(new InvitationIdentifier(1), new ResponseStatus(ResponseStatusValue.ACCEPTED), midDiff);
 
         assertFalse(invitationA.sameAs(invitationB)); //cause the invitation and the person is the same but the response is different
     }
@@ -60,8 +60,8 @@ public class InvitationTest {
                 .withSystemUser(getNewDummyUser()).withfullName("Blitzcrank").build();
 
 
-        Invitation invitationA = new Invitation(new InvitationIdentifier(1), new ResponseStatus(false), mestreDaCulinaria);
-        Invitation invitationB = new Invitation(new InvitationIdentifier(1), new ResponseStatus(false), mestreDaCulinaria);
+        Invitation invitationA = new Invitation(new InvitationIdentifier(1), new ResponseStatus(ResponseStatusValue.REJECTED), mestreDaCulinaria);
+        Invitation invitationB = new Invitation(new InvitationIdentifier(1), new ResponseStatus(ResponseStatusValue.REJECTED), mestreDaCulinaria);
 
         assertTrue(invitationA.sameAs(invitationB));
     }
@@ -72,7 +72,7 @@ public class InvitationTest {
         Person pentaKiller = new PersonBuilder().withID(1)
                 .withSystemUser(getNewDummyUser()).withfullName("Broly").build();
 
-        Invitation invitationA = new Invitation(new InvitationIdentifier(1), new ResponseStatus(false), pentaKiller);
+        Invitation invitationA = new Invitation(new InvitationIdentifier(1), new ResponseStatus(ResponseStatusValue.REJECTED), pentaKiller);
 
         assertTrue(invitationA.sameAs(invitationA));
     }
@@ -85,7 +85,7 @@ public class InvitationTest {
 
 
 
-        Invitation invitationA = new Invitation(new InvitationIdentifier(1), new ResponseStatus(false), man);
+        Invitation invitationA = new Invitation(new InvitationIdentifier(1), new ResponseStatus(ResponseStatusValue.REJECTED), man);
 
         assertFalse(invitationA.sameAs(man));
     }

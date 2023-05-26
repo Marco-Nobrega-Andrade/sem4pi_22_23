@@ -2,8 +2,7 @@ package eapli.base.meetingmanagement.domain;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class InvitationIdentifierTest {
 
@@ -21,8 +20,8 @@ public class InvitationIdentifierTest {
     public void ensureIdAreEquals() {
         InvitationIdentifier test1 = new InvitationIdentifier(1L);
         InvitationIdentifier test2 = new InvitationIdentifier(2L);
-        assertTrue(test1.equals(test1));
-        assertFalse(test1.equals(test2));
+        assertEquals(test1, test1);
+        assertNotEquals(test1, test2);
     }
 
 }
