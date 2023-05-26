@@ -1,7 +1,10 @@
 package eapli.base.board.application.services;
 
 import eapli.base.board.domain.*;
-import eapli.base.board.repositories.BoardOwnerRepository;
+import eapli.base.usermanagement.domain.BoardOwner;
+import eapli.base.usermanagement.domain.BoardOwnerBuilder;
+import eapli.base.usermanagement.domain.BoardOwnerId;
+import eapli.base.usermanagement.repositories.BoardOwnerRepository;
 import eapli.base.board.repositories.BoardRepository;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.usermanagement.domain.Person;
@@ -33,24 +36,23 @@ public class CreateBoardService {
 
         boardRepository.save(board);
 
-        /*
-        TO DO, CREATE BOARD OWNER
+        AuthorizationService authz = AuthzRegistry.authorizationService();
+        SystemUser systemUser = authz.session().get().authenticatedUser();
+        Person person = personRepository.findPersonBySystemUser(systemUser);
+        BoardOwnerBuilder boardOwnerBuilder = new BoardOwnerBuilder();
 
-        AuthorizationService auth = AuthRegistry.authorizationService();
-        SystemUser user = auth.session().get().authenticatedUser();
-        List<EmailAddress> emailAddresses = new ArrayList<>();
-        emailAddresses.add(user.email());
-        List<Person> person = personRepository.findAllPersonsWhoMatch(emailAddresses);
-
-        if(boardOwnerRepository.ofIdentity(new BoardOwnerId(boardOwnerId)).isPresent()){
+        if(person.isBoardOwner()){
+            BoardOwner boardOwner = boardOwnerRepository.findBoardOwnerByPerson();
             boardOwner.addBoard(board);
             boardOwnerRepository.save(boardOwner);
-        }else{
-            BoardOwner boardOwner = boardOwnerBuilder.build();
-            boardOwner.addBoard(board);
-            boardOwnerRepository.save(boardOwner);
+        }else {
+            long totalOfBoardOwnerIds = boardOwnerRepository.count();
+            BoardOwner boardOwner = boardOwnerBuilder.withBoardOwnerId(new BoardOwnerId(totalOfBoardOwnerIds+1))
+                    .withBoard(board)
+                    .build();
+            person.addBoardOwner(boardOwner);
+            personRepository.save(person);
         }
-        */
 
         return true;
     }

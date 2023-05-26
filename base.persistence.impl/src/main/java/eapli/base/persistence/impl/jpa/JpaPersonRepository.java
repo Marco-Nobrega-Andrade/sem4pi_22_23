@@ -40,8 +40,8 @@ public class JpaPersonRepository extends JpaAutoTxRepository<Person, ID_Person,I
 
     @Override
     public Person findPersonBySystemUser(SystemUser systemUser) {
-        TypedQuery<Person> query = createQuery("SELECT p FROM Person p " +
-                "WHERE p.systemUser = :systemUser", Person.class);
+        TypedQuery<Person> query = createQuery("SELECT p FROM Person p WHERE p.systemUser = :systemUser",
+                Person.class);
         query.setParameter("systemUser", systemUser);
         return query.getSingleResult();
     }
