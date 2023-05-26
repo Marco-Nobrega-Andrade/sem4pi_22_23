@@ -1,11 +1,11 @@
-package eapli.base.meetingmanagement.domain;
+package eapli.base.usermanagement.domain;
 
 import eapli.framework.domain.model.ValueObject;
 
+import javax.persistence.EmbeddedId;
 import java.util.Objects;
 
 public class MeetingOwnerIdentifier implements Comparable<MeetingOwnerIdentifier>, ValueObject {
-
     long idMeetingOwner;
 
     public MeetingOwnerIdentifier(long idMeetingOwner) {

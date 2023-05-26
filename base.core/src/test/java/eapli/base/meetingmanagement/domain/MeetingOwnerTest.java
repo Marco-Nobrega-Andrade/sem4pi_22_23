@@ -3,8 +3,10 @@ package eapli.base.meetingmanagement.domain;
 import eapli.base.courseclasses.domain.Date;
 import eapli.base.courseclasses.domain.Duration;
 import eapli.base.courseclasses.domain.ScheduledDate;
-import eapli.base.meetingmanagement.domain.Factory.MeetingOwnerFactory;
+import eapli.base.usermanagement.domain.builder.MeetingOwnerFactory;
 import eapli.base.usermanagement.domain.BaseRoles;
+import eapli.base.usermanagement.domain.MeetingOwner;
+import eapli.base.usermanagement.domain.MeetingOwnerIdentifier;
 import eapli.base.usermanagement.domain.Person;
 import eapli.base.usermanagement.domain.builder.PersonBuilder;
 import eapli.framework.infrastructure.authz.domain.model.*;
@@ -41,22 +43,8 @@ public class MeetingOwnerTest {
         Person gold = new PersonBuilder().withID(1)
                 .withSystemUser(getNewDummyUser()).withfullName("Breach").build();
 
-        List<Invitation> invitationA = new ArrayList<>();
-        invitationA.add(new Invitation(new InvitationIdentifier(1), new ResponseStatus(false), platinum));
-        List<Invitation> invitationB = new ArrayList<>();
-        invitationB.add(new Invitation(new InvitationIdentifier(2), new ResponseStatus(false), gold));
-
-        Meeting meeting = new Meeting(new MeetingIdentifier(100),
-                new ScheduledDate(new Duration(10), new Date(new java.util.Date())), invitationA);
-        Meeting meeting2 = new Meeting(new MeetingIdentifier(101),
-                new ScheduledDate(new Duration(25), new Date(new java.util.Date())), invitationB);
-
-        List<Meeting> meetingList = new ArrayList<>();
-
-        meetingList.add(meeting);meetingList.add(meeting2);
-
-        MeetingOwner meetingOwner = new MeetingOwner(new MeetingOwnerIdentifier(1),meetingList,platinum);
-        MeetingOwner meetingOwner2 = new MeetingOwner(new MeetingOwnerIdentifier(1),meetingList,gold);
+        MeetingOwner meetingOwner = new MeetingOwner(new MeetingOwnerIdentifier(1),platinum);
+        MeetingOwner meetingOwner2 = new MeetingOwner(new MeetingOwnerIdentifier(1),gold);
 
         assertFalse(meetingOwner.sameAs(meetingOwner2));//cause the person is different
     }
@@ -68,21 +56,8 @@ public class MeetingOwnerTest {
         Person silver = new PersonBuilder().withID(1)
                 .withSystemUser(getNewDummyUser()).withfullName("Yoru").build();
 
-
-        List<Invitation> invitationA = new ArrayList<>();
-        invitationA.add(new Invitation(new InvitationIdentifier(2), new ResponseStatus(false), silver));
-
-        Meeting meeting = new Meeting(new MeetingIdentifier(100),
-                new ScheduledDate(new Duration(10), new Date(new java.util.Date())), invitationA);
-        Meeting meeting2 = new Meeting(new MeetingIdentifier(101),
-                new ScheduledDate(new Duration(25), new Date(new java.util.Date())), invitationA);
-
-        List<Meeting> meetingList = new ArrayList<>();
-
-        meetingList.add(meeting);meetingList.add(meeting2);
-
-        MeetingOwner meetingOwner = new MeetingOwner(new MeetingOwnerIdentifier(1),meetingList,silver);
-        MeetingOwner meetingOwner2 = new MeetingOwner(new MeetingOwnerIdentifier(1),meetingList,silver);
+        MeetingOwner meetingOwner = new MeetingOwner(new MeetingOwnerIdentifier(1),silver);
+        MeetingOwner meetingOwner2 = new MeetingOwner(new MeetingOwnerIdentifier(1),silver);
 
         assertTrue(meetingOwner.sameAs(meetingOwner2));
     }
@@ -96,22 +71,8 @@ public class MeetingOwnerTest {
         Person iron = new PersonBuilder().withID(1)
                 .withSystemUser(getNewDummyUser()).withfullName("Astra").build();
 
-        List<Invitation> invitationA = new ArrayList<>();
-        invitationA.add(new Invitation(new InvitationIdentifier(1), new ResponseStatus(false), bronze));
-        List<Invitation> invitationB = new ArrayList<>();
-        invitationB.add(new Invitation(new InvitationIdentifier(2), new ResponseStatus(false), iron));
-
-        Meeting meeting = new Meeting(new MeetingIdentifier(100),
-                new ScheduledDate(new Duration(10), new Date(new java.util.Date())), invitationA);
-        Meeting meeting2 = new Meeting(new MeetingIdentifier(101),
-                new ScheduledDate(new Duration(25), new Date(new java.util.Date())), invitationB);
-
-        List<Meeting> meetingList = new ArrayList<>();
-
-        meetingList.add(meeting);meetingList.add(meeting2);
-
-        MeetingOwner meetingOwner = new MeetingOwner(new MeetingOwnerIdentifier(1),meetingList,bronze);
-        MeetingOwner meetingOwner2 = new MeetingOwner(new MeetingOwnerIdentifier(2),meetingList,iron);
+        MeetingOwner meetingOwner = new MeetingOwner(new MeetingOwnerIdentifier(1),bronze);
+        MeetingOwner meetingOwner2 = new MeetingOwner(new MeetingOwnerIdentifier(2),iron);
 
         assertFalse(meetingOwner.sameAs(meetingOwner2));//cause the id is different
     }
@@ -121,20 +82,7 @@ public class MeetingOwnerTest {
         Person jgDiff = new PersonBuilder().withID(1)
                 .withSystemUser(getNewDummyUser()).withfullName("Warwick").build();
 
-
-        List<Invitation> invitationA = new ArrayList<>();
-        invitationA.add(new Invitation(new InvitationIdentifier(2), new ResponseStatus(false), jgDiff));
-
-        Meeting meeting = new Meeting(new MeetingIdentifier(100),
-                new ScheduledDate(new Duration(10), new Date(new java.util.Date())), invitationA);
-        Meeting meeting2 = new Meeting(new MeetingIdentifier(101),
-                new ScheduledDate(new Duration(25), new Date(new java.util.Date())), invitationA);
-
-        List<Meeting> meetingList = new ArrayList<>();
-
-        meetingList.add(meeting);meetingList.add(meeting2);
-
-        MeetingOwner meetingOwner = new MeetingOwner(new MeetingOwnerIdentifier(1),meetingList,jgDiff);
+        MeetingOwner meetingOwner = new MeetingOwner(new MeetingOwnerIdentifier(1),jgDiff);
 
         assertTrue(meetingOwner.sameAs(meetingOwner));
     }
@@ -144,22 +92,9 @@ public class MeetingOwnerTest {
         Person supDiff = new PersonBuilder().withID(1)
                 .withSystemUser(getNewDummyUser()).withfullName("Lux").build();
 
+        MeetingOwner meetingOwner = new MeetingOwner(new MeetingOwnerIdentifier(1),supDiff);
 
-        List<Invitation> invitationA = new ArrayList<>();
-        invitationA.add(new Invitation(new InvitationIdentifier(2), new ResponseStatus(false), supDiff));
-
-        Meeting meeting = new Meeting(new MeetingIdentifier(100),
-                new ScheduledDate(new Duration(10), new Date(new java.util.Date())), invitationA);
-        Meeting meeting2 = new Meeting(new MeetingIdentifier(101),
-                new ScheduledDate(new Duration(25), new Date(new java.util.Date())), invitationA);
-
-        List<Meeting> meetingList = new ArrayList<>();
-
-        meetingList.add(meeting);meetingList.add(meeting2);
-
-        MeetingOwner meetingOwner = new MeetingOwner(new MeetingOwnerIdentifier(1),meetingList,supDiff);
-
-        assertFalse(meetingOwner.sameAs(meeting));
+        assertFalse(meetingOwner.sameAs(supDiff));
     }
 
     @Test
@@ -167,22 +102,14 @@ public class MeetingOwnerTest {
         Person topDiff = new PersonBuilder().withID(1)
                 .withSystemUser(getNewDummyUser()).withfullName("Lux").build();
 
+        MeetingOwner meetingOwner = new MeetingOwner(new MeetingOwnerIdentifier(1),topDiff);
 
         List<Invitation> invitationA = new ArrayList<>();
-        invitationA.add(new Invitation(new InvitationIdentifier(2), new ResponseStatus(false), topDiff));
+        invitationA.add(new Invitation(new InvitationIdentifier(2), new ResponseStatus(ResponseStatusValue.PENDING), topDiff));
 
         Meeting meeting = new Meeting(new MeetingIdentifier(100),
-                new ScheduledDate(new Duration(10), new Date(new java.util.Date())), invitationA);
-        Meeting meeting2 = new Meeting(new MeetingIdentifier(101),
-                new ScheduledDate(new Duration(25), new Date(new java.util.Date())), invitationA);
+                new ScheduledDate(new Duration(10), new Date(new java.util.Date())),meetingOwner,invitationA);
 
-        List<Meeting> meetingList = new ArrayList<>();
-
-        meetingList.add(meeting);
-
-        MeetingOwner meetingOwner = new MeetingOwner(new MeetingOwnerIdentifier(1),meetingList,topDiff);
-        meetingOwner.addMeeting(meeting2);
-
-        assertTrue(meetingOwner.hasMeeting(meeting2));
+        assertTrue(meeting.isMeetingOwner(meetingOwner));
     }
 }

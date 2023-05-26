@@ -4,6 +4,7 @@ import eapli.base.usermanagement.domain.ID_Person;
 import eapli.base.usermanagement.domain.Person;
 import eapli.base.usermanagement.repositories.PersonRepository;
 import eapli.framework.general.domain.model.EmailAddress;
+import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
 
 import java.util.HashMap;
@@ -21,6 +22,11 @@ public class InMemoryPersonRepository extends InMemoryDomainRepository<Person, I
 
     @Override
     public List<Person> findAllPersonsWhoMatch(List<EmailAddress> email) {
+        return null;
+    }
+
+    @Override
+    public Person findPersonBySystemUser(SystemUser systemUser) {
         return null;
     }
 

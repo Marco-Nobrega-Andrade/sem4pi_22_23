@@ -192,6 +192,11 @@ public class Course implements AggregateRoot<CourseIdentifier> {
         return true;
     }
 
+    public boolean addFormativeExam(FormativeExam formativeExam){
+        formativeExams.add(formativeExam);
+        return true;
+    }
+
     public boolean hasTeacherInList(List<Teacher> teacherList) {
         return this.teachersList.equals(teacherList);
     }
