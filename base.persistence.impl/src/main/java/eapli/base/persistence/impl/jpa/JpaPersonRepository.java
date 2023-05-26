@@ -6,8 +6,10 @@ import eapli.base.usermanagement.domain.ID_Person;
 import eapli.base.usermanagement.domain.Person;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.general.domain.model.EmailAddress;
+import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
+import javax.persistence.TypedQuery;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,5 +38,12 @@ public class JpaPersonRepository extends JpaAutoTxRepository<Person, ID_Person,I
                 .setParameter("email", email).getResultList();
     }
 
+    @Override
+    public Person findPersonBySystemUser(SystemUser systemUser) {
+        TypedQuery<Person> query = createQuery("SELECT p FROM Person p " +
+                "WHERE p.systemUser = :systemUser", Person.class);
+        query.setParameter("systemUser", systemUser);
+        return query.getSingleResult();
+    }
 
 }
