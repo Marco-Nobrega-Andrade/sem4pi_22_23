@@ -67,4 +67,8 @@ public class Meeting implements AggregateRoot<MeetingIdentifier> {
         this.meetingState = new MeetingState(false);
         return true;
     }
+
+    public long returnMeetingIdentifier(){
+        return idMeeting.returnCourseIdentifierString();
+    }
 }
