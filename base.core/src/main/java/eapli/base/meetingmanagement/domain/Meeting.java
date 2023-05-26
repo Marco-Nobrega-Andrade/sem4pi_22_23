@@ -11,6 +11,8 @@ public class Meeting implements AggregateRoot<MeetingIdentifier> {
     @EmbeddedId
     private MeetingIdentifier idMeeting;
     private ScheduledDate scheduledDate;
+
+    private MeetingState meetingState;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Invitation> invitation;
     @OneToOne(cascade = CascadeType.ALL)
@@ -22,6 +24,7 @@ public class Meeting implements AggregateRoot<MeetingIdentifier> {
         this.scheduledDate = scheduledDate;
         this.invitation = invitation;
         this.meetingOwner = meetingOwner;
+        this.meetingState = new MeetingState(true);
     }
 
     protected Meeting() {
@@ -59,5 +62,9 @@ public class Meeting implements AggregateRoot<MeetingIdentifier> {
 
     public boolean isMeetingOwner(MeetingOwner meetingOwner) {
         return this.meetingOwner.sameAs(meetingOwner);
+    }
+    public boolean cancelMeeting(){
+        this.meetingState = new MeetingState(false);
+        return true;
     }
 }
