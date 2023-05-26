@@ -9,8 +9,8 @@ public class ScheduleMeetingController {
 
     ScheduleMeetingService theService = new ScheduleMeetingService();
 
-    public void scheduledMeeting(List<String> emails, Date date, int duration) {
+    public boolean scheduledMeeting(List<String> emails, Date date, int duration) {
         // TODO
-        theService.scheduledMeeting(emails, date, duration);
+        return theService.scheduledMeeting(emails, date, duration);
     }
 }
