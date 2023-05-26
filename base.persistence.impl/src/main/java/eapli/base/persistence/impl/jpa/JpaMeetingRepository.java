@@ -1,19 +1,15 @@
 package eapli.base.persistence.impl.jpa;
 
 import eapli.base.Application;
-import eapli.base.courseclasses.domain.Date;
 import eapli.base.meetingmanagement.domain.Meeting;
 import eapli.base.meetingmanagement.domain.MeetingIdentifier;
-import eapli.base.meetingmanagement.domain.MeetingOwner;
+import eapli.base.usermanagement.domain.MeetingOwner;
 import eapli.base.meetingmanagement.repositories.MeetingRepository;
 import eapli.base.usermanagement.domain.Person;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 public class JpaMeetingRepository extends JpaAutoTxRepository<Meeting, MeetingIdentifier,MeetingIdentifier> implements MeetingRepository {
 

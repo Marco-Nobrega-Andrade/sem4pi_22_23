@@ -2,22 +2,30 @@ package eapli.base.meetingmanagement.domain;
 
 import eapli.framework.domain.model.ValueObject;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.util.Objects;
 
 public class ResponseStatus implements ValueObject {
+    @Enumerated(EnumType.STRING)
+    private ResponseStatusValue status;
 
-    private boolean status;
-
-    public ResponseStatus(boolean status) {
+    public ResponseStatus(ResponseStatusValue status) {
         this.status = status;
     }
 
+    public ResponseStatus(String status) {
+        this.status = ResponseStatusValue.valueOf(status);
+    }
     protected ResponseStatus() {
         //for ORM
     }
 
-    protected boolean returnResponseStatus() {
-        return status;
+    public String returnResponseStatus() {
+        return status.toString();
+    }
+    public int returnResponseStatusInt(){
+        return status.getState();
     }
 
     @Override

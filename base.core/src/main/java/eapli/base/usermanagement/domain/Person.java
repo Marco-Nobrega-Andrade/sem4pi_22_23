@@ -25,6 +25,9 @@ public class Person implements AggregateRoot<ID_Person> {
     @OneToOne(cascade = CascadeType.ALL)
     private Student student;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private BoardOwner boardOwner;
+
     public Person(final SystemUser user, final FullName fullName, ID_Person id) {
         if (fullName == null || user == null || id == null) {
             throw new IllegalArgumentException();
@@ -115,5 +118,16 @@ public class Person implements AggregateRoot<ID_Person> {
     }
     public boolean isATeacher() {
         return this.teacher != null;
+    }
+
+    public boolean addBoardOwner(BoardOwner boardOwner){
+        if(isBoardOwner()) return false;
+        this.boardOwner=boardOwner;
+        return true;
+    }
+
+    public boolean isBoardOwner(){
+        if(boardOwner!=null) return true;
+        return false;
     }
 }

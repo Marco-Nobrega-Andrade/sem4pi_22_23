@@ -1,9 +1,10 @@
-package eapli.base.board.domain;
+package eapli.base.usermanagement.domain;
 
-import eapli.base.usermanagement.domain.Person;
+import eapli.base.board.domain.Board;
 import eapli.framework.domain.model.AggregateRoot;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 @Entity
@@ -12,18 +13,15 @@ public class BoardOwner implements AggregateRoot<BoardOwnerId> {
     @EmbeddedId
     private BoardOwnerId boardOwnerId;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private Person person;
-
     @OneToMany(cascade = CascadeType.ALL)
-    private List<Board> boardList;
+    private List<Board> boardList = new ArrayList<>();
 
-    public BoardOwner(BoardOwnerId boardOwnerId, Person person){
-        if(boardOwnerId == null || person == null){
+    protected BoardOwner(BoardOwnerId boardOwnerId, Board board){
+        if(boardOwnerId == null){
             throw new IllegalArgumentException("Board Owner cannot be created with null Value Objects");
         }
         this.boardOwnerId = boardOwnerId;
-        this.person = person;
+        addBoard(board);
     }
 
     protected BoardOwner(){
@@ -60,7 +58,9 @@ public class BoardOwner implements AggregateRoot<BoardOwnerId> {
     }
 
     public boolean addBoard(Board board){
-        if(boardList.contains(board)) return false;
+        if(boardList.contains(board)){
+            throw new IllegalArgumentException("The Board is already associated with this BoardOwner");
+        }
         boardList.add(board);
         return true;
     }

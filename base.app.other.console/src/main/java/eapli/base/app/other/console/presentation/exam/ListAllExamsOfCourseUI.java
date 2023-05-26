@@ -35,12 +35,18 @@ public class ListAllExamsOfCourseUI extends AbstractUI {
         int idx = Console.readOption(1, size, 0);
 
         if (idx != 0){
+            
             try {
                 List<ExamDTOWithExamIdDateInterval> examDTOWithExamIdDateIntervalList = listAllExamsOfCourseController.listAllExamsFromCourse(courseDTOWithIdList.get(idx - 1));
                 System.out.println("----------------Exams List---------------");
                 for (ExamDTOWithExamIdDateInterval examDTOWithExamIdDateInterval : examDTOWithExamIdDateIntervalList) {
                     System.out.println(examDTOWithExamIdDateInterval);
                 }
+            }catch (Exception e){
+                System.out.println(e.getMessage());
+            }
+
+            try{
                 List<FormativeExamDTOWithId> formativeExamDTOWithIdList = listAllExamsOfCourseController.listFormativeExamsFromCourse(courseDTOWithIdList.get(idx - 1));
                 System.out.println("---------Formative Exams List------------");
                 for (FormativeExamDTOWithId formativeExamDTOWithId : formativeExamDTOWithIdList) {
@@ -49,6 +55,7 @@ public class ListAllExamsOfCourseUI extends AbstractUI {
             }catch (Exception e){
                 System.out.println(e.getMessage());
             }
+
         }
 
         return true;

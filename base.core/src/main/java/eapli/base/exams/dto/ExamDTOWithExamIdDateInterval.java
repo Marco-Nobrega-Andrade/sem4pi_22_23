@@ -14,8 +14,8 @@ public class ExamDTOWithExamIdDateInterval {
 
     @Override
     public String toString() {
-        return "examId='" + examId +
-                ", initialDate='" + initialDate +
-                ", finalDate='" + finalDate;
+        return examId +
+                initialDate +
+                finalDate;
     }
 }

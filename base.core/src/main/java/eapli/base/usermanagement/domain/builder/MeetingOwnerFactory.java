@@ -1,8 +1,8 @@
-package eapli.base.meetingmanagement.domain.Factory;
+package eapli.base.usermanagement.domain.builder;
 
 import eapli.base.meetingmanagement.domain.Meeting;
-import eapli.base.meetingmanagement.domain.MeetingOwner;
-import eapli.base.meetingmanagement.domain.MeetingOwnerIdentifier;
+import eapli.base.usermanagement.domain.MeetingOwner;
+import eapli.base.usermanagement.domain.MeetingOwnerIdentifier;
 import eapli.base.usermanagement.domain.Person;
 
 import java.util.List;
@@ -23,6 +23,6 @@ public class MeetingOwnerFactory {
             throw new IllegalArgumentException("The id must be greater than 0");
         }
 
-       return new MeetingOwner(new MeetingOwnerIdentifier(id_MeetingOwner), meetingList, person);
+       return new MeetingOwner(new MeetingOwnerIdentifier(id_MeetingOwner), person);
     }
 }

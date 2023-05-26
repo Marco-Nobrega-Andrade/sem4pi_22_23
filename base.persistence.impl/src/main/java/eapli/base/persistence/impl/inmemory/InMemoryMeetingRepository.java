@@ -1,15 +1,13 @@
 package eapli.base.persistence.impl.inmemory;
 
-import eapli.base.courseclasses.domain.Date;
 import eapli.base.meetingmanagement.domain.Meeting;
 import eapli.base.meetingmanagement.domain.MeetingIdentifier;
-import eapli.base.meetingmanagement.domain.MeetingOwner;
+import eapli.base.usermanagement.domain.MeetingOwner;
 import eapli.base.meetingmanagement.repositories.MeetingRepository;
 import eapli.base.usermanagement.domain.Person;
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 public class InMemoryMeetingRepository extends InMemoryDomainRepository<Meeting, MeetingIdentifier>
         implements MeetingRepository {
