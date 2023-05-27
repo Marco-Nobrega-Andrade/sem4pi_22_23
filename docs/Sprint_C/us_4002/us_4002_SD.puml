@@ -28,6 +28,9 @@ deactivate MR
 CMS -> M : cancelMeeting()
 activate M
 return true
+CMS -> MR : save(meeting)
+activate MR
+deactivate MR
 deactivate CMS
 deactivate CTRL
 
