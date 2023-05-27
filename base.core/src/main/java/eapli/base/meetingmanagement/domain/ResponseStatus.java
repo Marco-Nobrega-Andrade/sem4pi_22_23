@@ -2,10 +2,12 @@ package eapli.base.meetingmanagement.domain;
 
 import eapli.framework.domain.model.ValueObject;
 
+import javax.persistence.Embeddable;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import java.util.Objects;
 
+@Embeddable
 public class ResponseStatus implements ValueObject {
     @Enumerated(EnumType.STRING)
     private ResponseStatusValue status;
