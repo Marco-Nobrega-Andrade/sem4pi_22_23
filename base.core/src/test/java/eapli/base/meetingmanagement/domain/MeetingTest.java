@@ -30,6 +30,21 @@ public class MeetingTest {
     private SystemUser getNewDummyUser() {
         return dummyUser("dummy", BaseRoles.MANAGER);
     }
+    private Meeting dummyMeeting(){
+        Person diamond = new PersonBuilder().withID(1)
+                .withSystemUser(getNewDummyUser()).withfullName("Viper").build();
+        List<Long> invitations = new ArrayList<>();
+        invitations.add(1L);
+
+        java.util.Date date = new java.util.Date(1000, Calendar.NOVEMBER,9,10,10,10);
+        MeetingFactory factory = new MeetingFactory();
+        List<Person> peopleList = new ArrayList<>();
+        peopleList.add(diamond);
+        return factory.build(777, diamond, 1,peopleList ,invitations,1,date);
+    }
+    public Meeting getNewDummyMeeting(){
+        return dummyMeeting();
+    }
 
     @Test(expected = IllegalArgumentException.class)
     public void verifyMeetingOwnerWithNullValues() {
@@ -170,4 +185,9 @@ public class MeetingTest {
         assertFalse(b);
     }
 
+    @Test
+    public void verifyIfWasCanceled(){
+        Meeting meeting = getNewDummyMeeting();
+        assertTrue(meeting.cancelMeeting());
+    }
 }
