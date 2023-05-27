@@ -16,60 +16,6 @@ public interface FormativeExamGrammarVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitProg(FormativeExamGrammarParser.ProgContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link FormativeExamGrammarParser#points}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitPoints(FormativeExamGrammarParser.PointsContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link FormativeExamGrammarParser#phrase}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitPhrase(FormativeExamGrammarParser.PhraseContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link FormativeExamGrammarParser#middle_phrase}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitMiddle_phrase(FormativeExamGrammarParser.Middle_phraseContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link FormativeExamGrammarParser#list_with_title}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitList_with_title(FormativeExamGrammarParser.List_with_titleContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link FormativeExamGrammarParser#title_list}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitTitle_list(FormativeExamGrammarParser.Title_listContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link FormativeExamGrammarParser#list}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitList(FormativeExamGrammarParser.ListContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link FormativeExamGrammarParser#topic_list}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitTopic_list(FormativeExamGrammarParser.Topic_listContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link FormativeExamGrammarParser#feedback}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitFeedback(FormativeExamGrammarParser.FeedbackContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link FormativeExamGrammarParser#question}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitQuestion(FormativeExamGrammarParser.QuestionContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link FormativeExamGrammarParser#multiple_choice_question}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -112,11 +58,11 @@ public interface FormativeExamGrammarVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitSelect_missing_words(FormativeExamGrammarParser.Select_missing_wordsContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link FormativeExamGrammarParser#missing_word_question}.
+	 * Visit a parse tree produced by {@link FormativeExamGrammarParser#missing_word_phrase}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitMissing_word_question(FormativeExamGrammarParser.Missing_word_questionContext ctx);
+	T visitMissing_word_phrase(FormativeExamGrammarParser.Missing_word_phraseContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link FormativeExamGrammarParser#missing_word_solution}.
 	 * @param ctx the parse tree
@@ -153,4 +99,52 @@ public interface FormativeExamGrammarVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitNumerical_answer(FormativeExamGrammarParser.Numerical_answerContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link FormativeExamGrammarParser#question}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitQuestion(FormativeExamGrammarParser.QuestionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link FormativeExamGrammarParser#points}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPoints(FormativeExamGrammarParser.PointsContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link FormativeExamGrammarParser#feedback}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFeedback(FormativeExamGrammarParser.FeedbackContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link FormativeExamGrammarParser#phrase}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPhrase(FormativeExamGrammarParser.PhraseContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link FormativeExamGrammarParser#list_with_title}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitList_with_title(FormativeExamGrammarParser.List_with_titleContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link FormativeExamGrammarParser#title_list}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTitle_list(FormativeExamGrammarParser.Title_listContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link FormativeExamGrammarParser#list}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitList(FormativeExamGrammarParser.ListContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link FormativeExamGrammarParser#topic_list}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTopic_list(FormativeExamGrammarParser.Topic_listContext ctx);
 }

@@ -17,96 +17,6 @@ public interface FormativeExamGrammarListener extends ParseTreeListener {
 	 */
 	void exitProg(FormativeExamGrammarParser.ProgContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link FormativeExamGrammarParser#points}.
-	 * @param ctx the parse tree
-	 */
-	void enterPoints(FormativeExamGrammarParser.PointsContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link FormativeExamGrammarParser#points}.
-	 * @param ctx the parse tree
-	 */
-	void exitPoints(FormativeExamGrammarParser.PointsContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link FormativeExamGrammarParser#phrase}.
-	 * @param ctx the parse tree
-	 */
-	void enterPhrase(FormativeExamGrammarParser.PhraseContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link FormativeExamGrammarParser#phrase}.
-	 * @param ctx the parse tree
-	 */
-	void exitPhrase(FormativeExamGrammarParser.PhraseContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link FormativeExamGrammarParser#middle_phrase}.
-	 * @param ctx the parse tree
-	 */
-	void enterMiddle_phrase(FormativeExamGrammarParser.Middle_phraseContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link FormativeExamGrammarParser#middle_phrase}.
-	 * @param ctx the parse tree
-	 */
-	void exitMiddle_phrase(FormativeExamGrammarParser.Middle_phraseContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link FormativeExamGrammarParser#list_with_title}.
-	 * @param ctx the parse tree
-	 */
-	void enterList_with_title(FormativeExamGrammarParser.List_with_titleContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link FormativeExamGrammarParser#list_with_title}.
-	 * @param ctx the parse tree
-	 */
-	void exitList_with_title(FormativeExamGrammarParser.List_with_titleContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link FormativeExamGrammarParser#title_list}.
-	 * @param ctx the parse tree
-	 */
-	void enterTitle_list(FormativeExamGrammarParser.Title_listContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link FormativeExamGrammarParser#title_list}.
-	 * @param ctx the parse tree
-	 */
-	void exitTitle_list(FormativeExamGrammarParser.Title_listContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link FormativeExamGrammarParser#list}.
-	 * @param ctx the parse tree
-	 */
-	void enterList(FormativeExamGrammarParser.ListContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link FormativeExamGrammarParser#list}.
-	 * @param ctx the parse tree
-	 */
-	void exitList(FormativeExamGrammarParser.ListContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link FormativeExamGrammarParser#topic_list}.
-	 * @param ctx the parse tree
-	 */
-	void enterTopic_list(FormativeExamGrammarParser.Topic_listContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link FormativeExamGrammarParser#topic_list}.
-	 * @param ctx the parse tree
-	 */
-	void exitTopic_list(FormativeExamGrammarParser.Topic_listContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link FormativeExamGrammarParser#feedback}.
-	 * @param ctx the parse tree
-	 */
-	void enterFeedback(FormativeExamGrammarParser.FeedbackContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link FormativeExamGrammarParser#feedback}.
-	 * @param ctx the parse tree
-	 */
-	void exitFeedback(FormativeExamGrammarParser.FeedbackContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link FormativeExamGrammarParser#question}.
-	 * @param ctx the parse tree
-	 */
-	void enterQuestion(FormativeExamGrammarParser.QuestionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link FormativeExamGrammarParser#question}.
-	 * @param ctx the parse tree
-	 */
-	void exitQuestion(FormativeExamGrammarParser.QuestionContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link FormativeExamGrammarParser#multiple_choice_question}.
 	 * @param ctx the parse tree
 	 */
@@ -177,15 +87,15 @@ public interface FormativeExamGrammarListener extends ParseTreeListener {
 	 */
 	void exitSelect_missing_words(FormativeExamGrammarParser.Select_missing_wordsContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link FormativeExamGrammarParser#missing_word_question}.
+	 * Enter a parse tree produced by {@link FormativeExamGrammarParser#missing_word_phrase}.
 	 * @param ctx the parse tree
 	 */
-	void enterMissing_word_question(FormativeExamGrammarParser.Missing_word_questionContext ctx);
+	void enterMissing_word_phrase(FormativeExamGrammarParser.Missing_word_phraseContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link FormativeExamGrammarParser#missing_word_question}.
+	 * Exit a parse tree produced by {@link FormativeExamGrammarParser#missing_word_phrase}.
 	 * @param ctx the parse tree
 	 */
-	void exitMissing_word_question(FormativeExamGrammarParser.Missing_word_questionContext ctx);
+	void exitMissing_word_phrase(FormativeExamGrammarParser.Missing_word_phraseContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link FormativeExamGrammarParser#missing_word_solution}.
 	 * @param ctx the parse tree
@@ -246,4 +156,84 @@ public interface FormativeExamGrammarListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitNumerical_answer(FormativeExamGrammarParser.Numerical_answerContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link FormativeExamGrammarParser#question}.
+	 * @param ctx the parse tree
+	 */
+	void enterQuestion(FormativeExamGrammarParser.QuestionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FormativeExamGrammarParser#question}.
+	 * @param ctx the parse tree
+	 */
+	void exitQuestion(FormativeExamGrammarParser.QuestionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link FormativeExamGrammarParser#points}.
+	 * @param ctx the parse tree
+	 */
+	void enterPoints(FormativeExamGrammarParser.PointsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FormativeExamGrammarParser#points}.
+	 * @param ctx the parse tree
+	 */
+	void exitPoints(FormativeExamGrammarParser.PointsContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link FormativeExamGrammarParser#feedback}.
+	 * @param ctx the parse tree
+	 */
+	void enterFeedback(FormativeExamGrammarParser.FeedbackContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FormativeExamGrammarParser#feedback}.
+	 * @param ctx the parse tree
+	 */
+	void exitFeedback(FormativeExamGrammarParser.FeedbackContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link FormativeExamGrammarParser#phrase}.
+	 * @param ctx the parse tree
+	 */
+	void enterPhrase(FormativeExamGrammarParser.PhraseContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FormativeExamGrammarParser#phrase}.
+	 * @param ctx the parse tree
+	 */
+	void exitPhrase(FormativeExamGrammarParser.PhraseContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link FormativeExamGrammarParser#list_with_title}.
+	 * @param ctx the parse tree
+	 */
+	void enterList_with_title(FormativeExamGrammarParser.List_with_titleContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FormativeExamGrammarParser#list_with_title}.
+	 * @param ctx the parse tree
+	 */
+	void exitList_with_title(FormativeExamGrammarParser.List_with_titleContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link FormativeExamGrammarParser#title_list}.
+	 * @param ctx the parse tree
+	 */
+	void enterTitle_list(FormativeExamGrammarParser.Title_listContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FormativeExamGrammarParser#title_list}.
+	 * @param ctx the parse tree
+	 */
+	void exitTitle_list(FormativeExamGrammarParser.Title_listContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link FormativeExamGrammarParser#list}.
+	 * @param ctx the parse tree
+	 */
+	void enterList(FormativeExamGrammarParser.ListContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FormativeExamGrammarParser#list}.
+	 * @param ctx the parse tree
+	 */
+	void exitList(FormativeExamGrammarParser.ListContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link FormativeExamGrammarParser#topic_list}.
+	 * @param ctx the parse tree
+	 */
+	void enterTopic_list(FormativeExamGrammarParser.Topic_listContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FormativeExamGrammarParser#topic_list}.
+	 * @param ctx the parse tree
+	 */
+	void exitTopic_list(FormativeExamGrammarParser.Topic_listContext ctx);
 }
