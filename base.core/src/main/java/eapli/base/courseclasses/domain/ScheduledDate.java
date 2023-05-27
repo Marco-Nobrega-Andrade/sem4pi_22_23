@@ -61,7 +61,7 @@ public class ScheduledDate implements ValueObject {
 
     public String returnDateString(){
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        return dateFormat.format(this.date);
+        return dateFormat.format(this.date.returnDate());
     }
     @Override
     public boolean equals(Object o) {

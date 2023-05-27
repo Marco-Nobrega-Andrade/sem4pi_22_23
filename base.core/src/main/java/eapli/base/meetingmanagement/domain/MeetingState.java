@@ -2,10 +2,11 @@ package eapli.base.meetingmanagement.domain;
 
 import eapli.framework.domain.model.ValueObject;
 
+import javax.persistence.Embeddable;
 import java.util.Objects;
-
+@Embeddable
 public class MeetingState implements ValueObject {
-    boolean isActive;
+    private boolean isActive;
     MeetingState(boolean isActive){
         this.isActive = isActive;
     }
