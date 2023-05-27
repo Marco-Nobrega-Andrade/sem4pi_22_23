@@ -7,6 +7,7 @@ import eapli.base.usermanagement.domain.MeetingOwner;
 import eapli.base.meetingmanagement.repositories.MeetingRepository;
 import eapli.base.usermanagement.domain.Person;
 import eapli.framework.domain.repositories.TransactionalContext;
+import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
 import java.util.List;
@@ -38,6 +39,12 @@ public class JpaMeetingRepository extends JpaAutoTxRepository<Meeting, MeetingId
         return createQuery("SELECT m FROM MeetingOwner m " +
                 "WHERE m.person = :person", MeetingOwner.class)
                 .setParameter("person", person).getResultList();
+    }
+
+    @Override
+    public List<Meeting> findAllOwnerMeetings(SystemUser systemUser){
+        return createQuery("SELECT m FROM Meeting m where m.meetingOwner.person IN (SELECT p FROM Person p WHERE p.systemUser = :systemUser) AND m.meetingState.isActive = TRUE", Meeting.class)
+                .setParameter("systemUser", systemUser).getResultList();
     }
 
     @Override

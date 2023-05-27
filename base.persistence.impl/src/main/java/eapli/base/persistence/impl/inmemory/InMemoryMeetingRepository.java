@@ -5,6 +5,7 @@ import eapli.base.meetingmanagement.domain.MeetingIdentifier;
 import eapli.base.usermanagement.domain.MeetingOwner;
 import eapli.base.meetingmanagement.repositories.MeetingRepository;
 import eapli.base.usermanagement.domain.Person;
+import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
 
 import java.util.List;
@@ -24,6 +25,11 @@ public class InMemoryMeetingRepository extends InMemoryDomainRepository<Meeting,
 
     @Override
     public List<MeetingOwner> findIfPersonIsAMeetingOwner(Person person) {
+        return null;
+    }
+
+    @Override
+    public List<Meeting> findAllOwnerMeetings(SystemUser systemUser) {
         return null;
     }
 
