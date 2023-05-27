@@ -11,5 +11,6 @@ public class CancelMeetingService {
         MeetingRepository meetingRepository = PersistenceContext.repositories().meetingRepository();
         Meeting meeting = meetingRepository.ofIdentity(new MeetingIdentifier(meetingDTO.meetingId)).get();
         meeting.cancelMeeting();
+        meetingRepository.save(meeting);
     }
 }
