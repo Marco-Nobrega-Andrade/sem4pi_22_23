@@ -22,7 +22,7 @@ private final ListCourseController listCourseController = new ListCourseControll
             System.out.println("Choose one of the following courses: ");
             for (CourseDTOWithIdTitle courseDTOWithIdTitle :courseDTOWithIdTitleList) {
                 i++;
-                System.out.println(i+". Tittle"+courseDTOWithIdTitle.courseTitle);
+                System.out.println(i+". Tittle: "+courseDTOWithIdTitle.courseTitle);
             }
             int option = Console.readOption(1,courseDTOWithIdTitleList.size(),0);
             CourseDTOWithIdTitle course = courseDTOWithIdTitleList.get(option-1);
