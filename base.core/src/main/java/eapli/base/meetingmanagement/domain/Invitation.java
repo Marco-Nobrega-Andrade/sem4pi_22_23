@@ -32,6 +32,14 @@ public class Invitation implements AggregateRoot<InvitationIdentifier> {
         return status;
     }
 
+    public String returnResponseStatusString(){
+        return status.returnResponseStatus();
+    }
+
+    public String returnPersonNameString(){
+        return person.returnFullNameString();
+    }
+
     @Override
     public boolean sameAs(Object other) {
         if (!(other instanceof Invitation)) {

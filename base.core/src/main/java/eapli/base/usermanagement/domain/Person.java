@@ -69,6 +69,9 @@ public class Person implements AggregateRoot<ID_Person> {
         return this.fullName;
     }
 
+    public String returnFullNameString(){
+        return fullName.toString();
+    }
     @Override
     public boolean sameAs(Object other) {
         if (!(other instanceof Person)) {
