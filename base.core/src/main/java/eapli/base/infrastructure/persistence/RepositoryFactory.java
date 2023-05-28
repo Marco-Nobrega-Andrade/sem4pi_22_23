@@ -20,6 +20,7 @@
  */
 package eapli.base.infrastructure.persistence;
 
+import eapli.base.boardhistory.repositories.BoardHistoryRepository;
 import eapli.base.usermanagement.repositories.BoardOwnerRepository;
 import eapli.base.board.repositories.BoardRepository;
 import eapli.base.clientusermanagement.repositories.ClientUserRepository;
@@ -151,6 +152,10 @@ public interface RepositoryFactory {
     BoardOwnerRepository boardOwnerRepository(TransactionalContext autoTx);
 
     BoardOwnerRepository boardOwnerRepository();
+
+    BoardHistoryRepository boardHistoryRepository(TransactionalContext autoTx);
+
+    BoardHistoryRepository boardHistoryRepository();
     /**
      *
      * @param autoTx

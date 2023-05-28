@@ -2,10 +2,11 @@ package eapli.base.boardhistory.domain;
 
 import eapli.framework.domain.model.ValueObject;
 
+import javax.persistence.Embeddable;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import java.util.Objects;
-
+@Embeddable
 public class Operation implements ValueObject {
 
 @Enumerated(EnumType.STRING)

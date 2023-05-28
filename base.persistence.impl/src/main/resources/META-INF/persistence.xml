@@ -28,6 +28,8 @@
     <class>eapli.base.formativeexams.domain.FormativeExam</class>
     <class>eapli.base.usermanagement.domain.MeetingOwner</class>
     <class>eapli.base.usermanagement.domain.BoardOwner</class>
+    <class>eapli.base.boardhistory.domain.BoardHistory</class>
+    <class>eapli.base.boardhistory.domain.Task</class>
 
     <properties>
       <!--<property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/base"/>-->
