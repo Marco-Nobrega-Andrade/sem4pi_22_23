@@ -22,10 +22,10 @@ activate p
 p -> ui: inserts meeting and ask for list
 activate ui
 ui -> ctrl: create()
-ui -> ctrl: "ListAllInvitationsFromMeeting(MeetingDTO)
+ui -> ctrl: listAllInvitationsFromMeeting(meetingDTO)
 activate ctrl
 ctrl ->service: create()
-ctrl ->  service: ListAllInvitationsFromMeeting(MeetingDTO)
+ctrl ->  service: listAllInvitationsFromMeeting(meetingDTO)
 activate service
 
 service -> persistence: repositories()
@@ -33,13 +33,13 @@ activate persistence
 persistence -> repFactory: create
 persistence --> service: factory
 deactivate persistence
-service -> repFactory: teacherRepository()
+service -> repFactory: invitationRepository()
 activate repFactory
 repFactory -> invRep: create
 repFactory --> service: teacherRepository
 deactivate repFactory
 
-service -> invRep: getInvitationWithIdMeeting(IdMeeting)
+service -> invRep: getInvitationWithIdMeeting(meetingId)
 activate invRep
 invRep --> service: listInvitation
 deactivate invRep
