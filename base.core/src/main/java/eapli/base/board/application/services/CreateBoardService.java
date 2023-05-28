@@ -1,6 +1,10 @@
 package eapli.base.board.application.services;
 
 import eapli.base.board.domain.*;
+import eapli.base.boardhistory.domain.BoardHistory;
+import eapli.base.boardhistory.domain.BoardHistoryBuilder;
+import eapli.base.boardhistory.domain.OperationValue;
+import eapli.base.boardhistory.repositories.BoardHistoryRepository;
 import eapli.base.usermanagement.domain.BoardOwner;
 import eapli.base.usermanagement.domain.BoardOwnerBuilder;
 import eapli.base.usermanagement.domain.BoardOwnerId;
@@ -22,6 +26,7 @@ public class CreateBoardService {
     private final BoardRepository boardRepository = PersistenceContext.repositories().boardRepository();
     private final PersonRepository personRepository = PersistenceContext.repositories().personRepository();
     private final BoardOwnerRepository boardOwnerRepository = PersistenceContext.repositories().boardOwnerRepository();
+    private final BoardHistoryRepository boardHistoryRepository = PersistenceContext.repositories().boardHistoryRepository();
     public boolean createBoard(String boardTitle, int rowNumber, int columnNumber){
 
         BoardBuilder boardBuilder = new BoardBuilder();
@@ -40,19 +45,27 @@ public class CreateBoardService {
         SystemUser systemUser = authz.session().get().authenticatedUser();
         Person person = personRepository.findPersonBySystemUser(systemUser);
         BoardOwnerBuilder boardOwnerBuilder = new BoardOwnerBuilder();
+        BoardOwner boardOwner;
 
         if(person.isBoardOwner()){
-            BoardOwner boardOwner = boardOwnerRepository.findBoardOwnerByPerson();
+            boardOwner = boardOwnerRepository.findBoardOwnerByPerson();
             boardOwner.addBoard(board);
             boardOwnerRepository.save(boardOwner);
         }else {
             long totalOfBoardOwnerIds = boardOwnerRepository.count();
-            BoardOwner boardOwner = boardOwnerBuilder.withBoardOwnerId(new BoardOwnerId(totalOfBoardOwnerIds+1))
+            boardOwner = boardOwnerBuilder.withBoardOwnerId(new BoardOwnerId(totalOfBoardOwnerIds+1))
                     .withBoard(board)
                     .build();
             person.addBoardOwner(boardOwner);
             personRepository.save(person);
         }
+
+        BoardHistoryBuilder boardHistoryBuilder = new BoardHistoryBuilder();
+        BoardHistory boardHistory = boardHistoryBuilder.withBoardHistoryId(boardHistoryRepository.count()+1)
+                .withTask(boardHistoryRepository.getLastTaskId()+1, OperationValue.CREATE, boardOwner)
+                .build();
+
+        boardHistoryRepository.save(boardHistory);
 
         return true;
     }
