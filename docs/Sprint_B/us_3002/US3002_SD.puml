@@ -8,6 +8,7 @@ participant "<<Factory>>\nfactory:RepositoryFactory" as RF
 database "<<Repository>>\nboardRepository\n:BoardRepository" as BR
 database "<<Repository>>\npersonRepository\n:PersonRepository" as PR
 database "<<Repository>>\nboardOwnerRepository\n:BoardOwnerRepository" as BOR
+database "<<Repository>>\nboardHistoryRepository\n:BoardHistoryRepository" as BHR
 participant "<<Domain>>\n:BoardBuilder" as BB
 participant "<<Domain>>\n:List<Cell>" as CL
 participant "<<Domain>>\n:CellBuilder" as CB
@@ -19,6 +20,10 @@ participant UserSession as userSe <<Domain>>
 participant "<<Domain>>\n:BoardOwner" as BO
 participant "<<Domain>>\n:BoardOwnerBuilder" as BOB
 participant "<<Domain>>\nperson\n:Person" as P
+participant "<<Domain>>\n:BoardHistoryBuilder" as BHB
+participant "<<Domain>>\nboardHistory\n:BoardHistory" as BH
+participant "<<Domain>>\n:TaskBuilder" as TB
+participant "<<Domain>>\ntask\n:Task" as T
 
 U -> UI : The user initializes the \nprocess of creating a board
 activate U
@@ -45,6 +50,10 @@ CBSv -> RF : boardOwnerRepository()
 activate RF
 RF -> BOR : create()
 return boardOwnerRepository
+CBSv -> RF : boardHistoryRepository()
+activate RF
+RF -> BHR : create()
+return boardHistoryRepository
 deactivate CBSv
 deactivate CTRL
 UI --> U : The system requests \nthe board relevant data\n(title, rowNumber, columnNumber)
@@ -122,6 +131,16 @@ CBSv -> PR : save(person)
 activate PR
 deactivate PR
 end
+CBSv -> BHB : create()
+CBSv -> BHB : build()
+activate BHB
+BHB -> TB : build()
+activate TB
+TB -> T : create()
+return task
+BHB -> BH : create()
+return boardHistory
+CBSv -> BHR : save(boardHistory)
 end
 activate BR
 deactivate BR
