@@ -26,6 +26,7 @@ package eapli.base.app.user.console.presentation;
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
 import eapli.base.app.common.console.presentation.board.CreateBoardAction;
 import eapli.base.app.common.console.presentation.course.ListCourseAction;
+import eapli.base.app.common.console.presentation.meeting.ListAllInvitationsFromMeetingAction;
 import eapli.base.app.common.console.presentation.meeting.ScheduleMeetingAction;
 import eapli.base.app.user.console.presentation.enrollment.RequestEnrollmentAction;
 import eapli.base.app.user.console.presentation.exams.ListFutureExamsAction;
@@ -78,6 +79,9 @@ class MainMenu extends ClientUserBaseUI {
     // MEETING MENU
     private static final int SCHEDULE_MEETING_OPTION = 1;
 
+    private static final int List_ALL_INVITATIONS = 3;
+
+
     //BOARD MENU
     private static final int CREATE_BOARD_OPTION = 1;
 
@@ -125,6 +129,7 @@ class MainMenu extends ClientUserBaseUI {
         final Menu meetingMenu = new Menu("Meeting  >");
 
         meetingMenu.addItem(SCHEDULE_MEETING_OPTION, "Schedule Meeting", new ScheduleMeetingAction());
+        meetingMenu.addItem(List_ALL_INVITATIONS, "List all Invitations", new ListAllInvitationsFromMeetingAction());
         meetingMenu.addItem(EXIT_OPTION, "Return", Actions.SUCCESS);
 
         return meetingMenu;
