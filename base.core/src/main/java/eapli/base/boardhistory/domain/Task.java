@@ -15,6 +15,9 @@ public class Task{
     private BoardOwner  boardOwner;
 
     protected Task(TaskId taskId, Operation operation, BoardOwner boardOwner){
+        if(taskId == null | operation == null | boardOwner == null){
+            throw new IllegalArgumentException("The task cannot be created with null Value Objects");
+        }
         this.taskId = taskId;
         this.operation = operation;
         this.boardOwner = boardOwner;

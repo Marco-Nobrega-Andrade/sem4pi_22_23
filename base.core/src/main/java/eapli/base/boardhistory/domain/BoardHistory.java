@@ -17,8 +17,11 @@ public class BoardHistory implements AggregateRoot<BoardHistoryId> {
     private List<Task> taskList = new ArrayList<>();
 
     protected BoardHistory(BoardHistoryId boardHistoryId, Task task){
-
+        if(boardHistoryId == null | task == null){
+            throw new IllegalArgumentException("The board history cannot be created with null Value Objects");
+        }
         this.boardHistoryId = boardHistoryId;
+        addTask(task);
     }
 
     protected BoardHistory(){
