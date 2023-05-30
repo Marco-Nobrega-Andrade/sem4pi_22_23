@@ -40,6 +40,13 @@ public class Invitation implements AggregateRoot<InvitationIdentifier> {
         return person.returnFullNameString();
     }
 
+    public boolean updateResponseStatus(String newStatus){
+        if(status.returnResponseStatusInt() != 1) {
+            throw new IllegalArgumentException("Only pending invitations can have its response status updated");
+        }
+        status = new ResponseStatus(newStatus);
+        return true;
+    }
     @Override
     public boolean sameAs(Object other) {
         if (!(other instanceof Invitation)) {
