@@ -36,7 +36,7 @@ deactivate persistence
 service -> repFactory: invitationRepository()
 activate repFactory
 repFactory -> invRep: create
-repFactory --> service: teacherRepository
+repFactory --> service: invitationRepository
 deactivate repFactory
 
 service -> invRep: getInvitationWithIdMeeting(meetingId)
