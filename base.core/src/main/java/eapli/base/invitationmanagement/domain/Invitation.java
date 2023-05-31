@@ -1,7 +1,13 @@
-package eapli.base.meetingmanagement.domain;
+package eapli.base.invitationmanagement.domain;
+
+import eapli.base.meetingmanagement.domain.ResponseStatus;
 import eapli.base.usermanagement.domain.Person;
 import eapli.framework.domain.model.AggregateRoot;
-import javax.persistence.*;
+
+import javax.persistence.CascadeType;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Invitation implements AggregateRoot<InvitationIdentifier> {
