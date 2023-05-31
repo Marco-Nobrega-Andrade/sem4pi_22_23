@@ -2,7 +2,7 @@ package eapli.base.app.common.console.presentation.meeting;
 
 import eapli.base.invitationmanagement.application.ListAllInvitationsFromMeetingController;
 import eapli.base.invitationmanagement.dto.InvitationDTOWithStatusAndPersonName;
-import eapli.base.meetingmanagement.application.ListActiveMeetingsIOwnController;
+import eapli.base.meetingmanagement.application.ListActiveMeetingsIParticipateController;
 import eapli.base.meetingmanagement.dto.MeetingDTOWithIdDate;
 import eapli.framework.presentation.console.AbstractUI;
 import eapli.framework.presentation.console.SelectWidget;
@@ -12,8 +12,8 @@ import java.util.List;
 public class ListAllInvitationsFromMeetingUI extends AbstractUI {
     @Override
     protected boolean doShow() {
-        ListActiveMeetingsIOwnController listActiveMeetingsIOwnController = new ListActiveMeetingsIOwnController();
-        List<MeetingDTOWithIdDate> meetingDTOList = listActiveMeetingsIOwnController.listActiveMeetingsIOwn();
+        ListActiveMeetingsIParticipateController listActiveMeetingsIParticipateController = new ListActiveMeetingsIParticipateController();
+        List<MeetingDTOWithIdDate> meetingDTOList = listActiveMeetingsIParticipateController.listActiveMeetingsIParticipate();
         try {
             if (!meetingDTOList.isEmpty()) {
                 SelectWidget<MeetingDTOWithIdDate> selected = new SelectWidget<>("Select a meeting to cancel.", meetingDTOList, new MeetingDTOWithIdDatePrinter());
