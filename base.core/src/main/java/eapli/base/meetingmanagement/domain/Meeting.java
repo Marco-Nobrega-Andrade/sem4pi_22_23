@@ -19,7 +19,7 @@ public class Meeting implements AggregateRoot<MeetingIdentifier> {
     @OneToOne(cascade = CascadeType.ALL)
     private MeetingOwner meetingOwner;
 
-    public Meeting(MeetingIdentifier idMeeting, ScheduledDate scheduledDate, MeetingOwner meetingOwner,
+    protected Meeting(MeetingIdentifier idMeeting, ScheduledDate scheduledDate, MeetingOwner meetingOwner,
                    List<Invitation> invitation) {
         this.idMeeting = idMeeting;
         this.scheduledDate = scheduledDate;

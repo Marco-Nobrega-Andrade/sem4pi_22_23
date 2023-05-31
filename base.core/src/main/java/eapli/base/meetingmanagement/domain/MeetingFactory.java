@@ -1,4 +1,4 @@
-package eapli.base.meetingmanagement.domain.Factory;
+package eapli.base.meetingmanagement.domain;
 
 import eapli.base.courseclasses.domain.Date;
 import eapli.base.courseclasses.domain.Duration;
