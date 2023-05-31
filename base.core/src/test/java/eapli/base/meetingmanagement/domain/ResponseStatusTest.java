@@ -1,5 +1,7 @@
 package eapli.base.meetingmanagement.domain;
 
+import eapli.base.invitationmanagement.domain.ResponseStatus;
+import eapli.base.invitationmanagement.domain.ResponseStatusValue;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
