@@ -1,4 +1,4 @@
-package eapli.base.meetingmanagement.domain;
+package eapli.base.invitation.management;
 
 import eapli.base.invitationmanagement.domain.ResponseStatus;
 import eapli.base.invitationmanagement.domain.ResponseStatusValue;
