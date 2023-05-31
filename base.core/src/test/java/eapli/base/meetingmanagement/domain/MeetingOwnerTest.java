@@ -4,12 +4,12 @@ import eapli.base.courseclasses.domain.Date;
 import eapli.base.courseclasses.domain.Duration;
 import eapli.base.courseclasses.domain.ScheduledDate;
 import eapli.base.invitationmanagement.domain.Invitation;
-import eapli.base.invitationmanagement.domain.InvitationIdentifier;
-import eapli.base.usermanagement.domain.builder.MeetingOwnerFactory;
+import eapli.base.invitationmanagement.domain.InvitationFactory;
 import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.base.usermanagement.domain.MeetingOwner;
 import eapli.base.usermanagement.domain.MeetingOwnerIdentifier;
 import eapli.base.usermanagement.domain.Person;
+import eapli.base.usermanagement.domain.builder.MeetingOwnerFactory;
 import eapli.base.usermanagement.domain.builder.PersonBuilder;
 import eapli.framework.infrastructure.authz.domain.model.*;
 import org.junit.Test;
@@ -106,8 +106,10 @@ public class MeetingOwnerTest {
 
         MeetingOwner meetingOwner = new MeetingOwner(new MeetingOwnerIdentifier(1),topDiff);
 
+        InvitationFactory invitationFactory = new InvitationFactory();
+
         List<Invitation> invitationA = new ArrayList<>();
-        invitationA.add(new Invitation(new InvitationIdentifier(2), new ResponseStatus(ResponseStatusValue.PENDING), topDiff));
+        invitationA.add(invitationFactory.build(1,topDiff));
 
         Meeting meeting = new Meeting(new MeetingIdentifier(100),
                 new ScheduledDate(new Duration(10), new Date(new java.util.Date())),meetingOwner,invitationA);

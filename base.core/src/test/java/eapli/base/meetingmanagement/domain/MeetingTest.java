@@ -4,7 +4,7 @@ import eapli.base.courseclasses.domain.Date;
 import eapli.base.courseclasses.domain.Duration;
 import eapli.base.courseclasses.domain.ScheduledDate;
 import eapli.base.invitationmanagement.domain.Invitation;
-import eapli.base.invitationmanagement.domain.InvitationIdentifier;
+import eapli.base.invitationmanagement.domain.InvitationFactory;
 import eapli.base.meetingmanagement.domain.Factory.MeetingFactory;
 import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.base.usermanagement.domain.MeetingOwner;
@@ -66,12 +66,12 @@ public class MeetingTest {
         MeetingOwner meetingOwner = new MeetingOwner(new MeetingOwnerIdentifier(1),challenger);
         MeetingOwner meetingOwner2 = new MeetingOwner(new MeetingOwnerIdentifier(1),radiant);
 
+        InvitationFactory invitationFactory = new InvitationFactory();
+
         List<Invitation> invitationA = new ArrayList<>();
-        invitationA.add(new Invitation(new InvitationIdentifier(1),
-                new ResponseStatus(ResponseStatusValue.REJECTED), challenger));
+        invitationA.add(invitationFactory.build(1,challenger));
         List<Invitation> invitationB = new ArrayList<>();
-        invitationB.add(new Invitation(new InvitationIdentifier(2),
-                new ResponseStatus(ResponseStatusValue.REJECTED), radiant));
+        invitationB.add(invitationFactory.build(2,radiant));
 
         Meeting meeting = new Meeting(new MeetingIdentifier(100),
                 new ScheduledDate(new Duration(10),
@@ -95,12 +95,12 @@ public class MeetingTest {
         MeetingOwner meetingOwner = new MeetingOwner(new MeetingOwnerIdentifier(1),grandMaster);
         MeetingOwner meetingOwner2 = new MeetingOwner(new MeetingOwnerIdentifier(1),inmortal);
 
+        InvitationFactory invitationFactory = new InvitationFactory();
+
         List<Invitation> invitationA = new ArrayList<>();
-        invitationA.add(new Invitation(new InvitationIdentifier(1),
-                new ResponseStatus(ResponseStatusValue.REJECTED), grandMaster));
+        invitationA.add(invitationFactory.build(1,grandMaster));
         List<Invitation> invitationB = new ArrayList<>();
-        invitationB.add(new Invitation(new InvitationIdentifier(2),
-                new ResponseStatus(ResponseStatusValue.REJECTED), inmortal));
+        invitationB.add(invitationFactory.build(2,inmortal));
 
         Meeting meeting = new Meeting(new MeetingIdentifier(777),
                 new ScheduledDate(new Duration(10),
@@ -119,9 +119,10 @@ public class MeetingTest {
 
         MeetingOwner meetingOwner = new MeetingOwner(new MeetingOwnerIdentifier(1),master);
 
+        InvitationFactory invitationFactory = new InvitationFactory();
+
         List<Invitation> invitationA = new ArrayList<>();
-        invitationA.add(new Invitation(new InvitationIdentifier(1),
-                new ResponseStatus(ResponseStatusValue.REJECTED), master));
+        invitationA.add(invitationFactory.build(1,master));
 
         Meeting meeting = new Meeting(new MeetingIdentifier(777),
                 new ScheduledDate(new Duration(10),
@@ -137,9 +138,10 @@ public class MeetingTest {
 
         MeetingOwner meetingOwner = new MeetingOwner(new MeetingOwnerIdentifier(1),ascendant);
 
+        InvitationFactory invitationFactory = new InvitationFactory();
 
         List<Invitation> invitationA = new ArrayList<>();
-        invitationA.add(new Invitation(new InvitationIdentifier(1), new ResponseStatus(ResponseStatusValue.REJECTED), ascendant));
+        invitationA.add(invitationFactory.build(1,ascendant));
 
         Meeting meeting = new Meeting(new MeetingIdentifier(777),
                 new ScheduledDate(new Duration(10), new Date(new java.util.Date())),meetingOwner ,invitationA);
@@ -154,8 +156,10 @@ public class MeetingTest {
 
         MeetingOwner meetingOwner = new MeetingOwner(new MeetingOwnerIdentifier(1),immortal);
 
+        InvitationFactory invitationFactory = new InvitationFactory();
+
         List<Invitation> invitationA = new ArrayList<>();
-        invitationA.add(new Invitation(new InvitationIdentifier(1), new ResponseStatus(ResponseStatusValue.REJECTED), immortal));
+        invitationA.add(invitationFactory.build(1,immortal));
 
         java.util.Date date = new java.util.Date(1000, Calendar.NOVEMBER,9,10,10,10);
 
@@ -172,9 +176,10 @@ public class MeetingTest {
 
         MeetingOwner meetingOwner = new MeetingOwner(new MeetingOwnerIdentifier(1),diamond);
 
+        InvitationFactory invitationFactory = new InvitationFactory();
+
         List<Invitation> invitationA = new ArrayList<>();
-        invitationA.add(new Invitation(new InvitationIdentifier(1),
-                new ResponseStatus(ResponseStatusValue.REJECTED), diamond));
+        invitationA.add(invitationFactory.build(1,diamond));
 
         java.util.Date date = new java.util.Date(1000, Calendar.NOVEMBER,9,10,10,10);
 

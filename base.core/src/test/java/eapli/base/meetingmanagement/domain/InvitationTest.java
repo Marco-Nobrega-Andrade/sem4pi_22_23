@@ -1,7 +1,7 @@
 package eapli.base.meetingmanagement.domain;
 
 import eapli.base.invitationmanagement.domain.Invitation;
-import eapli.base.invitationmanagement.domain.InvitationIdentifier;
+import eapli.base.invitationmanagement.domain.InvitationFactory;
 import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.base.usermanagement.domain.Person;
 import eapli.base.usermanagement.domain.builder.PersonBuilder;
@@ -24,7 +24,8 @@ public class InvitationTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void verifyInvitationWithNullValues() {
-        new Invitation(null, null, null);
+        InvitationFactory invitationFactory = new InvitationFactory();
+        invitationFactory.build(0, null);
     }
 
     @Test
@@ -36,8 +37,10 @@ public class InvitationTest {
         Person kingOfAces = new PersonBuilder().withID(1)
                 .withSystemUser(getNewDummyUser()).withfullName("Aurelion").build();
 
-        Invitation invitationA = new Invitation(new InvitationIdentifier(1), new ResponseStatus(ResponseStatusValue.REJECTED), botDiff);
-        Invitation invitationB = new Invitation(new InvitationIdentifier(1), new ResponseStatus(ResponseStatusValue.REJECTED), kingOfAces);
+        InvitationFactory invitationFactory = new InvitationFactory();
+
+        Invitation invitationA = invitationFactory.build(1, botDiff);
+        Invitation invitationB = invitationFactory.build(1, kingOfAces);
 
         assertFalse(invitationA.sameAs(invitationB)); //cause the invitation is the same but the person is different
     }
@@ -48,8 +51,12 @@ public class InvitationTest {
         Person midDiff = new PersonBuilder().withID(1)
                 .withSystemUser(getNewDummyUser()).withfullName("Sylas").build();
 
-        Invitation invitationA = new Invitation(new InvitationIdentifier(1), new ResponseStatus(ResponseStatusValue.REJECTED), midDiff);
-        Invitation invitationB = new Invitation(new InvitationIdentifier(1), new ResponseStatus(ResponseStatusValue.ACCEPTED), midDiff);
+        InvitationFactory invitationFactory = new InvitationFactory();
+
+        Invitation invitationA = invitationFactory.build(1, midDiff);
+        Invitation invitationB = invitationFactory.build(1, midDiff);
+
+        invitationB.updateResponseStatus("REJECTED");
 
         assertFalse(invitationA.sameAs(invitationB)); //cause the invitation and the person is the same but the response is different
     }
@@ -61,9 +68,10 @@ public class InvitationTest {
         Person mestreDaCulinaria = new PersonBuilder().withID(1)
                 .withSystemUser(getNewDummyUser()).withfullName("Blitzcrank").build();
 
+        InvitationFactory invitationFactory = new InvitationFactory();
 
-        Invitation invitationA = new Invitation(new InvitationIdentifier(1), new ResponseStatus(ResponseStatusValue.REJECTED), mestreDaCulinaria);
-        Invitation invitationB = new Invitation(new InvitationIdentifier(1), new ResponseStatus(ResponseStatusValue.REJECTED), mestreDaCulinaria);
+        Invitation invitationA = invitationFactory.build(1, mestreDaCulinaria);
+        Invitation invitationB = invitationFactory.build(1, mestreDaCulinaria);
 
         assertTrue(invitationA.sameAs(invitationB));
     }
@@ -74,7 +82,9 @@ public class InvitationTest {
         Person pentaKiller = new PersonBuilder().withID(1)
                 .withSystemUser(getNewDummyUser()).withfullName("Broly").build();
 
-        Invitation invitationA = new Invitation(new InvitationIdentifier(1), new ResponseStatus(ResponseStatusValue.REJECTED), pentaKiller);
+        InvitationFactory invitationFactory = new InvitationFactory();
+
+        Invitation invitationA = invitationFactory.build(1, pentaKiller);
 
         assertTrue(invitationA.sameAs(invitationA));
     }
@@ -85,9 +95,9 @@ public class InvitationTest {
         Person man = new PersonBuilder().withID(1)
                 .withSystemUser(getNewDummyUser()).withfullName("man").build();
 
+        InvitationFactory invitationFactory = new InvitationFactory();
 
-
-        Invitation invitationA = new Invitation(new InvitationIdentifier(1), new ResponseStatus(ResponseStatusValue.REJECTED), man);
+        Invitation invitationA = invitationFactory.build(1,man);
 
         assertFalse(invitationA.sameAs(man));
     }
