@@ -8,8 +8,7 @@ import eapli.base.usermanagement.domain.builder.PersonBuilder;
 import eapli.framework.infrastructure.authz.domain.model.*;
 import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class InvitationTest {
 
@@ -102,4 +101,63 @@ public class InvitationTest {
         assertFalse(invitationA.sameAs(man));
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void ensureCannotUpdateAcceptedInvitation(){
+        Person person1 = new PersonBuilder().withID(1)
+                .withSystemUser(getNewDummyUser()).withfullName("Broly").build();
+
+        InvitationFactory invitationFactory = new InvitationFactory();
+
+        Invitation instance = invitationFactory.build(1, person1);
+
+        instance.updateResponseStatus("ACCEPTED");
+
+        instance.updateResponseStatus("ACCEPTED");
+
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void ensureCannotUpdateRejectedInvitation(){
+        Person person1 = new PersonBuilder().withID(1)
+                .withSystemUser(getNewDummyUser()).withfullName("Broly").build();
+
+        InvitationFactory invitationFactory = new InvitationFactory();
+
+        Invitation instance = invitationFactory.build(1, person1);
+
+        instance.updateResponseStatus("REJECTED");
+
+        instance.updateResponseStatus("REJECTED");
+
+    }
+
+    @Test
+    public void ensureInvitationIsRejected(){
+        Person person1 = new PersonBuilder().withID(1)
+                .withSystemUser(getNewDummyUser()).withfullName("Broly").build();
+
+        InvitationFactory invitationFactory = new InvitationFactory();
+
+        Invitation instance = invitationFactory.build(1, person1);
+
+        instance.updateResponseStatus("REJECTED");
+
+        String expected = "Rejected";
+        assertEquals(expected,instance.returnResponseStatusString());
+    }
+
+    @Test
+    public void ensureInvitationIsAccepted(){
+        Person person1 = new PersonBuilder().withID(1)
+                .withSystemUser(getNewDummyUser()).withfullName("Broly").build();
+
+        InvitationFactory invitationFactory = new InvitationFactory();
+
+        Invitation instance = invitationFactory.build(1, person1);
+
+        instance.updateResponseStatus("ACCEPTED");
+
+        String expected = "Accepted";
+        assertEquals(expected,instance.returnResponseStatusString());
+    }
 }
