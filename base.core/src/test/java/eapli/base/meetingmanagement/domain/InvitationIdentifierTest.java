@@ -1,5 +1,6 @@
 package eapli.base.meetingmanagement.domain;
 
+import eapli.base.invitationmanagement.domain.InvitationIdentifier;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

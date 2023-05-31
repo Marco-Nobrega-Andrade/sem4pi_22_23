@@ -1,5 +1,7 @@
 package eapli.base.meetingmanagement.domain;
 
+import eapli.base.invitationmanagement.domain.Invitation;
+import eapli.base.invitationmanagement.domain.InvitationIdentifier;
 import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.base.usermanagement.domain.Person;
 import eapli.base.usermanagement.domain.builder.PersonBuilder;
