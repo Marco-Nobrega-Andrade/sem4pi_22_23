@@ -3,7 +3,7 @@ package eapli.base.meetingmanagement.application.service;
 import eapli.base.courseclasses.application.services.VerifyIfExistAClassForThatPersonAtThisTimeService;
 import eapli.base.courseclasses.application.services.VerifyIfExistAExtraClassForThatPersonAtThisTimeService;
 import eapli.base.infrastructure.persistence.PersistenceContext;
-import eapli.base.meetingmanagement.domain.Factory.MeetingFactory;
+import eapli.base.meetingmanagement.domain.MeetingFactory;
 import eapli.base.meetingmanagement.domain.Meeting;
 import eapli.base.meetingmanagement.repositories.InvitationRepository;
 import eapli.base.meetingmanagement.repositories.MeetingRepository;
