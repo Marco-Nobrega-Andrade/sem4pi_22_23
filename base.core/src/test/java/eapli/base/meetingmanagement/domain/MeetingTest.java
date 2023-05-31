@@ -5,7 +5,6 @@ import eapli.base.courseclasses.domain.Duration;
 import eapli.base.courseclasses.domain.ScheduledDate;
 import eapli.base.invitationmanagement.domain.Invitation;
 import eapli.base.invitationmanagement.domain.InvitationFactory;
-import eapli.base.meetingmanagement.domain.Factory.MeetingFactory;
 import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.base.usermanagement.domain.MeetingOwner;
 import eapli.base.usermanagement.domain.MeetingOwnerIdentifier;
