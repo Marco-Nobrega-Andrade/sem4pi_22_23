@@ -1,6 +1,6 @@
 package eapli.base.invitationmanagement.dto;
 
-import eapli.base.meetingmanagement.domain.Invitation;
+import eapli.base.invitationmanagement.domain.Invitation;
 
 
 public class InvitationDTOWithStatusAndPersonNameMapper {
