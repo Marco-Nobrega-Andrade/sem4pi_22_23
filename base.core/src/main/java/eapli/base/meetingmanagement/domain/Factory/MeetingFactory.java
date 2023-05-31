@@ -3,7 +3,7 @@ package eapli.base.meetingmanagement.domain.Factory;
 import eapli.base.courseclasses.domain.Date;
 import eapli.base.courseclasses.domain.Duration;
 import eapli.base.courseclasses.domain.ScheduledDate;
-import eapli.base.invitationmanagement.domain.Factory.InvitationFactory;
+import eapli.base.invitationmanagement.domain.InvitationFactory;
 import eapli.base.invitationmanagement.domain.Invitation;
 import eapli.base.meetingmanagement.domain.Meeting;
 import eapli.base.meetingmanagement.domain.MeetingIdentifier;

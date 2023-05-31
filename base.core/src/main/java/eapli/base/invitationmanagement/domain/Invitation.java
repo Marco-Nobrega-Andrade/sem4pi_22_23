@@ -19,7 +19,7 @@ public class Invitation implements AggregateRoot<InvitationIdentifier> {
     @ManyToOne(cascade = CascadeType.ALL)
     private Person person;
 
-    public Invitation(InvitationIdentifier idInvitation, ResponseStatus status, Person person) {
+    protected Invitation(InvitationIdentifier idInvitation, ResponseStatus status, Person person) {
         if (idInvitation == null || status == null || person == null) {
             throw new IllegalArgumentException("Parameters can't be null");
         }

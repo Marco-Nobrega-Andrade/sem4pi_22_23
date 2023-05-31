@@ -1,7 +1,5 @@
-package eapli.base.invitationmanagement.domain.Factory;
+package eapli.base.invitationmanagement.domain;
 
-import eapli.base.invitationmanagement.domain.Invitation;
-import eapli.base.invitationmanagement.domain.InvitationIdentifier;
 import eapli.base.meetingmanagement.domain.ResponseStatus;
 import eapli.base.meetingmanagement.domain.ResponseStatusValue;
 import eapli.base.usermanagement.domain.Person;
