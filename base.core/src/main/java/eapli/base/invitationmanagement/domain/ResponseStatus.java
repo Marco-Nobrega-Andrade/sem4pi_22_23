@@ -17,6 +17,9 @@ public class ResponseStatus implements ValueObject {
     }
 
     public ResponseStatus(String status) {
+        if (status == null || status.isEmpty()) {
+            throw new IllegalArgumentException("Status cannot be null or empty");
+        }
         this.status = ResponseStatusValue.valueOf(status);
     }
     protected ResponseStatus() {

@@ -22,9 +22,6 @@ public class Invitation implements AggregateRoot<InvitationIdentifier> {
         if (idInvitation == null || status == null || person == null) {
             throw new IllegalArgumentException("Parameters can't be null");
         }
-        if (idInvitation.returnInvitationIdentifier() < 0) {
-            throw new IllegalArgumentException("Id must be positive");
-        }
         this.idInvitation = idInvitation;
         this.status = status;
         this.person = person;

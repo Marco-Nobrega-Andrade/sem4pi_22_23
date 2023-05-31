@@ -19,26 +19,6 @@ public class MeetingFactory  {
 
     public Meeting build(long idMeeting, Person owner, long idMeetingOwner, List<Person> people,
                          List<Long> idInvitations, int minDuration, java.util.Date date_time) {
-
-        if (idInvitations==null | people==null | owner==null| date_time==null){
-            throw new IllegalArgumentException("The invitations or people can't be null");
-        }
-        if (idInvitations.isEmpty() | people.isEmpty()){
-            throw new IllegalArgumentException("There is not invitations or people");
-        }
-        if (idInvitations.size()!=people.size()){
-            throw new IllegalArgumentException("The number of invitations and people must be the same");
-        }
-        if (minDuration<=0){
-            throw new IllegalArgumentException("The duration must be greater than 0");
-        }
-        if (idMeeting<=0){
-            throw new IllegalArgumentException("The id must be greater than 0");
-        }
-        if (date_time.before(new java.util.Date())){
-            throw new IllegalArgumentException("The date can't be before the current date");
-        }
-
         MeetingOwner meetingOwner = new MeetingOwner(
                 new MeetingOwnerIdentifier(idMeetingOwner),owner);
 
