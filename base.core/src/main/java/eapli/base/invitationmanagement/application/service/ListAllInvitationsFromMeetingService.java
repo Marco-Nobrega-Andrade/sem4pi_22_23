@@ -3,7 +3,7 @@ package eapli.base.invitationmanagement.application.service;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.invitationmanagement.dto.InvitationDTOWithStatusAndPersonName;
 import eapli.base.invitationmanagement.dto.InvitationDTOWithStatusAndPersonNameMapper;
-import eapli.base.meetingmanagement.domain.Invitation;
+import eapli.base.invitationmanagement.domain.Invitation;
 import eapli.base.meetingmanagement.dto.MeetingDTOWithIdDate;
 import eapli.base.meetingmanagement.repositories.InvitationRepository;
 
