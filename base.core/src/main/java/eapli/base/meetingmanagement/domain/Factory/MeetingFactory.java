@@ -3,9 +3,10 @@ package eapli.base.meetingmanagement.domain.Factory;
 import eapli.base.courseclasses.domain.Date;
 import eapli.base.courseclasses.domain.Duration;
 import eapli.base.courseclasses.domain.ScheduledDate;
-import eapli.base.infrastructure.persistence.PersistenceContext;
-import eapli.base.meetingmanagement.domain.*;
-import eapli.base.meetingmanagement.repositories.MeetingRepository;
+import eapli.base.invitationmanagement.domain.Factory.InvitationFactory;
+import eapli.base.invitationmanagement.domain.Invitation;
+import eapli.base.meetingmanagement.domain.Meeting;
+import eapli.base.meetingmanagement.domain.MeetingIdentifier;
 import eapli.base.usermanagement.domain.MeetingOwner;
 import eapli.base.usermanagement.domain.MeetingOwnerIdentifier;
 import eapli.base.usermanagement.domain.Person;
@@ -41,11 +42,12 @@ public class MeetingFactory  {
         MeetingOwner meetingOwner = new MeetingOwner(
                 new MeetingOwnerIdentifier(idMeetingOwner),owner);
 
+        InvitationFactory invitationFactory = new InvitationFactory();
         List<Invitation> invitations = new ArrayList<>();
-        for (int i = 0; i < idInvitations.size(); i++) {
-            invitations.add(new Invitation(new InvitationIdentifier(idInvitations.get(i)),
-                    new ResponseStatus(ResponseStatusValue.PENDING), people.get(i)));
+        for (int i=0; i<idInvitations.size(); i++) {
+            invitations.add(invitationFactory.build(idInvitations.get(i),people.get(i)));
         }
+
         ScheduledDate scheduledDate = new ScheduledDate(new Duration(minDuration), new Date(date_time));
         MeetingIdentifier meetingIdentifier = new MeetingIdentifier(idMeeting);
 
