@@ -1,4 +1,4 @@
-package eapli.base.meetingmanagement.domain;
+package eapli.base.invitationmanagement.domain;
 
 public enum ResponseStatusValue {
 

@@ -1,6 +1,5 @@
 package eapli.base.invitationmanagement.domain;
 
-import eapli.base.meetingmanagement.domain.ResponseStatus;
 import eapli.base.usermanagement.domain.Person;
 import eapli.framework.domain.model.AggregateRoot;
 

@@ -1,7 +1,5 @@
 package eapli.base.invitationmanagement.domain;
 
-import eapli.base.meetingmanagement.domain.ResponseStatus;
-import eapli.base.meetingmanagement.domain.ResponseStatusValue;
 import eapli.base.usermanagement.domain.Person;
 
 public class InvitationFactory {
