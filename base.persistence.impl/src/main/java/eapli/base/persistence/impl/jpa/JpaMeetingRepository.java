@@ -51,4 +51,12 @@ public class JpaMeetingRepository extends JpaAutoTxRepository<Meeting, MeetingId
     public long countNumberOfOwners() {
         return createQuery("SELECT COUNT(m) FROM MeetingOwner m", Long.class).getSingleResult();
     }
+
+    @Override
+    public List<Meeting> findAllMeetingsIParticipate(SystemUser user) {
+        return createQuery("SELECT DISTINCT m FROM Meeting m where (m.meetingOwner.person IN (SELECT p FROM Person p WHERE p.systemUser = :systemUser)" +
+                "OR :systemUser IN (SELECT p.systemUser FROM m.invitation i JOIN Person p ON i.person = p where i.status.status = 'ACCEPTED'))" +
+                "AND m.meetingState.isActive = TRUE", Meeting.class)
+                .setParameter("systemUser", user).getResultList();
+    }
 }

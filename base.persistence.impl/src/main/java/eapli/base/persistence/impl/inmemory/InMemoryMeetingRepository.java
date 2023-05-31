@@ -10,7 +10,8 @@ import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainR
 
 import java.util.List;
 
-public class InMemoryMeetingRepository extends InMemoryDomainRepository<Meeting, MeetingIdentifier>
+public class
+InMemoryMeetingRepository extends InMemoryDomainRepository<Meeting, MeetingIdentifier>
         implements MeetingRepository {
 
     @Override
@@ -36,5 +37,10 @@ public class InMemoryMeetingRepository extends InMemoryDomainRepository<Meeting,
     @Override
     public long countNumberOfOwners() {
         return 0;
+    }
+
+    @Override
+    public List<Meeting> findAllMeetingsIParticipate(SystemUser user) {
+        return null;
     }
 }

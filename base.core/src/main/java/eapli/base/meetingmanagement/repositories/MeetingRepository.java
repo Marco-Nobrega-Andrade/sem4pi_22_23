@@ -17,4 +17,6 @@ public interface MeetingRepository extends DomainRepository<MeetingIdentifier, M
     public List<Meeting> findAllOwnerMeetings(SystemUser systemUser);
 
     long countNumberOfOwners();
+
+    List<Meeting> findAllMeetingsIParticipate(SystemUser user);
 }
