@@ -1,7 +1,7 @@
 package eapli.base.persistence.impl.inmemory;
 
-import eapli.base.meetingmanagement.domain.Invitation;
-import eapli.base.meetingmanagement.domain.InvitationIdentifier;
+import eapli.base.invitationmanagement.domain.Invitation;
+import eapli.base.invitationmanagement.domain.InvitationIdentifier;
 
 import eapli.base.meetingmanagement.repositories.InvitationRepository;
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
