@@ -1,0 +1,25 @@
+@startuml
+actor User as U
+participant "ViewHistoryOfUpdatesUI" as UI <<Presentation>>
+control "ViewHistoryOfUpdatesController" as CTRL <<Application>>
+participant "ViewHistoryOfUpdatesService" as S <<Service>>
+database "BoardRepository" as BR <<Persistence>>
+database "BoardHistoryRepository" as BHR <<Persistence>>
+
+U->UI: Selects a board
+activate UI
+UI->CTRL : listBoardTasks(selectedBoardDTO)
+activate CTRL
+CTRL->S: listBoardTasks(selectedBoardDTO)
+activate S
+S->BR: ofIdentity(BoardTitle)
+activate BR
+return board
+S->BHR: findAllUpdatesFromBoard(board)
+activate BHR
+return taskList
+return taskList
+return taskList
+UI-->U: task list
+deactivate UI
+@enduml
