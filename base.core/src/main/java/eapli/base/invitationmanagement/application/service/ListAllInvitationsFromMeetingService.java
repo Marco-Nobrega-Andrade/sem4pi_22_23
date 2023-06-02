@@ -5,7 +5,7 @@ import eapli.base.invitationmanagement.dto.InvitationDTOWithStatusAndPersonName;
 import eapli.base.invitationmanagement.dto.InvitationDTOWithStatusAndPersonNameMapper;
 import eapli.base.invitationmanagement.domain.Invitation;
 import eapli.base.meetingmanagement.dto.MeetingDTOWithIdDate;
-import eapli.base.meetingmanagement.repositories.InvitationRepository;
+import eapli.base.invitationmanagement.repositories.InvitationRepository;
 
 import java.util.ArrayList;
 import java.util.List;

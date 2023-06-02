@@ -3,7 +3,7 @@ package eapli.base.invitationmanagement.application.service;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.invitationmanagement.domain.Invitation;
 import eapli.base.invitationmanagement.domain.InvitationIdentifier;
-import eapli.base.meetingmanagement.repositories.InvitationRepository;
+import eapli.base.invitationmanagement.repositories.InvitationRepository;
 
 public class AcceptRejectInvitationService {
 
