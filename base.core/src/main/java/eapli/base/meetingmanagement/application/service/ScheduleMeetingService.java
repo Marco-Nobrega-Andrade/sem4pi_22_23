@@ -5,7 +5,7 @@ import eapli.base.courseclasses.application.services.VerifyIfExistAExtraClassFor
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.meetingmanagement.domain.MeetingFactory;
 import eapli.base.meetingmanagement.domain.Meeting;
-import eapli.base.meetingmanagement.repositories.InvitationRepository;
+import eapli.base.invitationmanagement.repositories.InvitationRepository;
 import eapli.base.meetingmanagement.repositories.MeetingRepository;
 import eapli.base.usermanagement.application.services.ListPersonService;
 import eapli.base.usermanagement.domain.Person;

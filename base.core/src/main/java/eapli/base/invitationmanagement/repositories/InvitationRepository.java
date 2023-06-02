@@ -1,4 +1,4 @@
-package eapli.base.meetingmanagement.repositories;
+package eapli.base.invitationmanagement.repositories;
 
 import eapli.base.invitationmanagement.domain.Invitation;
 import eapli.base.invitationmanagement.domain.InvitationIdentifier;

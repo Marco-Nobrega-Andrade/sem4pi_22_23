@@ -33,7 +33,7 @@ import eapli.base.exams.repositories.ExamRepository;
 import eapli.base.formativeexams.repositories.FormativeExamRepository;
 import eapli.base.infrastructure.bootstrapers.BaseBootstrapper;
 import eapli.base.infrastructure.persistence.RepositoryFactory;
-import eapli.base.meetingmanagement.repositories.InvitationRepository;
+import eapli.base.invitationmanagement.repositories.InvitationRepository;
 import eapli.base.meetingmanagement.repositories.MeetingRepository;
 import eapli.base.questionmanagement.repositories.QuestionRepository;
 import eapli.base.usermanagement.repositories.PersonRepository;
