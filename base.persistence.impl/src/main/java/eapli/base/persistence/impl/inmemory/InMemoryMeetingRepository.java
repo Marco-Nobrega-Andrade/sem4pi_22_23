@@ -1,5 +1,6 @@
 package eapli.base.persistence.impl.inmemory;
 
+import eapli.base.invitationmanagement.domain.Invitation;
 import eapli.base.meetingmanagement.domain.Meeting;
 import eapli.base.meetingmanagement.domain.MeetingIdentifier;
 import eapli.base.usermanagement.domain.MeetingOwner;
@@ -9,6 +10,7 @@ import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public class
 InMemoryMeetingRepository extends InMemoryDomainRepository<Meeting, MeetingIdentifier>
@@ -42,5 +44,10 @@ InMemoryMeetingRepository extends InMemoryDomainRepository<Meeting, MeetingIdent
     @Override
     public List<Meeting> findAllMeetingsIParticipate(SystemUser user) {
         return null;
+    }
+
+    @Override
+    public Optional<Meeting> findMeetingContainingInvitation(Invitation invitation) {
+        return Optional.empty();
     }
 }

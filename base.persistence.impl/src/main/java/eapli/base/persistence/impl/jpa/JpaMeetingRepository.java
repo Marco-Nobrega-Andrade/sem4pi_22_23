@@ -1,6 +1,8 @@
 package eapli.base.persistence.impl.jpa;
 
 import eapli.base.Application;
+import eapli.base.coursemanagement.domain.Course;
+import eapli.base.invitationmanagement.domain.Invitation;
 import eapli.base.meetingmanagement.domain.Meeting;
 import eapli.base.meetingmanagement.domain.MeetingIdentifier;
 import eapli.base.usermanagement.domain.MeetingOwner;
@@ -10,7 +12,9 @@ import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
+import javax.persistence.TypedQuery;
 import java.util.List;
+import java.util.Optional;
 
 public class JpaMeetingRepository extends JpaAutoTxRepository<Meeting, MeetingIdentifier,MeetingIdentifier> implements MeetingRepository {
 
@@ -58,5 +62,13 @@ public class JpaMeetingRepository extends JpaAutoTxRepository<Meeting, MeetingId
                 "OR :systemUser IN (SELECT p.systemUser FROM m.invitation i JOIN Person p ON i.person = p where i.status.status = 'ACCEPTED'))" +
                 "AND m.meetingState.isActive = TRUE", Meeting.class)
                 .setParameter("systemUser", user).getResultList();
+    }
+
+    @Override
+    public Optional<Meeting> findMeetingContainingInvitation(Invitation invitation) {
+        TypedQuery<Meeting> query = createQuery(
+                "SELECT m FROM Meeting m JOIN m.invitation i WHERE i = :invitation", Meeting.class);
+        query.setParameter("invitation", invitation);
+        return Optional.of(query.getSingleResult());
     }
 }
