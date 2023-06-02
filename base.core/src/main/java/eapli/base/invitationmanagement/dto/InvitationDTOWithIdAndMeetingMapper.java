@@ -1,9 +1,12 @@
 package eapli.base.invitationmanagement.dto;
 
+import eapli.base.invitationmanagement.domain.Invitation;
+import eapli.base.meetingmanagement.domain.Meeting;
+
 public class InvitationDTOWithIdAndMeetingMapper {
 
-    public InvitationDTOWithIdAndMeeting toDTO(Long invitationId,Long meetingId,String meetingDate){
+    public InvitationDTOWithIdAndMeeting toDTO(Invitation invitation, Meeting meeting){
         InvitationDTOWithIdAndMeetingBuilder builder = new InvitationDTOWithIdAndMeetingBuilder();
-        return builder.withAll(invitationId, meetingId, meetingDate).build();
+        return builder.withAll(invitation.identity().returnInvitationIdentifier(), meeting.returnMeetingIdentifier(), meeting.returnScheduledDateString()).build();
     }
 }
