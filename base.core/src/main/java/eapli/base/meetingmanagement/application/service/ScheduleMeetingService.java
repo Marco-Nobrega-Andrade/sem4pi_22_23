@@ -60,8 +60,8 @@ public class ScheduleMeetingService {
         List<Person> invitatedPerson = personRepository.findAllPersonsWhoMatch(emailAddresses);
         List<Long> longsId = new ArrayList<>();
         longsId.add(invitationRepository.count()+1);
-        for (int i=1 ; i<invitatedPerson.size() ; i++) {
-            longsId.add(longsId.get(i-1)+1);
+        for (int i=0 ; i<invitatedPerson.size() ; i++) {
+            longsId.add(longsId.get(i)+1);
         }
         Meeting meeting= factory.build(meetingRepository.count()+1, personOwner,
                 meetingRepository.countNumberOfOwners()+1, invitatedPerson,longsId,duration,date);
