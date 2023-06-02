@@ -36,7 +36,7 @@ public class MeetingTest {
                 .withSystemUser(getNewDummyUser()).withfullName("Viper").build();
         List<Long> invitations = new ArrayList<>();
         invitations.add(1L);
-
+        invitations.add(2L);
         java.util.Date date = new java.util.Date(1000, Calendar.NOVEMBER,9,10,10,10);
         MeetingFactory factory = new MeetingFactory();
         List<Person> peopleList = new ArrayList<>();
