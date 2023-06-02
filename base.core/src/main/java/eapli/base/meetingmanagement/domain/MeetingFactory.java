@@ -3,10 +3,8 @@ package eapli.base.meetingmanagement.domain;
 import eapli.base.courseclasses.domain.Date;
 import eapli.base.courseclasses.domain.Duration;
 import eapli.base.courseclasses.domain.ScheduledDate;
-import eapli.base.invitationmanagement.domain.InvitationFactory;
 import eapli.base.invitationmanagement.domain.Invitation;
-import eapli.base.meetingmanagement.domain.Meeting;
-import eapli.base.meetingmanagement.domain.MeetingIdentifier;
+import eapli.base.invitationmanagement.domain.InvitationFactory;
 import eapli.base.usermanagement.domain.MeetingOwner;
 import eapli.base.usermanagement.domain.MeetingOwnerIdentifier;
 import eapli.base.usermanagement.domain.Person;
@@ -24,8 +22,11 @@ public class MeetingFactory  {
 
         InvitationFactory invitationFactory = new InvitationFactory();
         List<Invitation> invitations = new ArrayList<>();
-        for (int i=0; i<idInvitations.size(); i++) {
-            invitations.add(invitationFactory.build(idInvitations.get(i),people.get(i)));
+
+        invitations.add(invitationFactory.buildAccepted(idInvitations.get(0),owner));
+
+        for (int i=0; i<people.size(); i++) {
+            invitations.add(invitationFactory.build(idInvitations.get(i+1),people.get(i)));
         }
 
         ScheduledDate scheduledDate = new ScheduledDate(new Duration(minDuration), new Date(date_time));
