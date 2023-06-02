@@ -1,3 +1,5 @@
+package eapli.base.app.sharedboardServer;
+
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.ServerSocket;

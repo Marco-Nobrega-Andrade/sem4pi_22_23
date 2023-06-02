@@ -1,4 +1,4 @@
-package eapli.base.app.sharedboardServer.encoder;
+package eapli.base.sharedBoard;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,27 +11,27 @@ public class SBPMessageFormat {
     public static final int ERR_CODE = 3;
     public static final int AUTH_CODE = 4;
 
-    public byte[] createAuthRequest(String username, String password){
+    public static byte[] createAuthRequest(String username, String password){
         return encodeRequest(AUTH_CODE, username + "," + password);
     }
 
-    public byte[] createCommRequest(){
+    public static byte[] createCommRequest(){
         return encodeRequest(COMMTEST_CODE, "");
     }
 
-    public byte[] creteErrorRequest(String errorMessage){
+    public static byte[] creteErrorRequest(String errorMessage){
         return encodeRequest(ERR_CODE, errorMessage);
     }
 
-    public byte[] createAcknowledgeRequest(){
+    public static byte[] createAcknowledgeRequest(){
         return encodeRequest(ACK_CODE, "");
     }
 
-    public byte[] createDisconnRequest(){
+    public static byte[] createDisconnRequest(){
         return encodeRequest(DISCONN_CODE, "");
     }
 
-    private byte[] encodeRequest(int code, String data){
+    public static byte[] encodeRequest(int code, String data){
         //Data values
         byte[] dataBytes = data.getBytes();
 
@@ -52,7 +52,7 @@ public class SBPMessageFormat {
         return request;
     }
 
-    private List<String> decodeParam(byte[] request){
+    public static List<String> decodeParam(byte[] request){
         StringBuilder stringBuilder = new StringBuilder();
         List<String> paramList = new ArrayList<>();
         byte comma = (byte) ',';
@@ -67,7 +67,7 @@ public class SBPMessageFormat {
         return paramList;
     }
 
-    private int[] decodeFormat(byte[] request){
+    public static int[] decodeFormat(byte[] request){
         int [] format = new int[4];
         for(int i = 0; i < 4; i++){
             format[i] = request[i];
