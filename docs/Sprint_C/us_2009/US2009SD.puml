@@ -1,0 +1,30 @@
+@startuml
+actor Student as S
+participant "TakeFormativeExamUI" as UI <<Presentation>>
+control "TakeFormativeExamController" as CTRL <<Application>>
+participant "TakeFormativeExamService" as SV <<Service>>
+database "FormativeExamRepository" as FER <<Persistence>>
+
+/'S->UI: Selects the option to list the grades\n of the exams of all his courses
+activate S
+activate UI
+UI->CTRL : listGradesFromTeacherCourses()
+activate CTRL
+CTRL->SV: listGradesFromTeacherCourses()
+activate SV
+SV->CR: findCoursesFromTeacher(teacher)
+activate CR
+return courseList
+SV->ERR: listGradesFromTeacherCourses(courseList)
+activate ERR
+'examResolutionDTOExamTitleGrade'
+return examResolutionList
+loop foreach examResolution in examResolutionList
+
+end loop
+return examResolutionDTOList
+return examResolutionDTOList
+return show all grades from teacher courses
+deactivate UI
+deactivate S'/
+@enduml
