@@ -1,0 +1,27 @@
+@startuml
+actor Teacher as T
+participant "ViewHistoryOfUpdatesUI" as UI <<Presentation>>
+control "ViewHistoryOfUpdatesController" as CTRL <<Application>>
+participant "ViewHistoryOfUpdatesService" as S <<Service>>
+database "CourseRepository" as CR <<Persistence>>
+database "ExamResolutionRepository" as ERR <<Persistence>>
+
+
+T->UI: Selects the option to list the grades\n of the exams of all his courses
+activate T
+activate UI
+UI->CTRL : listGradesFromTeacherCourse(course)
+activate CTRL
+CTRL->S: listGradesFromTeacherCourse(course)
+activate S
+return courseList
+'examResolutionDTOExamTitleGrade'
+return examResolutionList
+loop foreach examResolution in examResolutionList
+end loop
+return examResolutionDTOList
+return examResolutionDTOList
+return show all grades from teacher courses
+deactivate UI
+deactivate T
+@enduml
