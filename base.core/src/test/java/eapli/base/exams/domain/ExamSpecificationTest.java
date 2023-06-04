@@ -8,7 +8,7 @@ public class ExamSpecificationTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void ensureThatExamSpecificationCannotBeCreateWithNullValues() {
-        ExamSpecification test= new ExamSpecification("");
+        ExamSpecification test= new ExamSpecification(null);
     }
 
     @Test(expected = IllegalArgumentException.class)

@@ -3,8 +3,8 @@ package eapli.base.exams.application.services;
 import eapli.base.coursemanagement.domain.Course;
 import eapli.base.coursemanagement.repositories.CourseRepository;
 import eapli.base.exams.domain.Exam;
-import eapli.base.exams.dto.ExamDTOWithDatesExamIdCourseId;
-import eapli.base.exams.dto.ExamDTOWithDatesExamIdCourseIdMapper;
+import eapli.base.exams.dto.ExamDTOWithDatesExamTitleCourseId;
+import eapli.base.exams.dto.ExamDTOWithDatesExamTitleCourseIdMapper;
 import eapli.base.exams.repositories.ExamRepository;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.usermanagement.domain.Teacher;
@@ -24,17 +24,17 @@ public class ListTeacherExamsService {
     private CourseRepository courseRepository = PersistenceContext.repositories().courseRepository();
 
 
-    public List<ExamDTOWithDatesExamIdCourseId> listTeacherExam(){
+    public List<ExamDTOWithDatesExamTitleCourseId> listTeacherExam(){
 
         AuthorizationService authz = AuthzRegistry.authorizationService();
         SystemUser systemUser = authz.session().get().authenticatedUser();
         Teacher teacher = teacherRepository.findTeacherBySystemUser(systemUser);
         List<Exam> listExam = examRepository.findTeacherExams(teacher);
-        List<ExamDTOWithDatesExamIdCourseId> listExamDTOWithDatesExamIdCourseId = new ArrayList<>();
+        List<ExamDTOWithDatesExamTitleCourseId> listExamDTOWithDatesExamTitleCourseId = new ArrayList<>();
         for (Exam exam: listExam) {
             Course course = courseRepository.findCourseByExam(exam);
-            listExamDTOWithDatesExamIdCourseId.add(ExamDTOWithDatesExamIdCourseIdMapper.toDto(exam,course));
+            listExamDTOWithDatesExamTitleCourseId.add(ExamDTOWithDatesExamTitleCourseIdMapper.toDto(exam,course));
         }
-        return listExamDTOWithDatesExamIdCourseId;
+        return listExamDTOWithDatesExamTitleCourseId;
     }
 }
