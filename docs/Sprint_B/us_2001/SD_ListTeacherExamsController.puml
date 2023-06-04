@@ -19,9 +19,9 @@ database "TeacherRepository" as teaRep <<Repository>>
 database ExamRepository as examRep <<Repository>>
 database CourseRepository as courseRep <<Repository>>
 
-participant "ExamDTOWithDatesExamIdCourseIdMapper" as em <<DTO>>
-participant "ExamDTOWithDatesExamIdCourseIdBuilder" as builder <<DTO>>
-participant "ExamDTOWithDatesExamIdCourseId" as dto <<DTO>>
+participant "ExamDTOWithDatesExamTitleCourseIdMapper" as em <<DTO>>
+participant "ExamDTOWithDatesExamTitleCourseIdBuilder" as builder <<DTO>>
+participant "ExamDTOWithDatesExamTitleCourseId" as dto <<DTO>>
 
 
 
@@ -89,18 +89,18 @@ loop foreach exam from listExams
 service -> em : toDTO(exam, course)
 activate em
 em -> builder: create()
-em -> builder: withDatesExamIdCourseId(initialDate,finalDate,ExamId,courseID)
+em -> builder: withDatesExamIdCourseId(initialDate,finalDate,examTitle,courseID)
 em -> builder: build()
 activate builder
-builder -> dto: create(initialDate,finalDate,ExamId,courseID)
+builder -> dto: create(initialDate,finalDate,examTitle,courseID)
 activate dto
-dto-->builder: examDTOWithDatesExamIdCourseId
+dto-->builder: examDTOWithDatesExamTitleCourseId
 deactivate dto
-builder --> em: examDTOWithDatesExamIdCourseId
+builder --> em: examDTOWithDatesExamTitleCourseId
 end loop
 deactivate builder
-return examDTOWithDatesExamIdCourseId
-return listExamDTOWithDatesExamIdCourseId
+return examDTOWithDatesExamTitleCourseId
+return listExamDTOWithDatesExamTitleCourseId
 
 deactivate em
 
