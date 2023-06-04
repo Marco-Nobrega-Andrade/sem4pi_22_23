@@ -33,12 +33,14 @@ public class CreateUpdateExamService {
         Course course = courseRepository.ofIdentity(new CourseIdentifier(courseDto.courseIdentifier)).get();
 
         course.addExam(exam);
-        Exam examVerification = examRepository.ofIdentity(new ExamTitle(exam.returnExamTitleString())).get();
-        if (examVerification != null) throw new IllegalArgumentException("An exam with this title already exists");
-        examRepository.save(exam);
-        courseRepository.save(course);
-
-        return true;
+        try {
+            Exam examVerification = examRepository.ofIdentity(new ExamTitle(exam.returnExamTitleString())).get();
+        } catch (Exception e) {
+            examRepository.save(exam);
+            courseRepository.save(course);
+            return true;
+        }
+        throw new IllegalArgumentException("An exam with this title already exists");
     }
 
     public boolean updateExam(String structure, Date initialDate, Date finalDate, ExamDTOWithDatesExamTitleCourseId examDTO){
