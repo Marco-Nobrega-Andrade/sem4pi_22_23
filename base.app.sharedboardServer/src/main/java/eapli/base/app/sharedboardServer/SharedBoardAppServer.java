@@ -11,7 +11,6 @@ public class SharedBoardAppServer {
             while (true) {
                 Socket socket = server.accept();
                 Thread clienConn = new Thread(new AttendClient(socket));
-                clienConn.setDaemon(true);
                 clienConn.start();
             }
         } catch (IOException e) {
