@@ -1,4 +1,8 @@
+import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.sharedBoard.SBPMessageFormat;
+import eapli.base.usermanagement.domain.BasePasswordPolicy;
+import eapli.framework.infrastructure.authz.application.AuthzRegistry;
+import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
 import eapli.framework.io.util.Console;
 
 import java.io.DataInputStream;
@@ -6,10 +10,13 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.List;
 
 public class sharedBoardAppClient {
     public static void main(String[] args) {
         try {
+            AuthzRegistry.configure(PersistenceContext.repositories().users(),
+                    new BasePasswordPolicy(), new PlainTextEncoder());
             final var clientIP = InetAddress.getLocalHost().getHostAddress();
             Socket socket = new Socket(clientIP, 5000);
             System.out.println("Connected");
@@ -22,15 +29,18 @@ public class sharedBoardAppClient {
                 String password = Console.readLine("Password");
                 byte[] authRequest = SBPMessageFormat.createAuthRequest(username, password);
                 dos.writeUTF(new String(authRequest));
-                int[] arrayFormat = SBPMessageFormat.decodeFormat(dis.readUTF().getBytes());
 
-                if(arrayFormat[1] == SBPMessageFormat.ACK_CODE){
+                byte[] message = dis.readUTF().getBytes();
+
+                int[] arrayFormat = SBPMessageFormat.decodeFormat(message);
+                if(arrayFormat[SBPMessageFormat.CODE_OFFSET] == SBPMessageFormat.ACK_CODE){
                     error = false;
                     final MainMenu menu = new MainMenu();
                     menu.mainLoop();
                 }else{
                     error = true;
-                    System.out.println("ERROR: Please insert the correct credentials!");
+                    List<String> params = SBPMessageFormat.decodeParam(message);
+                    System.out.println(params.get(0));
                 }
             }while (error);
         } catch (IOException e) {

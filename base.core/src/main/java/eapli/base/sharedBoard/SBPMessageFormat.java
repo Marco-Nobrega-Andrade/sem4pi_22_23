@@ -1,5 +1,6 @@
 package eapli.base.sharedBoard;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,9 +68,10 @@ public class SBPMessageFormat {
                 paramList.add(stringBuilder.toString());
                 stringBuilder = new StringBuilder();
             }else{
-                stringBuilder.append(request[i]);
+                stringBuilder.append(new String(new byte[]{request[i]}) );
             }
         }
+        paramList.add(stringBuilder.toString());
         return paramList;
     }
 
