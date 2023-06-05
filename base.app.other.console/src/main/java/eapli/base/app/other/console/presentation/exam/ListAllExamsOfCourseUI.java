@@ -2,8 +2,7 @@ package eapli.base.app.other.console.presentation.exam;
 
 import eapli.base.coursemanagement.application.ListAllExamsOfCourseController;
 import eapli.base.coursemanagement.dto.CourseDTOWithIdTitle;
-import eapli.base.coursemanagement.dto.CourseDTOWithIdTitleStatus;
-import eapli.base.exams.dto.ExamDTOWithExamIdDateInterval;
+import eapli.base.exams.dto.ExamDTOWithExamTitleDateInterval;
 import eapli.base.formativeexams.dto.FormativeExamDTOWithId;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
@@ -37,9 +36,9 @@ public class ListAllExamsOfCourseUI extends AbstractUI {
         if (idx != 0){
             
             try {
-                List<ExamDTOWithExamIdDateInterval> examDTOWithExamIdDateIntervalList = listAllExamsOfCourseController.listAllExamsFromCourse(courseDTOWithIdList.get(idx - 1));
+                List<ExamDTOWithExamTitleDateInterval> examDTOWithExamIdDateIntervalList = listAllExamsOfCourseController.listAllExamsFromCourse(courseDTOWithIdList.get(idx - 1));
                 System.out.println("----------------Exams List---------------");
-                for (ExamDTOWithExamIdDateInterval examDTOWithExamIdDateInterval : examDTOWithExamIdDateIntervalList) {
+                for (ExamDTOWithExamTitleDateInterval examDTOWithExamIdDateInterval : examDTOWithExamIdDateIntervalList) {
                     System.out.println(examDTOWithExamIdDateInterval);
                 }
             }catch (Exception e){

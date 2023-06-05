@@ -1,20 +1,20 @@
 package eapli.base.exams.dto;
 
-public class ExamDTOWithExamIdDateInterval {
+public class ExamDTOWithExamTitleDateInterval {
 
-    public String examId;
+    public String examTitle;
     public String initialDate;
     public String finalDate;
 
-    protected ExamDTOWithExamIdDateInterval(String examId, String initialDate, String finalDate){
-        this.examId = examId;
+    protected ExamDTOWithExamTitleDateInterval(String examTitle, String initialDate, String finalDate){
+        this.examTitle = examTitle;
         this.initialDate = initialDate;
         this.finalDate = finalDate;
     }
 
     @Override
     public String toString() {
-        return examId +
+        return examTitle +
                 initialDate +
                 finalDate;
     }

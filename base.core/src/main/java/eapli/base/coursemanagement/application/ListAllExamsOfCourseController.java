@@ -2,7 +2,7 @@ package eapli.base.coursemanagement.application;
 
 import eapli.base.coursemanagement.dto.CourseDTOWithIdTitle;
 import eapli.base.coursemanagement.application.services.ListAllExamsOfCourseService;
-import eapli.base.exams.dto.ExamDTOWithExamIdDateInterval;
+import eapli.base.exams.dto.ExamDTOWithExamTitleDateInterval;
 import eapli.base.formativeexams.dto.FormativeExamDTOWithId;
 
 import java.util.List;
@@ -14,7 +14,7 @@ public class ListAllExamsOfCourseController {
     public List<CourseDTOWithIdTitle> listAllCourses(){
         return listAllExamsOfCourseService.listAllCourses();
     }
-    public List<ExamDTOWithExamIdDateInterval> listAllExamsFromCourse(CourseDTOWithIdTitle selectedCourseDTO){
+    public List<ExamDTOWithExamTitleDateInterval> listAllExamsFromCourse(CourseDTOWithIdTitle selectedCourseDTO){
         return listAllExamsOfCourseService.listExamsFromCourse(selectedCourseDTO);
     }
 

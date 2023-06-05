@@ -9,7 +9,6 @@ import eapli.base.exams.domain.Exam;
 import eapli.base.exams.dto.*;
 import eapli.base.exams.repositories.ExamRepository;
 import eapli.base.formativeexams.domain.FormativeExam;
-import eapli.base.formativeexams.dto.FormativeExamDTOWithBuilder;
 import eapli.base.formativeexams.dto.FormativeExamDTOWithId;
 import eapli.base.formativeexams.dto.FormativeExamDTOWithIdMapper;
 import eapli.base.formativeexams.repositories.FormativeExamRepository;
@@ -38,15 +37,15 @@ public class ListAllExamsOfCourseService {
 
         return courseDTOList;
     }
-    public List<ExamDTOWithExamIdDateInterval> listExamsFromCourse(CourseDTOWithIdTitle selectedCourseDTO){
-        List<ExamDTOWithExamIdDateInterval> examDTOList = new ArrayList<>();
-        ExamDTOWithExamIdDateIntervalMapper examDTOWithDatesCourseIdMapper = new ExamDTOWithExamIdDateIntervalMapper();
+    public List<ExamDTOWithExamTitleDateInterval> listExamsFromCourse(CourseDTOWithIdTitle selectedCourseDTO){
+        List<ExamDTOWithExamTitleDateInterval> examDTOList = new ArrayList<>();
+        ExamDTOWithExamTitleDateIntervalMapper examDTOWithDatesCourseIdMapper = new ExamDTOWithExamTitleDateIntervalMapper();
         List<Exam> examList = examRepository.findExamsFromCourse(new CourseIdentifier(selectedCourseDTO.courseIdentifier));
         if(examList.isEmpty()){
             throw new IllegalArgumentException("There no exams in the selected course.");
         }
         for (Exam exam : examList) {
-            ExamDTOWithExamIdDateInterval examDTOWithExamIdDateInterval = examDTOWithDatesCourseIdMapper.toDto(exam);
+            ExamDTOWithExamTitleDateInterval examDTOWithExamIdDateInterval = examDTOWithDatesCourseIdMapper.toDto(exam);
             examDTOList.add(examDTOWithExamIdDateInterval);
         }
 
