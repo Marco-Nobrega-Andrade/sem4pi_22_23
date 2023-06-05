@@ -6,7 +6,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.util.Scanner;
 
 public class sharedBoardAppClient {
     public static void main(String[] args) {
@@ -25,7 +24,7 @@ public class sharedBoardAppClient {
                 dos.writeUTF(new String(authRequest));
                 int[] arrayFormat = SBPMessageFormat.decodeFormat(dis.readUTF().getBytes());
 
-                if(arrayFormat[0] == SBPMessageFormat.ACK_CODE){
+                if(arrayFormat[1] == SBPMessageFormat.ACK_CODE){
                     error = false;
                     final MainMenu menu = new MainMenu();
                     menu.mainLoop();

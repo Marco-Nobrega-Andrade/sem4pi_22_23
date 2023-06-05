@@ -1,6 +1,5 @@
 package eapli.base.app.sharedboardServer;
 
-import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -9,16 +8,14 @@ public class SharedBoardAppServer {
     public static void main(String[] args) {
         try {
             ServerSocket server = new ServerSocket(5000);
-            Socket socket = server.accept();
-            System.out.println("Connected");
-            DataInputStream inputStream = new DataInputStream(socket.getInputStream());
-            String message;
-            do {
-                message = inputStream.readUTF();
-                System.out.println(message);
-            }while (!message.equalsIgnoreCase("bye"));
+            while (true) {
+                Socket socket = server.accept();
+                Thread clienConn = new Thread(new AttendClient(socket));
+                clienConn.setDaemon(true);
+                clienConn.start();
+            }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println("Could not start server.");
         }
     }
 }

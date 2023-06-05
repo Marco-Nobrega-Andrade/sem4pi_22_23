@@ -23,16 +23,7 @@
  */
 
 import eapli.base.Application;
-import eapli.base.app.common.console.presentation.authz.MyUserMenu;
-import eapli.base.app.common.console.presentation.board.CreateBoardAction;
-import eapli.base.app.common.console.presentation.course.ListCourseAction;
-import eapli.base.app.common.console.presentation.meeting.CancelMeetingAction;
-import eapli.base.app.common.console.presentation.meeting.ListAllInvitationsFromMeetingAction;
-import eapli.base.app.common.console.presentation.meeting.ScheduleMeetingAction;
-import eapli.base.usermanagement.domain.BaseRoles;
-import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
-import eapli.framework.actions.menu.MenuItem;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.presentation.console.AbstractUI;
@@ -52,6 +43,10 @@ public class MainMenu extends AbstractUI {
     private static final String RETURN_LABEL = "Return ";
 
     private static final int EXIT_OPTION = 0;
+
+    private static final int COMMTEST_OPTION = 1;
+
+    private static final int AUTH_OPTION = 2;
 
     private static final String SEPARATOR_LABEL = "--------------";
 
