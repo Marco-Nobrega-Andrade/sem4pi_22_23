@@ -17,11 +17,35 @@ public interface ExamGrammarVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitProg(ExamGrammarParser.ProgContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link ExamGrammarParser#question_type}.
+	 * Visit a parse tree produced by {@link ExamGrammarParser#question_type_with_feedback}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitQuestion_type(ExamGrammarParser.Question_typeContext ctx);
+	T visitQuestion_type_with_feedback(ExamGrammarParser.Question_type_with_feedbackContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ExamGrammarParser#question_type_without_feedback}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitQuestion_type_without_feedback(ExamGrammarParser.Question_type_without_feedbackContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ExamGrammarParser#type_of_grade}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitType_of_grade(ExamGrammarParser.Type_of_gradeContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ExamGrammarParser#type_of_feedback}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitType_of_feedback(ExamGrammarParser.Type_of_feedbackContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ExamGrammarParser#header_description}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitHeader_description(ExamGrammarParser.Header_descriptionContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link ExamGrammarParser#multiple_choice_question}.
 	 * @param ctx the parse tree
@@ -155,11 +179,11 @@ public interface ExamGrammarVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitTopic_list(ExamGrammarParser.Topic_listContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link ExamGrammarParser#header}.
+	 * Visit a parse tree produced by {@link ExamGrammarParser#title}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitHeader(ExamGrammarParser.HeaderContext ctx);
+	T visitTitle(ExamGrammarParser.TitleContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link ExamGrammarParser#section}.
 	 * @param ctx the parse tree

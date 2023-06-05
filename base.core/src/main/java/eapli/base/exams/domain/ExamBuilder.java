@@ -20,8 +20,8 @@ public class ExamBuilder {
         this.specification = new ExamSpecification(structure);
         new VerifyExamSpecificationService().verifyExamSpecification(structure);
         String[] lines = structure.split("\r\n");
-        String[] title = lines[0].split(": ");
-        this.examTitle = new ExamTitle(title[1]);
+        String[] title = lines[0].split(":");
+        this.examTitle = new ExamTitle(title[1].trim());
         return this;
     }
 

@@ -1,4 +1,8 @@
-#Header: oaskoakso
+#Title: exam1
+
+#Type of grade: on-submission
+#Type of feedback: on-submission
+#Header description: Header exam1
 
 #Section: 1
 #Section description: section1

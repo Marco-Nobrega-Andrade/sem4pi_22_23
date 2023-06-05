@@ -29,13 +29,61 @@ public class ExamGrammarBaseListener implements ExamGrammarListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterQuestion_type(ExamGrammarParser.Question_typeContext ctx) { }
+	@Override public void enterQuestion_type_with_feedback(ExamGrammarParser.Question_type_with_feedbackContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitQuestion_type(ExamGrammarParser.Question_typeContext ctx) { }
+	@Override public void exitQuestion_type_with_feedback(ExamGrammarParser.Question_type_with_feedbackContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterQuestion_type_without_feedback(ExamGrammarParser.Question_type_without_feedbackContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitQuestion_type_without_feedback(ExamGrammarParser.Question_type_without_feedbackContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterType_of_grade(ExamGrammarParser.Type_of_gradeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitType_of_grade(ExamGrammarParser.Type_of_gradeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterType_of_feedback(ExamGrammarParser.Type_of_feedbackContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitType_of_feedback(ExamGrammarParser.Type_of_feedbackContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterHeader_description(ExamGrammarParser.Header_descriptionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitHeader_description(ExamGrammarParser.Header_descriptionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -305,13 +353,13 @@ public class ExamGrammarBaseListener implements ExamGrammarListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterHeader(ExamGrammarParser.HeaderContext ctx) { }
+	@Override public void enterTitle(ExamGrammarParser.TitleContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitHeader(ExamGrammarParser.HeaderContext ctx) { }
+	@Override public void exitTitle(ExamGrammarParser.TitleContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
