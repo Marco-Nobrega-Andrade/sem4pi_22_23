@@ -33,9 +33,9 @@ public class AcceptRejectInvitationUI extends AbstractUI {
         if(selectedInvitation != null){
             try {
                 List<String> optionsList = new ArrayList<>();
-                optionsList.add("Accept");
-                optionsList.add("Reject");
-                SelectWidget<String> optionSelector = new SelectWidget<>("Do you want to accept or reject this invitation? (Select desired option)",
+                optionsList.add("Accepted");
+                optionsList.add("Rejected");
+                SelectWidget<String> optionSelector = new SelectWidget<>("Do you want this invitation to be accepted or rejected? (Select desired option)",
                         optionsList,new AcceptRejectOptionPrinter());
 
                 optionSelector.show();

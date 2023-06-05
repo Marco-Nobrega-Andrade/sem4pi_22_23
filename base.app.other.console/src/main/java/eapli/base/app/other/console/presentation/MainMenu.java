@@ -27,6 +27,7 @@ import eapli.base.app.common.console.presentation.authz.MyUserMenu;
 import eapli.base.Application;
 import eapli.base.app.common.console.presentation.board.CreateBoardAction;
 import eapli.base.app.common.console.presentation.course.ListCourseAction;
+import eapli.base.app.common.console.presentation.meeting.AcceptRejectInvitationAction;
 import eapli.base.app.common.console.presentation.meeting.CancelMeetingAction;
 import eapli.base.app.common.console.presentation.meeting.ListAllInvitationsFromMeetingAction;
 import eapli.base.app.common.console.presentation.meeting.ScheduleMeetingAction;
@@ -86,6 +87,7 @@ public class MainMenu extends AbstractUI {
     private static final int SCHEDULE_MEETING = 1;
     private static final int CANCEL_MEETING = 2;
     private static final int List_ALL_INVITATIONS = 3;
+    private static final int ACCEPT_REJECT_INVITATIONS = 4;
 
 
     //BOARD MENU
@@ -189,7 +191,7 @@ public class MainMenu extends AbstractUI {
         meetingMenu.addItem(SCHEDULE_MEETING, "Schedule Meeting", new ScheduleMeetingAction());
         meetingMenu.addItem(CANCEL_MEETING, "Cancel Meeting", new CancelMeetingAction());
         meetingMenu.addItem(List_ALL_INVITATIONS, "List all Invitations", new ListAllInvitationsFromMeetingAction());
-
+        meetingMenu.addItem(ACCEPT_REJECT_INVITATIONS,"Accept/Reject invitations", new AcceptRejectInvitationAction());
         meetingMenu.addItem(EXIT_OPTION, "Return", Actions.SUCCESS);
 
         return meetingMenu;
