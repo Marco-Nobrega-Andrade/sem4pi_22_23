@@ -32,7 +32,7 @@ public class JpaInvitationRepository extends JpaAutoTxRepository<Invitation, Inv
     @Override
     public List<Invitation> getPersonPendingInvitations(Person person) {
         TypedQuery<Invitation> query = createQuery(
-                "SELECT i FROM Invitation i WHERE i.person = :person AND i.status.status = PENDING",
+                "SELECT i FROM Invitation i WHERE i.person = :person AND i.status.status = 'PENDING'",
                 Invitation.class);
         query.setParameter("person", person);
         return query.getResultList();
