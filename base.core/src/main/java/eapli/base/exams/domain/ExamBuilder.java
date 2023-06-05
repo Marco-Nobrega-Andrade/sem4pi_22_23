@@ -1,6 +1,5 @@
 package eapli.base.exams.domain;
 
-import eapli.base.questionmanagement.domain.*;
 import eapli.base.usermanagement.domain.Teacher;
 
 import java.util.Date;
@@ -9,21 +8,20 @@ public class ExamBuilder {
 
     private DateInterval dateInterval;
 
-    private ExamId examId;
+    private ExamTitle examTitle;
 
     private ExamSpecification specification;
 
     private Teacher teacher;
 
 
-    public ExamBuilder withId(long examId){
-        this.examId = new ExamId(examId);
-        return this;
-    }
 
     public ExamBuilder withExamSpecification(String structure){
         this.specification = new ExamSpecification(structure);
         new VerifyExamSpecificationService().verifyExamSpecification(structure);
+        String[] lines = structure.split("\r\n");
+        String[] title = lines[0].split(": ");
+        this.examTitle = new ExamTitle(title[1]);
         return this;
     }
 
@@ -38,7 +36,7 @@ public class ExamBuilder {
     }
 
     public Exam build(){
-        return new Exam(examId, dateInterval,specification,teacher);
+        return new Exam(examTitle, dateInterval,specification,teacher);
     }
 
 

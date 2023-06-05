@@ -4,7 +4,7 @@ import eapli.base.Application;
 import eapli.base.coursemanagement.domain.Course;
 import eapli.base.coursemanagement.domain.CourseIdentifier;
 import eapli.base.exams.domain.Exam;
-import eapli.base.exams.domain.ExamId;
+import eapli.base.exams.domain.ExamTitle;
 import eapli.base.exams.repositories.ExamRepository;
 import eapli.base.usermanagement.domain.Teacher;
 import eapli.framework.domain.repositories.TransactionalContext;
@@ -14,7 +14,7 @@ import javax.persistence.TypedQuery;
 import java.util.Date;
 import java.util.List;
 
-public class JpaExamRepository extends JpaAutoTxRepository<Exam, ExamId, ExamId> implements ExamRepository {
+public class JpaExamRepository extends JpaAutoTxRepository<Exam, ExamTitle, ExamTitle> implements ExamRepository {
 
     public JpaExamRepository(final TransactionalContext autoTx) {
         super(autoTx, "examId");
@@ -22,7 +22,7 @@ public class JpaExamRepository extends JpaAutoTxRepository<Exam, ExamId, ExamId>
 
     public JpaExamRepository(final String puname) {
         super(puname, Application.settings().getExtendedPersistenceProperties(),
-                "examId");
+                "examTitle");
     }
     @Override
     public List<Exam> listFutureExamsByCourse(Course course, Date currentDate){

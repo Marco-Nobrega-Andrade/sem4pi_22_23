@@ -7,7 +7,7 @@ public class ExamDTOWithExamIdDateIntervalMapper {
     public ExamDTOWithExamIdDateInterval toDto(Exam exam){
         ExamDTOWithExamIdDateIntervalBuilder examDTOWithExamIdDateIntervalBuilder = new ExamDTOWithExamIdDateIntervalBuilder();
 
-        return examDTOWithExamIdDateIntervalBuilder.withExamId(exam.returnExamIdString())
+        return examDTOWithExamIdDateIntervalBuilder.withExamId(exam.returnExamTitleString())
                 .withInitialDate(exam.returnInitialDateString())
                 .withFinalDate(exam.returnFinalDateString())
                 .build();

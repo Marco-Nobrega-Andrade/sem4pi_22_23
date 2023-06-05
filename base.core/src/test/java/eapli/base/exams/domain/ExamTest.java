@@ -22,7 +22,7 @@ public class ExamTest {
     }
 
     @Test
-    public void ensureExamsEqualsPassesForTheSameID() throws IOException {
+    public void ensureExamsEqualsPassesForTheSameExamTitle() throws IOException {
         Teacher aTeacher = new TeacherBuilder().withAcronym("BCC")
                 .withDateOfBirth(new Date(100,10,2)).withTaxPayerNumber(111111111).build();
 
@@ -30,21 +30,23 @@ public class ExamTest {
         byte[] fileBytes = Files.readAllBytes(path);
         String str = new String(fileBytes);
 
-        Exam exam = new ExamBuilder().withExamSpecification(str).withId(1L).withTeacher(aTeacher).withDateInterval(new Date(1000,1,10),new Date (1000,1,11)).build();
-        Exam anotherExam = new ExamBuilder().withExamSpecification(str).withId(1L).withTeacher(aTeacher).withDateInterval(new Date(1000,1,10),new Date (1000,1,11)).build();
+        Exam exam = new ExamBuilder().withExamSpecification(str).withTeacher(aTeacher).withDateInterval(new Date(1000,1,10),new Date (1000,1,11)).build();
+        Exam anotherExam = new ExamBuilder().withExamSpecification(str).withTeacher(aTeacher).withDateInterval(new Date(1000,1,10),new Date (1000,1,11)).build();
         assertTrue(exam.equals(anotherExam));
     }
 
     @Test
-    public void ensureExamsEqualsFailsForDifferenteID() throws IOException {
+    public void ensureExamsEqualsFailsForDifferenteExamTitle() throws IOException {
 
         Path path = Paths.get("files/testfiles/US2001/ExamAccepted.txt");
         byte[] fileBytes = Files.readAllBytes(path);
+        path = Paths.get("files/testfiles/US2001/ExamAccepted2.txt");
+        byte[] fileBytes2 = Files.readAllBytes(path);
 
         Teacher aTeacher = new TeacherBuilder().withAcronym("BCC")
                 .withDateOfBirth(new Date(100,10,2)).withTaxPayerNumber(111111111).build();
-        Exam exam = new ExamBuilder().withExamSpecification(new String(fileBytes)).withId(1).withTeacher(aTeacher).withDateInterval(new Date(1000,1,10),new Date (1000,1,11)).build();
-        Exam anotherExam = new ExamBuilder().withExamSpecification(new String(fileBytes)).withId(2).withTeacher(aTeacher).withDateInterval(new Date(1000,1,10),new Date (1000,1,11)).build();
+        Exam exam = new ExamBuilder().withExamSpecification(new String(fileBytes)).withTeacher(aTeacher).withDateInterval(new Date(1000,1,10),new Date (1000,1,11)).build();
+        Exam anotherExam = new ExamBuilder().withExamSpecification(new String(fileBytes2)).withTeacher(aTeacher).withDateInterval(new Date(1000,1,10),new Date (1000,1,11)).build();
 
         assertFalse(exam.equals(anotherExam));
     }
@@ -72,21 +74,23 @@ public class ExamTest {
 
         Teacher aTeacher = new TeacherBuilder().withAcronym("BCC")
                 .withDateOfBirth(new Date(100,10,2)).withTaxPayerNumber(111111111).build();
-        Exam exam = new ExamBuilder().withExamSpecification(new String(fileBytes)).withId(1).withTeacher(aTeacher).withDateInterval(new Date(1000,1,10),new Date (1000,1,11)).build();
+        Exam exam = new ExamBuilder().withExamSpecification(new String(fileBytes)).withTeacher(aTeacher).withDateInterval(new Date(1000,1,10),new Date (1000,1,11)).build();
 
         assertTrue(exam.sameAs(exam));
     }
 
     @Test
-    public void ensureTwoExamsWithDifferentIDAreNotTheSame() throws IOException {
+    public void ensureTwoExamsWithDifferentExamTitleAreNotTheSame() throws IOException {
 
         Path path = Paths.get("files/testfiles/US2001/ExamAccepted.txt");
         byte[] fileBytes = Files.readAllBytes(path);
+        path = Paths.get("files/testfiles/US2001/ExamAccepted2.txt");
+        byte[] fileBytes2 = Files.readAllBytes(path);
 
         Teacher aTeacher = new TeacherBuilder().withAcronym("BCC")
                 .withDateOfBirth(new Date(100,10,2)).withTaxPayerNumber(111111111).build();
-        Exam exam = new ExamBuilder().withExamSpecification(new String(fileBytes)).withId(1).withTeacher(aTeacher).withDateInterval(new Date(1000,1,10),new Date (1000,1,11)).build();
-        Exam anotherExam = new ExamBuilder().withExamSpecification(new String(fileBytes)).withId(2).withTeacher(aTeacher).withDateInterval(new Date(1000,1,10),new Date (1000,1,11)).build();
+        Exam exam = new ExamBuilder().withExamSpecification(new String(fileBytes)).withTeacher(aTeacher).withDateInterval(new Date(1000,1,10),new Date (1000,1,11)).build();
+        Exam anotherExam = new ExamBuilder().withExamSpecification(new String(fileBytes2)).withTeacher(aTeacher).withDateInterval(new Date(1000,1,10),new Date (1000,1,11)).build();
 
         assertFalse(exam.sameAs(anotherExam));
     }

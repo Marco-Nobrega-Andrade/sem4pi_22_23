@@ -2,7 +2,7 @@ package eapli.base.app.other.console.presentation.exam;
 
 
 import eapli.base.exams.application.UpdateExamController;
-import eapli.base.exams.dto.ExamDTOWithDatesExamIdCourseId;
+import eapli.base.exams.dto.ExamDTOWithDatesExamTitleCourseId;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 
@@ -17,19 +17,19 @@ public class UpdateExamUI extends AbstractUI {
     protected boolean doShow() {
         try {
             UpdateExamController controller = new UpdateExamController();
-            List<ExamDTOWithDatesExamIdCourseId> listExamsDto = controller.listTeacherExams();
+            List<ExamDTOWithDatesExamTitleCourseId> listExamsDto = controller.listTeacherExams();
             int i = 1;
             if (listExamsDto.isEmpty())throw new IllegalArgumentException("No exams");
-            System.out.println("Select the Exam: (ExamId | Initial Date | Final Date | Course Identifier)");
-            for (ExamDTOWithDatesExamIdCourseId exam : listExamsDto) {
+            System.out.println("Select the Exam: (Exam Title | Initial Date | Final Date | Course Identifier)");
+            for (ExamDTOWithDatesExamTitleCourseId exam : listExamsDto) {
 
-                System.out.println(i + ". " + exam.examId + " | " + exam.initialDate + " | " + exam.finalDate + " | " + exam.courseId);
+                System.out.println(i + ". " + exam.examTitle + " | " + exam.initialDate + " | " + exam.finalDate + " | " + exam.courseId);
                 i++;
             }
             System.out.println(0 + ". Cancel");
             int option = Console.readOption(1, listExamsDto.size(), 0);
             if (option == 0) return true;
-            ExamDTOWithDatesExamIdCourseId selectedExam = listExamsDto.get(option - 1);
+            ExamDTOWithDatesExamTitleCourseId selectedExam = listExamsDto.get(option - 1);
             System.out.println("What do you wish to update:");
             System.out.println("1 - Exam Specification");
             System.out.println("2 - Date Interval");

@@ -10,10 +10,11 @@ import javax.persistence.ManyToOne;
 import java.util.Objects;
 
 @Entity
-public class Exam implements AggregateRoot<ExamId>  {
+public class Exam implements AggregateRoot<ExamTitle>  {
 
     @EmbeddedId
-    private ExamId examId;
+    private ExamTitle examTitle;
+
     private DateInterval dateInterval;
 
     private ExamSpecification examSpecification;
@@ -21,10 +22,10 @@ public class Exam implements AggregateRoot<ExamId>  {
     @ManyToOne(cascade = CascadeType.REFRESH)
     private Teacher examTeacher;
 
-    protected Exam(ExamId examId, DateInterval dateInterval, ExamSpecification examSpecification, Teacher examTeacher) {
-        if (examId == null || dateInterval == null || examSpecification == null || examTeacher == null ) throw new IllegalArgumentException("Exam cannot be created with null parameters");
+    protected Exam(ExamTitle examTitle, DateInterval dateInterval, ExamSpecification examSpecification, Teacher examTeacher) {
+        if (examTitle == null || dateInterval == null || examSpecification == null || examTeacher == null ) throw new IllegalArgumentException("Exam cannot be created with null parameters");
 
-        this.examId = examId;
+        this.examTitle = examTitle;
         this.dateInterval = dateInterval;
         this.examSpecification = examSpecification;
         this.examTeacher = examTeacher;
@@ -39,12 +40,12 @@ public class Exam implements AggregateRoot<ExamId>  {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Exam exam = (Exam) o;
-        return Objects.equals(examId, exam.examId) && Objects.equals(dateInterval, exam.dateInterval) && Objects.equals(examSpecification, exam.examSpecification) && Objects.equals(examTeacher, exam.examTeacher);
+        return Objects.equals(examTitle, exam.examTitle) && Objects.equals(dateInterval, exam.dateInterval) && Objects.equals(examSpecification, exam.examSpecification) && Objects.equals(examTeacher, exam.examTeacher);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(examId, dateInterval, examSpecification, examTeacher);
+        return Objects.hash(examTitle, dateInterval, examSpecification, examTeacher);
     }
 
     @Override
@@ -55,22 +56,22 @@ public class Exam implements AggregateRoot<ExamId>  {
 
         final Exam that = (Exam) other;
 
-        return examId.equals(that.examId) && dateInterval.equals(that.dateInterval) && examSpecification.equals(that.examSpecification)
+        return examTitle.equals(that.examTitle) && dateInterval.equals(that.dateInterval) && examSpecification.equals(that.examSpecification)
                 && examTeacher.equals(that.examTeacher);
     }
 
     @Override
-    public int compareTo(ExamId other) {
+    public int compareTo(ExamTitle other) {
         return AggregateRoot.super.compareTo(other);
     }
 
     @Override
-    public ExamId identity() {
-        return examId;
+    public ExamTitle identity() {
+        return examTitle;
     }
 
     @Override
-    public boolean hasIdentity(ExamId id) {
+    public boolean hasIdentity(ExamTitle id) {
         return AggregateRoot.super.hasIdentity(id);
     }
 
@@ -80,7 +81,7 @@ public class Exam implements AggregateRoot<ExamId>  {
     public String returnFinalDateString(){
         return dateInterval.toStringFinalDate();
     }
-    public String returnExamIdString(){return examId.toString();}
+    public String returnExamTitleString(){return examTitle.toString();}
 
     public boolean updateExamSpecification(ExamSpecification specification){
         this.examSpecification = specification;

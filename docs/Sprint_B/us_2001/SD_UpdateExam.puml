@@ -13,7 +13,7 @@ participant "CreateUpdateExamService" as service <<Service>>
 participant PersistenceContext as persistence <<persistence>>
 participant RepositoryFactory as repFactory <<factory>>
 
-participant "ExamId" as examId <<Domain>>
+participant "ExamTitle" as examId <<Domain>>
 participant "ExamSpecification" as spec <<Domain>>
 participant "VerifyExamSpecificationService" as verExam <<Service>>
 participant "DateInterval" as dateInterval <<Domain>>
@@ -61,12 +61,12 @@ ctrl->service: updateExam(structure,initialDate,finalDate,examDto)
 
 activate service
 
-service -> examId: create(examDto.examId)
+service -> examId: create(examDto.examTitle)
 activate examId
-examId -> service: examId
+examId --> service: examTitle
 deactivate examId
 
-service -> examRep: ofIdentity(examId)
+service -> examRep: ofIdentity(examTitle)
 activate examRep
 examRep --> service: exam
 deactivate examRep

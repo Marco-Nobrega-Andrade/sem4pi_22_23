@@ -5,7 +5,7 @@ import eapli.base.coursemanagement.domain.CourseIdentifier;
 import eapli.base.coursemanagement.dto.CourseDTOWithIdTitle;
 import eapli.base.coursemanagement.repositories.CourseRepository;
 import eapli.base.exams.domain.*;
-import eapli.base.exams.dto.ExamDTOWithDatesExamIdCourseId;
+import eapli.base.exams.dto.ExamDTOWithDatesExamTitleCourseId;
 import eapli.base.exams.repositories.ExamRepository;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.usermanagement.domain.Teacher;
@@ -28,20 +28,23 @@ public class CreateUpdateExamService {
         SystemUser systemUser = authz.session().get().authenticatedUser();
         Teacher teacher = teacherRepository.findTeacherBySystemUser(systemUser);
 
-        Long numberOfExams = examRepository.count();
         ExamBuilder examBuilder = new ExamBuilder();
-        Exam exam = examBuilder.withExamSpecification(structure).withDateInterval(initialDate,finalDate).withId(numberOfExams +1).withTeacher(teacher).build();
+        Exam exam = examBuilder.withExamSpecification(structure).withDateInterval(initialDate,finalDate).withTeacher(teacher).build();
         Course course = courseRepository.ofIdentity(new CourseIdentifier(courseDto.courseIdentifier)).get();
 
         course.addExam(exam);
-        examRepository.save(exam);
-        courseRepository.save(course);
-
-        return true;
+        try {
+            Exam examVerification = examRepository.ofIdentity(new ExamTitle(exam.returnExamTitleString())).get();
+        } catch (Exception e) {
+            examRepository.save(exam);
+            courseRepository.save(course);
+            return true;
+        }
+        throw new IllegalArgumentException("An exam with this title already exists");
     }
 
-    public boolean updateExam(String structure, Date initialDate, Date finalDate, ExamDTOWithDatesExamIdCourseId examDTO){
-        Exam exam = examRepository.ofIdentity(new ExamId(Long.parseLong(examDTO.examId))).get();
+    public boolean updateExam(String structure, Date initialDate, Date finalDate, ExamDTOWithDatesExamTitleCourseId examDTO){
+        Exam exam = examRepository.ofIdentity(new ExamTitle(examDTO.examTitle)).get();
         if (structure!= null){
             ExamSpecification specification = new ExamSpecification(structure);
             new VerifyExamSpecificationService().verifyExamSpecification(structure);

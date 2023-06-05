@@ -134,12 +134,11 @@ deactivate verExam
 deactivate builder
 
 service -> builder: withDateInterval(initialDate,finalDate)
-service -> builder: withID(numberOfExams + 1)
 service -> builder: withTeacher(teacher)
 
 service -> builder: build()
 activate builder
-builder -> exam: create(id,dateInterval,...)
+builder -> exam: create(examTitle,dateInterval,specification)
 activate exam
 exam --> builder: exam
 deactivate exam
