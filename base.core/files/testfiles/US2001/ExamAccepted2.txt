@@ -1,4 +1,7 @@
-#Header: aaa
+#Title: exam1
+
+#Type of grade: none
+#Type of feedback: none
 
 #Section: 1
 #Section description: section1
@@ -20,19 +23,16 @@ Country:
 Tokyo-Japan
 Italy-Rome
 Canada-Ottawa
-#Feedback: Well Done.
 
 #Points: 10
 #Question: Exam banger?
 #Solution: T
-#Feedback: Nice.
 
 #Section: 2
 
 #Points: 10
 #Question: Capital of Brazil length?
 #Solution: 222,22 km
-#Feedback: Very good
 
 #Points: 10
 #Question: Please select the correct missing words.
@@ -51,7 +51,6 @@ WORD:
 #Points: 10
 #Question: Capital of Brazil?
 #Solution: Brasilia
-#Feedback: Very good
 
 #Points: 20
 #Question: What is the Capital of Japan?

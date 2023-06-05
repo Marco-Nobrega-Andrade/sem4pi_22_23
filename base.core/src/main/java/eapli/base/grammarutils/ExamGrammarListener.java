@@ -18,15 +18,55 @@ public interface ExamGrammarListener extends ParseTreeListener {
 	 */
 	void exitProg(ExamGrammarParser.ProgContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ExamGrammarParser#question_type}.
+	 * Enter a parse tree produced by {@link ExamGrammarParser#question_type_with_feedback}.
 	 * @param ctx the parse tree
 	 */
-	void enterQuestion_type(ExamGrammarParser.Question_typeContext ctx);
+	void enterQuestion_type_with_feedback(ExamGrammarParser.Question_type_with_feedbackContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ExamGrammarParser#question_type}.
+	 * Exit a parse tree produced by {@link ExamGrammarParser#question_type_with_feedback}.
 	 * @param ctx the parse tree
 	 */
-	void exitQuestion_type(ExamGrammarParser.Question_typeContext ctx);
+	void exitQuestion_type_with_feedback(ExamGrammarParser.Question_type_with_feedbackContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ExamGrammarParser#question_type_without_feedback}.
+	 * @param ctx the parse tree
+	 */
+	void enterQuestion_type_without_feedback(ExamGrammarParser.Question_type_without_feedbackContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ExamGrammarParser#question_type_without_feedback}.
+	 * @param ctx the parse tree
+	 */
+	void exitQuestion_type_without_feedback(ExamGrammarParser.Question_type_without_feedbackContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ExamGrammarParser#type_of_grade}.
+	 * @param ctx the parse tree
+	 */
+	void enterType_of_grade(ExamGrammarParser.Type_of_gradeContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ExamGrammarParser#type_of_grade}.
+	 * @param ctx the parse tree
+	 */
+	void exitType_of_grade(ExamGrammarParser.Type_of_gradeContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ExamGrammarParser#type_of_feedback}.
+	 * @param ctx the parse tree
+	 */
+	void enterType_of_feedback(ExamGrammarParser.Type_of_feedbackContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ExamGrammarParser#type_of_feedback}.
+	 * @param ctx the parse tree
+	 */
+	void exitType_of_feedback(ExamGrammarParser.Type_of_feedbackContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ExamGrammarParser#header_description}.
+	 * @param ctx the parse tree
+	 */
+	void enterHeader_description(ExamGrammarParser.Header_descriptionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ExamGrammarParser#header_description}.
+	 * @param ctx the parse tree
+	 */
+	void exitHeader_description(ExamGrammarParser.Header_descriptionContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ExamGrammarParser#multiple_choice_question}.
 	 * @param ctx the parse tree
@@ -248,15 +288,15 @@ public interface ExamGrammarListener extends ParseTreeListener {
 	 */
 	void exitTopic_list(ExamGrammarParser.Topic_listContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ExamGrammarParser#header}.
+	 * Enter a parse tree produced by {@link ExamGrammarParser#title}.
 	 * @param ctx the parse tree
 	 */
-	void enterHeader(ExamGrammarParser.HeaderContext ctx);
+	void enterTitle(ExamGrammarParser.TitleContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ExamGrammarParser#header}.
+	 * Exit a parse tree produced by {@link ExamGrammarParser#title}.
 	 * @param ctx the parse tree
 	 */
-	void exitHeader(ExamGrammarParser.HeaderContext ctx);
+	void exitTitle(ExamGrammarParser.TitleContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ExamGrammarParser#section}.
 	 * @param ctx the parse tree
