@@ -17,6 +17,8 @@ public class SharedBoardAppServer {
                     new BasePasswordPolicy(), new PlainTextEncoder());
             while (true) {
                 Socket socket = server.accept();
+                new AttendClient(socket).run();
+
                 Thread clienConn = new Thread(new AttendClient(socket));
                 clienConn.start();
             }

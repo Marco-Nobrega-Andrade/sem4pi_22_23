@@ -1,5 +1,7 @@
 package eapli.base.app.sharedboardServer;
 
+import eapli.base.board.application.ListBoardsIOwnController;
+import eapli.base.board.dto.BoardDTOWithTitle;
 import eapli.base.infrastructure.authz.AuthenticationCredentialHandler;
 import eapli.base.infrastructure.authz.CredentialHandler;
 import eapli.base.infrastructure.persistence.PersistenceContext;
@@ -49,6 +51,11 @@ public class AttendClient implements Runnable{
                         break;
                     case SBPMessageFormat.COMMTEST_CODE:
                             outputStream.writeUTF(new String(SBPMessageFormat.createAcknowledgeRequest()));
+                        break;
+                    case SBPMessageFormat.LIST_BOARD_I_OWN_SEND:
+                        List<BoardDTOWithTitle> boardDTOList = new ListBoardsIOwnController().listBoardsIOwn();
+                        byte[] boardIOwnListRequest = SBPMessageFormat.createListBoardIOwnRequestReceive(boardDTOList);
+                        outputStream.writeUTF(new String(boardIOwnListRequest));
                         break;
                 }
             }while (arrayFormat[SBPMessageFormat.CODE_OFFSET] != SBPMessageFormat.DISCONN_CODE) ;
