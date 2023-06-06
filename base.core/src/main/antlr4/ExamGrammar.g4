@@ -41,7 +41,7 @@ matching_type_question : points question list_with_title list_with_title matchin
 matching_type_solution : SOLUTION_ENTRY (NEWLINE phrase DASH phrase)+
                        ;
 //////////////////////////
-true_false_question : points question true_false_solution (feedback)?
+true_false_question : points question true_false_solution
                     ;
 
 true_false_solution: SOLUTION_ENTRY TRUE_FALSE_RESPONSES
