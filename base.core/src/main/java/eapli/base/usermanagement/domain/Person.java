@@ -1,9 +1,12 @@
 package eapli.base.usermanagement.domain;
 
+import eapli.base.boardparticipantmanagement.domain.BoardParticipant;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -28,6 +31,8 @@ public class Person implements AggregateRoot<ID_Person> {
     @OneToOne(cascade = CascadeType.ALL)
     private BoardOwner boardOwner;
 
+    @OneToMany(cascade = CascadeType.REFRESH)
+    private List<BoardParticipant> boardParticipantList;
     public Person(final SystemUser user, final FullName fullName, ID_Person id) {
         if (fullName == null || user == null || id == null) {
             throw new IllegalArgumentException();
@@ -132,5 +137,13 @@ public class Person implements AggregateRoot<ID_Person> {
     public boolean isBoardOwner(){
         if(boardOwner!=null) return true;
         return false;
+    }
+
+    public boolean addBoardParticipant(BoardParticipant participant){
+        if(boardParticipantList == null){
+            boardParticipantList = new ArrayList<>();
+        }
+        boardParticipantList.add(participant);
+        return true;
     }
 }
