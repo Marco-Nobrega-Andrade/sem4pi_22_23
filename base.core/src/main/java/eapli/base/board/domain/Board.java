@@ -57,4 +57,8 @@ public class Board implements AggregateRoot<BoardTitle> {
         return boardTitle;
     }
 
+    public String returnBoardTitleString(){
+        return boardTitle.toString();
+    }
+
 }
