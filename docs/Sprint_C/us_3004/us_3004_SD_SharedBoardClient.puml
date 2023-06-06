@@ -25,7 +25,7 @@ activate DIS
 deactivate DIS
 UI -> DOS : writeUTF(shareBoardRequest)
 activate DOS
-return DOS
+deactivate DOS
 UI -> DIS : readUTF()
 activate DIS
 return message
