@@ -1,6 +1,11 @@
 package eapli.base.usermanagement.domain;
 
 
+import com.sun.jdi.request.DuplicateRequestException;
+import eapli.base.board.domain.Board;
+import eapli.base.board.domain.BoardBuilder;
+import eapli.base.boardparticipantmanagement.domain.BoardParticipant;
+import eapli.base.boardparticipantmanagement.domain.BoardParticipantFactory;
 import eapli.base.usermanagement.domain.builder.PersonBuilder;
 import eapli.framework.infrastructure.authz.domain.model.*;
 import org.junit.Test;
@@ -15,8 +20,22 @@ public class PersonTest {
         SystemUserBuilder userBuilder = new SystemUserBuilder(new NilPasswordPolicy(), new PlainTextEncoder());
         return userBuilder.with(username, "duMMy1", "dummy", "dummy", "a@b.ro").withRoles(roles).build();
     }
+    public static Board dummyBoard1(){
+        BoardBuilder boardBuilder = new BoardBuilder();
+        return boardBuilder.withCellList(1, 2,3).withBoardTitle("DummyBoard1").build();
+    }
 
-    private SystemUser getNewDummyUser() {
+    public static Board dummyBoard2(){
+        BoardBuilder boardBuilder = new BoardBuilder();
+        return boardBuilder.withCellList(1, 2,3).withBoardTitle("DummyBoard2").build();
+    }
+
+
+    public static Person dummyPerson(){
+        return new PersonBuilder().withID(1).withSystemUser(getNewDummyUser()).withfullName("Dummy Person").build();
+    }
+
+    private static SystemUser getNewDummyUser() {
         return dummyUser("dummy", BaseRoles.MANAGER);
     }
     @Test
@@ -90,4 +109,26 @@ public class PersonTest {
         assertFalse(expected);
     }
 
+    @Test(expected = DuplicateRequestException.class)
+    public void ensureAddingTheSamePersonTwiceInBoardDoesntHappen(){
+        Person person = dummyPerson();
+        Board board = dummyBoard1();
+        BoardParticipant boardParticipant1 = new BoardParticipantFactory().buildBoardParticipant(1L,true, board);
+        BoardParticipant boardParticipant2 = new BoardParticipantFactory().buildBoardParticipant(2L,true, board);
+
+        assertTrue(person.addBoardParticipant(boardParticipant1));
+        person.addBoardParticipant(boardParticipant2);
+    }
+
+    @Test
+    public void ensureAddingTheSamePersonInDifferentBoardsSucceeds(){
+        Person person = dummyPerson();
+        Board board1 = dummyBoard1();
+        Board board2 = dummyBoard2();
+        BoardParticipant boardParticipant1 = new BoardParticipantFactory().buildBoardParticipant(1L,true, board1);
+        BoardParticipant boardParticipant2 = new BoardParticipantFactory().buildBoardParticipant(2L,true, board2);
+
+        assertTrue(person.addBoardParticipant(boardParticipant1));
+        assertTrue(person.addBoardParticipant(boardParticipant2));
+    }
 }
