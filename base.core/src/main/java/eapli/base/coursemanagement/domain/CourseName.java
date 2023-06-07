@@ -10,13 +10,36 @@ public class CourseName implements ValueObject {
     private String course_Name;
 
     public CourseName(String courseName) {
-        if(StringPredicates.isNullOrEmpty(courseName)){
+        if(validateCourseNameString(courseName)){
+            this.course_Name = courseName;
+        }
+    }
+
+    private boolean validateCourseNameString(String courseName) {
+        return ensureCourseNameIsNotNull(courseName) &&
+                ensureCourseNameIsNotEmpty(courseName) &&
+                ensureCourseNameIsNotBlank(courseName);
+    }
+
+    private boolean ensureCourseNameIsNotNull(String courseName) {
+        if (courseName == null){
             throw new IllegalArgumentException("Course name cannot be null");
         }
-        if(courseName.isBlank()){
+        return true;
+    }
+
+    private boolean ensureCourseNameIsNotEmpty(String courseName) {
+        if (courseName.isEmpty()){
+            throw new IllegalArgumentException("Course name cannot be empty");
+        }
+        return true;
+    }
+
+    private boolean ensureCourseNameIsNotBlank(String courseName) {
+        if (courseName.isBlank()){
             throw new IllegalArgumentException("Course name cannot be blank");
         }
-        this.course_Name = courseName;
+        return true;
     }
 
     protected CourseName() {

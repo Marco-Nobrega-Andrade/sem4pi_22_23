@@ -11,18 +11,30 @@ public class EnrollmentLimits implements ValueObject {
     private int maxEnrollments;
 
     public EnrollmentLimits(int minEnrollments, int maxEnrollments) {
-        verifyLimits(minEnrollments,maxEnrollments);
-        this.minEnrollments = minEnrollments;
-        this.maxEnrollments = maxEnrollments;
+        if(verifyEnrollmentLimits(minEnrollments,maxEnrollments)){
+            this.minEnrollments = minEnrollments;
+            this.maxEnrollments = maxEnrollments;
+        }
     }
 
-    private void verifyLimits(int minEnrollments, int maxEnrollments) {
-        if(minEnrollments < 1){
-            throw new IllegalArgumentException("Minimum number of course enrollments must be greater than 0");
+    private boolean verifyEnrollmentLimits(int minEnrollments, int maxEnrollments) {
+        return ensureLimitIsGreaterThanZero(minEnrollments) &&
+                ensureLimitIsGreaterThanZero(maxEnrollments) &&
+                ensureMaxLimitIsGraterThanMinLimit(minEnrollments,maxEnrollments);
+    }
+
+    private boolean ensureLimitIsGreaterThanZero(int limit){
+        if(limit < 1){
+            throw new IllegalArgumentException("Any enrollment limit must be greater than 0");
         }
-        if(minEnrollments > maxEnrollments){
+        return true;
+    }
+
+    private boolean ensureMaxLimitIsGraterThanMinLimit(int minLimit, int maxLimit){
+        if(minLimit > maxLimit){
             throw new IllegalArgumentException("Maximum number of course enrollments must be greater or equal to the minimum number of course enrollments");
         }
+        return true;
     }
 
     protected EnrollmentLimits() {
