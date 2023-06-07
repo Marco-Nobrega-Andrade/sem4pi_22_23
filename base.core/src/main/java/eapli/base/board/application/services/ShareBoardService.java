@@ -6,6 +6,7 @@ import eapli.base.board.repositories.BoardRepository;
 import eapli.base.boardparticipantmanagement.domain.BoardParticipant;
 import eapli.base.boardparticipantmanagement.domain.BoardParticipantFactory;
 import eapli.base.boardparticipantmanagement.repositories.BoardParticipantRepository;
+import eapli.base.exceptions.ParameterNullBlankException;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.infrastructure.persistence.RepositoryFactory;
 import eapli.base.usermanagement.domain.Person;
@@ -14,7 +15,7 @@ import eapli.base.usermanagement.repositories.PersonRepository;
 import javax.persistence.NoResultException;
 
 public class ShareBoardService {
-    public boolean shareBoard(String boardTitle, String email, boolean permission){
+    public boolean shareBoard(String boardTitle, String email, boolean permission) throws ParameterNullBlankException {
         RepositoryFactory repositoryFactory = PersistenceContext.repositories();
         BoardParticipantRepository boardParticipantRepository = repositoryFactory.boardParticipantRepository();
         BoardRepository boardRepository = repositoryFactory.boardRepository();

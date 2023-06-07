@@ -1,6 +1,7 @@
 package eapli.base.boardparticipantmanagement.domain;
 
 import eapli.base.board.domain.Board;
+import eapli.base.exceptions.ParameterNullBlankException;
 import eapli.framework.domain.model.AggregateRoot;
 
 import javax.persistence.EmbeddedId;
@@ -15,7 +16,8 @@ public class BoardParticipant implements AggregateRoot<BoardParticipantId> {
     @OneToOne
     private Board board;
 
-    protected BoardParticipant(BoardParticipantId boardParticipantId, Permission permission, Board board){
+    protected BoardParticipant(BoardParticipantId boardParticipantId, Permission permission, Board board) throws ParameterNullBlankException {
+        verifyNullBlankParameters(boardParticipantId, permission, board);
         this.boardParticipantId = boardParticipantId;
         this.permission = permission;
         this.board = board;
@@ -40,5 +42,18 @@ public class BoardParticipant implements AggregateRoot<BoardParticipantId> {
     @Override
     public BoardParticipantId identity() {
         return null;
+    }
+
+    public boolean verifyNullBlankParameters(BoardParticipantId boardParticipantId, Permission permission, Board board) throws ParameterNullBlankException {
+        if(boardParticipantId == null){
+            throw new ParameterNullBlankException("BoardParticipantId cannot be null");
+        }
+        if(permission == null){
+            throw new ParameterNullBlankException("The permission needs to be assigned.");
+        }
+        if(board == null){
+            throw new ParameterNullBlankException("A board needs to be chosen.");
+        }
+        return true;
     }
 }

@@ -1,5 +1,6 @@
 package eapli.base.boardparticipantmanagement.domain;
 
+import eapli.base.exceptions.ParameterNullBlankException;
 import eapli.framework.domain.model.ValueObject;
 
 import java.util.Objects;
@@ -7,7 +8,8 @@ import java.util.Objects;
 public class BoardParticipantId  implements Comparable<BoardParticipantId>, ValueObject {
     private Long id;
 
-    protected BoardParticipantId(Long id) {
+    protected BoardParticipantId(Long id) throws ParameterNullBlankException {
+        verifyIdentifierNotNull(id);
         this.id = id;
     }
 
@@ -31,5 +33,12 @@ public class BoardParticipantId  implements Comparable<BoardParticipantId>, Valu
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    private boolean verifyIdentifierNotNull(Long id) throws ParameterNullBlankException {
+        if(id == null){
+            throw new ParameterNullBlankException("Id of boardParticipant cannot be null.");
+        }
+        return true;
     }
 }
