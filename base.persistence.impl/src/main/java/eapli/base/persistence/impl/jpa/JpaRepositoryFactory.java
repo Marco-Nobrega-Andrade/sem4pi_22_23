@@ -22,6 +22,7 @@ package eapli.base.persistence.impl.jpa;
 
 import eapli.base.Application;
 import eapli.base.boardhistory.repositories.BoardHistoryRepository;
+import eapli.base.boardparticipantmanagement.repositories.BoardParticipantRepository;
 import eapli.base.usermanagement.repositories.BoardOwnerRepository;
 import eapli.base.board.repositories.BoardRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
@@ -226,6 +227,14 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     @Override
     public FormativeExamRepository formativeExamRepository(TransactionalContext autoTx) {
         return new JpaFormativeExamRepository(autoTx);
+    }
+    @Override
+    public BoardParticipantRepository boardParticipantRepository(){
+        return new JpaBoardParticipantRepository(Application.settings().getPersistenceUnitName());
+    }
+    @Override
+    public BoardParticipantRepository boardParticipantRepository(TransactionalContext autoTx) {
+        return new JpaBoardParticipantRepository(autoTx);
     }
 
     @Override

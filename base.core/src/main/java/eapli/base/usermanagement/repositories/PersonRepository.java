@@ -22,7 +22,7 @@ public interface PersonRepository extends DomainRepository<ID_Person, Person> {
  *
  * @return
  */
-
+    Person findPersonByEmail(String email);
     List<Person> findAllPersonsWhoMatch(List<EmailAddress> email);
 
     Person findPersonBySystemUser(SystemUser systemUser);

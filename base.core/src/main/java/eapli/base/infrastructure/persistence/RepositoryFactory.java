@@ -21,6 +21,7 @@
 package eapli.base.infrastructure.persistence;
 
 import eapli.base.boardhistory.repositories.BoardHistoryRepository;
+import eapli.base.boardparticipantmanagement.repositories.BoardParticipantRepository;
 import eapli.base.usermanagement.repositories.BoardOwnerRepository;
 import eapli.base.board.repositories.BoardRepository;
 import eapli.base.clientusermanagement.repositories.ClientUserRepository;
@@ -216,4 +217,7 @@ public interface RepositoryFactory {
 
     FormativeExamRepository formativeExamRepository();
     FormativeExamRepository formativeExamRepository(TransactionalContext autoTx);
+
+    BoardParticipantRepository boardParticipantRepository();
+    BoardParticipantRepository boardParticipantRepository(TransactionalContext autoTx);
 }

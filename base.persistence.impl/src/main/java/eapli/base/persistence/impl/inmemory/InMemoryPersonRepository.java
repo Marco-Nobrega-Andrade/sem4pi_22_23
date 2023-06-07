@@ -21,6 +21,11 @@ public class InMemoryPersonRepository extends InMemoryDomainRepository<Person, I
     }
 
     @Override
+    public Person findPersonByEmail(String email) {
+        return null;
+    }
+
+    @Override
     public List<Person> findAllPersonsWhoMatch(List<EmailAddress> email) {
         return null;
     }

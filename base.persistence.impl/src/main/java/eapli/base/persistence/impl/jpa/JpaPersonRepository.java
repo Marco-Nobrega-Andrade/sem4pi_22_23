@@ -33,6 +33,12 @@ public class JpaPersonRepository extends JpaAutoTxRepository<Person, ID_Person,I
     }
 
     @Override
+    public Person findPersonByEmail(String email) {
+        return createQuery("SELECT p FROM Person p WHERE p.systemUser.email.email =:email", Person.class)
+                .setParameter("email", email).getSingleResult();
+    }
+
+    @Override
     public List<Person> findAllPersonsWhoMatch(List<EmailAddress> email) {
         return createQuery("SELECT p FROM Person p WHERE p.systemUser.email IN ( :email )", Person.class)
                 .setParameter("email", email).getResultList();
