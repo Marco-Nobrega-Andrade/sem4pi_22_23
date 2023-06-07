@@ -32,9 +32,11 @@ public class BoardParticipant implements AggregateRoot<BoardParticipantId> {
         }
         final BoardParticipant that = (BoardParticipant) other;
 
-        return boardParticipantId.equals(that.boardParticipantId) && permission.equals(that.permission) && board.equals(that.board);
+        return boardParticipantId.equals(that.boardParticipantId) && board.equals(that.board);
     }
-
+    public String returnBoardTitleString(){
+        return board.returnBoardTitleString();
+    }
     @Override
     public BoardParticipantId identity() {
         return null;

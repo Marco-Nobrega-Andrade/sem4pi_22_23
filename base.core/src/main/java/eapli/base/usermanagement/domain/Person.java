@@ -1,5 +1,7 @@
 package eapli.base.usermanagement.domain;
 
+import com.sun.jdi.request.DuplicateRequestException;
+import eapli.base.board.domain.Board;
 import eapli.base.boardparticipantmanagement.domain.BoardParticipant;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
@@ -142,6 +144,11 @@ public class Person implements AggregateRoot<ID_Person> {
     public boolean addBoardParticipant(BoardParticipant participant){
         if(boardParticipantList == null){
             boardParticipantList = new ArrayList<>();
+        }
+        for(BoardParticipant boardParticipant : boardParticipantList){
+            if(boardParticipant.returnBoardTitleString().equals(participant.returnBoardTitleString())){
+                throw new DuplicateRequestException("ERROR: The person you tried to add to the board is already in your board!");
+            }
         }
         boardParticipantList.add(participant);
         return true;
