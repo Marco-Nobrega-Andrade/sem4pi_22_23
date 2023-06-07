@@ -17,7 +17,7 @@ public class SBPMessageFormat {
     public static final int LIST_BOARD_I_OWN_SEND = 5;
     public static final int LIST_BOARD_I_OWN_RCV = 6;
 
-
+    public static final int SHARE_BOARD_CODE = 7;
     public static final int VERSION_OFFSET = 0;
     public static final int CODE_OFFSET = 1;
     public static final int D_LENGTH1_OFFSET = 2;
@@ -60,6 +60,10 @@ public class SBPMessageFormat {
             return encodeRequest(LIST_BOARD_I_OWN_RCV, "");
         }
         return encodeRequest(LIST_BOARD_I_OWN_RCV, strBuilder.toString());
+    }
+
+    public static byte[] createShareBoardRequest(String boardTitle, String email, String permission){
+        return encodeRequest(SHARE_BOARD_CODE, boardTitle + ","+ email + "," + permission);
     }
     public static byte[] encodeRequest(int code, String data){
         //Data values
