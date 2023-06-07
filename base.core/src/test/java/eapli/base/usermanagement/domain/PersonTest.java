@@ -6,6 +6,7 @@ import eapli.base.board.domain.Board;
 import eapli.base.board.domain.BoardBuilder;
 import eapli.base.boardparticipantmanagement.domain.BoardParticipant;
 import eapli.base.boardparticipantmanagement.domain.BoardParticipantFactory;
+import eapli.base.exceptions.DuplicateCreationException;
 import eapli.base.exceptions.ParameterNullBlankException;
 import eapli.base.usermanagement.domain.builder.PersonBuilder;
 import eapli.framework.infrastructure.authz.domain.model.*;
@@ -110,8 +111,8 @@ public class PersonTest {
         assertFalse(expected);
     }
 
-    @Test(expected = DuplicateRequestException.class)
-    public void ensureAddingTheSamePersonTwiceInBoardDoesntHappen() throws ParameterNullBlankException {
+    @Test(expected = DuplicateCreationException.class)
+    public void ensureAddingTheSamePersonTwiceInBoardDoesntHappen() throws ParameterNullBlankException, DuplicateCreationException {
         Person person = dummyPerson();
         Board board = dummyBoard1();
         BoardParticipant boardParticipant1 = new BoardParticipantFactory().buildBoardParticipant(1L,true, board);
@@ -122,7 +123,7 @@ public class PersonTest {
     }
 
     @Test
-    public void ensureAddingTheSamePersonInDifferentBoardsSucceeds() throws ParameterNullBlankException {
+    public void ensureAddingTheSamePersonInDifferentBoardsSucceeds() throws ParameterNullBlankException, DuplicateCreationException {
         Person person = dummyPerson();
         Board board1 = dummyBoard1();
         Board board2 = dummyBoard2();

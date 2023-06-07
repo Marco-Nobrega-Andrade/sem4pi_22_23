@@ -4,6 +4,7 @@ import com.sun.jdi.request.DuplicateRequestException;
 import eapli.base.board.application.ListBoardsIOwnController;
 import eapli.base.board.application.ShareBoardController;
 import eapli.base.board.dto.BoardDTOWithTitle;
+import eapli.base.exceptions.DuplicateCreationException;
 import eapli.base.exceptions.ParameterNullBlankException;
 import eapli.base.infrastructure.authz.AuthenticationCredentialHandler;
 import eapli.base.infrastructure.authz.CredentialHandler;
@@ -64,7 +65,7 @@ public class AttendClient implements Runnable{
                         try {
                             new ShareBoardController().shareBoard(shareBoardParams.get(0), shareBoardParams.get(1), permission);
                             outputStream.writeUTF(new String(SBPMessageFormat.createAcknowledgeRequest()));
-                        }catch (DuplicateRequestException | ParameterNullBlankException e){
+                        }catch (DuplicateCreationException | ParameterNullBlankException e){
                             outputStream.writeUTF(new String(SBPMessageFormat.creteErrorRequest(e.getMessage())));
                         }catch (NoResultException e){
                             outputStream.writeUTF(new String(SBPMessageFormat.creteErrorRequest("ERROR: There are no people in the system with that e-mail")));
