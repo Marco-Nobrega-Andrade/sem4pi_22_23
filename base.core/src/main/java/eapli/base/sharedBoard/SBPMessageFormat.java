@@ -18,6 +18,8 @@ public class SBPMessageFormat {
     public static final int LIST_BOARD_I_OWN_RCV = 6;
 
     public static final int SHARE_BOARD_CODE = 7;
+
+    public static final int ARCHIVE_BOARD_CODE = 8;
     public static final int VERSION_OFFSET = 0;
     public static final int CODE_OFFSET = 1;
     public static final int D_LENGTH1_OFFSET = 2;
@@ -62,6 +64,10 @@ public class SBPMessageFormat {
         return encodeRequest(LIST_BOARD_I_OWN_RCV, strBuilder.toString());
     }
 
+    public static byte[] createArchiveBoardRequest(String boardTitle){
+        return encodeRequest(ARCHIVE_BOARD_CODE, boardTitle);
+    }
+
     public static byte[] createShareBoardRequest(String boardTitle, String email, String permission){
         return encodeRequest(SHARE_BOARD_CODE, boardTitle + ","+ email + "," + permission);
     }
@@ -98,7 +104,9 @@ public class SBPMessageFormat {
                 stringBuilder.append(new String(new byte[]{request[i]}) );
             }
         }
-        paramList.add(stringBuilder.toString());
+        if(!stringBuilder.toString().equals("")){
+            paramList.add(stringBuilder.toString());
+        }
         return paramList;
     }
 
