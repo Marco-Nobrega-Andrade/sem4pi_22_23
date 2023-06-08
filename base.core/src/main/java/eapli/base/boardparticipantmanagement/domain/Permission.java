@@ -1,9 +1,11 @@
 package eapli.base.boardparticipantmanagement.domain;
 
+import eapli.framework.domain.model.ValueObject;
+
 import javax.persistence.Embeddable;
 import java.util.Objects;
 @Embeddable
-public class Permission {
+public class Permission implements ValueObject {
     private boolean hasWritePermission;
 
     protected Permission(boolean hasWritePermission){
