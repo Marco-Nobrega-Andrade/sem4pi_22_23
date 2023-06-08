@@ -20,6 +20,7 @@ Country:
 - Italy
 - Japan
 
+#Answer:
 #Solution:
 Tokyo-Japan
 Italy-Rome
@@ -28,6 +29,7 @@ Canada-Ottawa
 
 #Points: 10
 #Question: Exam banger?
+#Answer:
 #Solution: T
 #Feedback: Nice.
 
@@ -35,6 +37,7 @@ Canada-Ottawa
 
 #Points: 10
 #Question: Capital of Brazil length?
+#Answer:
 #Solution: 222,22 km
 #Feedback: Very good
 
@@ -48,12 +51,14 @@ WORD:
 -Berlengas
 -Ilhéu da Pontinha
 
+#Answer:
 #Solution: Berlengas
 
 #Section: 3
 
 #Points: 10
 #Question: Capital of Brazil?
+#Answer:
 #Solution: Brasilia
 #Feedback: Very good
 
@@ -64,6 +69,8 @@ Select one option:
 -Ottawa
 -Rome
 -Tokyo
+
+#Answer:
 #Solution: Tokyo
 
 #Points: 20
@@ -75,4 +82,6 @@ Select multiple options:
 -New York
 -Lisbon
 -Los Angeles
+
+#Answer:
 #Solution: New York, Los Angeles
