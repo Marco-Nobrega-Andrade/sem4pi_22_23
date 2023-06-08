@@ -1,4 +1,4 @@
-// Generated from D:/Uni_2ano_2sem/SEM_4_PI/sem4pi-22-23-24/base.core/src/main/antlr4\ExamGrammar.g4 by ANTLR 4.12.0
+// Generated from C:/Uni/2A/sem4pi-22-23-24/base.core/src/main/antlr4\ExamGrammar.g4 by ANTLR 4.12.0
 package eapli.base.grammarutils;
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -101,6 +101,18 @@ public class ExamGrammarBaseListener implements ExamGrammarListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterMultiple_choice_answer(ExamGrammarParser.Multiple_choice_answerContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMultiple_choice_answer(ExamGrammarParser.Multiple_choice_answerContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterMultiple_choice_solution(ExamGrammarParser.Multiple_choice_solutionContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -125,6 +137,18 @@ public class ExamGrammarBaseListener implements ExamGrammarListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterMatching_type_answer(ExamGrammarParser.Matching_type_answerContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMatching_type_answer(ExamGrammarParser.Matching_type_answerContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterMatching_type_solution(ExamGrammarParser.Matching_type_solutionContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -144,6 +168,18 @@ public class ExamGrammarBaseListener implements ExamGrammarListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitTrue_false_question(ExamGrammarParser.True_false_questionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterTrue_false_answer(ExamGrammarParser.True_false_answerContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTrue_false_answer(ExamGrammarParser.True_false_answerContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -185,6 +221,18 @@ public class ExamGrammarBaseListener implements ExamGrammarListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterMissing_word_answer(ExamGrammarParser.Missing_word_answerContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMissing_word_answer(ExamGrammarParser.Missing_word_answerContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterMissing_word_solution(ExamGrammarParser.Missing_word_solutionContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -221,6 +269,18 @@ public class ExamGrammarBaseListener implements ExamGrammarListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterShort_answer_answer(ExamGrammarParser.Short_answer_answerContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitShort_answer_answer(ExamGrammarParser.Short_answer_answerContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterShort_answer_solution(ExamGrammarParser.Short_answer_solutionContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -252,6 +312,18 @@ public class ExamGrammarBaseListener implements ExamGrammarListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitNumerical_answer(ExamGrammarParser.Numerical_answerContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterNumerical_solution(ExamGrammarParser.Numerical_solutionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitNumerical_solution(ExamGrammarParser.Numerical_solutionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

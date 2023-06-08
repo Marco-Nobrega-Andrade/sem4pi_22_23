@@ -1,4 +1,4 @@
-// Generated from D:/Uni_2ano_2sem/SEM_4_PI/sem4pi-22-23-24/base.core/src/main/antlr4\ExamGrammar.g4 by ANTLR 4.12.0
+// Generated from C:/Uni/2A/sem4pi-22-23-24/base.core/src/main/antlr4\ExamGrammar.g4 by ANTLR 4.12.0
 package eapli.base.grammarutils;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -53,6 +53,12 @@ public interface ExamGrammarVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitMultiple_choice_question(ExamGrammarParser.Multiple_choice_questionContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link ExamGrammarParser#multiple_choice_answer}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMultiple_choice_answer(ExamGrammarParser.Multiple_choice_answerContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link ExamGrammarParser#multiple_choice_solution}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -65,6 +71,12 @@ public interface ExamGrammarVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitMatching_type_question(ExamGrammarParser.Matching_type_questionContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link ExamGrammarParser#matching_type_answer}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMatching_type_answer(ExamGrammarParser.Matching_type_answerContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link ExamGrammarParser#matching_type_solution}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -76,6 +88,12 @@ public interface ExamGrammarVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitTrue_false_question(ExamGrammarParser.True_false_questionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ExamGrammarParser#true_false_answer}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTrue_false_answer(ExamGrammarParser.True_false_answerContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link ExamGrammarParser#true_false_solution}.
 	 * @param ctx the parse tree
@@ -95,6 +113,12 @@ public interface ExamGrammarVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitMissing_word_phrase(ExamGrammarParser.Missing_word_phraseContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link ExamGrammarParser#missing_word_answer}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMissing_word_answer(ExamGrammarParser.Missing_word_answerContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link ExamGrammarParser#missing_word_solution}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -113,6 +137,12 @@ public interface ExamGrammarVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitShort_answer_question(ExamGrammarParser.Short_answer_questionContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link ExamGrammarParser#short_answer_answer}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitShort_answer_answer(ExamGrammarParser.Short_answer_answerContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link ExamGrammarParser#short_answer_solution}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -130,6 +160,12 @@ public interface ExamGrammarVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitNumerical_answer(ExamGrammarParser.Numerical_answerContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ExamGrammarParser#numerical_solution}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNumerical_solution(ExamGrammarParser.Numerical_solutionContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link ExamGrammarParser#question}.
 	 * @param ctx the parse tree
