@@ -2,6 +2,7 @@ package eapli.base.coursemanagement.domain;
 
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.util.StringPredicates;
+import eapli.framework.validations.Preconditions;
 
 import javax.persistence.Embeddable;
 import java.util.Objects;
@@ -10,13 +11,36 @@ public class CourseTitle implements ValueObject {
     private String course_Title;
 
     public CourseTitle(String courseTitle) {
-        if(StringPredicates.isNullOrEmpty(courseTitle)){
+        if(validateCourseTitleString(courseTitle)){
+            this.course_Title = courseTitle;
+        }
+    }
+
+    private boolean validateCourseTitleString(String courseTitle) {
+        return ensureCourseTitleIsNotNull(courseTitle) &&
+                ensureCourseTitleIsNotEmpty(courseTitle) &&
+                ensureCourseTitleIsNotBlank(courseTitle);
+    }
+
+    private boolean ensureCourseTitleIsNotNull(String courseTitle) {
+        if (courseTitle == null){
             throw new IllegalArgumentException("Course title cannot be null");
         }
-        if(courseTitle.isBlank()){
+        return true;
+    }
+
+    private boolean ensureCourseTitleIsNotEmpty(String courseTitle) {
+        if (courseTitle.isEmpty()){
+            throw new IllegalArgumentException("Course title cannot be empty");
+        }
+        return true;
+    }
+
+    private boolean ensureCourseTitleIsNotBlank(String courseTitle) {
+        if (courseTitle.isBlank()){
             throw new IllegalArgumentException("Course title cannot be blank");
         }
-        this.course_Title = courseTitle;
+        return true;
     }
 
     protected CourseTitle() {

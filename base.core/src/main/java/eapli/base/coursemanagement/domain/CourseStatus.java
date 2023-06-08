@@ -14,12 +14,39 @@ public class CourseStatus implements ValueObject {
 
 
     public CourseStatus(CourseStatusValue courseStatusValue) {
-        this.courseStatusValue = courseStatusValue;
+        if (validateCourseStatusValue(courseStatusValue)){
+            this.courseStatusValue = courseStatusValue;
+        }
     }
 
     public CourseStatus(String status) {
-        this.courseStatusValue = CourseStatusValue.valueOf(status);
+        if (validateCourseStatusValueString(status)){
+            this.courseStatusValue = CourseStatusValue.valueOf(status);
+        }
     }
+
+    private boolean validateCourseStatusValue(CourseStatusValue courseStatusValue) {
+        return ensureCourseStatusValueIsNotNull(courseStatusValue);
+    }
+
+    private boolean validateCourseStatusValueString(String status) {
+        return ensureCourseStatusValueIsValidOption(status);
+    }
+
+    private boolean ensureCourseStatusValueIsNotNull(CourseStatusValue courseStatusValue) {
+        if(courseStatusValue == null){
+            throw new IllegalArgumentException("Course status value cannot be null");
+        }
+        return true;
+    }
+
+    private boolean ensureCourseStatusValueIsValidOption(String status) {
+        if(!status.equals("CLOSE") && !status.equals("OPEN") && !status.equals("OPEN_ENROLLMENTS") && !status.equals("CLOSED_ENROLLMENTS") && !status.equals("CLOSED")){
+            throw new IllegalArgumentException("The course status must be one of the predefined options");
+        }
+        return true;
+    }
+
 
     public CourseStatus() {
     }

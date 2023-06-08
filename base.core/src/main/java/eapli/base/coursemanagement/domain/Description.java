@@ -10,13 +10,36 @@ public class Description implements ValueObject {
     private String description;
 
     public Description(String description) {
-        if(StringPredicates.isNullOrEmpty(description)){
+        if(validateCourseDescriptionString(description)){
+            this.description = description;
+        }
+    }
+
+    private boolean validateCourseDescriptionString(String description) {
+        return ensureDescriptionIsNotNull(description) &&
+                ensureDescriptionIsNotEmpty(description) &&
+                ensureDescriptionIsNotBlank(description);
+    }
+
+    private boolean ensureDescriptionIsNotNull(String description) {
+        if (description == null){
             throw new IllegalArgumentException("Course description cannot be null");
         }
-        if(description.isBlank()){
+        return true;
+    }
+
+    private boolean ensureDescriptionIsNotEmpty(String description) {
+        if (description.isEmpty()){
+            throw new IllegalArgumentException("Course description cannot be empty");
+        }
+        return true;
+    }
+
+    private boolean ensureDescriptionIsNotBlank(String description) {
+        if (description.isBlank()){
             throw new IllegalArgumentException("Course description cannot be blank");
         }
-        this.description = description;
+        return true;
     }
 
     protected Description() {
