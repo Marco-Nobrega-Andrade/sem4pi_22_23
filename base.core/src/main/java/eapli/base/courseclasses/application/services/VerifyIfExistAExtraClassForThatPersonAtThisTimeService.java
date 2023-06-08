@@ -6,6 +6,8 @@ import eapli.base.coursemanagement.domain.Course;
 import eapli.base.coursemanagement.repositories.CourseRepository;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.usermanagement.domain.Person;
+import eapli.base.usermanagement.domain.Teacher;
+import eapli.base.usermanagement.repositories.PersonRepository;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,6 +18,7 @@ public class VerifyIfExistAExtraClassForThatPersonAtThisTimeService {
     private final ExtraClassRepository extraClassRepository = PersistenceContext.repositories().extraClassRepository();
 
     private final CourseRepository courseRepository = PersistenceContext.repositories().courseRepository();
+    private final PersonRepository personRepository = PersistenceContext.repositories().personRepository();
 
     public Boolean verifyIfExistAExtraClass(List<Person> people, Date utilDate, int duration) {
         // TODO
@@ -34,22 +37,29 @@ public class VerifyIfExistAExtraClassForThatPersonAtThisTimeService {
             }
         }
 
-        List<Person> teachers = new ArrayList<>();
+        List<Teacher> teachers = new ArrayList<>();
         for (Person person : people){
             if (person.isATeacher()){
-                teachers.add(person);
+                Teacher teacher = personRepository.findTeachersByPerson(person);
+                teachers.add(teacher);
             }
         }
 
-        List<ExtraClass> teacherClasses =extraClassRepository.findAllClassesByTeacher(teachers);
+        List<List<ExtraClass>> allClasses = new ArrayList<>();
+        for (Teacher teacher : teachers) {
+            List<ExtraClass> teacherClasses = extraClassRepository.findAllClassesByTeacher(teacher);
+            allClasses.add(teacherClasses);
+        }
 
-        if (teacherClasses.isEmpty()&&classesListByStudents.isEmpty()){
+        if (allClasses.isEmpty()&&classesListByStudents.isEmpty()){
             return false;
         }
 
-        for (ExtraClass classe : teacherClasses){
-            if (classe.verifyIfExistAnExtraClassAtTheTime(utilDate,duration)) {
-                return true;
+        for (List<ExtraClass> teacherClasses : allClasses) {
+            for (ExtraClass classe : teacherClasses) {
+                if (classe.verifyIfExistAnExtraClassAtTheTime(utilDate, duration)) {
+                    return true;
+                }
             }
         }
         for (List<ExtraClass> classes : classesListByStudents){
