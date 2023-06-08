@@ -32,10 +32,10 @@ public class JpaClassRepository extends JpaAutoTxRepository<Class, ClassId,Class
 
 
     @Override
-    public List<Class> findAllClassesByTeacher(List<Person> teachers) {
-        return createQuery("SELECT c FROM Class c WHERE c.classTeacher IN ( :teachers ) ",
+    public List<Class> findAllClassesByTeacher(Teacher teacher) {
+        return createQuery("SELECT c FROM Class c WHERE c.classTeacher = :teacher",
                 Class.class)
-                .setParameter("teachers", teachers).getResultList();
+                .setParameter("teacher", teacher).getResultList();
     }
 
     @Override

@@ -2,6 +2,7 @@ package eapli.base.persistence.impl.inmemory;
 
 import eapli.base.usermanagement.domain.ID_Person;
 import eapli.base.usermanagement.domain.Person;
+import eapli.base.usermanagement.domain.Teacher;
 import eapli.base.usermanagement.repositories.PersonRepository;
 import eapli.framework.general.domain.model.EmailAddress;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
@@ -27,6 +28,11 @@ public class InMemoryPersonRepository extends InMemoryDomainRepository<Person, I
 
     @Override
     public Person findPersonBySystemUser(SystemUser systemUser) {
+        return null;
+    }
+
+    @Override
+    public Teacher findTeachersByPerson(Person person) {
         return null;
     }
 

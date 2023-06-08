@@ -19,7 +19,7 @@ public class InMemoryClassRepository extends InMemoryDomainRepository<Class, Cla
 
 
     @Override
-    public List<Class> findAllClassesByTeacher(List<Person> teacher) {
+    public List<Class> findAllClassesByTeacher(Teacher teacher) {
         return null;
     }
 

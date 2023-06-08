@@ -6,6 +6,7 @@ import eapli.base.courseclasses.domain.Class;
 import eapli.base.courseclasses.repositories.ExtraClassRepository;
 import eapli.base.coursemanagement.domain.Course;
 import eapli.base.usermanagement.domain.Person;
+import eapli.base.usermanagement.domain.Teacher;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
@@ -23,15 +24,12 @@ public class JpaExtraClassRepository extends JpaAutoTxRepository<ExtraClass, Ext
         super(puname, Application.settings().getExtendedPersistenceProperties(),
                 "extraClassId");
     }
-    @Override
-    public List<ExtraClass> findAllClassesWhoMatch(List<Person> people) {
-       return createQuery("SELECT c FROM ExtraClass c JOIN Person p WHERE c.extraClassTeacher " +
-               "IN ( :people ) OR SELECT s FROM Student s IN ( c.participatingStudents ) " +
-               "WHERE s IN ( :people )", ExtraClass.class)
-               .setParameter("people", people)
-               .getResultList();
-    }
 
+    /**
+     * Finds all classes of a course
+     * @param course course to search for extra classes
+     * @return List of ExtraClass
+     */
     @Override
     public List<ExtraClass> findExtraClassesInACourse(Course course) {
         return  createQuery("SELECT c FROM ExtraClass c WHERE c IN ( :course.extraClassesList )"
@@ -39,10 +37,15 @@ public class JpaExtraClassRepository extends JpaAutoTxRepository<ExtraClass, Ext
                 setParameter("course", course).getResultList();
     }
 
+    /**
+     * Finds all classes of a teacher
+     * @param teacher teacher to search for extra classes
+     * @return List of ExtraClass
+     */
     @Override
-    public List<ExtraClass> findAllClassesByTeacher(List<Person> teachers) {
-        return createQuery("SELECT c FROM ExtraClass c WHERE c.extraClassTeacher IN ( :teachers ) ",
+    public List<ExtraClass> findAllClassesByTeacher(Teacher teacher) {
+        return createQuery("SELECT c FROM ExtraClass c WHERE c.extraClassTeacher = :teacher",
                 ExtraClass.class)
-                .setParameter("teachers", teachers).getResultList();
+                .setParameter("teacher", teacher).getResultList();
     }
 }

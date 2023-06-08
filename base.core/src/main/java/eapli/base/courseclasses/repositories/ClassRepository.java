@@ -13,10 +13,10 @@ public interface ClassRepository extends DomainRepository<ClassId, Class> {
 
     /**
      * Finds all classes who match a person and a date
-     * @param  person person
+     * @param  teacher teacher who lecture the classes
      * @return list of classes
      */
-    List<Class> findAllClassesByTeacher(List<Person> teacher);
+    List<Class> findAllClassesByTeacher(Teacher teacher);
 
     /**
      * Finds a class by its id
