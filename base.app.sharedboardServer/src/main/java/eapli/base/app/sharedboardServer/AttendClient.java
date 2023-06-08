@@ -1,9 +1,11 @@
 package eapli.base.app.sharedboardServer;
 
 import com.sun.jdi.request.DuplicateRequestException;
+import eapli.base.board.application.ArchiveBoardController;
 import eapli.base.board.application.ListBoardsIOwnController;
 import eapli.base.board.application.ShareBoardController;
 import eapli.base.board.dto.BoardDTOWithTitle;
+import eapli.base.exceptions.AlreadyDeactivatedException;
 import eapli.base.exceptions.DuplicateCreationException;
 import eapli.base.exceptions.ParameterNullBlankException;
 import eapli.base.infrastructure.authz.AuthenticationCredentialHandler;
@@ -70,6 +72,16 @@ public class AttendClient implements Runnable{
                         }catch (NoResultException e){
                             outputStream.writeUTF(new String(SBPMessageFormat.creteErrorRequest("ERROR: There are no people in the system with that e-mail")));
                         }
+                        break;
+                    case SBPMessageFormat.ARCHIVE_BOARD_CODE:
+                        List<String> archiveBoardParam = SBPMessageFormat.decodeParam(message.getBytes());
+                        try{
+                            new ArchiveBoardController().archiveBoard(archiveBoardParam.get(0));
+                            outputStream.writeUTF(new String(SBPMessageFormat.createAcknowledgeRequest()));
+                        }catch (AlreadyDeactivatedException e){
+                            outputStream.writeUTF(new String(SBPMessageFormat.creteErrorRequest(e.getMessage())));
+                        }
+                        break;
                 }
             }while (arrayFormat[SBPMessageFormat.CODE_OFFSET] != SBPMessageFormat.DISCONN_CODE) ;
         } catch (IOException e) {
