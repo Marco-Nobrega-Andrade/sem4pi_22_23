@@ -1,4 +1,5 @@
-package eapli.base.grammarutils;// Generated from C:/Users/David/OneDrive/Documentos/ISEP/2�Ano/SEM2/LAPR4/PI/sem4pi-22-23-24/base.core/src/main/antlr4\FormativeExamGrammar.g4 by ANTLR 4.12.0
+// Generated from C:/Users/windows/Documents/sem4pi-22-23-24/base.core/src/main/antlr4\FormativeExamGrammar.g4 by ANTLR 4.12.0
+package eapli.base.grammarutils;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
@@ -27,6 +28,16 @@ public interface FormativeExamGrammarListener extends ParseTreeListener {
 	 */
 	void exitMultiple_choice_question(FormativeExamGrammarParser.Multiple_choice_questionContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link FormativeExamGrammarParser#multiple_choice_answer}.
+	 * @param ctx the parse tree
+	 */
+	void enterMultiple_choice_answer(FormativeExamGrammarParser.Multiple_choice_answerContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FormativeExamGrammarParser#multiple_choice_answer}.
+	 * @param ctx the parse tree
+	 */
+	void exitMultiple_choice_answer(FormativeExamGrammarParser.Multiple_choice_answerContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link FormativeExamGrammarParser#multiple_choice_solution}.
 	 * @param ctx the parse tree
 	 */
@@ -47,6 +58,16 @@ public interface FormativeExamGrammarListener extends ParseTreeListener {
 	 */
 	void exitMatching_type_question(FormativeExamGrammarParser.Matching_type_questionContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link FormativeExamGrammarParser#matching_type_answer}.
+	 * @param ctx the parse tree
+	 */
+	void enterMatching_type_answer(FormativeExamGrammarParser.Matching_type_answerContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FormativeExamGrammarParser#matching_type_answer}.
+	 * @param ctx the parse tree
+	 */
+	void exitMatching_type_answer(FormativeExamGrammarParser.Matching_type_answerContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link FormativeExamGrammarParser#matching_type_solution}.
 	 * @param ctx the parse tree
 	 */
@@ -66,6 +87,16 @@ public interface FormativeExamGrammarListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitTrue_false_question(FormativeExamGrammarParser.True_false_questionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link FormativeExamGrammarParser#true_false_answer}.
+	 * @param ctx the parse tree
+	 */
+	void enterTrue_false_answer(FormativeExamGrammarParser.True_false_answerContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FormativeExamGrammarParser#true_false_answer}.
+	 * @param ctx the parse tree
+	 */
+	void exitTrue_false_answer(FormativeExamGrammarParser.True_false_answerContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link FormativeExamGrammarParser#true_false_solution}.
 	 * @param ctx the parse tree
@@ -97,6 +128,16 @@ public interface FormativeExamGrammarListener extends ParseTreeListener {
 	 */
 	void exitMissing_word_phrase(FormativeExamGrammarParser.Missing_word_phraseContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link FormativeExamGrammarParser#missing_word_answer}.
+	 * @param ctx the parse tree
+	 */
+	void enterMissing_word_answer(FormativeExamGrammarParser.Missing_word_answerContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FormativeExamGrammarParser#missing_word_answer}.
+	 * @param ctx the parse tree
+	 */
+	void exitMissing_word_answer(FormativeExamGrammarParser.Missing_word_answerContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link FormativeExamGrammarParser#missing_word_solution}.
 	 * @param ctx the parse tree
 	 */
@@ -127,6 +168,16 @@ public interface FormativeExamGrammarListener extends ParseTreeListener {
 	 */
 	void exitShort_answer_question(FormativeExamGrammarParser.Short_answer_questionContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link FormativeExamGrammarParser#short_answer_answer}.
+	 * @param ctx the parse tree
+	 */
+	void enterShort_answer_answer(FormativeExamGrammarParser.Short_answer_answerContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FormativeExamGrammarParser#short_answer_answer}.
+	 * @param ctx the parse tree
+	 */
+	void exitShort_answer_answer(FormativeExamGrammarParser.Short_answer_answerContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link FormativeExamGrammarParser#short_answer_solution}.
 	 * @param ctx the parse tree
 	 */
@@ -156,6 +207,16 @@ public interface FormativeExamGrammarListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitNumerical_answer(FormativeExamGrammarParser.Numerical_answerContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link FormativeExamGrammarParser#numerical_solution}.
+	 * @param ctx the parse tree
+	 */
+	void enterNumerical_solution(FormativeExamGrammarParser.Numerical_solutionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FormativeExamGrammarParser#numerical_solution}.
+	 * @param ctx the parse tree
+	 */
+	void exitNumerical_solution(FormativeExamGrammarParser.Numerical_solutionContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link FormativeExamGrammarParser#question}.
 	 * @param ctx the parse tree
