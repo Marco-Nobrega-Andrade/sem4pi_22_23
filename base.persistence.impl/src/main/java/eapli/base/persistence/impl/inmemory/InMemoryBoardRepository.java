@@ -19,4 +19,9 @@ public class InMemoryBoardRepository extends InMemoryDomainRepository<Board, Boa
     public List<Board> findAllBoardsIOwn(SystemUser user) {
         return null;
     }
+
+    @Override
+    public Board findBoardByTitle(String boardTitle) {
+        return null;
+    }
 }

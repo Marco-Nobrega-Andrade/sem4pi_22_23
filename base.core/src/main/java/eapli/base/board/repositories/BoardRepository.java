@@ -11,4 +11,6 @@ public interface BoardRepository extends DomainRepository<BoardTitle, Board> {
     public long getLastCellId();
 
     public List<Board> findAllBoardsIOwn(SystemUser user);
+
+    public Board findBoardByTitle(String boardTitle);
 }

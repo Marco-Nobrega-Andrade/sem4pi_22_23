@@ -27,8 +27,14 @@ public class JpaBoardRepository extends JpaAutoTxRepository<Board, BoardTitle, B
 
     @Override
     public List<Board> findAllBoardsIOwn(SystemUser user) {
-        return createQuery("SELECT bl FROM BoardOwner bo JOIN bo.boardList bl WHERE bo = (SELECT p.boardOwner FROM Person p WHERE p.systemUser = :systemUser)", Board.class)
+        return createQuery("SELECT b FROM Board b WHERE b IN (SELECT bl FROM BoardOwner bo JOIN bo.boardList bl WHERE bo = (SELECT p.boardOwner FROM Person p WHERE p.systemUser = :systemUser)) AND b.boardStatus.isActive = TRUE", Board.class)
                 .setParameter("systemUser", user).getResultList();
 
+    }
+
+    @Override
+    public Board findBoardByTitle(String boardTitle) {
+        return createQuery("SELECT b FROM Board b WHERE b.boardTitle.boardTitle =: boardTitleString", Board.class)
+                .setParameter("boardTitleString", boardTitle).getSingleResult();
     }
 }
