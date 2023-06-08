@@ -71,7 +71,7 @@ public class ShareBoardUI extends AbstractUI {
         } catch (IOException e) {
             System.out.printf("Your connection to the server has been lost.\n\n");
         }
-        return true;
+        return false;
     }
     @Override
     public String headline() {
