@@ -1,4 +1,4 @@
-// Generated from D:/Uni_2ano_2sem/SEM_4_PI/sem4pi-22-23-24/base.core/src/main/antlr4\ExamGrammar.g4 by ANTLR 4.12.0
+// Generated from C:/Uni/2A/sem4pi-22-23-24/base.core/src/main/antlr4\ExamGrammar.g4 by ANTLR 4.12.0
 package eapli.base.grammarutils;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -78,6 +78,16 @@ public interface ExamGrammarListener extends ParseTreeListener {
 	 */
 	void exitMultiple_choice_question(ExamGrammarParser.Multiple_choice_questionContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link ExamGrammarParser#multiple_choice_answer}.
+	 * @param ctx the parse tree
+	 */
+	void enterMultiple_choice_answer(ExamGrammarParser.Multiple_choice_answerContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ExamGrammarParser#multiple_choice_answer}.
+	 * @param ctx the parse tree
+	 */
+	void exitMultiple_choice_answer(ExamGrammarParser.Multiple_choice_answerContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link ExamGrammarParser#multiple_choice_solution}.
 	 * @param ctx the parse tree
 	 */
@@ -98,6 +108,16 @@ public interface ExamGrammarListener extends ParseTreeListener {
 	 */
 	void exitMatching_type_question(ExamGrammarParser.Matching_type_questionContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link ExamGrammarParser#matching_type_answer}.
+	 * @param ctx the parse tree
+	 */
+	void enterMatching_type_answer(ExamGrammarParser.Matching_type_answerContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ExamGrammarParser#matching_type_answer}.
+	 * @param ctx the parse tree
+	 */
+	void exitMatching_type_answer(ExamGrammarParser.Matching_type_answerContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link ExamGrammarParser#matching_type_solution}.
 	 * @param ctx the parse tree
 	 */
@@ -117,6 +137,16 @@ public interface ExamGrammarListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitTrue_false_question(ExamGrammarParser.True_false_questionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ExamGrammarParser#true_false_answer}.
+	 * @param ctx the parse tree
+	 */
+	void enterTrue_false_answer(ExamGrammarParser.True_false_answerContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ExamGrammarParser#true_false_answer}.
+	 * @param ctx the parse tree
+	 */
+	void exitTrue_false_answer(ExamGrammarParser.True_false_answerContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ExamGrammarParser#true_false_solution}.
 	 * @param ctx the parse tree
@@ -148,6 +178,16 @@ public interface ExamGrammarListener extends ParseTreeListener {
 	 */
 	void exitMissing_word_phrase(ExamGrammarParser.Missing_word_phraseContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link ExamGrammarParser#missing_word_answer}.
+	 * @param ctx the parse tree
+	 */
+	void enterMissing_word_answer(ExamGrammarParser.Missing_word_answerContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ExamGrammarParser#missing_word_answer}.
+	 * @param ctx the parse tree
+	 */
+	void exitMissing_word_answer(ExamGrammarParser.Missing_word_answerContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link ExamGrammarParser#missing_word_solution}.
 	 * @param ctx the parse tree
 	 */
@@ -178,6 +218,16 @@ public interface ExamGrammarListener extends ParseTreeListener {
 	 */
 	void exitShort_answer_question(ExamGrammarParser.Short_answer_questionContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link ExamGrammarParser#short_answer_answer}.
+	 * @param ctx the parse tree
+	 */
+	void enterShort_answer_answer(ExamGrammarParser.Short_answer_answerContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ExamGrammarParser#short_answer_answer}.
+	 * @param ctx the parse tree
+	 */
+	void exitShort_answer_answer(ExamGrammarParser.Short_answer_answerContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link ExamGrammarParser#short_answer_solution}.
 	 * @param ctx the parse tree
 	 */
@@ -207,6 +257,16 @@ public interface ExamGrammarListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitNumerical_answer(ExamGrammarParser.Numerical_answerContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ExamGrammarParser#numerical_solution}.
+	 * @param ctx the parse tree
+	 */
+	void enterNumerical_solution(ExamGrammarParser.Numerical_solutionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ExamGrammarParser#numerical_solution}.
+	 * @param ctx the parse tree
+	 */
+	void exitNumerical_solution(ExamGrammarParser.Numerical_solutionContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ExamGrammarParser#question}.
 	 * @param ctx the parse tree

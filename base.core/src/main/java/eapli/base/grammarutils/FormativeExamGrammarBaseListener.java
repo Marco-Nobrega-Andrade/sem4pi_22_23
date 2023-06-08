@@ -1,4 +1,5 @@
-package eapli.base.grammarutils;// Generated from C:/Users/David/OneDrive/Documentos/ISEP/2�Ano/SEM2/LAPR4/PI/sem4pi-22-23-24/base.core/src/main/antlr4\FormativeExamGrammar.g4 by ANTLR 4.12.0
+// Generated from C:/Users/windows/Documents/sem4pi-22-23-24/base.core/src/main/antlr4\FormativeExamGrammar.g4 by ANTLR 4.12.0
+package eapli.base.grammarutils;
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
@@ -40,6 +41,18 @@ public class FormativeExamGrammarBaseListener implements FormativeExamGrammarLis
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterMultiple_choice_answer(FormativeExamGrammarParser.Multiple_choice_answerContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMultiple_choice_answer(FormativeExamGrammarParser.Multiple_choice_answerContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterMultiple_choice_solution(FormativeExamGrammarParser.Multiple_choice_solutionContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -64,6 +77,18 @@ public class FormativeExamGrammarBaseListener implements FormativeExamGrammarLis
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterMatching_type_answer(FormativeExamGrammarParser.Matching_type_answerContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMatching_type_answer(FormativeExamGrammarParser.Matching_type_answerContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterMatching_type_solution(FormativeExamGrammarParser.Matching_type_solutionContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -83,6 +108,18 @@ public class FormativeExamGrammarBaseListener implements FormativeExamGrammarLis
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitTrue_false_question(FormativeExamGrammarParser.True_false_questionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterTrue_false_answer(FormativeExamGrammarParser.True_false_answerContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTrue_false_answer(FormativeExamGrammarParser.True_false_answerContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -124,6 +161,18 @@ public class FormativeExamGrammarBaseListener implements FormativeExamGrammarLis
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterMissing_word_answer(FormativeExamGrammarParser.Missing_word_answerContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMissing_word_answer(FormativeExamGrammarParser.Missing_word_answerContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterMissing_word_solution(FormativeExamGrammarParser.Missing_word_solutionContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -160,6 +209,18 @@ public class FormativeExamGrammarBaseListener implements FormativeExamGrammarLis
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterShort_answer_answer(FormativeExamGrammarParser.Short_answer_answerContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitShort_answer_answer(FormativeExamGrammarParser.Short_answer_answerContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterShort_answer_solution(FormativeExamGrammarParser.Short_answer_solutionContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -191,6 +252,18 @@ public class FormativeExamGrammarBaseListener implements FormativeExamGrammarLis
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitNumerical_answer(FormativeExamGrammarParser.Numerical_answerContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterNumerical_solution(FormativeExamGrammarParser.Numerical_solutionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitNumerical_solution(FormativeExamGrammarParser.Numerical_solutionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
