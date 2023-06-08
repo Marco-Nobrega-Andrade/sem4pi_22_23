@@ -1,0 +1,54 @@
+@startuml
+autonumber
+title ArchiveBoard - SharedBoardServer
+
+participant ": AttendClient" as AC <<Application>>
+participant ": DataInputStream" as DIS
+participant ": DataOutputStream" as DOS
+participant ": SBPMessageFormat" as SBPMF
+control "ArchiveBoardController" as CTRL <<ShareBoardServer>> <<Application>>
+participant ": ArchiveBoardService" as SBS <<Service>>
+participant ": Board" as B <<Domain>>
+database ": BoardRepository" as BR <<Repository>>
+activate AC
+AC -> DIS : create(socket)
+activate DIS
+deactivate DIS
+AC -> DOS : create(socket)
+activate DOS
+deactivate DOS
+AC -> DIS : readUTF()
+activate DIS
+return message
+AC -> SBPMF : decodeFormat(message)
+activate SBPMF
+return arrayFormat
+AC -> SBPMF : decodeParams(message)
+activate SBPMF
+return params
+AC -> CTRL : archiveBoard(boardId)
+activate CTRL
+CTRL -> SBS : archiveBoard(boardId)
+activate SBS
+SBS -> BR : ofIdentity()
+activate BR
+return board
+SBS -> B : archiveBoard()
+activate B
+return true
+SBS -> BR : save(board)
+activate BR
+deactivate BR
+SBS --> CTRL : true
+deactivate SBS
+CTRL --> AC : true
+deactivate CTRL
+AC -> SBPMF : createAcknowledgeRequest()
+activate SBPMF
+return ackRequest
+AC -> DOS : writeUTF(ackRequest)
+activate DOS
+deactivate DOS
+deactivate AC
+
+@enduml
