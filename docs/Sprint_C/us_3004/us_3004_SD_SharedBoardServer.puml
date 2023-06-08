@@ -1,0 +1,66 @@
+@startuml
+autonumber
+title ShareBoard - SharedBoardServer
+
+participant ": AttendClient" as AC <<Application>>
+participant ": DataInputStream" as DIS
+participant ": DataOutputStream" as DOS
+participant ": SBPMessageFormat" as SBPMF
+control "ShareBoardController" as CTRL <<ShareBoardServer>> <<Application>>
+participant ": ShareBoardService" as SBS <<Service>>
+participant ": Person" as P <<Domain>>
+participant ": BoardParticipantFactory" as BPF <<Factory>>
+database ": BoardParticipantRepository" as BPR <<Repository>>
+database PersonRepository as PR <<Repository>>
+activate AC
+AC -> DIS : create(socket)
+activate DIS
+deactivate DIS
+AC -> DOS : create(socket)
+activate DOS
+deactivate DOS
+AC -> DIS : readUTF()
+activate DIS
+return message
+AC -> SBPMF : decodeFormat(message)
+activate SBPMF
+return arrayFormat
+AC -> SBPMF : decodeParams(message)
+activate SBPMF
+return params
+AC -> CTRL : shareBoard(boardId, email, permission)
+activate CTRL
+CTRL -> SBS : shareBoard(boardId, email, permission)
+activate SBS
+SBS -> BPR : findMaxId()
+activate BPR
+return id
+SBS -> BPF : buildBoardParticipant(id, permission)
+activate BPF
+return boardParticipant
+SBS -> PR : findPersonByEmail(email)
+activate PR
+PR --> SBS : person
+deactivate PR
+SBS -> P : addBoardParticipant(boardParticipant)
+activate P
+return true
+SBS -> BPR : save(boardParticipant)
+activate BPR
+deactivate BPR
+SBS -> PR : save(person)
+activate PR
+deactivate PR
+SBS --> CTRL : true
+deactivate SBS
+CTRL --> AC : true
+deactivate CTRL
+AC -> SBPMF : createAcknowledgeRequest()
+activate SBPMF
+return ackRequest
+AC -> DOS : writeUTF(ackRequest)
+activate DOS
+deactivate DOS
+deactivate AC
+
+@enduml

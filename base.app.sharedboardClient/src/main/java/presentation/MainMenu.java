@@ -1,4 +1,4 @@
-/*
+package presentation;/*
  * Copyright (c) 2013-2023 the original author or authors.
  *
  * MIT License
@@ -32,6 +32,10 @@ import eapli.framework.presentation.console.menu.HorizontalMenuRenderer;
 import eapli.framework.presentation.console.menu.MenuItemRenderer;
 import eapli.framework.presentation.console.menu.MenuRenderer;
 import eapli.framework.presentation.console.menu.VerticalMenuRenderer;
+import presentation.shareBoard.ShareBoardAppAction;
+import presentation.shareBoard.ShareBoardUI;
+
+import java.net.Socket;
 
 /**
  * TODO split this class in more specialized classes for each menu
@@ -39,14 +43,18 @@ import eapli.framework.presentation.console.menu.VerticalMenuRenderer;
  * @author Paulo Gandra Sousa
  */
 public class MainMenu extends AbstractUI {
+    private final Socket socket;
+    public MainMenu (Socket socket){
+        this.socket = socket;
+    }
 
     private static final String RETURN_LABEL = "Return ";
 
     private static final int EXIT_OPTION = 0;
+    private static final int SHARE_BOARD_OPTION = 1;
 
-    private static final int COMMTEST_OPTION = 1;
+    // private static final int COMMTEST_OPTION = 1;
 
-    private static final int AUTH_OPTION = 2;
 
     private static final String SEPARATOR_LABEL = "--------------";
 
@@ -82,6 +90,7 @@ public class MainMenu extends AbstractUI {
 
     private Menu buildMainMenu() {
         final Menu mainMenu = new Menu();
+        mainMenu.addItem(SHARE_BOARD_OPTION, "Share Board", new ShareBoardAppAction(socket));
         mainMenu.addItem(EXIT_OPTION, "Exit", new ExitWithMessageAction("Bye, Bye"));
         return mainMenu;
     }

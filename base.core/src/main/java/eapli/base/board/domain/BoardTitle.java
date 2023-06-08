@@ -40,4 +40,9 @@ public class BoardTitle implements Comparable<BoardTitle>, ValueObject{
     public int compareTo(BoardTitle o) {
         return boardTitle.compareTo(o.boardTitle);
     }
+
+    @Override
+    public String toString() {
+        return boardTitle;
+    }
 }

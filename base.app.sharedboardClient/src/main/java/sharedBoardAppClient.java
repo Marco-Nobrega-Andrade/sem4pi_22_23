@@ -4,6 +4,7 @@ import eapli.base.usermanagement.domain.BasePasswordPolicy;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
 import eapli.framework.io.util.Console;
+import presentation.MainMenu;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -35,7 +36,7 @@ public class sharedBoardAppClient {
                 int[] arrayFormat = SBPMessageFormat.decodeFormat(message);
                 if(arrayFormat[SBPMessageFormat.CODE_OFFSET] == SBPMessageFormat.ACK_CODE){
                     error = false;
-                    final MainMenu menu = new MainMenu();
+                    final MainMenu menu = new MainMenu(socket);
                     menu.mainLoop();
                 }else{
                     error = true;

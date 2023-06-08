@@ -1,6 +1,6 @@
 package eapli.base.board.domain;
 
-import eapli.base.courseclasses.domain.Class;
+import eapli.base.exceptions.AlreadyDeactivatedException;
 import eapli.framework.domain.model.AggregateRoot;
 
 import javax.persistence.CascadeType;
@@ -16,12 +16,15 @@ public class Board implements AggregateRoot<BoardTitle> {
     @OneToMany(cascade = CascadeType.ALL)
     private List<Cell> cellList;
 
+    private BoardStatus boardStatus;
+
     protected Board(BoardTitle boardTiTle, List<Cell> cellList){
         if (boardTiTle == null || cellList.isEmpty()) {
             throw new IllegalArgumentException("The board cannot be created with null Value Objects");
         }
         this.boardTitle = boardTiTle;
         this.cellList = cellList;
+        this.boardStatus = new BoardStatus(true);
     }
 
     protected Board(){
@@ -55,6 +58,19 @@ public class Board implements AggregateRoot<BoardTitle> {
     @Override
     public BoardTitle identity() {
         return boardTitle;
+    }
+
+    public String returnBoardTitleString(){
+        return boardTitle.toString();
+    }
+
+    public boolean archiveBoard() throws AlreadyDeactivatedException {
+        BoardStatus newBoardStatus = new BoardStatus(false);
+        if(newBoardStatus.equals(this.boardStatus)){
+            throw new AlreadyDeactivatedException("ERROR: The board is already archived!");
+        }
+        this.boardStatus = newBoardStatus;
+        return true;
     }
 
 }

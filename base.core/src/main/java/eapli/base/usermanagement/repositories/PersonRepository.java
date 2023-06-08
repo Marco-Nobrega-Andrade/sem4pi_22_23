@@ -18,11 +18,17 @@ public interface PersonRepository extends DomainRepository<ID_Person, Person> {
     int findTotalNumberOfPerson();
 
     /**
-        * search the list of Person in the system that match with the given list of EmailAddress
-        * @param email List of email to be searched
-        * @return List of Person that match with the given List of emails
-    */
+     * search the Person in the system that match with the given email
+     * @param email Email to be searched
+     * @return the Person that match with the given email
+     */
+    Person findPersonByEmail(String email);
 
+    /**
+     * search the list of Person in the system that match with the given list of EmailAddress
+     * @param email List of email to be searched
+     * @return List of Person that match with the given List of emails
+     */
     List<Person> findAllPersonsWhoMatch(List<EmailAddress> email);
 
     /**

@@ -21,6 +21,8 @@
 package eapli.base.persistence.impl.inmemory;
 
 import eapli.base.boardhistory.repositories.BoardHistoryRepository;
+import eapli.base.boardparticipantmanagement.domain.BoardParticipantFactory;
+import eapli.base.boardparticipantmanagement.repositories.BoardParticipantRepository;
 import eapli.base.usermanagement.repositories.BoardOwnerRepository;
 import eapli.base.board.repositories.BoardRepository;
 import eapli.base.clientusermanagement.repositories.ClientUserRepository;
@@ -229,7 +231,14 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
     public FormativeExamRepository formativeExamRepository(TransactionalContext autoTx) {
         return new InMemoryFormativeExamRepository();
     }
-
+    @Override
+    public BoardParticipantRepository boardParticipantRepository(){
+        return boardParticipantRepository(null);
+    }
+    @Override
+    public BoardParticipantRepository boardParticipantRepository(TransactionalContext autoTx){
+        return new InMemoryBoardParticipantRepository();
+    }
     @Override
     public SignupRequestRepository signupRequests(final TransactionalContext tx) {
         return new InMemorySignupRequestRepository();

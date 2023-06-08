@@ -1,20 +1,19 @@
 package eapli.base.app.sharedboardServer;
 
+import com.sun.jdi.request.DuplicateRequestException;
+import eapli.base.board.application.ListBoardsIOwnController;
+import eapli.base.board.application.ShareBoardController;
+import eapli.base.board.dto.BoardDTOWithTitle;
+import eapli.base.exceptions.DuplicateCreationException;
+import eapli.base.exceptions.ParameterNullBlankException;
 import eapli.base.infrastructure.authz.AuthenticationCredentialHandler;
 import eapli.base.infrastructure.authz.CredentialHandler;
-import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.sharedBoard.SBPMessageFormat;
-import eapli.base.usermanagement.domain.BasePasswordPolicy;
-import eapli.base.usermanagement.domain.BaseRoles;
-import eapli.framework.infrastructure.authz.application.AuthzRegistry;
-import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
-import eapli.framework.infrastructure.authz.domain.model.Role;
-
+import javax.persistence.NoResultException;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
-import java.net.SocketException;
 import java.util.List;
 
 public class AttendClient implements Runnable{
@@ -39,17 +38,38 @@ public class AttendClient implements Runnable{
                     case SBPMessageFormat.AUTH_CODE:
 
                         List<String> params = SBPMessageFormat.decodeParam(message.getBytes());
-                        if(credentialHandler.authenticated(params.get(0), params.get(1),null)){
+                        if (credentialHandler.authenticated(params.get(0), params.get(1), null)) {
                             byte[] authRequest = SBPMessageFormat.createAcknowledgeRequest();
                             outputStream.writeUTF(new String(authRequest));
-                        }else {
+                        } else {
                             byte[] authRequest = SBPMessageFormat.creteErrorRequest("Wrong username or password.");
                             outputStream.writeUTF(new String(authRequest));
                         }
                         break;
                     case SBPMessageFormat.COMMTEST_CODE:
-                            outputStream.writeUTF(new String(SBPMessageFormat.createAcknowledgeRequest()));
+                        outputStream.writeUTF(new String(SBPMessageFormat.createAcknowledgeRequest()));
                         break;
+                    case SBPMessageFormat.LIST_BOARD_I_OWN_SEND:
+                        List<BoardDTOWithTitle> boardDTOList = new ListBoardsIOwnController().listBoardsIOwn();
+                        byte[] boardIOwnListRequest = SBPMessageFormat.createListBoardIOwnRequestReceive(boardDTOList);
+                        outputStream.writeUTF(new String(boardIOwnListRequest));
+                        break;
+                    case SBPMessageFormat.SHARE_BOARD_CODE:
+                        List<String> shareBoardParams = SBPMessageFormat.decodeParam(message.getBytes());
+                        boolean permission;
+                        if (shareBoardParams.get(2).equals("t")) {
+                            permission = true;
+                        } else {
+                            permission = false;
+                        }
+                        try {
+                            new ShareBoardController().shareBoard(shareBoardParams.get(0), shareBoardParams.get(1), permission);
+                            outputStream.writeUTF(new String(SBPMessageFormat.createAcknowledgeRequest()));
+                        }catch (DuplicateCreationException | ParameterNullBlankException e){
+                            outputStream.writeUTF(new String(SBPMessageFormat.creteErrorRequest(e.getMessage())));
+                        }catch (NoResultException e){
+                            outputStream.writeUTF(new String(SBPMessageFormat.creteErrorRequest("ERROR: There are no people in the system with that e-mail")));
+                        }
                 }
             }while (arrayFormat[SBPMessageFormat.CODE_OFFSET] != SBPMessageFormat.DISCONN_CODE) ;
         } catch (IOException e) {

@@ -5,7 +5,10 @@ import eapli.base.board.domain.Board;
 import eapli.base.board.domain.BoardTitle;
 import eapli.base.board.repositories.BoardRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
+import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
+
+import java.util.List;
 
 public class JpaBoardRepository extends JpaAutoTxRepository<Board, BoardTitle, BoardTitle> implements BoardRepository {
     public JpaBoardRepository(final TransactionalContext autoTx) {
@@ -20,5 +23,18 @@ public class JpaBoardRepository extends JpaAutoTxRepository<Board, BoardTitle, B
     @Override
     public long getLastCellId() {
         return createQuery("SELECT COUNT(c) FROM Cell c", Long.class).getSingleResult();
+    }
+
+    @Override
+    public List<Board> findAllBoardsIOwn(SystemUser user) {
+        return createQuery("SELECT b FROM Board b WHERE b IN (SELECT bl FROM BoardOwner bo JOIN bo.boardList bl WHERE bo = (SELECT p.boardOwner FROM Person p WHERE p.systemUser = :systemUser)) AND b.boardStatus.isActive = TRUE", Board.class)
+                .setParameter("systemUser", user).getResultList();
+
+    }
+
+    @Override
+    public Board findBoardByTitle(String boardTitle) {
+        return createQuery("SELECT b FROM Board b WHERE b.boardTitle.boardTitle =: boardTitleString", Board.class)
+                .setParameter("boardTitleString", boardTitle).getSingleResult();
     }
 }
