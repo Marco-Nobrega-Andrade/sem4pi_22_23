@@ -42,4 +42,9 @@ class RowIdentifier implements Comparable<RowIdentifier>, ValueObject {
     public int compareTo(RowIdentifier o) {
         return rowIdentifier.compareTo(o.rowIdentifier);
     }
+
+    @Override
+    public String toString() {
+        return ""+rowIdentifier;
+    }
 }

@@ -32,5 +32,9 @@ public class Content implements ValueObject {
     protected Content(){
         //ORM
     }
-    
+
+    @Override
+    public String toString() {
+        return content;
+    }
 }

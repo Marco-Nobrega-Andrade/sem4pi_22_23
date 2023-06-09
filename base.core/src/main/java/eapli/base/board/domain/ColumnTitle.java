@@ -40,4 +40,8 @@ class ColumnTitle implements Comparable<ColumnTitle>, ValueObject {
         return columnTitle.compareTo(o.columnTitle);
     }
 
+    @Override
+    public String toString() {
+        return columnTitle;
+    }
 }

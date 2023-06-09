@@ -40,4 +40,10 @@ class RowTitle implements Comparable<RowTitle>, ValueObject {
         return rowTitle.compareTo(o.rowTitle);
     }
 
+    @Override
+    public String toString() {
+        return rowTitle;
+    }
+
+
 }

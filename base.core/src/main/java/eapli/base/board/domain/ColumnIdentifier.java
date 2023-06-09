@@ -42,4 +42,9 @@ class ColumnIdentifier implements Comparable<ColumnIdentifier>, ValueObject {
     public int compareTo(ColumnIdentifier o) {
         return columnIdentifier.compareTo(o.columnIdentifier);
     }
+
+    @Override
+    public String toString() {
+        return ""+columnIdentifier;
+    }
 }
