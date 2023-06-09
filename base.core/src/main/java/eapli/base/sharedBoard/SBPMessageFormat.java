@@ -92,6 +92,24 @@ public class SBPMessageFormat {
         return request;
     }
 
+    public static List<List<String>> decodeDTO(byte[] request){
+        List<String> params = decodeParam(request);
+        List<List<String>> finalList = new ArrayList<>();
+        List<String> dtoParams = new ArrayList<>();
+        for(String string : params){
+            if(!string.equals(";")){
+                dtoParams.add(string);
+            }else{
+                finalList.add(dtoParams);
+                dtoParams = new ArrayList<>();
+            }
+        }
+        if(!dtoParams.isEmpty()){
+            finalList.add(dtoParams);
+        }
+        return finalList;
+    }
+
     public static List<String> decodeParam(byte[] request){
         StringBuilder stringBuilder = new StringBuilder();
         List<String> paramList = new ArrayList<>();
