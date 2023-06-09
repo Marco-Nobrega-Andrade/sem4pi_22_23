@@ -2,7 +2,6 @@ package eapli.base.sharedBoard;
 
 import eapli.base.board.dto.BoardDTOWithTitle;
 
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,7 +49,7 @@ public class SBPMessageFormat {
         return encodeRequest(LIST_BOARD_I_OWN_SEND, "");
     }
 
-    public static byte[] createListBoardIOwnRequestReceive(List<BoardDTOWithTitle> boardDTOList){
+    public static byte[] createListBoardReceive(List<BoardDTOWithTitle> boardDTOList){
         StringBuilder strBuilder = new StringBuilder();
         for(int i = 0; i < boardDTOList.size(); i++){
             strBuilder.append(boardDTOList.get(i).toString());

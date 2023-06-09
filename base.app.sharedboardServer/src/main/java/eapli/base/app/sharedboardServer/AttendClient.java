@@ -1,6 +1,5 @@
 package eapli.base.app.sharedboardServer;
 
-import com.sun.jdi.request.DuplicateRequestException;
 import eapli.base.board.application.ArchiveBoardController;
 import eapli.base.board.application.ListBoardsIOwnController;
 import eapli.base.board.application.ShareBoardController;
@@ -53,7 +52,7 @@ public class AttendClient implements Runnable{
                         break;
                     case SBPMessageFormat.LIST_BOARD_I_OWN_SEND:
                         List<BoardDTOWithTitle> boardDTOList = new ListBoardsIOwnController().listBoardsIOwn();
-                        byte[] boardIOwnListRequest = SBPMessageFormat.createListBoardIOwnRequestReceive(boardDTOList);
+                        byte[] boardIOwnListRequest = SBPMessageFormat.createListBoardReceive(boardDTOList);
                         outputStream.writeUTF(new String(boardIOwnListRequest));
                         break;
                     case SBPMessageFormat.SHARE_BOARD_CODE:
