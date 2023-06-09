@@ -18,7 +18,6 @@ class Row implements Comparable<Row>, ValueObject {
             this.rowIdentifier = rowIdentifier;
 
     }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -39,5 +38,13 @@ class Row implements Comparable<Row>, ValueObject {
     @Override
     public int compareTo(Row o) {
         return 0;
+    }
+
+    public String returnRowTitleString(){
+        return rowTitle.toString();
+    }
+
+    public String returnRowIdentifierString(){
+        return rowIdentifier.toString();
     }
 }

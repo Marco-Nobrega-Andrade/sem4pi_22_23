@@ -40,4 +40,13 @@ class Column implements Comparable<Column>, ValueObject {
     public int compareTo(Column o) {
         return columnIdentifier.compareTo(o.columnIdentifier);
     }
+
+
+    public String returnColumnTitleString(){
+        return columnTitle.toString();
+    }
+
+    public String returnColumnIdentifierString(){
+        return columnIdentifier.toString();
+    }
 }

@@ -52,4 +52,8 @@ public class PostIt implements AggregateRoot<PostItIdentifier> {
     public PostItIdentifier identity() {
         return postItIdentifier;
     }
+
+    public String returnContentString(){
+        return content.toString();
+    }
 }
