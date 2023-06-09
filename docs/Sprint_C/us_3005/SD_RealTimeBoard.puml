@@ -1,0 +1,42 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor user
+
+participant "ViewInRealTimeUI" as ui <<ShareBoardClient>> <<Presentation>>
+participant "SBPMessageFormat" as sbpf
+participant "DataOutputStream" as dos
+participant "DataInputStream" as dis
+
+activate user
+
+user -> ui: selects the board and asks to view updates
+activate ui
+ui -> sbpf: createViewInRealTimeRequest(boardId)
+activate sbpf
+sbpf --> ui: viewInRealTimeRequest
+deactivate sbpf
+ui -> dos: writeUTF(viewInRealTimeRequest)
+activate dos
+deactivate dos
+ui -> dis : readUTF()
+activate dis
+note right : for more information check SD_BoardInformation
+dis --> ui: boardInfo
+deactivate dis
+
+alt request != exit
+
+
+
+end
+
+
+
+
+deactivate ui
+
+deactivate user
+@enduml
