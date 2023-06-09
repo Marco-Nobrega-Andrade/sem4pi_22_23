@@ -3,6 +3,7 @@ package eapli.base.persistence.impl.jpa;
 import eapli.base.Application;
 import eapli.base.board.domain.Board;
 import eapli.base.board.domain.BoardTitle;
+import eapli.base.board.domain.Cell;
 import eapli.base.board.repositories.BoardRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
@@ -36,5 +37,11 @@ public class JpaBoardRepository extends JpaAutoTxRepository<Board, BoardTitle, B
     public Board findBoardByTitle(String boardTitle) {
         return createQuery("SELECT b FROM Board b WHERE b.boardTitle.boardTitle =: boardTitleString", Board.class)
                 .setParameter("boardTitleString", boardTitle).getSingleResult();
+    }
+
+    @Override
+    public List<Cell> getAllCellsFromABoard(Board board) {
+        return createQuery("SELECT DISTINCT c FROM Cell c WHERE c IN (SELECT cl FROM board b  JOIN b.cellList cl WHERE b = :board)", Cell.class)
+                .setParameter("board", board).getResultList();
     }
 }

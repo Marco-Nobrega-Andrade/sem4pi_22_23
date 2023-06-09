@@ -2,6 +2,7 @@ package eapli.base.persistence.impl.inmemory;
 
 import eapli.base.board.domain.Board;
 import eapli.base.board.domain.BoardTitle;
+import eapli.base.board.domain.Cell;
 import eapli.base.board.repositories.BoardRepository;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
@@ -22,6 +23,11 @@ public class InMemoryBoardRepository extends InMemoryDomainRepository<Board, Boa
 
     @Override
     public Board findBoardByTitle(String boardTitle) {
+        return null;
+    }
+
+    @Override
+    public List<Cell> getAllCellsFromABoard(Board board) {
         return null;
     }
 }
