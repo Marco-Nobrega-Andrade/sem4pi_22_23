@@ -3,7 +3,9 @@ package eapli.base.app.sharedboardServer;
 import eapli.base.board.application.ArchiveBoardController;
 import eapli.base.board.application.ListBoardsIOwnController;
 import eapli.base.board.application.ShareBoardController;
+import eapli.base.board.application.services.BoardInformationController;
 import eapli.base.board.dto.BoardDTOWithTitle;
+import eapli.base.board.dto.CellDTOWithColumnRowContent;
 import eapli.base.exceptions.AlreadyDeactivatedException;
 import eapli.base.exceptions.DuplicateCreationException;
 import eapli.base.exceptions.ParameterNullBlankException;
@@ -78,6 +80,15 @@ public class AttendClient implements Runnable{
                             new ArchiveBoardController().archiveBoard(archiveBoardParam.get(0));
                             outputStream.writeUTF(new String(SBPMessageFormat.createAcknowledgeRequest()));
                         }catch (AlreadyDeactivatedException e){
+                            outputStream.writeUTF(new String(SBPMessageFormat.creteErrorRequest(e.getMessage())));
+                        }
+                        break;
+                    case SBPMessageFormat.VIEW_IN_REAL_TIME_CODE:
+                        List<String> param = SBPMessageFormat.decodeParam(message.getBytes());
+                        try{
+                            List<CellDTOWithColumnRowContent>  listCellDTOWithColumnRowContent = new BoardInformationController().getBoardInformation(param.get(0));
+                            outputStream.writeUTF(new String(SBPMessageFormat.createBoardInfoRequest(listCellDTOWithColumnRowContent)));
+                        }catch (Exception e){
                             outputStream.writeUTF(new String(SBPMessageFormat.creteErrorRequest(e.getMessage())));
                         }
                         break;
