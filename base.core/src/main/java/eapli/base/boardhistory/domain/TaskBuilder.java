@@ -29,6 +29,9 @@ public class TaskBuilder {
     }
 
     public Task build(){
+        if (this.postIt == null){
+            return new Task(this.taskId, this.operation, this.boardOwner);
+        }
         return new Task(this.taskId, this.operation, this.boardOwner,this.postIt);
     }
 }
