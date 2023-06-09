@@ -73,9 +73,9 @@ short_answer_solution : SOLUTION_ENTRY phrase
 ////////////////////
 numerical_question: points question numerical_answer numerical_solution
                   ;
-numerical_answer : ANSWER_ENTRY (INT(COMMA INT)? WORD)?
-                 ;
-numerical_solution: SOLUTION_ENTRY INT(COMMA INT)? WORD
+numerical_answer: ANSWER_ENTRY ((INT|NUMERICAL_VALUE) WORD)?
+                ;
+numerical_solution: SOLUTION_ENTRY (INT|NUMERICAL_VALUE) WORD
                 ;
 /////////////////////
 question: NEWLINE+ QUESTION_ENTRY phrase
@@ -127,5 +127,6 @@ WORD: [A-Za-z]+;
 COLON : ':' ;
 DASH : '-';
 INT : [0-9]+;
+NUMERICAL_VALUE : INT COMMA INT;
 ANY_CHAR : ~[\t\r\n];
 MISSING_WORD : '||WORD||';
