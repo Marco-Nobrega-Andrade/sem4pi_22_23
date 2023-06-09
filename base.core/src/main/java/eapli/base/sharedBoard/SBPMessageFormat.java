@@ -1,6 +1,7 @@
 package eapli.base.sharedBoard;
 
 import eapli.base.board.dto.BoardDTOWithTitle;
+import eapli.base.board.dto.CellDTOWithColumnRowContent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,11 @@ public class SBPMessageFormat {
 
     public static final int LIST_BOARD_I_OWN_SEND = 5;
     public static final int LIST_BOARD_I_OWN_RCV = 6;
+
+    public static final int BOARD_INFO_CODE = 9;
+
+    public static final int VIEW_IN_REAL_TIME_CODE = 10;
+
 
     public static final int SHARE_BOARD_CODE = 7;
 
@@ -62,6 +68,27 @@ public class SBPMessageFormat {
         }
         return encodeRequest(LIST_BOARD_I_OWN_RCV, strBuilder.toString());
     }
+
+    public static byte[] createViewInRealTimeRequest(String boardId){
+        return encodeRequest(VIEW_IN_REAL_TIME_CODE,boardId);
+    }
+
+
+    public static byte[] createBoardInfoRequest(List<CellDTOWithColumnRowContent> listCellDTOWithColumnRowContent){
+        StringBuilder strBuilder = new StringBuilder();
+        for(int i = 0; i < listCellDTOWithColumnRowContent.size(); i++){
+            strBuilder.append(listCellDTOWithColumnRowContent.get(i).toString());
+            if(i < listCellDTOWithColumnRowContent.size() - 1){
+                strBuilder.append(';');
+            }
+        }
+        if(strBuilder.length() == 0){
+            return encodeRequest(BOARD_INFO_CODE, "");
+        }
+
+        return encodeRequest(BOARD_INFO_CODE,strBuilder.toString());
+    }
+
 
     public static byte[] createArchiveBoardRequest(String boardTitle){
         return encodeRequest(ARCHIVE_BOARD_CODE, boardTitle);
