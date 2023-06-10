@@ -22,6 +22,7 @@ package eapli.base.infrastructure.persistence;
 
 import eapli.base.boardhistory.repositories.BoardHistoryRepository;
 import eapli.base.boardparticipantmanagement.repositories.BoardParticipantRepository;
+import eapli.base.postitmanager.repositories.PostItRepository;
 import eapli.base.usermanagement.repositories.BoardOwnerRepository;
 import eapli.base.board.repositories.BoardRepository;
 import eapli.base.clientusermanagement.repositories.ClientUserRepository;
@@ -220,4 +221,18 @@ public interface RepositoryFactory {
 
     BoardParticipantRepository boardParticipantRepository();
     BoardParticipantRepository boardParticipantRepository(TransactionalContext autoTx);
+
+    /**
+     * repository will be created in auto transaction mode
+     *
+     * @return PostItRepository
+     */
+    PostItRepository postItRepository();
+    /**
+     * repository will be created with the given transactional context
+     *
+     * @param autoTx the transactional context to enroll
+     * @return PostItRepository
+     */
+    PostItRepository postItRepository(TransactionalContext autoTx);
 }
