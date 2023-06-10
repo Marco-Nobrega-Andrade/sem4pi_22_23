@@ -17,7 +17,7 @@ activate SV
 SV->FER : ofIdentify(formativeExamId)
 activate FER
 return formativeExam
-SV->VFESv : verifyFormativeExam
+SV->VFESv : verifyFormativeExam(resolution)
 SV->ERS : takeFormativeExam(resolution)
 activate ERS
 return grade and feedback
