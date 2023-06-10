@@ -15,7 +15,7 @@ multiple_choice_solution : SOLUTION_ENTRY list_phrases
 /////////////////////////
 matching_type_question : HASH MT_Q points question list_with_title list_with_title matching_type_solution (feedback)?
                        ;
-matching_type_solution : SOLUTION_ENTRY (NEWLINE phrase DASH phrase)+
+matching_type_solution : SOLUTION_ENTRY phrase DASH phrase (COMMA phrase DASH phrase)*
                        ;
 //////////////////////////
 true_false_question : HASH TF_Q points question true_false_solution (feedback)?
@@ -41,7 +41,7 @@ short_answer_solution: SOLUTION_ENTRY phrase
 ////////////////////
 numerical_question: HASH N_Q points question numerical_answer (feedback)?
                   ;
-numerical_answer: SOLUTION_ENTRY INT(COMMA INT)? WORD
+numerical_answer: SOLUTION_ENTRY (INT|NUMERICAL_VALUE) WORD
                 ;
 /////////////////////
 question: NEWLINE+ QUESTION_ENTRY phrase
@@ -85,5 +85,6 @@ WORD: [A-Za-z]+;
 COLON : ':' ;
 DASH : '-';
 INT : [0-9]+;
+NUMERICAL_VALUE : INT COMMA INT;
 ANY_CHAR : ~[\t\r\n];
 MISSING_WORD : '||WORD||';
