@@ -17,21 +17,112 @@ public class FormativeExamResolutionVisitor extends FormativeExamGrammarBaseVisi
     }
 
     @Override
+    public String visitMatching_type_question(FormativeExamGrammarParser.Matching_type_questionContext ctx) {
+        int points = Integer.parseInt(ctx.points().INT().getText());
+
+        List<String> solutions = new ArrayList<>();
+        List<FormativeExamGrammarParser.PhraseContext> solutionPhrases = ctx.matching_type_solution().phrase();
+        for (int i = 0; i < solutionPhrases.size(); i = i+2){
+
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append(solutionPhrases.get(i).getText());
+            stringBuilder.append("-");
+            stringBuilder.append(solutionPhrases.get(i+1).getText());
+
+            solutions.add(stringBuilder.toString());
+        }
+
+        List<String> answers = new ArrayList<>();
+        try {
+            List<FormativeExamGrammarParser.PhraseContext> answerPhrases = ctx.matching_type_answer().phrase();
+            for (int i = 0; i < answerPhrases.size(); i = i+2) {
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.append(answerPhrases.get(i).getText());
+                stringBuilder.append("-");
+                stringBuilder.append(answerPhrases.get(i+1).getText());
+
+                answers.add(stringBuilder.toString());
+            }
+        } catch (Exception ignored) {
+
+        }
+
+        double pointsByAnswer = (double) points / solutions.size();
+
+        for (int i = 0; i < Integer.min(answers.size(), solutions.size()); i++){
+            if(solutions.contains(answers.get(i))){
+                this.grade += pointsByAnswer;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public String visitSelect_missing_words(FormativeExamGrammarParser.Select_missing_wordsContext ctx) {
+        int points = Integer.parseInt(ctx.points().INT().getText());
+
+        List<String> solutions = new ArrayList<>();
+        List<FormativeExamGrammarParser.PhraseContext> solutionPhrases = ctx.missing_word_solution().list_phrases().phrase();
+        for (FormativeExamGrammarParser.PhraseContext phraseContext : solutionPhrases){
+            solutions.add(phraseContext.getText());
+        }
+
+        List<String> answers = new ArrayList<>();
+        try {
+            List<FormativeExamGrammarParser.PhraseContext> answerPhrases = ctx.missing_word_answer().list_phrases().phrase();
+            for (FormativeExamGrammarParser.PhraseContext phraseContext : answerPhrases){
+                answers.add(phraseContext.getText());
+            }
+        } catch (Exception ignored) {
+
+        }
+
+        double pointsByAnswer = (double) points / solutions.size();
+
+        for (int i = 0; i < Integer.min(answers.size(), solutions.size()); i++){
+            if(answers.get(i).equalsIgnoreCase(solutions.get(i))){
+                this.grade += pointsByAnswer;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public String visitShort_answer_question(FormativeExamGrammarParser.Short_answer_questionContext ctx) {
+        int points = Integer.parseInt(ctx.points().INT().getText());
+        String answer;
+        try {
+            answer = ctx.short_answer_answer().phrase().getText();
+        } catch (Exception e) {
+            answer = "";
+        }
+        String solution = ctx.short_answer_solution().phrase().getText();
+
+        if ((answer.trim()).equalsIgnoreCase(solution.trim())){
+            this.grade += points;
+        }
+        return null;
+    }
+
+    @Override
     public String visitTrue_false_question(FormativeExamGrammarParser.True_false_questionContext ctx) {
 
-        String answer = ctx.true_false_answer().TRUE_FALSE_RESPONSES().getText();
-        double points = Double.parseDouble(ctx.points().INT().getText());
+        String answer;
+
+        try {
+            answer = ctx.true_false_answer().TRUE_FALSE_RESPONSES().getText();
+        } catch (Exception e) {
+            answer = "";
+        }
+        int points = Integer.parseInt(ctx.points().INT().getText());
         String solution = ctx.true_false_solution().TRUE_FALSE_RESPONSES().getText();
 
-        if(answer.equals(solution)){
+        if((answer.trim()).equalsIgnoreCase(solution.trim())){
             grade += points;
         }
 
-        if(!ctx.feedback().getText().isEmpty()){
-            feedback += ctx.feedback().getText();
-        }
-
         return null;
+
     }
 
     @Override
@@ -88,8 +179,15 @@ public class FormativeExamResolutionVisitor extends FormativeExamGrammarBaseVisi
         List<String> answerList;
         List<String> solutionList;
 
-        String answerText = ctx.multiple_choice_answer().list_phrases().getText();
-        String solutionText = ctx.multiple_choice_solution().list_phrases().getText();
+        String answerText = "";
+        String solutionText = "";
+
+        try{
+            answerText = ctx.multiple_choice_answer().list_phrases().getText();
+            solutionText = ctx.multiple_choice_solution().list_phrases().getText();
+        }catch(Exception e){
+
+        }
 
         answerList = Arrays.asList(answerText.split(","));
         solutionList = Arrays.asList(solutionText.split(","));
@@ -119,9 +217,8 @@ public class FormativeExamResolutionVisitor extends FormativeExamGrammarBaseVisi
         return null;
     }
 
-    public double grade(){
-        if(this.grade < 0) return 0;
-        return this.grade;
+    public Double grade(){
+        return (double) Math.round(this.grade * 100) / 100;
     }
 
     public String feedback(){

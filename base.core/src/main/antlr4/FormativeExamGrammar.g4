@@ -18,9 +18,9 @@ multiple_choice_solution : SOLUTION_ENTRY list_phrases
 /////////////////////////
 matching_type_question : HASH MT_Q points question list_with_title list_with_title matching_type_answer matching_type_solution (feedback)?
                        ;
-matching_type_answer : ANSWER_ENTRY ((NEWLINE phrase DASH phrase)+)?
+matching_type_answer : ANSWER_ENTRY ANSWER_ENTRY (phrase DASH phrase (COMMA phrase DASH phrase)*)?
                      ;
-matching_type_solution : SOLUTION_ENTRY (NEWLINE phrase DASH phrase)+
+matching_type_solution : SOLUTION_ENTRY ANSWER_ENTRY phrase DASH phrase (COMMA phrase DASH phrase)*
                        ;
 //////////////////////////
 true_false_question : HASH TF_Q points question true_false_answer true_false_solution (feedback)?

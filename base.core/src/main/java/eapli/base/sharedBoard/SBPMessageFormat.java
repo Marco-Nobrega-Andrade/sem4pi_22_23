@@ -114,7 +114,7 @@ public class SBPMessageFormat {
         for(int i = 0; i < listCellDTOWithColumnRowContent.size(); i++){
             strBuilder.append(listCellDTOWithColumnRowContent.get(i).toString());
             if(i < listCellDTOWithColumnRowContent.size() - 1){
-                strBuilder.append(';');
+                strBuilder.append(",;,");
             }
         }
         if(strBuilder.length() == 0){
