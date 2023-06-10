@@ -1,5 +1,6 @@
 package eapli.base.usermanagement.repositories;
 
+import eapli.base.usermanagement.domain.BoardOwner;
 import eapli.base.usermanagement.domain.ID_Person;
 import eapli.base.usermanagement.domain.Person;
 import eapli.base.usermanagement.domain.Teacher;
@@ -45,4 +46,5 @@ public interface PersonRepository extends DomainRepository<ID_Person, Person> {
     */
     Teacher findTeachersByPerson(Person person);
 
-    }
+    BoardOwner findBoardOwnerByPerson(Person person);
+}

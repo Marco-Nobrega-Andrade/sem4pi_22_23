@@ -20,11 +20,9 @@
  */
 package eapli.base.persistence.impl.inmemory;
 
-import eapli.base.boardhistory.repositories.BoardHistoryRepository;
-import eapli.base.boardparticipantmanagement.domain.BoardParticipantFactory;
-import eapli.base.boardparticipantmanagement.repositories.BoardParticipantRepository;
-import eapli.base.usermanagement.repositories.BoardOwnerRepository;
 import eapli.base.board.repositories.BoardRepository;
+import eapli.base.boardhistory.repositories.BoardHistoryRepository;
+import eapli.base.boardparticipantmanagement.repositories.BoardParticipantRepository;
 import eapli.base.clientusermanagement.repositories.ClientUserRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
 import eapli.base.courseclasses.repositories.ClassRepository;
@@ -37,7 +35,9 @@ import eapli.base.infrastructure.bootstrapers.BaseBootstrapper;
 import eapli.base.infrastructure.persistence.RepositoryFactory;
 import eapli.base.invitationmanagement.repositories.InvitationRepository;
 import eapli.base.meetingmanagement.repositories.MeetingRepository;
+import eapli.base.postitmanager.repositories.PostItRepository;
 import eapli.base.questionmanagement.repositories.QuestionRepository;
+import eapli.base.usermanagement.repositories.BoardOwnerRepository;
 import eapli.base.usermanagement.repositories.PersonRepository;
 import eapli.base.usermanagement.repositories.StudentRepository;
 import eapli.base.usermanagement.repositories.TeacherRepository;
@@ -239,6 +239,17 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
     public BoardParticipantRepository boardParticipantRepository(TransactionalContext autoTx){
         return new InMemoryBoardParticipantRepository();
     }
+
+    @Override
+    public PostItRepository postItRepository() {
+        return null;
+    }
+
+    @Override
+    public PostItRepository postItRepository(TransactionalContext autoTx) {
+        return null;
+    }
+
     @Override
     public SignupRequestRepository signupRequests(final TransactionalContext tx) {
         return new InMemorySignupRequestRepository();

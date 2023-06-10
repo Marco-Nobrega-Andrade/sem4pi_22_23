@@ -27,6 +27,11 @@ public class InMemoryBoardRepository extends InMemoryDomainRepository<Board, Boa
     }
 
     @Override
+    public List<Board> findAllBoardsIParticipateWithWritePermission(SystemUser user) {
+        return null;
+    }
+
+    @Override
     public List<Cell> getAllCellsFromABoard(Board board) {
         return null;
     }
