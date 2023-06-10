@@ -20,14 +20,8 @@ Country:
 - Italy
 - Japan
 
-#Answer:
-Tokyo-Japan
-Italy-Rome
-Canada-Ottawa
-#Solution:
-Tokyo-Japan
-Italy-Rome
-Canada-Ottawa
+#Answer: Tokyo-Japan, Italy-Rome, Canada-Ottawa
+#Solution: Tokyo-Japan, Italy-Rome, Canada-Ottawa
 #Feedback: Well Done.
 
 #Points: 10

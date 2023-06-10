@@ -21,10 +21,7 @@ Country:
 - Japan
 
 #Answer:
-#Solution:
-Tokyo-Japan
-Italy-Rome
-Canada-Ottawa
+#Solution: Tokyo-Japan, Italy-Rome, Canada-Ottawa
 #Feedback: Well Done.
 
 #Points: 10
