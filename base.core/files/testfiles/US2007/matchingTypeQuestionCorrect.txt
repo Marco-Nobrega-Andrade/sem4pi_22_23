@@ -12,8 +12,6 @@ List:
 -object2B
 -object3B
 
-#Solution:
-object1A-object1B
-object2A-object2B
+#Solution: object1A-object1B, object2A-object2B
 
 #Feedback: Here's the feedback.
