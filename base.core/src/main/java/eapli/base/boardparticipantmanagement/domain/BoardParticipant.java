@@ -56,4 +56,12 @@ public class BoardParticipant implements AggregateRoot<BoardParticipantId> {
         }
         return true;
     }
+
+    public boolean hasWritePermission() {
+        return permission.hasWritePermission();
+    }
+
+    public boolean isBoardParticipant(Board board) {
+        return this.board.equals(board);
+    }
 }

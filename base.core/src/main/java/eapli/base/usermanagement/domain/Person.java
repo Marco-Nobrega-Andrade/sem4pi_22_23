@@ -1,6 +1,5 @@
 package eapli.base.usermanagement.domain;
 
-import com.sun.jdi.request.DuplicateRequestException;
 import eapli.base.board.domain.Board;
 import eapli.base.boardparticipantmanagement.domain.BoardParticipant;
 import eapli.base.exceptions.DuplicateCreationException;
@@ -153,5 +152,23 @@ public class Person implements AggregateRoot<ID_Person> {
         }
         boardParticipantList.add(participant);
         return true;
+    }
+
+    public boolean isBoardOwner(Board board) {
+        if(boardOwner!=null){
+            return boardOwner.isBoardOwner(board);
+        }
+        return false;
+    }
+
+    public boolean isBoardParticipant(Board board) {
+        if(boardParticipantList!=null){
+            for(BoardParticipant boardParticipant : boardParticipantList){
+                if(boardParticipant.isBoardParticipant(board)){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

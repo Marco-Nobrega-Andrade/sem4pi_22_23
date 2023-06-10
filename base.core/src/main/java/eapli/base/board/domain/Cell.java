@@ -53,4 +53,16 @@ public class Cell implements Comparable<Cell>{
     public int compareTo(Cell o) {
         return this.cellId.compareTo(o.cellId);
     }
+
+    public void addPostIt(PostIt postIt) {
+        this.postIt = postIt;
+    }
+
+    public boolean isColumn(int column) {
+        return this.column.returnColumnIdentifierString().equals(Integer.toString(column));
+    }
+
+    public boolean isRow(int row) {
+        return this.row.returnRowIdentifierString().equals(Integer.toString(row));
+    }
 }

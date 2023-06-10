@@ -64,4 +64,11 @@ public class BoardOwner implements AggregateRoot<BoardOwnerId> {
         boardList.add(board);
         return true;
     }
+
+    public boolean isBoardOwner(Board board) {
+        if(boardList.contains(board)){
+            return true;
+        }
+        return false;
+    }
 }
