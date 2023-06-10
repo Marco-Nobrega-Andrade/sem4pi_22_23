@@ -3,8 +3,7 @@ package eapli.base.postitmanager.application;
 public class CreatePostItController {
 
     private final CreatePostItService service = new CreatePostItService();
-    public boolean createPostIt(String content, byte[] image, int column, int line) {
-        service.createPostIt( content, image, column, line);
-        return false;
+    public boolean createPostIt(String boardTittle, String content, int column, int row) {
+        return service.createPostIt(boardTittle, content, column, row);
     }
 }
