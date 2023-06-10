@@ -93,5 +93,8 @@ public class Exam implements AggregateRoot<ExamTitle>  {
         return true;
     }
 
+    public String returnFullExamSpecificationString(){
+        return examSpecification.returnSpecification();
+    }
 
 }

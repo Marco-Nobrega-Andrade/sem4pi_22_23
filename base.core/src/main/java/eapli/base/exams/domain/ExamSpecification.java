@@ -38,4 +38,8 @@ public class ExamSpecification implements ValueObject {
     public int hashCode() {
         return Objects.hash(specification);
     }
+
+    public String returnSpecification(){
+        return this.specification;
+    }
 }
