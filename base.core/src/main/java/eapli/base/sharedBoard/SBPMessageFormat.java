@@ -15,7 +15,7 @@ public class SBPMessageFormat {
     public static final int AUTH_CODE = 4;
 
     public static final int LIST_BOARD_I_OWN_SEND = 5;
-    public static final int LIST_BOARD_I_OWN_RCV = 6;
+    public static final int LIST_BOARD = 6;
 
     public static final int LIST_BOARD_I_PARTICIPATE_SEND = 11;
     public static final int NUMBER_OF_CELLS_REQUEST_SEND = 13;
@@ -64,9 +64,9 @@ public class SBPMessageFormat {
     public static byte[] createListBoardReceive(List<BoardDTOWithTitle> boardDTOList){
         StringBuilder strBuilder = getBoardData(boardDTOList);
         if(strBuilder.length() == 0){
-            return encodeRequest(LIST_BOARD_I_OWN_RCV, "");
+            return encodeRequest(LIST_BOARD, "");
         }
-        return encodeRequest(LIST_BOARD_I_OWN_RCV, strBuilder.toString());
+        return encodeRequest(LIST_BOARD, strBuilder.toString());
     }
 
     public static byte[] createListBoardIParticipateRequestSend(){
