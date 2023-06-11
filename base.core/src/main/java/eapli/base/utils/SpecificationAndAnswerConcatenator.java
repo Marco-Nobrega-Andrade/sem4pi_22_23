@@ -4,14 +4,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-
-
-
 public class SpecificationAndAnswerConcatenator {
 
-    private final String SPLIT_REGEX = "#Answer:";
+    private static final String SPLIT_REGEX = "#Answer:";
 
-    public String concatenate(String specification, Map<Integer, List<String>> answers){
+    public static String concatenate(String specification, Map<Integer, List<String>> answers){
         List<String> splitSpecification = Arrays.asList(specification.split(SPLIT_REGEX));
         StringBuilder stringBuilder = new StringBuilder();
 
@@ -28,7 +25,6 @@ public class SpecificationAndAnswerConcatenator {
             }
             stringBuilder.append(splitSpecification.get(i));
         }
-
 
         return stringBuilder.toString();
     }
