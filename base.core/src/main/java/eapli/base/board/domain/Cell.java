@@ -46,6 +46,7 @@ public class Cell implements Comparable<Cell>{
     }
 
     public String returnPostItContentString(){
+        if (postIt == null) return " ";
         return postIt.returnContentString();
     }
 

@@ -43,6 +43,7 @@ class Column implements Comparable<Column>, ValueObject {
 
 
     public String returnColumnTitleString(){
+        if (columnTitle == null)return "";
         return columnTitle.toString();
     }
 
