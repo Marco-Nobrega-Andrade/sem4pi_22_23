@@ -100,4 +100,8 @@ public class Student implements AggregateRoot<MecanographicNumber> {
         enrollmentList.add(newEnrollment);
         return true;
     }
+
+    public boolean addExamResolution(ExamResolution newExamResolution){
+        return examResolutions.add(newExamResolution);
+    }
 }

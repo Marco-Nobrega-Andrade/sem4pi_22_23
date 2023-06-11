@@ -116,4 +116,8 @@ public class Exam implements AggregateRoot<ExamTitle>  {
 
         return stringBuilder.toString();
     }
+
+    public boolean addExamResolution(ExamResolution newExamResolution){
+        return examResolutions.add(newExamResolution);
+    }
 }
