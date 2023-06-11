@@ -1,6 +1,7 @@
 package eapli.base.usermanagement.domain;
 
 import eapli.base.enrollments.domain.Enrollment;
+import eapli.base.exams.domain.ExamResolution;
 import eapli.framework.domain.model.AggregateRoot;
 
 
@@ -20,6 +21,9 @@ public class Student implements AggregateRoot<MecanographicNumber> {
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Enrollment> enrollmentList = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<ExamResolution> examResolutions = new ArrayList<>();
 
     public Student( MecanographicNumber mecanographicNumber, DateOfBirth date, TaxPayerNumber taxPayerNumber) {
         this.mecanographicNumber = mecanographicNumber;
@@ -42,12 +46,12 @@ public class Student implements AggregateRoot<MecanographicNumber> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Student student = (Student) o;
-        return Objects.equals(mecanographicNumber, student.mecanographicNumber) && Objects.equals(date, student.date) && Objects.equals(taxPayerNumber, student.taxPayerNumber) && Objects.equals(enrollmentList, student.enrollmentList);
+        return Objects.equals(mecanographicNumber, student.mecanographicNumber) && Objects.equals(date, student.date) && Objects.equals(taxPayerNumber, student.taxPayerNumber) && Objects.equals(enrollmentList, student.enrollmentList) && Objects.equals(examResolutions, student.examResolutions);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(mecanographicNumber, date, taxPayerNumber, enrollmentList);
+        return Objects.hash(mecanographicNumber, date, taxPayerNumber, enrollmentList, examResolutions);
     }
 
     @Override
@@ -58,7 +62,9 @@ public class Student implements AggregateRoot<MecanographicNumber> {
 
         final Student that = (Student) other;
 
-        return mecanographicNumber.equals(that.mecanographicNumber) && date.equals(that.date) && taxPayerNumber.equals(that.taxPayerNumber) && enrollmentList.equals(that.enrollmentList);
+        return mecanographicNumber.equals(that.mecanographicNumber) && date.equals(that.date)
+                && taxPayerNumber.equals(that.taxPayerNumber) && enrollmentList.equals(that.enrollmentList)
+                && examResolutions.equals(that.examResolutions);
     }
 
     @Override

@@ -3,10 +3,9 @@ package eapli.base.exams.domain;
 import eapli.base.usermanagement.domain.Teacher;
 import eapli.framework.domain.model.AggregateRoot;
 
-import javax.persistence.CascadeType;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -21,6 +20,9 @@ public class Exam implements AggregateRoot<ExamTitle>  {
 
     @ManyToOne(cascade = CascadeType.REFRESH)
     private Teacher examTeacher;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<ExamResolution> examResolutions = new ArrayList<>();
 
     protected Exam(ExamTitle examTitle, DateInterval dateInterval, ExamSpecification examSpecification, Teacher examTeacher) {
         if (examTitle == null || dateInterval == null || examSpecification == null || examTeacher == null ) throw new IllegalArgumentException("Exam cannot be created with null parameters");
@@ -40,12 +42,14 @@ public class Exam implements AggregateRoot<ExamTitle>  {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Exam exam = (Exam) o;
-        return Objects.equals(examTitle, exam.examTitle) && Objects.equals(dateInterval, exam.dateInterval) && Objects.equals(examSpecification, exam.examSpecification) && Objects.equals(examTeacher, exam.examTeacher);
+        return Objects.equals(examTitle, exam.examTitle) && Objects.equals(dateInterval, exam.dateInterval)
+                && Objects.equals(examSpecification, exam.examSpecification) && Objects.equals(examTeacher, exam.examTeacher)
+                && Objects.equals(examResolutions,exam.examResolutions);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(examTitle, dateInterval, examSpecification, examTeacher);
+        return Objects.hash(examTitle, dateInterval, examSpecification, examTeacher, examResolutions);
     }
 
     @Override
@@ -57,7 +61,7 @@ public class Exam implements AggregateRoot<ExamTitle>  {
         final Exam that = (Exam) other;
 
         return examTitle.equals(that.examTitle) && dateInterval.equals(that.dateInterval) && examSpecification.equals(that.examSpecification)
-                && examTeacher.equals(that.examTeacher);
+                && examTeacher.equals(that.examTeacher) && examResolutions.equals(that.examResolutions);
     }
 
     @Override
