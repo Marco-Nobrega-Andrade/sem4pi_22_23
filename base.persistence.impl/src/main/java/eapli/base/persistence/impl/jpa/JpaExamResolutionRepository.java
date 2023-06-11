@@ -19,4 +19,13 @@ public class JpaExamResolutionRepository extends JpaAutoTxRepository<ExamResolut
         super(puname, Application.settings().getExtendedPersistenceProperties(),
                 "examResolution_Id");
     }
+
+    @Override
+    public Long findMaxId() {
+        if (count() > 0) {
+            return createQuery("SELECT MAX(e.examResolution_Id.examResolution_id) FROM ExamResolution e", Long.class).getSingleResult();
+        } else {
+            return 0L;
+        }
+    }
 }

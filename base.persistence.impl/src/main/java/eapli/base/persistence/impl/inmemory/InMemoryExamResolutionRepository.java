@@ -7,4 +7,8 @@ import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainR
 
 public class InMemoryExamResolutionRepository extends InMemoryDomainRepository<ExamResolution, ExamResolutionId> implements ExamResolutionRepository {
 
+    @Override
+    public Long findMaxId() {
+        return 0L;
+    }
 }
