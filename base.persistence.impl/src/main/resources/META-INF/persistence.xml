@@ -32,6 +32,7 @@
     <class>eapli.base.boardhistory.domain.Task</class>
     <class>eapli.base.boardparticipantmanagement.domain.BoardParticipant</class>
     <class>eapli.base.postitmanager.domain.PostIt</class>
+    <class>eapli.base.exams.domain.ExamResolution</class>
 
     <properties>
       <!--<property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/base"/>-->
