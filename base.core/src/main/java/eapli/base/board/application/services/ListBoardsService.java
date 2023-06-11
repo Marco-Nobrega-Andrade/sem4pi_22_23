@@ -13,9 +13,40 @@ import java.util.List;
 
 public class ListBoardsService {
     BoardRepository boardRepository = PersistenceContext.repositories().boardRepository();
+    /**
+     * Lists all boards owned by the user
+     * @return a list of boardDTOs
+     */
     public List<BoardDTOWithTitle> listBoardsIOwn(){
-        SystemUser user = AuthzRegistry.authorizationService().session().get().authenticatedUser();
+        SystemUser user = getSystemUser();
         List<Board> boardList = boardRepository.findAllBoardsIOwn(user);
+        return getBoardDTOList(boardList);
+    }
+    /**
+     * Lists all boards in which the user is a participant
+     * @return a list of boardDTOs
+     */
+    public List<BoardDTOWithTitle> listBoardsIParticipate() {
+        SystemUser user = getSystemUser();
+        List<Board> boardList = boardRepository.findAllBoardsIParticipateWithWritePermission(user);
+        return getBoardDTOList(boardList);
+    }
+    /**
+     * Gets the authenticated user
+     * @return the authenticated user
+     */
+    private SystemUser getSystemUser(){
+        if (AuthzRegistry.authorizationService().session().isPresent()) {
+            return AuthzRegistry.authorizationService().session().get().authenticatedUser();
+        }
+        throw new IllegalStateException("Session without user");
+    }
+    /**
+     * Converts a list of boards to a list of boardDTOs
+     * @param boardList the list of boards to convert
+     * @return a list of boardDTOs
+     */
+    private List<BoardDTOWithTitle> getBoardDTOList(List<Board> boardList){
         List<BoardDTOWithTitle> boardDTOList = new ArrayList<>();
         for(Board board : boardList){
             boardDTOList.add(BoardDTOWithTitleMapper.doDTO(board));

@@ -27,4 +27,8 @@ public class Permission implements ValueObject {
     public int hashCode() {
         return Objects.hash(hasWritePermission);
     }
+
+    public boolean hasWritePermission() {
+        return hasWritePermission;
+    }
 }

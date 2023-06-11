@@ -1,5 +1,6 @@
 package eapli.base.boardhistory.domain;
 
+import eapli.base.boardparticipantmanagement.domain.BoardParticipant;
 import eapli.base.usermanagement.domain.BoardOwner;
 
 public class BoardHistoryBuilder {
@@ -16,6 +17,14 @@ public class BoardHistoryBuilder {
         this.task = taskBuilder.withTaskId(taskId)
                 .withOperation(operation)
                 .withBoardOwner(boardOwner)
+                .build();
+        return this;
+    }
+    public BoardHistoryBuilder withTask(long taskId, OperationValue operation, BoardParticipant boardParticipant){
+        TaskBuilder taskBuilder = new TaskBuilder();
+        this.task = taskBuilder.withTaskId(taskId)
+                .withOperation(operation)
+                .withBoardParticipant(boardParticipant)
                 .build();
         return this;
     }

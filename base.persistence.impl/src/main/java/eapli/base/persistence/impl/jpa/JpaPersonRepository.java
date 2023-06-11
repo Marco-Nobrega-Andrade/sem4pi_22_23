@@ -1,6 +1,7 @@
 package eapli.base.persistence.impl.jpa;
 
 import eapli.base.Application;
+import eapli.base.usermanagement.domain.BoardOwner;
 import eapli.base.usermanagement.domain.ID_Person;
 import eapli.base.usermanagement.domain.Person;
 import eapli.base.usermanagement.domain.Teacher;
@@ -55,6 +56,15 @@ public class JpaPersonRepository extends JpaAutoTxRepository<Person, ID_Person,I
                 Teacher.class);
         query.setParameter("person", person);
         return query.getSingleResult();
+    }
+
+    @Override
+    public BoardOwner findBoardOwnerByPerson(Person person) {
+        return createQuery("SELECT b FROM BoardOwner b WHERE b = (SELECT p.boardOwner " +
+                "FROM Person p WHERE p = :person)", BoardOwner.class)
+                .setParameter("person", person)
+                .getSingleResult();
+
     }
 
 }

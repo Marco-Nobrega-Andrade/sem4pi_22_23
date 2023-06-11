@@ -1,5 +1,6 @@
 package eapli.base.persistence.impl.inmemory;
 
+import eapli.base.usermanagement.domain.BoardOwner;
 import eapli.base.usermanagement.domain.ID_Person;
 import eapli.base.usermanagement.domain.Person;
 import eapli.base.usermanagement.domain.Teacher;
@@ -38,6 +39,11 @@ public class InMemoryPersonRepository extends InMemoryDomainRepository<Person, I
 
     @Override
     public Teacher findTeachersByPerson(Person person) {
+        return null;
+    }
+
+    @Override
+    public BoardOwner findBoardOwnerByPerson(Person person) {
         return null;
     }
 

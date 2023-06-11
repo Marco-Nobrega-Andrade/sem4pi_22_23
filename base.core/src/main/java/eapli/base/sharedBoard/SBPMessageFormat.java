@@ -17,6 +17,12 @@ public class SBPMessageFormat {
     public static final int LIST_BOARD_I_OWN_SEND = 5;
     public static final int LIST_BOARD_I_OWN_RCV = 6;
 
+    public static final int LIST_BOARD_I_PARTICIPATE_SEND = 11;
+    public static final int NUMBER_OF_CELLS_REQUEST_SEND = 13;
+    public static final int LIST_BOARD_I_PARTICIPATE_RCV = 12;
+    public static final int NUMBER_OF_CELLS_REQUEST_RCV = 14;
+    public static final int POST_IT_REQUEST_SEND = 15 ;
+
     public static final int BOARD_INFO_CODE = 9;
 
     public static final int VIEW_IN_REAL_TIME_CODE = 10;
@@ -56,6 +62,26 @@ public class SBPMessageFormat {
     }
 
     public static byte[] createListBoardReceive(List<BoardDTOWithTitle> boardDTOList){
+        StringBuilder strBuilder = getBoardData(boardDTOList);
+        if(strBuilder.length() == 0){
+            return encodeRequest(LIST_BOARD_I_OWN_RCV, "");
+        }
+        return encodeRequest(LIST_BOARD_I_OWN_RCV, strBuilder.toString());
+    }
+
+    public static byte[] createListBoardIParticipateRequestSend(){
+        return encodeRequest(LIST_BOARD_I_PARTICIPATE_SEND, "");
+    }
+
+    public static byte[] createListBoardIParticipateRequestReceive(List<BoardDTOWithTitle> boardDTOList){
+        StringBuilder strBuilder = getBoardData(boardDTOList);
+        if(strBuilder.length() == 0){
+            return encodeRequest(LIST_BOARD_I_PARTICIPATE_RCV, "");
+        }
+        return encodeRequest(LIST_BOARD_I_PARTICIPATE_RCV, strBuilder.toString());
+    }
+
+    private static StringBuilder getBoardData(List<BoardDTOWithTitle> boardDTOList) {
         StringBuilder strBuilder = new StringBuilder();
         for(int i = 0; i < boardDTOList.size(); i++){
             strBuilder.append(boardDTOList.get(i).toString());
@@ -63,10 +89,19 @@ public class SBPMessageFormat {
                 strBuilder.append(',');
             }
         }
-        if(strBuilder.length() == 0){
-            return encodeRequest(LIST_BOARD_I_OWN_RCV, "");
-        }
-        return encodeRequest(LIST_BOARD_I_OWN_RCV, strBuilder.toString());
+        return strBuilder;
+    }
+
+    public static byte[] createShowNumberOfCellsRequestSend(String board) {
+        return encodeRequest(NUMBER_OF_CELLS_REQUEST_SEND, board);
+    }
+
+    public static byte[] createShowNumberOfCellsRequestRCV(int maxColumn, int maxRow) {
+        return encodeRequest(NUMBER_OF_CELLS_REQUEST_RCV, maxColumn + "," + maxRow);
+    }
+
+    public static byte[] createPostItRequest(String board, String data, int column, int row) {
+        return encodeRequest(POST_IT_REQUEST_SEND, board + "," + data + "," + column + "," + row);
     }
 
     public static byte[] createViewInRealTimeRequest(String boardId){
@@ -111,9 +146,7 @@ public class SBPMessageFormat {
         request[D_LENGTH1_OFFSET] = (byte) length1;
         request[D_LENGTH2_OFFSET] = (byte) length2;
 
-        for(int i = 0; i<data.getBytes().length; i++){
-            request[DATA_OFFSET+i] = dataBytes[i];
-        }
+        System.arraycopy(dataBytes, 0, request, 4, data.getBytes().length);
 
         return request;
     }

@@ -1,6 +1,7 @@
 package eapli.base.board.domain;
 
 import eapli.base.exceptions.AlreadyDeactivatedException;
+import eapli.base.postitmanager.domain.PostIt;
 import eapli.framework.domain.model.AggregateRoot;
 
 import javax.persistence.CascadeType;
@@ -73,4 +74,39 @@ public class Board implements AggregateRoot<BoardTitle> {
         return true;
     }
 
+    public void addPostIt(PostIt postIt, int column, int row) {
+        for (Cell cell : cellList) {
+            if (cell.isColumn(column)  && cell.isRow(row)) {
+                cell.addPostIt(postIt);
+            }
+        }
+    }
+
+    /**
+     * Returns the maximum column number of the board
+     * @return int number of the maximum column
+     */
+    public int maxColumn() {
+        int maxColumn = 0;
+        for (Cell cell : cellList) {
+            if (Integer.parseInt(cell.returnColumnIdentifierString()) > maxColumn) {
+                maxColumn = Integer.parseInt(cell.returnColumnIdentifierString());
+            }
+        }
+        return maxColumn;
+    }
+
+    /**
+     * Returns the maximum row number of the board
+     * @return int number of the maximum row
+     */
+    public int maxRow() {
+        int maxRow = 0;
+        for (Cell cell : cellList) {
+            if (Integer.parseInt(cell.returnRowIdentifierString()) > maxRow) {
+                maxRow = Integer.parseInt(cell.returnRowIdentifierString());
+            }
+        }
+        return maxRow;
+    }
 }

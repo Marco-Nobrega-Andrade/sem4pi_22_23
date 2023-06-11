@@ -1,5 +1,6 @@
 package eapli.base.boardhistory.domain;
 
+import eapli.base.boardparticipantmanagement.domain.BoardParticipant;
 import eapli.base.postitmanager.domain.PostIt;
 import eapli.base.usermanagement.domain.BoardOwner;
 
@@ -14,6 +15,8 @@ public class Task{
     private Operation operation;
     @OneToOne
     private BoardOwner  boardOwner;
+    @OneToOne
+    private BoardParticipant boardParticipant;
     @OneToOne
     private PostIt postIt;
 
@@ -41,4 +44,13 @@ public class Task{
 
     }
 
+    public Task(TaskId taskId, Operation operation, BoardParticipant boardParticipant, PostIt postIt) {
+        if(taskId == null || operation == null || boardParticipant == null || postIt == null){
+            throw new IllegalArgumentException("The task cannot be created with null Value Objects");
+        }
+        this.taskId = taskId;
+        this.operation = operation;
+        this.boardParticipant = boardParticipant;
+        this.postIt = postIt;
+    }
 }

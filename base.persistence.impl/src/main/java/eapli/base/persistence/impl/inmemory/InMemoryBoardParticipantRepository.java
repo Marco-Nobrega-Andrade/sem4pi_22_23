@@ -1,5 +1,6 @@
 package eapli.base.persistence.impl.inmemory;
 
+import eapli.base.board.domain.Board;
 import eapli.base.boardparticipantmanagement.domain.BoardParticipant;
 import eapli.base.boardparticipantmanagement.domain.BoardParticipantId;
 import eapli.base.boardparticipantmanagement.repositories.BoardParticipantRepository;
@@ -9,5 +10,10 @@ public class InMemoryBoardParticipantRepository extends InMemoryDomainRepository
     @Override
     public Long findMaxId() {
         return 0L;
+    }
+
+    @Override
+    public BoardParticipant findBoardParticipantByBoard(Board board) {
+        return null;
     }
 }

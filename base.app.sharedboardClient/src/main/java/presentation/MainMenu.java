@@ -33,6 +33,7 @@ import eapli.framework.presentation.console.menu.MenuItemRenderer;
 import eapli.framework.presentation.console.menu.MenuRenderer;
 import eapli.framework.presentation.console.menu.VerticalMenuRenderer;
 import presentation.archiveBoard.ArchiveBoardAction;
+import presentation.postIt.CreatePostItAction;
 import presentation.shareBoard.ShareBoardAppAction;
 import presentation.shareBoard.ShareBoardUI;
 
@@ -55,6 +56,8 @@ public class MainMenu extends AbstractUI {
     private static final int SHARE_BOARD_OPTION = 1;
 
     private static final int ARCHIVE_BOARD_OPTION = 2;
+
+    private static final int CREATE_A_POST_IT = 3;
 
     // private static final int COMMTEST_OPTION = 1;
 
@@ -95,6 +98,7 @@ public class MainMenu extends AbstractUI {
         final Menu mainMenu = new Menu();
         mainMenu.addItem(SHARE_BOARD_OPTION, "Share Board", new ShareBoardAppAction(socket));
         mainMenu.addItem(ARCHIVE_BOARD_OPTION, "Archive Board", new ArchiveBoardAction(socket));
+        mainMenu.addItem(CREATE_A_POST_IT, "Create a Post-it", new CreatePostItAction(socket));
         mainMenu.addItem(EXIT_OPTION, "Exit", new ExitWithMessageAction("Bye, Bye"));
         return mainMenu;
     }

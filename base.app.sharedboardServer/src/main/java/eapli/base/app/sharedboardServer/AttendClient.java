@@ -1,8 +1,6 @@
 package eapli.base.app.sharedboardServer;
 
-import eapli.base.board.application.ArchiveBoardController;
-import eapli.base.board.application.ListBoardsIOwnController;
-import eapli.base.board.application.ShareBoardController;
+import eapli.base.board.application.*;
 import eapli.base.board.application.services.BoardInformationController;
 import eapli.base.board.dto.BoardDTOWithTitle;
 import eapli.base.board.dto.CellDTOWithColumnRowContent;
@@ -11,7 +9,9 @@ import eapli.base.exceptions.DuplicateCreationException;
 import eapli.base.exceptions.ParameterNullBlankException;
 import eapli.base.infrastructure.authz.AuthenticationCredentialHandler;
 import eapli.base.infrastructure.authz.CredentialHandler;
+import eapli.base.postitmanager.application.CreatePostItController;
 import eapli.base.sharedBoard.SBPMessageFormat;
+
 import javax.persistence.NoResultException;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -45,7 +45,8 @@ public class AttendClient implements Runnable{
                             byte[] authRequest = SBPMessageFormat.createAcknowledgeRequest();
                             outputStream.writeUTF(new String(authRequest));
                         } else {
-                            byte[] authRequest = SBPMessageFormat.creteErrorRequest("Wrong username or password.");
+                            byte[] authRequest = SBPMessageFormat.
+                                    creteErrorRequest("Wrong username or password.");
                             outputStream.writeUTF(new String(authRequest));
                         }
                         break;
@@ -57,6 +58,47 @@ public class AttendClient implements Runnable{
                         byte[] boardIOwnListRequest = SBPMessageFormat.createListBoardReceive(boardDTOList);
                         outputStream.writeUTF(new String(boardIOwnListRequest));
                         break;
+                    case SBPMessageFormat.LIST_BOARD_I_PARTICIPATE_SEND:
+                        List<BoardDTOWithTitle> boardDTOList2 = new ListBoardIParticipateController().
+                                listBoardsIParticipate();
+                        byte[] boardIParticipateListRequest = SBPMessageFormat.
+                                createListBoardIParticipateRequestReceive(boardDTOList2);
+                        outputStream.writeUTF(new String(boardIParticipateListRequest));
+                        break;
+                    case SBPMessageFormat.NUMBER_OF_CELLS_REQUEST_SEND:
+                        String board = SBPMessageFormat.decodeParam(message.getBytes()).get(0);
+                        if (!board.isEmpty()){
+
+                            int maxColumn = new ShowCellInformationController().getMaxColumn(board);
+                            int maxRow = new ShowCellInformationController().getMaxRow(board);
+                            byte[] numberOfCellsRequest = SBPMessageFormat.
+                                    createShowNumberOfCellsRequestRCV(maxColumn, maxRow);
+                            outputStream.writeUTF(new String(numberOfCellsRequest));
+                        }
+                        else {
+                            outputStream.writeUTF(
+                                    new String(SBPMessageFormat.
+                                            creteErrorRequest("ERROR: Board title is empty")));
+                        }
+                        break;
+
+                    case SBPMessageFormat.POST_IT_REQUEST_SEND:
+                        synchronized (this) {
+                            List<String> postItParams = SBPMessageFormat.decodeParam(message.getBytes());
+                            try {
+                                if (new CreatePostItController().createPostIt(postItParams.get(0), postItParams.get(1),
+                                        Integer.parseInt(postItParams.get(2)), Integer.parseInt(postItParams.get(3)))) {
+                                    outputStream.writeUTF(new String(SBPMessageFormat.createAcknowledgeRequest()));
+                                } else {
+                                    outputStream.writeUTF(new String(SBPMessageFormat.
+                                            creteErrorRequest("ERROR: Post-it cannot be created")));
+                                }
+                            } catch (Exception e) {
+                                outputStream.writeUTF(new String(SBPMessageFormat.creteErrorRequest(e.getMessage())));
+                            }
+                        }
+                        break;
+
                     case SBPMessageFormat.SHARE_BOARD_CODE:
                         List<String> shareBoardParams = SBPMessageFormat.decodeParam(message.getBytes());
                         boolean permission;
@@ -66,12 +108,14 @@ public class AttendClient implements Runnable{
                             permission = false;
                         }
                         try {
-                            new ShareBoardController().shareBoard(shareBoardParams.get(0), shareBoardParams.get(1), permission);
+                            new ShareBoardController().shareBoard(shareBoardParams.get(0),
+                                    shareBoardParams.get(1), permission);
                             outputStream.writeUTF(new String(SBPMessageFormat.createAcknowledgeRequest()));
                         }catch (DuplicateCreationException | ParameterNullBlankException e){
                             outputStream.writeUTF(new String(SBPMessageFormat.creteErrorRequest(e.getMessage())));
                         }catch (NoResultException e){
-                            outputStream.writeUTF(new String(SBPMessageFormat.creteErrorRequest("ERROR: There are no people in the system with that e-mail")));
+                            outputStream.writeUTF(new String(SBPMessageFormat.
+                                    creteErrorRequest("ERROR: There are no people in the system with that e-mail")));
                         }
                         break;
                     case SBPMessageFormat.ARCHIVE_BOARD_CODE:
@@ -86,10 +130,13 @@ public class AttendClient implements Runnable{
                     case SBPMessageFormat.VIEW_IN_REAL_TIME_CODE:
                         List<String> param = SBPMessageFormat.decodeParam(message.getBytes());
                         try{
-                            List<CellDTOWithColumnRowContent>  listCellDTOWithColumnRowContent = new BoardInformationController().getBoardInformation(param.get(0));
-                            outputStream.writeUTF(new String(SBPMessageFormat.createBoardInfoRequest(listCellDTOWithColumnRowContent)));
+                            List<CellDTOWithColumnRowContent>  listCellDTOWithColumnRowContent =
+                                    new BoardInformationController().getBoardInformation(param.get(0));
+                            outputStream.writeUTF(
+                                    new String(SBPMessageFormat.createBoardInfoRequest(listCellDTOWithColumnRowContent)));
                         }catch (Exception e){
-                            outputStream.writeUTF(new String(SBPMessageFormat.creteErrorRequest(e.getMessage())));
+                            outputStream.writeUTF(
+                                    new String(SBPMessageFormat.creteErrorRequest(e.getMessage())));
                         }
                         break;
                 }

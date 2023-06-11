@@ -11,7 +11,6 @@ public class PostIt implements AggregateRoot<PostItIdentifier> {
     @EmbeddedId
     private PostItIdentifier postItIdentifier;
     private Content content;
-
     protected PostIt(PostItIdentifier postItIdentifier, Content content) {
         if (postItIdentifier == null || content == null) {
             throw new IllegalArgumentException();
@@ -19,11 +18,9 @@ public class PostIt implements AggregateRoot<PostItIdentifier> {
         this.postItIdentifier = postItIdentifier;
         this.content = content;
     }
-
     protected PostIt() {
         // for ORM only
     }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -31,12 +28,10 @@ public class PostIt implements AggregateRoot<PostItIdentifier> {
         PostIt postIt = (PostIt) o;
         return Objects.equals(postItIdentifier, postIt.postItIdentifier);
     }
-
     @Override
     public int hashCode() {
         return Objects.hash(postItIdentifier);
     }
-
     @Override
     public boolean sameAs(Object other) {
         if (!(other instanceof PostIt)) {
@@ -47,12 +42,10 @@ public class PostIt implements AggregateRoot<PostItIdentifier> {
 
         return this.postItIdentifier.equals(that.postItIdentifier);
     }
-
     @Override
     public PostItIdentifier identity() {
         return postItIdentifier;
     }
-
     public String returnContentString(){
         return content.toString();
     }
