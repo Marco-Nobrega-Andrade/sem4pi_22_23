@@ -146,7 +146,9 @@ public class SBPMessageFormat {
         request[D_LENGTH1_OFFSET] = (byte) length1;
         request[D_LENGTH2_OFFSET] = (byte) length2;
 
-        System.arraycopy(dataBytes, 0, request, 4, data.getBytes().length);
+        for(int i = 0; i<data.getBytes().length; i++){
+            request[DATA_OFFSET+i] = dataBytes[i];
+        }
 
         return request;
     }
