@@ -23,6 +23,7 @@ package eapli.base.persistence.impl.jpa;
 import eapli.base.Application;
 import eapli.base.boardhistory.repositories.BoardHistoryRepository;
 import eapli.base.boardparticipantmanagement.repositories.BoardParticipantRepository;
+import eapli.base.exams.repositories.ExamResolutionRepository;
 import eapli.base.postitmanager.repositories.PostItRepository;
 import eapli.base.usermanagement.repositories.BoardOwnerRepository;
 import eapli.base.board.repositories.BoardRepository;
@@ -246,6 +247,16 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     @Override
     public PostItRepository postItRepository(TransactionalContext autoTx) {
         return new JpaPostItRepository(autoTx);
+    }
+
+    @Override
+    public ExamResolutionRepository examResolutionRepository() {
+        return new JpaExamResolutionRepository(Application.settings().getPersistenceUnitName());
+    }
+
+    @Override
+    public ExamResolutionRepository examResolutionRepository(TransactionalContext autoTx) {
+        return new JpaExamResolutionRepository(autoTx);
     }
 
     @Override
