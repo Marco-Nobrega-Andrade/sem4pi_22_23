@@ -5,6 +5,7 @@ import eapli.framework.domain.model.AggregateRoot;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -101,4 +102,18 @@ public class Exam implements AggregateRoot<ExamTitle>  {
         return examSpecification.returnSpecification();
     }
 
+    public String returnStudentViewOfExamSpecification(){
+        StringBuilder stringBuilder = new StringBuilder();
+
+        List<String> specificationLines = Arrays.asList(this.examSpecification.returnSpecification().split("\n"));
+
+        for (String str : specificationLines){
+            if (!str.contains("#Solution:") && !str.contains("#Feedback:")){
+                stringBuilder.append(str);
+                stringBuilder.append("\n");
+            }
+        }
+
+        return stringBuilder.toString();
+    }
 }
