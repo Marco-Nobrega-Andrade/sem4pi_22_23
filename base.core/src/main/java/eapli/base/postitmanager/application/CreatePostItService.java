@@ -3,9 +3,8 @@ package eapli.base.postitmanager.application;
 import eapli.base.board.domain.Board;
 import eapli.base.board.domain.Notification;
 import eapli.base.board.repositories.BoardRepository;
-import eapli.base.boardhistory.domain.BoardHistory;
-import eapli.base.boardhistory.domain.BoardHistoryBuilder;
 import eapli.base.boardhistory.domain.OperationValue;
+import eapli.base.boardhistory.domain.TaskBuilder;
 import eapli.base.boardhistory.repositories.BoardHistoryRepository;
 import eapli.base.boardparticipantmanagement.domain.BoardParticipant;
 import eapli.base.boardparticipantmanagement.repositories.BoardParticipantRepository;
@@ -54,27 +53,23 @@ public class CreatePostItService {
         Person person = personRepository.findPersonBySystemUser(systemUser);
 
         //create task and save it
-        BoardHistoryBuilder boardHistoryBuilder = new BoardHistoryBuilder();
+        TaskBuilder taskBuilder = new TaskBuilder();
         if (person.isBoardOwner(board)) {
             BoardOwner boardOwner = personRepository.findBoardOwnerByPerson(person);
-            BoardHistory boardHistory = boardHistoryBuilder.withBoardHistoryId(boardHistoryRepository.count()+1)
-                    .withTask(boardHistoryRepository.getLastTaskId()+1, OperationValue.ADD, boardOwner, postIt)
-                    .build();
+            board.addTaskToHistory(taskBuilder.withBoardOwner(boardOwner).withPostIt(postIt).
+                    withTaskId(boardHistoryRepository.getLastTaskId()+1).withOperation(OperationValue.ADD).build());
 
             board.addNotification(new Notification("A new post it was added in "+board.returnBoardTitleString()
                     +" on column "+column+" and row "+row+ "by "+person.returnFullNameString(),new Date(new java.util.Date())));
-            boardHistoryRepository.save(boardHistory);
             boardRepository.save(board);
             postItRepository.save(postIt);
         }
         else if (person.isBoardParticipant(board)) {
             BoardParticipant boardParticipant =boardParticipantRepository.findBoardParticipantByPerson(person);
-            boardHistoryBuilder = boardHistoryBuilder.withBoardHistoryId(boardHistoryRepository.count()+1)
-                    .withTask(boardHistoryRepository.getLastTaskId()+1, OperationValue.ADD, boardParticipant, postIt);
-            BoardHistory boardHistory=boardHistoryBuilder.build();
+            board.addTaskToHistory(taskBuilder.withBoardParticipant(boardParticipant).withPostIt(postIt).
+                    withTaskId(boardHistoryRepository.getLastTaskId()+1).withOperation(OperationValue.ADD).build());
             board.addNotification(new Notification("A new post it was added in "+board.returnBoardTitleString()
                     +" on column "+column+" and row "+row+ "by "+person.returnFullNameString(),new Date(new java.util.Date())));
-            boardHistoryRepository.save(boardHistory);
             boardRepository.save(board);
             postItRepository.save(postIt);
         }
