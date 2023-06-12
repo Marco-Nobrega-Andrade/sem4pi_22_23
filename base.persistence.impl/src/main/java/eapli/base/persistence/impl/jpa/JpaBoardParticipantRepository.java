@@ -5,6 +5,7 @@ import eapli.base.board.domain.Board;
 import eapli.base.boardparticipantmanagement.domain.BoardParticipant;
 import eapli.base.boardparticipantmanagement.domain.BoardParticipantId;
 import eapli.base.boardparticipantmanagement.repositories.BoardParticipantRepository;
+import eapli.base.usermanagement.domain.Person;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
@@ -28,9 +29,10 @@ public class JpaBoardParticipantRepository extends JpaAutoTxRepository<BoardPart
     }
 
     @Override
-    public BoardParticipant findBoardParticipantByBoard(Board board) {
-        return createQuery("SELECT bp FROM BoardParticipant bp WHERE bp.board = :board", BoardParticipant.class)
-                .setParameter("board", board)
+    public BoardParticipant findBoardParticipantByPerson(Person person) {
+        return createQuery("SELECT bp FROM BoardParticipant bp WHERE bp IN (SELECT bpl FROM Person p " +
+                "JOIN p.boardParticipantList bpl WHERE p = :person)", BoardParticipant.class)
+                .setParameter("person", person)
                 .getSingleResult();
     }
 }
