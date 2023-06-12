@@ -6,14 +6,27 @@ autonumber
 actor user
 
 participant "ViewInRealTimeUI" as ui <<ShareBoardClient>> <<Presentation>>
+participant "ServerSocket" as ss
 participant "SBPMessageFormat" as sbpf
+participant "ViewInRealTimeRequest" as request
 participant "DataOutputStream" as dos
 participant "DataInputStream" as dis
+participant "HTTPmessage" as message
 
 activate user
 
-user -> ui: selects the board and asks to view updates
+user -> ui: selects the board, and the port asks to view updates
 activate ui
+
+
+ui -> ss: create(port)
+activate ss
+return sock
+ui -> ss: accept()
+activate ss
+return cliSocket
+
+
 ui -> sbpf: createViewInRealTimeRequest(boardId)
 activate sbpf
 sbpf --> ui: viewInRealTimeRequest
@@ -27,12 +40,22 @@ note right : for more information check SD_BoardInformation
 dis --> ui: boardInfo
 deactivate dis
 
-alt request != exit
+ui -> sbpf: decodeDTO(boardInfo)
+activate sbpf
+return boardCellsInfo
 
+ui -> request : create(cliSocket, BaseFolder, boardCellsInfo)
+activate request
+request -> dis: create
+request -> dos: create
 
+request -> request: getTableInHTML()
+activate request
+return content
 
-end
-
+request -> message: setContentFromString(content,"text/html");
+request -> message: setResponseStatus("200 Ok");
+request -> message: send (outS);
 
 
 

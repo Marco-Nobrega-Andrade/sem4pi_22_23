@@ -1,15 +1,20 @@
 package eapli.base.postitmanager.domain;
 
+import eapli.base.exceptions.NegativeParameterException;
+import eapli.base.exceptions.ZeroParameterException;
 import eapli.framework.domain.model.ValueObject;
 
 import java.util.Objects;
 
-public class PostItIdentifier implements Comparable<PostItIdentifier>, ValueObject {
-    private long postItId;
+public class PostItIdentifier implements ValueObject {
+        private long postItId;
 
-    protected PostItIdentifier(long id){
-        if (id <= 0){
-            throw new IllegalArgumentException("The post it id cannot be 0 or less.");
+    protected PostItIdentifier(long id) throws NegativeParameterException, ZeroParameterException {
+        if (id < 0){
+            throw new NegativeParameterException();
+        }
+        if (id == 0){
+            throw new ZeroParameterException();
         }
         this.postItId = id;
     }
@@ -29,10 +34,5 @@ public class PostItIdentifier implements Comparable<PostItIdentifier>, ValueObje
     @Override
     public int hashCode() {
         return Objects.hash(postItId);
-    }
-
-    @Override
-    public int compareTo(PostItIdentifier o) {
-        return 0;
     }
 }

@@ -3,7 +3,6 @@ package eapli.base.boardhistory.domain;
 import eapli.base.boardparticipantmanagement.domain.BoardParticipant;
 import eapli.base.postitmanager.domain.PostIt;
 import eapli.base.usermanagement.domain.BoardOwner;
-import eapli.base.usermanagement.domain.Person;
 
 public class TaskBuilder {
     private TaskId taskId;

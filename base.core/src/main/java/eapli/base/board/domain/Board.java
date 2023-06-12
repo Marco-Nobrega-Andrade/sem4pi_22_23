@@ -1,13 +1,11 @@
 package eapli.base.board.domain;
 
 import eapli.base.exceptions.AlreadyDeactivatedException;
+import eapli.base.exceptions.CellOccupiedException;
 import eapli.base.postitmanager.domain.PostIt;
 import eapli.framework.domain.model.AggregateRoot;
 
-import javax.persistence.CascadeType;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
 @Entity
@@ -18,6 +16,8 @@ public class Board implements AggregateRoot<BoardTitle> {
     private List<Cell> cellList;
 
     private BoardStatus boardStatus;
+    @ElementCollection
+    private List<Notification> notificationList;
 
     protected Board(BoardTitle boardTiTle, List<Cell> cellList){
         if (boardTiTle == null || cellList.isEmpty()) {
@@ -74,10 +74,15 @@ public class Board implements AggregateRoot<BoardTitle> {
         return true;
     }
 
-    public void addPostIt(PostIt postIt, int column, int row) {
+    public void addPostIt(PostIt postIt, int column, int row) throws CellOccupiedException {
         for (Cell cell : cellList) {
             if (cell.isColumn(column)  && cell.isRow(row)) {
-                cell.addPostIt(postIt);
+                if (!cell.hasPostIt()) {
+                    cell.addPostIt(postIt);
+                }
+                else {
+                    throw new CellOccupiedException();
+                }
             }
         }
     }
@@ -108,5 +113,9 @@ public class Board implements AggregateRoot<BoardTitle> {
             }
         }
         return maxRow;
+    }
+
+    public void addNotification(Notification notification){
+        this.notificationList.add(notification);
     }
 }
