@@ -4,6 +4,8 @@ import eapli.base.exceptions.NegativeParameterException;
 import eapli.base.exceptions.ZeroParameterException;
 import eapli.framework.domain.model.ValueObject;
 
+import java.util.Objects;
+
 public class PostItVersion implements ValueObject {
     private int version;
 
@@ -15,6 +17,14 @@ public class PostItVersion implements ValueObject {
             throw new ZeroParameterException();
         }
         this.version = version;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PostItVersion that = (PostItVersion) o;
+        return Objects.equals(version, that.version);
     }
 
     public void updateVersion() {

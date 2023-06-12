@@ -1,7 +1,5 @@
 package eapli.base.postitmanager.domain;
 
-import eapli.base.exceptions.NegativeParameterException;
-import eapli.base.exceptions.ZeroParameterException;
 import eapli.framework.domain.model.ValueObject;
 
 import java.util.Objects;
@@ -20,7 +18,7 @@ public class PostItKey implements Comparable<PostItKey>, ValueObject {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PostItKey that = (PostItKey) o;
-        return Objects.equals(postItIdentifier, that.postItIdentifier) && Objects.equals(postItVersion, that.postItVersion);
+        return postItIdentifier.equals(that.postItIdentifier) && (postItVersion.equals(that.postItVersion));
     }
 
     @Override
