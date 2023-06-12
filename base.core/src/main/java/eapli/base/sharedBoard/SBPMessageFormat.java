@@ -188,6 +188,7 @@ public class SBPMessageFormat {
         String decodedString = new String(request, StandardCharsets.UTF_8);
         decodedString = decodedString.substring(4);
         List<String> paramList = List.of(decodedString.split(","));
+        if (paramList.size()== 1 && paramList.get(0).equals("")){return new ArrayList<>();}
         return paramList;
     }
 
