@@ -146,7 +146,7 @@ public class AttendClient implements Runnable{
                     case SBPMessageFormat.HISTORY_OF_UPDATES_CODE:
                         List<String> boardHistoryParam = SBPMessageFormat.decodeParam(message.getBytes());
                         try {
-                            new HistoryOfUpdatesController().historyOfUpdates(boardHistoryParam.get(0));
+                            //new HistoryOfUpdatesController().historyOfUpdates(boardHistoryParam.get(0));
                             outputStream.writeUTF(new String(SBPMessageFormat.createAcknowledgeRequest()));
                         }catch (Exception e){
                             outputStream.writeUTF(new String(SBPMessageFormat.creteErrorRequest(e.getMessage())));
