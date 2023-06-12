@@ -1,11 +1,12 @@
 package eapli.base.board.domain;
 
 import eapli.base.boardhistory.domain.BoardHistory;
+import eapli.base.boardhistory.domain.Task;
 import eapli.base.exceptions.AlreadyDeactivatedException;
+import eapli.base.exceptions.CellOccupiedException;
 import eapli.base.postitmanager.domain.PostIt;
 import eapli.framework.domain.model.AggregateRoot;
 
-import javax.management.Notification;
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
@@ -124,7 +125,11 @@ public class Board implements AggregateRoot<BoardTitle> {
         this.boardHistory = boardHistory;
     }
 
-    public void addNotification(Notification notification){
+    public void addNotification(eapli.base.board.domain.Notification notification){
         this.notificationList.add(notification);
+    }
+
+    public void addTaskToHistory(Task task){
+        this.boardHistory.addTask(task);
     }
 }
