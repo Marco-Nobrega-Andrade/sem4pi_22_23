@@ -23,7 +23,7 @@ public class Board implements AggregateRoot<BoardTitle> {
     private BoardHistory boardHistory;
 
     @ElementCollection
-    private List<Notification> notificationList;
+    private List<eapli.base.board.domain.Notification> notificationList;
 
     protected Board(BoardTitle boardTiTle, List<Cell> cellList){
         if (boardTiTle == null || cellList.isEmpty()) {
