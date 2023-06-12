@@ -77,7 +77,17 @@ public class JpaBoardRepository extends JpaAutoTxRepository<Board, BoardTitle, B
 
     @Override
     public List<Cell> getAllCellsFromABoard(Board board) {
-        return createQuery("SELECT DISTINCT c FROM Cell c WHERE c IN (SELECT cl FROM board b  JOIN b.cellList cl WHERE b = :board)", Cell.class)
+        return createQuery("SELECT DISTINCT c FROM Cell c WHERE c IN (SELECT cl FROM Board b  JOIN b.cellList cl WHERE b = :board)", Cell.class)
                 .setParameter("board", board).getResultList();
+    }
+
+    @Override
+    public List<Board> listAllBoardsIParticipateAndCanRead(SystemUser user) {
+        return createQuery("SELECT DISTINCT b FROM Board b WHERE b IN " +
+                "(SELECT bl FROM BoardOwner bo JOIN bo.boardList bl" +
+                " WHERE bo = (SELECT p.boardOwner FROM Person p WHERE p.systemUser = :systemUser)) OR" +
+                " b IN (SELECT DISTINCT bp.board FROM BoardParticipant bp WHERE bp IN " +
+                "(SELECT bpl FROM Person p JOIN p.boardParticipantList bpl WHERE p.systemUser = :systemUser))", Board.class)
+                .setParameter("systemUser", user).getResultList();
     }
 }

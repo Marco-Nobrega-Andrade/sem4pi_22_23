@@ -3,6 +3,7 @@ package eapli.base.sharedBoard;
 import eapli.base.board.dto.BoardDTOWithTitle;
 import eapli.base.board.dto.CellDTOWithColumnRowContent;
 
+import javax.print.DocFlavor;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,7 @@ public class SBPMessageFormat {
     public static final int AUTH_CODE = 4;
 
     public static final int LIST_BOARD_I_OWN_SEND = 5;
-    public static final int LIST_BOARD_I_OWN_RCV = 6;
+    public static final int LIST_BOARD = 6;
 
     public static final int LIST_BOARD_I_PARTICIPATE_SEND = 11;
     public static final int NUMBER_OF_CELLS_REQUEST_SEND = 13;
@@ -26,7 +27,7 @@ public class SBPMessageFormat {
     public static final int BOARD_INFO_CODE = 9;
 
     public static final int VIEW_IN_REAL_TIME_CODE = 10;
-
+    public static final int LIST_ALL_BOARDS_I_PARTICIPATE_AND_CAN_READ = 16;
 
     public static final int SHARE_BOARD_CODE = 7;
 
@@ -64,13 +65,16 @@ public class SBPMessageFormat {
     public static byte[] createListBoardReceive(List<BoardDTOWithTitle> boardDTOList){
         StringBuilder strBuilder = getBoardData(boardDTOList);
         if(strBuilder.length() == 0){
-            return encodeRequest(LIST_BOARD_I_OWN_RCV, "");
+            return encodeRequest(LIST_BOARD, "");
         }
-        return encodeRequest(LIST_BOARD_I_OWN_RCV, strBuilder.toString());
+        return encodeRequest(LIST_BOARD, strBuilder.toString());
     }
 
     public static byte[] createListBoardIParticipateRequestSend(){
         return encodeRequest(LIST_BOARD_I_PARTICIPATE_SEND, "");
+    }
+    public static byte[] createListAllBoardsIParticipateAndCanRead(){
+        return encodeRequest(LIST_ALL_BOARDS_I_PARTICIPATE_AND_CAN_READ,"");
     }
 
     public static byte[] createListBoardIParticipateRequestReceive(List<BoardDTOWithTitle> boardDTOList){
@@ -146,7 +150,9 @@ public class SBPMessageFormat {
         request[D_LENGTH1_OFFSET] = (byte) length1;
         request[D_LENGTH2_OFFSET] = (byte) length2;
 
-        System.arraycopy(dataBytes, 0, request, 4, data.getBytes().length);
+        for(int i = 0; i<data.getBytes().length; i++){
+            request[DATA_OFFSET+i] = dataBytes[i];
+        }
 
         return request;
     }

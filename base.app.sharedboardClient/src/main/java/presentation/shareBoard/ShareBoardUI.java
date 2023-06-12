@@ -27,7 +27,7 @@ public class ShareBoardUI extends AbstractUI {
             dos.writeUTF(new String(SBPMessageFormat.createListBoardIOwnRequestSend()));
             dis = new DataInputStream(socket.getInputStream());
             String message = dis.readUTF();
-            if(SBPMessageFormat.decodeFormat(message.getBytes())[SBPMessageFormat.CODE_OFFSET] == SBPMessageFormat.LIST_BOARD_I_OWN_RCV){
+            if(SBPMessageFormat.decodeFormat(message.getBytes())[SBPMessageFormat.CODE_OFFSET] == SBPMessageFormat.LIST_BOARD){
                 List<String> boardList = SBPMessageFormat.decodeParam(message.getBytes());
                 if(!boardList.isEmpty()){
                     SelectWidget<String> selected = new SelectWidget<>("Select the board.", boardList, new StringPrinter());

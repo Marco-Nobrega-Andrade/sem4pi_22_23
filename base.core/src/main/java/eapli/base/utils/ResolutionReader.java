@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.*;
 
 public class ResolutionReader {
-    public Map<Integer,List<String>> importAnswers(String fileName){
+    public static Map<Integer,List<String>> importAnswers(String fileName){
         Map<Integer,List<String>> answers = new HashMap<>();
 
         String fileLine;

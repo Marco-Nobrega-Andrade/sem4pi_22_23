@@ -35,6 +35,13 @@ public class ListBoardsService {
      * Gets the authenticated user
      * @return the authenticated user
      */
+
+    public List<BoardDTOWithTitle> listAllBoardsIParticipateAndCanRead() {
+        SystemUser user = getSystemUser();
+        List<Board> boardList = boardRepository.listAllBoardsIParticipateAndCanRead(user);
+        return getBoardDTOList(boardList);
+    }
+
     private SystemUser getSystemUser(){
         if (AuthzRegistry.authorizationService().session().isPresent()) {
             return AuthzRegistry.authorizationService().session().get().authenticatedUser();

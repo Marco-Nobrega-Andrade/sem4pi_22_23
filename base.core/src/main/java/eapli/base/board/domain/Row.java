@@ -41,6 +41,7 @@ class Row implements Comparable<Row>, ValueObject {
     }
 
     public String returnRowTitleString(){
+        if (rowTitle == null)return "";
         return rowTitle.toString();
     }
 

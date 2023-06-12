@@ -8,21 +8,18 @@ function refreshVotes() {
         var vBoard=document.getElementById("table");
         
         request.onload = function() {
-            vBoard.remove();
             vBoard.innerHTML = this.responseText;
             vBoard.style.color="black";
             setTimeout(refreshVotes, 2000);
             };
             
         request.ontimeout = function() {
-            vBoard.remove();
             vBoard.innerHTML = "Server timeout, still trying ...";
             vBoard.style.color="red";
             setTimeout(refreshVotes, 100); 
         };
         
         request.onerror = function() {
-            vBoard.remove();
             vBoard.innerHTML = "No server reply, still trying ...";
             vBoard.style.color="red";
             setTimeout(refreshVotes, 5000); 
