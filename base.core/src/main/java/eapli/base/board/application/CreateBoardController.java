@@ -2,6 +2,8 @@ package eapli.base.board.application;
 
 import eapli.base.board.application.services.CreateBoardService;
 
+import java.io.IOException;
+
 public class CreateBoardController {
 
     private final CreateBoardService createBoardService = new CreateBoardService();

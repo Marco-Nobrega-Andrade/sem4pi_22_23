@@ -4,6 +4,8 @@ import eapli.base.board.application.CreateBoardController;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 
+import java.io.IOException;
+
 public class CreateBoardUI extends AbstractUI {
     private final CreateBoardController createBoardController = new CreateBoardController();
     @Override
