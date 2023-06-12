@@ -13,6 +13,10 @@ public class PostItKey implements Comparable<PostItKey>, ValueObject {
         this.postItVersion = postItVersion;
     }
 
+    protected PostItKey(){
+        //ORM use only
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
