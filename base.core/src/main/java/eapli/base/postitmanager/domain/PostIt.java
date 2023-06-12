@@ -1,5 +1,7 @@
 package eapli.base.postitmanager.domain;
 
+import eapli.base.exceptions.NegativeParameterException;
+import eapli.base.exceptions.ZeroParameterException;
 import eapli.framework.domain.model.AggregateRoot;
 
 import javax.persistence.EmbeddedId;
@@ -7,15 +9,15 @@ import javax.persistence.Entity;
 import java.util.Objects;
 
 @Entity
-public class PostIt implements AggregateRoot<PostItIdentifier> {
+public class PostIt implements AggregateRoot<PostItKey> {
     @EmbeddedId
-    private PostItIdentifier postItIdentifier;
+    private PostItKey postItKey;
     private Content content;
-    protected PostIt(PostItIdentifier postItIdentifier, Content content) {
-        if (postItIdentifier == null || content == null) {
+    protected PostIt(PostItKey postItKey, Content content) throws ZeroParameterException, NegativeParameterException {
+        if (postItKey == null || content == null) {
             throw new IllegalArgumentException();
         }
-        this.postItIdentifier = postItIdentifier;
+        this.postItKey = postItKey;
         this.content = content;
     }
     protected PostIt() {
@@ -26,11 +28,11 @@ public class PostIt implements AggregateRoot<PostItIdentifier> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PostIt postIt = (PostIt) o;
-        return Objects.equals(postItIdentifier, postIt.postItIdentifier);
+        return Objects.equals(postItKey, postIt.postItKey);
     }
     @Override
     public int hashCode() {
-        return Objects.hash(postItIdentifier);
+        return Objects.hash(postItKey);
     }
     @Override
     public boolean sameAs(Object other) {
@@ -40,13 +42,18 @@ public class PostIt implements AggregateRoot<PostItIdentifier> {
 
         final PostIt that = (PostIt) other;
 
-        return this.postItIdentifier.equals(that.postItIdentifier);
+        return this.postItKey.equals(that.postItKey);
     }
     @Override
-    public PostItIdentifier identity() {
-        return postItIdentifier;
+    public PostItKey identity() {
+        return postItKey;
     }
     public String returnContentString(){
         return content.toString();
     }
+
+    public void updateVersion(){
+        this.postItKey.updateVersion();
+    }
+
 }

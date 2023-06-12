@@ -5,6 +5,7 @@ import eapli.base.exams.repositories.ExamRepository;
 import eapli.base.exams.repositories.ExamResolutionRepository;
 import eapli.base.exceptions.InvalidIdException;
 import eapli.base.exceptions.NegativeParameterException;
+import eapli.base.exceptions.ParameterNullBlankException;
 import eapli.base.grammarutils.ExamResolutionVisitor;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.usermanagement.domain.Student;
@@ -20,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 public class TakeExamService {
-    public List<String> takeExam(String examId, String filePath) throws NegativeParameterException, InvalidIdException {
+    public List<String> takeExam(String examId, String filePath) throws NegativeParameterException, InvalidIdException, ParameterNullBlankException {
         ExamRepository examRepo = PersistenceContext.repositories().examRepository();
         ExamResolutionRepository examResRepo = PersistenceContext.repositories().examResolutionRepository();
         StudentRepository studentRepo = PersistenceContext.repositories().studentRepository();
@@ -51,7 +52,7 @@ public class TakeExamService {
 
 
             Long id = examResRepo.findMaxId();
-            ExamResolution newExamResolution = new ExamResolution(id,grade);
+            ExamResolution newExamResolution = new ExamResolution(id,grade,student,exam);
             examResRepo.save(newExamResolution);
 
             student.addExamResolution(newExamResolution);
