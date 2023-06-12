@@ -1,10 +1,11 @@
 package eapli.base.board.domain;
 
+import eapli.base.boardhistory.domain.BoardHistory;
 import eapli.base.exceptions.AlreadyDeactivatedException;
-import eapli.base.exceptions.CellOccupiedException;
 import eapli.base.postitmanager.domain.PostIt;
 import eapli.framework.domain.model.AggregateRoot;
 
+import javax.management.Notification;
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
@@ -16,6 +17,10 @@ public class Board implements AggregateRoot<BoardTitle> {
     private List<Cell> cellList;
 
     private BoardStatus boardStatus;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private BoardHistory boardHistory;
+
     @ElementCollection
     private List<Notification> notificationList;
 
@@ -113,6 +118,10 @@ public class Board implements AggregateRoot<BoardTitle> {
             }
         }
         return maxRow;
+    }
+
+    public void addBoardHistory(BoardHistory boardHistory){
+        this.boardHistory = boardHistory;
     }
 
     public void addNotification(Notification notification){
