@@ -53,4 +53,9 @@ public class Task{
         this.boardParticipant = boardParticipant;
         this.postIt = postIt;
     }
+
+    public String returnTaskIdString(){
+        return taskId.returnTaskIdString();
+    }
+
 }

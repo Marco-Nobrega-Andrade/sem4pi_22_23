@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class TaskId implements Comparable<TaskId>, ValueObject {
 
-    private long task_Id;
+    private Long task_Id;
 
     protected TaskId(long task_Id){
         if(task_Id<=0){
@@ -35,6 +35,10 @@ public class TaskId implements Comparable<TaskId>, ValueObject {
     @Override
     public int compareTo(TaskId o) {
         return (int)(task_Id-o.task_Id);
+    }
+
+    public String returnTaskIdString(){
+        return task_Id.toString();
     }
 }
 
