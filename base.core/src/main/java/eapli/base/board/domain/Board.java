@@ -2,10 +2,10 @@ package eapli.base.board.domain;
 
 import eapli.base.boardhistory.domain.BoardHistory;
 import eapli.base.exceptions.AlreadyDeactivatedException;
+import eapli.base.exceptions.CellOccupiedException;
 import eapli.base.postitmanager.domain.PostIt;
 import eapli.framework.domain.model.AggregateRoot;
 
-import javax.management.Notification;
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
@@ -22,7 +22,7 @@ public class Board implements AggregateRoot<BoardTitle> {
     private BoardHistory boardHistory;
 
     @ElementCollection
-    private List<Notification> notificationList;
+    private List<eapli.base.board.domain.Notification> notificationList;
 
     protected Board(BoardTitle boardTiTle, List<Cell> cellList){
         if (boardTiTle == null || cellList.isEmpty()) {
