@@ -80,9 +80,9 @@ public class ViewInRealTimeUI extends AbstractUI {
                                 System.out.println(SBPMessageFormat.decodeParam(boardInfo.getBytes()));
                             }
                         }
-                    }else{
-                        System.out.println("Currently you are not participating in any board");
                     }
+                }else{
+                    System.out.println("Currently you are not participating in any board");
                 }
             }
         } catch (IOException e) {
