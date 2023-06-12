@@ -32,6 +32,8 @@ import eapli.base.app.common.console.presentation.meeting.ListAllInvitationsFrom
 import eapli.base.app.common.console.presentation.meeting.ScheduleMeetingAction;
 import eapli.base.app.user.console.presentation.enrollment.RequestEnrollmentAction;
 import eapli.base.app.user.console.presentation.exams.ListFutureExamsAction;
+import eapli.base.app.user.console.presentation.exams.TakeExamAction;
+import eapli.base.app.user.console.presentation.exams.TakeExamUI;
 import eapli.base.app.user.console.presentation.foraamtiveexam.TakeFormativeExamAction;
 import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.framework.actions.Actions;
@@ -78,6 +80,9 @@ class MainMenu extends ClientUserBaseUI {
     // EXAM MENU
 
     private static final int LIST_FUTURE_EXAMS_OPTION = 1;
+
+    private static final int TAKE_EXAM_OPTION = 2;
+
     private final AuthorizationService authz =
             AuthzRegistry.authorizationService();
 
@@ -162,6 +167,7 @@ class MainMenu extends ClientUserBaseUI {
         final Menu examMenu = new Menu("Exam  >");
 
         examMenu.addItem(LIST_FUTURE_EXAMS_OPTION, "List Future Exams", new ListFutureExamsAction());
+        examMenu.addItem(TAKE_EXAM_OPTION,"Take an exam", new TakeExamAction());
         examMenu.addItem(EXIT_OPTION, "Return", Actions.SUCCESS);
         return examMenu;
     }
