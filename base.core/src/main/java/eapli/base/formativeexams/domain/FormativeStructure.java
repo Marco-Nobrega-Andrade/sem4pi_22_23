@@ -38,4 +38,8 @@ public class FormativeStructure implements ValueObject {
         return Objects.hash(formative_Structure);
     }
 
+    public String returnSpecification(){
+        return this.formative_Structure;
+    }
+
 }

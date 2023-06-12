@@ -29,6 +29,8 @@ public class SBPMessageFormat {
     public static final int VIEW_IN_REAL_TIME_CODE = 10;
     public static final int LIST_ALL_BOARDS_I_PARTICIPATE_AND_CAN_READ = 16;
 
+    public static final int HISTORY_OF_UPDATES_CODE = 17;
+
     public static final int SHARE_BOARD_CODE = 7;
 
     public static final int ARCHIVE_BOARD_CODE = 8;
@@ -136,6 +138,12 @@ public class SBPMessageFormat {
     public static byte[] createShareBoardRequest(String boardTitle, String email, String permission){
         return encodeRequest(SHARE_BOARD_CODE, boardTitle + ","+ email + "," + permission);
     }
+
+    public static byte[] createHistoryOfUpdatesRequest(String boardTitle){
+        return encodeRequest(HISTORY_OF_UPDATES_CODE, boardTitle);
+    }
+
+
     public static byte[] encodeRequest(int code, String data){
         //Data values
         byte[] dataBytes = data.getBytes();

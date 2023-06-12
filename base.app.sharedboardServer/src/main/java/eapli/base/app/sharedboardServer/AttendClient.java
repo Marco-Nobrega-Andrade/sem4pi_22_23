@@ -143,6 +143,15 @@ public class AttendClient implements Runnable{
                         List<BoardDTOWithTitle> listBoardDTO = new ListAllBoardsIParticipateAndCanReadController().listAllBoardsIParticipateAndCanRead();
                         outputStream.writeUTF(new String(SBPMessageFormat.createListBoardReceive(listBoardDTO)));
                         break;
+                    case SBPMessageFormat.HISTORY_OF_UPDATES_CODE:
+                        List<String> boardHistoryParam = SBPMessageFormat.decodeParam(message.getBytes());
+                        try {
+                            //new HistoryOfUpdatesController().historyOfUpdates(boardHistoryParam.get(0));
+                            outputStream.writeUTF(new String(SBPMessageFormat.createAcknowledgeRequest()));
+                        }catch (Exception e){
+                            outputStream.writeUTF(new String(SBPMessageFormat.creteErrorRequest(e.getMessage())));
+                        }
+                        break;
                 }
             }while (arrayFormat[SBPMessageFormat.CODE_OFFSET] != SBPMessageFormat.DISCONN_CODE) ;
         } catch (IOException e) {
