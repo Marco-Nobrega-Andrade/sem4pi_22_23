@@ -28,4 +28,9 @@ public class InMemoryExamRepository extends InMemoryDomainRepository<Exam, ExamT
     public List<Exam> findTeacherExams(Teacher teacher) {
         return null;
     }
+
+    @Override
+    public List<Exam> findAllStudentAvailableExamsOfGivenCourse(Course course, Date date) {
+        return null;
+    }
 }

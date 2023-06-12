@@ -44,4 +44,14 @@ public class JpaExamRepository extends JpaAutoTxRepository<Exam, ExamTitle, Exam
         query.setParameter("teacher", teacher);
         return query.getResultList();
     }
+
+    @Override
+    public List<Exam> findAllStudentAvailableExamsOfGivenCourse(Course course, Date date) {
+        TypedQuery<Exam> query = createQuery("SELECT e FROM Course c JOIN c.examsList e WHERE c.courseId =: course.courseId " +
+                "AND e.dateInterval.initialDate <= :date " +
+                "AND e.dateInterval.finalDate > :date ", Exam.class);
+        query.setParameter("course", course);
+        query.setParameter("date", date);
+        return query.getResultList();
+    }
 }
