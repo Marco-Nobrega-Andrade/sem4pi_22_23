@@ -38,4 +38,6 @@ public interface BoardRepository extends DomainRepository<BoardTitle, Board> {
     List<Board> findAllBoardsIParticipateWithWritePermission(SystemUser user);
 
     List<Cell> getAllCellsFromABoard(Board board);
+
+    List<Board> listAllBoardsIParticipateAndCanRead(SystemUser user);
 }
