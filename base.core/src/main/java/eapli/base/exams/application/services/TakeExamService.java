@@ -52,7 +52,7 @@ public class TakeExamService {
 
 
             Long id = examResRepo.findMaxId();
-            ExamResolution newExamResolution = new ExamResolution(id,grade,student,exam);
+            ExamResolution newExamResolution = new ExamResolution(id+1,grade,student,exam);
             examResRepo.save(newExamResolution);
 
             student.addExamResolution(newExamResolution);
