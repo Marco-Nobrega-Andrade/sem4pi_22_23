@@ -4,6 +4,7 @@ import eapli.base.board.dto.BoardDTOWithTitle;
 import eapli.base.board.dto.CellDTOWithColumnRowContent;
 
 import javax.print.DocFlavor;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -146,7 +147,7 @@ public class SBPMessageFormat {
 
     public static byte[] encodeRequest(int code, String data){
         //Data values
-        byte[] dataBytes = data.getBytes();
+        byte[] dataBytes = data.getBytes(StandardCharsets.UTF_8);
 
         byte[] request = new byte[DATA_OFFSET+dataBytes.length];
 
@@ -184,20 +185,9 @@ public class SBPMessageFormat {
     }
 
     public static List<String> decodeParam(byte[] request){
-        StringBuilder stringBuilder = new StringBuilder();
-        List<String> paramList = new ArrayList<>();
-        byte comma = (byte) ',';
-        for(int i=DATA_OFFSET; i<request.length; i++){
-            if(request[i] == comma){
-                paramList.add(stringBuilder.toString());
-                stringBuilder = new StringBuilder();
-            }else{
-                stringBuilder.append(new String(new byte[]{request[i]}) );
-            }
-        }
-        if(!stringBuilder.toString().equals("")){
-            paramList.add(stringBuilder.toString());
-        }
+        String decodedString = new String(request, StandardCharsets.UTF_8);
+        decodedString = decodedString.substring(4);
+        List<String> paramList = List.of(decodedString.split(","));
         return paramList;
     }
 
