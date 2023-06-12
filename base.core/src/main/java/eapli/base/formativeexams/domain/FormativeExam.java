@@ -4,6 +4,8 @@ import eapli.framework.domain.model.AggregateRoot;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import java.util.Arrays;
+import java.util.List;
 
 @Entity
 public class FormativeExam implements AggregateRoot<FormativeExamID> {
@@ -52,5 +54,25 @@ public class FormativeExam implements AggregateRoot<FormativeExamID> {
 
     public String returnFormativeExamId(){
         return formativeExamID.toString();
+    }
+
+    public String returnFullFormativeExamSpecificationString(){
+        return formativeStructure.returnSpecification();
+    }
+
+    public String returnStudentViewOfFormativeExamSpecification(){
+
+        StringBuilder stringBuilder = new StringBuilder();
+
+        List<String> specificationLines = Arrays.asList(this.formativeStructure.returnSpecification().split("\n"));
+
+        for (String str : specificationLines){
+            if (!str.contains("#Solution:") && !str.contains("#Feedback:")){
+                stringBuilder.append(str);
+                stringBuilder.append("\n");
+            }
+        }
+
+        return stringBuilder.toString();
     }
 }

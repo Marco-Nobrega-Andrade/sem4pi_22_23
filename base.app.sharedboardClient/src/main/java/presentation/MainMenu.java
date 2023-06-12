@@ -36,6 +36,7 @@ import presentation.archiveBoard.ArchiveBoardAction;
 import presentation.postIt.CreatePostItAction;
 import presentation.shareBoard.ShareBoardAppAction;
 import presentation.shareBoard.ShareBoardUI;
+import presentation.viewInRealTime.ViewInRealTimeAction;
 
 import java.net.Socket;
 
@@ -58,6 +59,9 @@ public class MainMenu extends AbstractUI {
     private static final int ARCHIVE_BOARD_OPTION = 2;
 
     private static final int CREATE_A_POST_IT = 3;
+
+    private static final int VIEW_IN_REAL_TIME = 4;
+
 
     // private static final int COMMTEST_OPTION = 1;
 
@@ -99,6 +103,8 @@ public class MainMenu extends AbstractUI {
         mainMenu.addItem(SHARE_BOARD_OPTION, "Share Board", new ShareBoardAppAction(socket));
         mainMenu.addItem(ARCHIVE_BOARD_OPTION, "Archive Board", new ArchiveBoardAction(socket));
         mainMenu.addItem(CREATE_A_POST_IT, "Create a Post-it", new CreatePostItAction(socket));
+        mainMenu.addItem(VIEW_IN_REAL_TIME, "View Board In Real Time", new ViewInRealTimeAction(socket));
+
         mainMenu.addItem(EXIT_OPTION, "Exit", new ExitWithMessageAction("Bye, Bye"));
         return mainMenu;
     }
