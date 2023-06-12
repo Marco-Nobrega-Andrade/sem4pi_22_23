@@ -1,6 +1,7 @@
 package eapli.base.postitmanager.application;
 
 import eapli.base.board.domain.Board;
+import eapli.base.board.domain.Notification;
 import eapli.base.board.repositories.BoardRepository;
 import eapli.base.boardhistory.domain.BoardHistory;
 import eapli.base.boardhistory.domain.BoardHistoryBuilder;
@@ -8,13 +9,16 @@ import eapli.base.boardhistory.domain.OperationValue;
 import eapli.base.boardhistory.repositories.BoardHistoryRepository;
 import eapli.base.boardparticipantmanagement.domain.BoardParticipant;
 import eapli.base.boardparticipantmanagement.repositories.BoardParticipantRepository;
+import eapli.base.courseclasses.domain.Date;
+import eapli.base.exceptions.CellOccupiedException;
+import eapli.base.exceptions.NegativeParameterException;
+import eapli.base.exceptions.ZeroParameterException;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.postitmanager.domain.PostIt;
 import eapli.base.postitmanager.domain.PostItFactory;
 import eapli.base.postitmanager.repositories.PostItRepository;
 import eapli.base.usermanagement.domain.BoardOwner;
 import eapli.base.usermanagement.domain.Person;
-import eapli.base.usermanagement.repositories.BoardOwnerRepository;
 import eapli.base.usermanagement.repositories.PersonRepository;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
@@ -25,20 +29,18 @@ public class CreatePostItService {
     BoardRepository boardRepository = PersistenceContext.repositories().boardRepository();
     BoardHistoryRepository boardHistoryRepository = PersistenceContext.repositories().boardHistoryRepository();
     PersonRepository personRepository = PersistenceContext.repositories().personRepository();
-    BoardOwnerRepository boardOwnerRepository = PersistenceContext.repositories().boardOwnerRepository();
     BoardParticipantRepository boardParticipantRepository = PersistenceContext.repositories().boardParticipantRepository();
 
 
-    public boolean createPostIt(String boardTittle, String content, int column, int row) {
+    public boolean createPostIt(String boardTittle, String content, int column, int row) throws CellOccupiedException, ZeroParameterException, NegativeParameterException {
 
-        //create postIt and save it
+        //create postIt
         PostItFactory postItFactory = new PostItFactory();
         PostIt postIt = postItFactory.build(content,postItRepository.count()+1);
-        postItRepository.save(postIt);
+
         //get the board and add the postIt to it
         Board board = boardRepository.findBoardByTitle(boardTittle);
         board.addPostIt(postIt, column, row);
-        boardRepository.save(board);
 
         //get person with session
         AuthorizationService authz = AuthzRegistry.authorizationService();
@@ -56,16 +58,25 @@ public class CreatePostItService {
         if (person.isBoardOwner(board)) {
             BoardOwner boardOwner = personRepository.findBoardOwnerByPerson(person);
             BoardHistory boardHistory = boardHistoryBuilder.withBoardHistoryId(boardHistoryRepository.count()+1)
-                    .withTask(boardHistoryRepository.getLastTaskId()+1, OperationValue.CREATE, boardOwner)
+                    .withTask(boardHistoryRepository.getLastTaskId()+1, OperationValue.ADD, boardOwner, postIt)
                     .build();
+
+            board.addNotification(new Notification("A new post it was added in "+board.returnBoardTitleString()
+                    +" on column "+column+" and row "+row+ "by "+person.returnFullNameString(),new Date(new java.util.Date())));
             boardHistoryRepository.save(boardHistory);
+            boardRepository.save(board);
+            postItRepository.save(postIt);
         }
         else if (person.isBoardParticipant(board)) {
-            BoardParticipant boardParticipant =boardParticipantRepository.findBoardParticipantByBoard(board);
-            BoardHistory boardHistory = boardHistoryBuilder.withBoardHistoryId(boardHistoryRepository.count()+1)
-                    .withTask(boardHistoryRepository.getLastTaskId()+1, OperationValue.CREATE, boardParticipant)
-                    .build();
+            BoardParticipant boardParticipant =boardParticipantRepository.findBoardParticipantByPerson(person);
+            boardHistoryBuilder = boardHistoryBuilder.withBoardHistoryId(boardHistoryRepository.count()+1)
+                    .withTask(boardHistoryRepository.getLastTaskId()+1, OperationValue.ADD, boardParticipant, postIt);
+            BoardHistory boardHistory=boardHistoryBuilder.build();
+            board.addNotification(new Notification("A new post it was added in "+board.returnBoardTitleString()
+                    +" on column "+column+" and row "+row+ "by "+person.returnFullNameString(),new Date(new java.util.Date())));
             boardHistoryRepository.save(boardHistory);
+            boardRepository.save(board);
+            postItRepository.save(postIt);
         }
 
         return true;
