@@ -4,8 +4,10 @@ import eapli.base.exceptions.NegativeParameterException;
 import eapli.base.exceptions.ZeroParameterException;
 import eapli.framework.domain.model.ValueObject;
 
+import javax.persistence.Embeddable;
 import java.util.Objects;
 
+@Embeddable
 public class PostItIdentifier implements ValueObject {
         private long postItId;
 

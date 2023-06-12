@@ -61,8 +61,8 @@ public class CreatePostItService {
 
             board.addNotification(new Notification("A new post it was added in "+board.returnBoardTitleString()
                     +" on column "+column+" and row "+row+ "by "+person.returnFullNameString(),new Date(new java.util.Date())));
-            boardRepository.save(board);
             postItRepository.save(postIt);
+            boardRepository.save(board);
         }
         else if (person.isBoardParticipant(board)) {
             BoardParticipant boardParticipant =boardParticipantRepository.findBoardParticipantByPerson(person);
@@ -70,8 +70,8 @@ public class CreatePostItService {
                     withTaskId(boardHistoryRepository.getLastTaskId()+1).withOperation(OperationValue.ADD).build());
             board.addNotification(new Notification("A new post it was added in "+board.returnBoardTitleString()
                     +" on column "+column+" and row "+row+ "by "+person.returnFullNameString(),new Date(new java.util.Date())));
-            boardRepository.save(board);
             postItRepository.save(postIt);
+            boardRepository.save(board);
         }
 
         return true;

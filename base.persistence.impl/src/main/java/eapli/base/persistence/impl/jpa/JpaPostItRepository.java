@@ -11,9 +11,9 @@ import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 public class JpaPostItRepository extends JpaAutoTxRepository<PostIt, PostItKey, PostItKey> implements PostItRepository {
     public JpaPostItRepository(final String puname) {
         super(puname, Application.settings().getExtendedPersistenceProperties(),
-                "postItIdentifier");
+                "postItKey");
     }
     public JpaPostItRepository(final TransactionalContext autoTx) {
-        super(autoTx, "postItIdentifier");
+        super(autoTx, "postItKey");
     }
 }
