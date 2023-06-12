@@ -1,15 +1,15 @@
 <html><head><title>View Board</title>
-    <style>
-        table, th, td {
-            border:1px solid black;
-        }
-    </style>
 <script src="rcomp-ajax.js"></script>
+<link rel="stylesheet" href="style.css">
 </head>
-<body bgcolor=#C0C0C0 onload="refreshVotes()"><h1>Board In Real Time</h1>
-<hr>
-<div id="table">
+<body onload="refreshTable()"><h1>Board In Real Time</h1>
+<style>
+    table{
+        display: inline-table;
+    }
+</style>
+<div id="table" class="table">
 Please wait, loading board...
 </div>
-<hr>
+
 </body></html>
