@@ -57,12 +57,14 @@ public class Cell implements Comparable<Cell>{
     public void addPostIt(PostIt postIt) {
         this.postIt = postIt;
     }
-
     public boolean isColumn(int column) {
         return this.column.returnColumnIdentifierString().equals(Integer.toString(column));
     }
-
     public boolean isRow(int row) {
         return this.row.returnRowIdentifierString().equals(Integer.toString(row));
     }
+    public boolean hasPostIt() {
+        return this.postIt != null;
+    }
+
 }

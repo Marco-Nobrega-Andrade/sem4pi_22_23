@@ -10,6 +10,8 @@ import java.util.Objects;
 public class PostIt implements AggregateRoot<PostItIdentifier> {
     @EmbeddedId
     private PostItIdentifier postItIdentifier;
+
+    private Version version;
     private Content content;
     protected PostIt(PostItIdentifier postItIdentifier, Content content) {
         if (postItIdentifier == null || content == null) {
