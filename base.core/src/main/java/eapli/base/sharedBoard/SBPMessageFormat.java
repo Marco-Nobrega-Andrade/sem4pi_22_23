@@ -3,6 +3,7 @@ package eapli.base.sharedBoard;
 import eapli.base.board.dto.BoardDTOWithTitle;
 import eapli.base.board.dto.CellDTOWithColumnRowContent;
 
+import javax.print.DocFlavor;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class SBPMessageFormat {
     public static final int BOARD_INFO_CODE = 9;
 
     public static final int VIEW_IN_REAL_TIME_CODE = 10;
-
+    public static final int LIST_ALL_BOARDS_I_PARTICIPATE_AND_CAN_READ = 16;
 
     public static final int SHARE_BOARD_CODE = 7;
 
@@ -71,6 +72,9 @@ public class SBPMessageFormat {
 
     public static byte[] createListBoardIParticipateRequestSend(){
         return encodeRequest(LIST_BOARD_I_PARTICIPATE_SEND, "");
+    }
+    public static byte[] createListAllBoardsIParticipateAndCanRead(){
+        return encodeRequest(LIST_ALL_BOARDS_I_PARTICIPATE_AND_CAN_READ,"");
     }
 
     public static byte[] createListBoardIParticipateRequestReceive(List<BoardDTOWithTitle> boardDTOList){
