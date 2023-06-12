@@ -32,6 +32,7 @@ import eapli.base.app.common.console.presentation.meeting.ListAllInvitationsFrom
 import eapli.base.app.common.console.presentation.meeting.ScheduleMeetingAction;
 import eapli.base.app.user.console.presentation.enrollment.RequestEnrollmentAction;
 import eapli.base.app.user.console.presentation.exams.ListFutureExamsAction;
+import eapli.base.app.user.console.presentation.foraamtiveexam.TakeFormativeExamAction;
 import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
@@ -66,6 +67,8 @@ class MainMenu extends ClientUserBaseUI {
 
     private static final int BOARD_OPTION = 5;
 
+    private static final int FORMATIVE_EXAM_OPTION = 6;
+
 
     // COURSE MENU
     private static final int LIST_COURSE_OPTION = 1;
@@ -88,6 +91,10 @@ class MainMenu extends ClientUserBaseUI {
 
     //BOARD MENU
     private static final int CREATE_BOARD_OPTION = 1;
+
+    //FORMATIVE EXAM
+
+    private static final int TAKE_FORMATIVE_EXAM_OPTION = 1;
 
     @Override
     public boolean show() {
@@ -119,10 +126,11 @@ class MainMenu extends ClientUserBaseUI {
             mainMenu.addSubMenu(EXAM_OPTION, examMenu);
             final Menu meetingMenu = buildMeetingMenu();
             mainMenu.addSubMenu(MEETING_OPTION, meetingMenu);
+            final Menu boardMenu = builBoardMenu();
+            mainMenu.addSubMenu(BOARD_OPTION, boardMenu);
+            final Menu formativeExamMenu = buildFormativeExamMenu();
+            mainMenu.addSubMenu(FORMATIVE_EXAM_OPTION, formativeExamMenu);
         }
-
-        final Menu boardMenu = builBoardMenu();
-        mainMenu.addSubMenu(BOARD_OPTION, boardMenu);
 
         mainMenu.addItem(EXIT_OPTION, "Exit", new ExitWithMessageAction("Bye, Bye"));
 
@@ -165,5 +173,14 @@ class MainMenu extends ClientUserBaseUI {
         boardMenu.addItem(EXIT_OPTION, "Return", Actions.SUCCESS);
 
         return boardMenu;
+    }
+
+    private Menu buildFormativeExamMenu(){
+        final Menu formativeExamMenu = new Menu("Formative Exam  >");
+
+        formativeExamMenu.addItem(TAKE_FORMATIVE_EXAM_OPTION, "Take Formative Exam", new TakeFormativeExamAction());
+        formativeExamMenu.addItem(EXIT_OPTION, "Return", Actions.SUCCESS);
+
+        return formativeExamMenu;
     }
 }
