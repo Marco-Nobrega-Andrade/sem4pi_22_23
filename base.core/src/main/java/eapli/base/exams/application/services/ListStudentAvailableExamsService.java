@@ -35,7 +35,7 @@ public class ListStudentAvailableExamsService {
         List<ExamDTOWithDatesExamTitleCourseId> dtoList = new ArrayList<>();
 
         for (Course course : courseList){
-            List<Exam> courseExamList = examRepo.findAllStudentAvailableExamsOfGivenCourse(course,currDate);
+            List<Exam> courseExamList = course.findAllDoableExams(currDate);
             for (Exam exam : courseExamList){
                 if (!examResRepo.containsOfExamAndStudent(exam,student)) {
                     dtoList.add(ExamDTOWithDatesExamTitleCourseIdMapper.toDto(exam,course));
