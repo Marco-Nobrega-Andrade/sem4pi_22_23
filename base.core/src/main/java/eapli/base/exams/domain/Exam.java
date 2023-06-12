@@ -4,10 +4,7 @@ import eapli.base.usermanagement.domain.Teacher;
 import eapli.framework.domain.model.AggregateRoot;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 public class Exam implements AggregateRoot<ExamTitle>  {
@@ -119,5 +116,9 @@ public class Exam implements AggregateRoot<ExamTitle>  {
 
     public boolean addExamResolution(ExamResolution newExamResolution){
         return examResolutions.add(newExamResolution);
+    }
+
+    public boolean canBeTaken(Date currDate) {
+        return currDate.after(dateInterval.initialDate()) && currDate.before(dateInterval.finalDate());
     }
 }

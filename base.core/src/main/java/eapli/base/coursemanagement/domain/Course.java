@@ -200,4 +200,14 @@ public class Course implements AggregateRoot<CourseIdentifier> {
     public boolean hasTeacherInList(List<Teacher> teacherList) {
         return this.teachersList.equals(teacherList);
     }
+
+    public List<Exam> findAllDoableExams(Date currDate) {
+        List<Exam> result = new ArrayList<>();
+        for (Exam ex : examsList){
+            if (ex.canBeTaken(currDate)){
+                result.add(ex);
+            }
+        }
+        return result;
+    }
 }

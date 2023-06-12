@@ -62,4 +62,12 @@ public class DateInterval implements ValueObject {
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         return dateFormat.format(this.finalDate);
     }
+
+    public Date initialDate() {
+        return this.initialDate;
+    }
+
+    public Date finalDate() {
+        return this.finalDate;
+    }
 }
