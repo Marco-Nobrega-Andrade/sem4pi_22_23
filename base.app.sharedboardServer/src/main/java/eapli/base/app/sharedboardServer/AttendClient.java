@@ -144,10 +144,11 @@ public class AttendClient implements Runnable{
                         outputStream.writeUTF(new String(SBPMessageFormat.createListBoardReceive(listBoardDTO)));
                         break;
                     case SBPMessageFormat.HISTORY_OF_UPDATES_CODE:
-                        List<String> boardHistoryParam = SBPMessageFormat.decodeParam(message.getBytes());
+                        List<String> boardParam = SBPMessageFormat.decodeParam(message.getBytes());
                         try {
-                            new HistoryOfUpdatesController().historyOfUpdates(boardHistoryParam.get(0));
-                            outputStream.writeUTF(new String(SBPMessageFormat.createAcknowledgeRequest()));
+                            List<String> taskList = new HistoryOfUpdatesController().historyOfUpdates(boardParam.get(0));
+                            byte[] taskListRequest = SBPMessageFormat.createTaskListRequest(taskList);
+                            outputStream.writeUTF(new String(taskListRequest));
                         }catch (Exception e){
                             outputStream.writeUTF(new String(SBPMessageFormat.creteErrorRequest(e.getMessage())));
                         }
