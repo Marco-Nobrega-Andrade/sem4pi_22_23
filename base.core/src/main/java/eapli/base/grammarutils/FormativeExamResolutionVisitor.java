@@ -8,12 +8,13 @@ import java.util.List;
 
 public class FormativeExamResolutionVisitor extends FormativeExamGrammarBaseVisitor<String>{
 
-    private double grade;
-    private String feedback;
+    private Double grade;
+    private Integer questionNumber;
+    private List<String> feedback = new ArrayList<>();
 
     public FormativeExamResolutionVisitor(){
-        this.grade = 0;
-        this.feedback = "";
+        this.grade = 0.0;
+        this.questionNumber = 0;
     }
 
     @Override
@@ -54,6 +55,29 @@ public class FormativeExamResolutionVisitor extends FormativeExamGrammarBaseVisi
                 this.grade += pointsByAnswer;
             }
         }
+
+        return null;
+    }
+
+    @Override
+    public String visitFeedback(FormativeExamGrammarParser.FeedbackContext ctx) {
+        questionNumber++;
+
+        try {
+            FormativeExamGrammarParser.PhraseContext phraseContext = ctx.phrase();
+            StringBuilder stringBuilder = new StringBuilder();
+
+            stringBuilder.append("Question "+ questionNumber + " : ");
+            for (FormativeExamGrammarParser.Phrase_wordContext phrase_wordContext : phraseContext.phrase_word()){
+                stringBuilder.append(phrase_wordContext.getText());
+                stringBuilder.append(" ");
+            }
+
+            feedback.add(stringBuilder.toString());
+        } catch (Exception ignored) {
+
+        }
+
         return null;
     }
 
@@ -166,10 +190,6 @@ public class FormativeExamResolutionVisitor extends FormativeExamGrammarBaseVisi
             grade += points;
         }
 
-        if(!ctx.feedback().getText().isEmpty()){
-            feedback += ctx.feedback().getText();
-        }
-
         return null;
     }
 
@@ -210,18 +230,35 @@ public class FormativeExamResolutionVisitor extends FormativeExamGrammarBaseVisi
             grade += questionGrade;
         }
 
-        if(!ctx.feedback().getText().isEmpty()){
-            feedback += ctx.feedback().getText();
-        }
-
         return null;
     }
+
+    /*public void getQuestionFeedback(E ctx){
+        questionNumber++;
+
+        try {
+            FormativeExamGrammarParser.PhraseContext phraseContext = ctx.feedback().phrase();
+            StringBuilder stringBuilder = new StringBuilder();
+
+            stringBuilder.append("Question "+ questionNumber + " : ");
+            for (FormativeExamGrammarParser.Phrase_wordContext phrase_wordContext : phraseContext.phrase_word()){
+                stringBuilder.append(phrase_wordContext.getText());
+                stringBuilder.append(" ");
+            }
+
+            feedback.add(stringBuilder.toString());
+        } catch (Exception ignored) {
+
+        }
+    }*/
+
+
 
     public Double grade(){
         return (double) Math.round(this.grade * 100) / 100;
     }
 
-    public String feedback(){
+    public List<String> feedback(){
         return this.feedback;
     }
 }
