@@ -23,7 +23,7 @@ public class HistoryOfUpdatesUI extends AbstractUI {
         DataInputStream dis;
         try {
             dos = new DataOutputStream(socket.getOutputStream());
-            dos.writeUTF(new String(SBPMessageFormat.createListBoardIOwnRequestSend()));
+            dos.writeUTF(new String(SBPMessageFormat.createListAllBoardsIParticipateAndCanRead()));
             dis = new DataInputStream(socket.getInputStream());
             String message = dis.readUTF();
             if(SBPMessageFormat.decodeFormat(message.getBytes())[SBPMessageFormat.CODE_OFFSET] == SBPMessageFormat.LIST_BOARD) {
