@@ -5,7 +5,10 @@ import eapli.base.exams.domain.ExamResolution;
 import eapli.base.exams.domain.ExamResolutionId;
 import eapli.base.exams.repositories.ExamResolutionRepository;
 import eapli.base.usermanagement.domain.Student;
+import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
+
+import java.util.List;
 
 public class InMemoryExamResolutionRepository extends InMemoryDomainRepository<ExamResolution, ExamResolutionId> implements ExamResolutionRepository {
 
@@ -17,5 +20,10 @@ public class InMemoryExamResolutionRepository extends InMemoryDomainRepository<E
     @Override
     public boolean containsOfExamAndStudent(Exam exam, Student student) {
         return false;
+    }
+
+    @Override
+    public List<ExamResolution> findStudentGrades(SystemUser systemUser) {
+        return null;
     }
 }

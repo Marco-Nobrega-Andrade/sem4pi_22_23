@@ -7,9 +7,11 @@ import eapli.base.exams.domain.ExamResolutionId;
 import eapli.base.exams.repositories.ExamResolutionRepository;
 import eapli.base.usermanagement.domain.Student;
 import eapli.framework.domain.repositories.TransactionalContext;
+import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -41,5 +43,12 @@ public class JpaExamResolutionRepository extends JpaAutoTxRepository<ExamResolut
         params.put("student", student);
         Optional<ExamResolution> opt =  matchOne(" e.student = :student AND e.exam = :exam",params);
         return opt.isPresent();
+    }
+
+    @Override
+    public List<ExamResolution> findStudentGrades(SystemUser systemUser) {
+        return  createQuery("SELECT e from ExamResolution e  " +
+                        "WHERE e.student IN (Select Distinct p.student from Person p WHERE p.systemUser = :systemUser)"
+                , ExamResolution.class).setParameter("systemUser", systemUser).getResultList();
     }
 }
