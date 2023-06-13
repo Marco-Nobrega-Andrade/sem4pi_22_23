@@ -97,4 +97,13 @@ public class ExamResolution implements AggregateRoot<ExamResolutionId> {
     public ExamResolutionId identity() {
         return this.examResolution_Id;
     }
+
+    public String returnExamTitleString(){
+        return exam.returnExamTitleString();
+    }
+
+
+    public String returnGradeString(){
+        return grade.toString();
+    }
 }
