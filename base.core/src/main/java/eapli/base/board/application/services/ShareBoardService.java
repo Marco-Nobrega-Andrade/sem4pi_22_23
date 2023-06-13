@@ -32,7 +32,7 @@ public class ShareBoardService {
         BoardParticipant boardParticipant = factory.buildBoardParticipant(boardParticipantRepository.findMaxId() + 1, permission, board);
         Person person = personRepository.findPersonByEmail(email);
         person.addBoardParticipant(boardParticipant);
-        board.addNotification(new Notification("The board was shared with " + person.returnFullNameString()));
+        board.addNotification(new Notification("The board " + boardTitle +" was shared with " + person.returnFullNameString()));
         Task task = new TaskBuilder().withTaskId(boardHistoryRepository
                         .getLastTaskId()+1).withOperation(OperationValue.ADD)
                 .withBoardOwner(boardOwnerRepository.findBoardOwnerByBoard(board))
