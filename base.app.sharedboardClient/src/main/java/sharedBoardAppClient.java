@@ -1,8 +1,4 @@
-import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.sharedBoard.SBPMessageFormat;
-import eapli.base.usermanagement.domain.BasePasswordPolicy;
-import eapli.framework.infrastructure.authz.application.AuthzRegistry;
-import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
 import eapli.framework.io.util.Console;
 import presentation.MainMenu;
 
@@ -16,8 +12,6 @@ import java.util.List;
 public class sharedBoardAppClient {
     public static void main(String[] args) {
         try {
-            AuthzRegistry.configure(PersistenceContext.repositories().users(),
-                    new BasePasswordPolicy(), new PlainTextEncoder());
             final var clientIP = InetAddress.getLocalHost().getHostAddress();
             Socket socket = new Socket(clientIP, 5000);
             System.out.println("Connected");
