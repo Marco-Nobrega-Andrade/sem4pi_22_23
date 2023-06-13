@@ -1,7 +1,6 @@
 package eapli.base.postitmanager.domain;
 
-import eapli.base.exceptions.NegativeParameterException;
-import eapli.base.exceptions.ZeroParameterException;
+import eapli.base.exceptions.*;
 
 public class PostItFactory {
 
@@ -10,8 +9,12 @@ public class PostItFactory {
      * @param content String with the content to set in the PostIt
      * @return the PostIt with the id and content set
      */
-    public PostIt build(String content, long id) throws ZeroParameterException, NegativeParameterException {
+    public PostIt build(String content, long id) throws ZeroParameterException,
+            NegativeParameterException, ParameterNullBlankException,
+            InvalidContentSizeForAPostItException {
+
         return new PostIt( new PostItKey (new PostItIdentifier(id),new PostItVersion(1))
                 ,new Content(content));
+
     }
 }

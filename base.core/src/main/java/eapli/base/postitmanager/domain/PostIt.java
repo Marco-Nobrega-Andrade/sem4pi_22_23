@@ -1,6 +1,7 @@
 package eapli.base.postitmanager.domain;
 
 import eapli.base.exceptions.NegativeParameterException;
+import eapli.base.exceptions.ParameterNullBlankException;
 import eapli.base.exceptions.ZeroParameterException;
 import eapli.framework.domain.model.AggregateRoot;
 
@@ -13,9 +14,10 @@ public class PostIt implements AggregateRoot<PostItKey> {
     @EmbeddedId
     private PostItKey postItKey;
     private Content content;
-    protected PostIt(PostItKey postItKey, Content content) throws ZeroParameterException, NegativeParameterException {
+    protected PostIt(PostItKey postItKey, Content content) throws ZeroParameterException, NegativeParameterException,
+            ParameterNullBlankException {
         if (postItKey == null || content == null) {
-            throw new IllegalArgumentException();
+            throw new ParameterNullBlankException();
         }
         this.postItKey = postItKey;
         this.content = content;
