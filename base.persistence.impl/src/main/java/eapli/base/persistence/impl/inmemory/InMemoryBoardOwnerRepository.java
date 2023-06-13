@@ -14,4 +14,9 @@ public class InMemoryBoardOwnerRepository extends InMemoryDomainRepository<Board
         return null;
     }
 
+    @Override
+    public BoardOwner findBoardOwnerByBoard(Board board) {
+        return null;
+    }
+
 }

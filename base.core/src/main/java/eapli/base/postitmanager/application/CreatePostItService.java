@@ -8,7 +8,6 @@ import eapli.base.boardhistory.domain.TaskBuilder;
 import eapli.base.boardhistory.repositories.BoardHistoryRepository;
 import eapli.base.boardparticipantmanagement.domain.BoardParticipant;
 import eapli.base.boardparticipantmanagement.repositories.BoardParticipantRepository;
-import eapli.base.courseclasses.domain.Date;
 import eapli.base.exceptions.*;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.postitmanager.domain.PostIt;
@@ -60,7 +59,7 @@ public class CreatePostItService {
                     withTaskId(boardHistoryRepository.getLastTaskId()+1).withOperation(OperationValue.ADD).build());
 
             board.addNotification(new Notification("A new post it was added in "+board.returnBoardTitleString()
-                    +" on column "+column+" and row "+row+ "by "+person.returnFullNameString(),new Date(new java.util.Date())));
+                    +" on column "+column+" and row "+row+ "by "+person.returnFullNameString()));
             postItRepository.save(postIt);
             boardRepository.save(board);
         }
@@ -69,7 +68,7 @@ public class CreatePostItService {
             board.addTaskToHistory(taskBuilder.withBoardParticipant(boardParticipant).withPostIt(postIt).
                     withTaskId(boardHistoryRepository.getLastTaskId()+1).withOperation(OperationValue.ADD).build());
             board.addNotification(new Notification("A new post it was added in "+board.returnBoardTitleString()
-                    +" on column "+column+" and row "+row+ "by "+person.returnFullNameString(),new Date(new java.util.Date())));
+                    +" on column "+column+" and row "+row+ "by "+person.returnFullNameString()));
             postItRepository.save(postIt);
             boardRepository.save(board);
         }

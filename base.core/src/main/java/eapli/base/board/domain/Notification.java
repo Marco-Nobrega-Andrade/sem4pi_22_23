@@ -10,9 +10,9 @@ public class Notification implements ValueObject {
     private String message;
 
     private eapli.base.courseclasses.domain.Date date;
-    public Notification(String message, Date date){
+    public Notification(String message){
         this.message = message;
-        this.date = date;
+        this.date = new Date(new java.util.Date());
     }
 
     public Notification() {
