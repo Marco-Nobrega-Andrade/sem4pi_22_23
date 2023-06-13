@@ -9,9 +9,7 @@ import eapli.base.boardhistory.repositories.BoardHistoryRepository;
 import eapli.base.boardparticipantmanagement.domain.BoardParticipant;
 import eapli.base.boardparticipantmanagement.repositories.BoardParticipantRepository;
 import eapli.base.courseclasses.domain.Date;
-import eapli.base.exceptions.CellOccupiedException;
-import eapli.base.exceptions.NegativeParameterException;
-import eapli.base.exceptions.ZeroParameterException;
+import eapli.base.exceptions.*;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.postitmanager.domain.PostIt;
 import eapli.base.postitmanager.domain.PostItFactory;
@@ -31,7 +29,9 @@ public class CreatePostItService {
     BoardParticipantRepository boardParticipantRepository = PersistenceContext.repositories().boardParticipantRepository();
 
 
-    public boolean createPostIt(String boardTittle, String content, int column, int row) throws CellOccupiedException, ZeroParameterException, NegativeParameterException {
+    public boolean createPostIt(String boardTittle, String content, int column, int row) throws CellOccupiedException,
+            ZeroParameterException, NegativeParameterException, ParameterNullBlankException,
+            InvalidContentSizeForAPostItException {
 
         //create postIt
         PostItFactory postItFactory = new PostItFactory();
