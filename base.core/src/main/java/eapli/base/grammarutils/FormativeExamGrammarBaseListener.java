@@ -317,6 +317,18 @@ public class FormativeExamGrammarBaseListener implements FormativeExamGrammarLis
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterPhrase_word(FormativeExamGrammarParser.Phrase_wordContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPhrase_word(FormativeExamGrammarParser.Phrase_wordContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterList_with_title(FormativeExamGrammarParser.List_with_titleContext ctx) { }
 	/**
 	 * {@inheritDoc}
