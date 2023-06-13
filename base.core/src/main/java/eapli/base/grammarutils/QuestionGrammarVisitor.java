@@ -125,6 +125,12 @@ public interface QuestionGrammarVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitPhrase(QuestionGrammarParser.PhraseContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link QuestionGrammarParser#phrase_word}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPhrase_word(QuestionGrammarParser.Phrase_wordContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link QuestionGrammarParser#list_with_title}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
