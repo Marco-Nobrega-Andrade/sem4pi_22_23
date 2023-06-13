@@ -1,27 +1,45 @@
 @startuml
 actor Teacher as T
-participant "ViewHistoryOfUpdatesUI" as UI <<Presentation>>
-control "ViewHistoryOfUpdatesController" as CTRL <<Application>>
-participant "ViewHistoryOfUpdatesService" as S <<Service>>
+participant "ViewCoursesGradesUI" as UI <<Presentation>>
+control "ViewCoursesGradesController" as CTRL <<Application>>
+participant "ViewCoursesGradesService" as S <<Service>>
 database "CourseRepository" as CR <<Persistence>>
+database "ExamRepository" as ER <<Persistence>>
 database "ExamResolutionRepository" as ERR <<Persistence>>
+participant "ExamResolution" as ExamR <<Domain>>
 
 
-T->UI: Selects the option to list the grades\n of the exams of all his courses
+T->UI: Selects the courses that he \nwants to see the grades from
 activate T
 activate UI
 UI->CTRL : listGradesFromTeacherCourse(course)
 activate CTRL
 CTRL->S: listGradesFromTeacherCourse(course)
 activate S
-return courseList
-'examResolutionDTOExamTitleGrade'
-return examResolutionList
-loop foreach examResolution in examResolutionList
+loop foreach selected course
+S -> CR : ofIdentity(courseIdentifier)
+activate CR
+return course
 end loop
-return examResolutionDTOList
-return examResolutionDTOList
-return show all grades from teacher courses
+loop foreach course in courseList
+S-> ER : getExamsFromCourse(courseIdentifier)
+activate ER
+return examList
+end loop
+loop foreach exam in examList
+S-> ERR : getExamResolutionsFromExam(examTitle)
+activate ERR
+return examResolutionList
+end loop
+loop foreach examResolution in examResolutionList
+S-> ExamR : returnExamResolutionGradeString()
+activate ExamR
+return grade
+end loop
+
+return gradesList
+return gradesList
+return show all grades from teacher\n selected courses
 deactivate UI
 deactivate T
 @enduml
