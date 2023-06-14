@@ -2,9 +2,10 @@ package eapli.base.board.domain;
 
 import eapli.base.boardhistory.domain.BoardHistory;
 import eapli.base.boardhistory.domain.Task;
-import eapli.base.exceptions.AlreadyDeactivatedException;
-import eapli.base.exceptions.CellOccupiedException;
+import eapli.base.boardparticipantmanagement.domain.BoardParticipant;
+import eapli.base.exceptions.*;
 import eapli.base.postitmanager.domain.PostIt;
+import eapli.base.usermanagement.domain.BoardOwner;
 import eapli.framework.domain.model.AggregateRoot;
 
 import javax.persistence.*;
@@ -141,5 +142,37 @@ public class Board implements AggregateRoot<BoardTitle> {
                 cell.addPostIt(postIt);
             }
         }
+    }
+
+    public PostIt verifyPostItCanBeUpdated(Integer row, Integer column, BoardParticipant boardParticipant, BoardOwner boardOwner) throws CellDoesNotExistException, CellIsEmptyException, UserDidNotCreatePostItException {
+        Cell cellToUpdate = cellFromRowAndColumn(row, column);
+        PostIt currentPostIt = cellToUpdate.currentPostIt();
+        if (currentPostIt == null){
+            throw new CellIsEmptyException("This cell doesn't have a post-it");
+        }
+
+        if(!boardHistory.checkIfPostItCanBeUpdatedByUser(currentPostIt,boardParticipant,boardOwner)){
+            throw new UserDidNotCreatePostItException("The post-it couldn't be changed because you didn't create it");
+        }
+
+        return currentPostIt;
+    }
+
+    public boolean updatePostIt(PostIt newPostIt, Integer row, Integer column) throws CellDoesNotExistException {
+        cellFromRowAndColumn(row, column).addPostIt(newPostIt);
+        return true;
+    }
+
+    private Cell cellFromRowAndColumn(Integer row, Integer column) throws CellDoesNotExistException {
+        Cell cell = null;
+        for (Cell c : cellList){
+            if (c.isColumn(column)  && c.isRow(row)){
+                cell = c;
+            }
+        }
+        if (cell == null){
+            throw new CellDoesNotExistException("This cell doesn't exist in this board");
+        }
+        return cell;
     }
 }
