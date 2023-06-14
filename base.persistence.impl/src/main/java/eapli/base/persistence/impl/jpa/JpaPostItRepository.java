@@ -1,8 +1,8 @@
 package eapli.base.persistence.impl.jpa;
 
 import eapli.base.Application;
+import eapli.base.board.domain.Board;
 import eapli.base.postitmanager.domain.PostIt;
-import eapli.base.postitmanager.domain.PostItIdentifier;
 import eapli.base.postitmanager.domain.PostItKey;
 import eapli.base.postitmanager.repositories.PostItRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
@@ -15,5 +15,21 @@ public class JpaPostItRepository extends JpaAutoTxRepository<PostIt, PostItKey, 
     }
     public JpaPostItRepository(final TransactionalContext autoTx) {
         super(autoTx, "postItKey");
+    }
+
+    @Override
+    public PostIt getPostItInACell(Board board, int column, int row) {
+        return createQuery("SELECT p FROM PostIt p WHERE p = " +
+                "(SELECT c.postIt FROM Cell c WHERE c IN (SELECT cl FROM Board b JOIN b.cellList cl WHERE b = :board) " +
+                "AND c.column = :column AND c.row = :row)", PostIt.class)
+                .setParameter("boardTittle", board).setParameter("column",column).
+                setParameter("row",row).getSingleResult();
+    }
+
+    @Override
+    public PostIt getLastVersionOfPostIt(int version, long id) {
+        return createQuery("SELECT p FROM PostIt p WHERE p.postItKey.postItVersion.version = :version " +
+                "AND p.postItKey.postItIdentifier.postItId = :id", PostIt.class)
+                .setParameter("version",version).setParameter("id",id).getSingleResult();
     }
 }

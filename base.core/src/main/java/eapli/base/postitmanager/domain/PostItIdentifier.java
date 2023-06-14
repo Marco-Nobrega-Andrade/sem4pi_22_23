@@ -9,19 +9,19 @@ import java.util.Objects;
 
 @Embeddable
 public class PostItIdentifier implements ValueObject {
-        private Long postItId;
+    private Long postItId;
 
     protected PostItIdentifier(long id) throws NegativeParameterException, ZeroParameterException {
-        if (id < 0){
+        if (id < 0) {
             throw new NegativeParameterException();
         }
-        if (id == 0){
+        if (id == 0) {
             throw new ZeroParameterException();
         }
         this.postItId = id;
     }
 
-    protected PostItIdentifier(){
+    protected PostItIdentifier() {
         //ORM
     }
 
@@ -38,6 +38,9 @@ public class PostItIdentifier implements ValueObject {
         return Objects.hash(postItId);
     }
 
+    public long returnIdentifier() {
+        return this.postItId;
+    }
     @Override
     public String toString() {
         return postItId.toString();

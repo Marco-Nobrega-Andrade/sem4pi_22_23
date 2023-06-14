@@ -34,7 +34,7 @@ public class ArchiveBoardUI extends AbstractUI {
                     if(selected.selectedOption() != 0){
                         String board = selected.selectedElement();
                         StringBuilder stringBuilder = new StringBuilder();
-                        stringBuilder.append("Are you sure you want to archive the board)");
+                        stringBuilder.append("Are you sure you want to archive the board ");
                         stringBuilder.append(board);
                         stringBuilder.append("? (y/n)");
                         boolean proceed = Console.readBoolean(stringBuilder.toString());
