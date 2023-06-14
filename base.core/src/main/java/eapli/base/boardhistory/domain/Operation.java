@@ -10,14 +10,14 @@ import java.util.Objects;
 public class Operation implements ValueObject {
 
 @Enumerated(EnumType.STRING)
-    OperationValue operationValue;
-protected Operation(OperationValue operationValue){
-    this.operationValue = operationValue;
-}
+    private OperationValue operationValue;
+    protected Operation(OperationValue operationValue){
+        this.operationValue = operationValue;
+    }
 
-protected Operation(){
+    protected Operation(){
 
-}
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -35,5 +35,9 @@ protected Operation(){
     @Override
     public String toString() {
         return operationValue.toString();
+    }
+
+    public OperationValue operationValue() {
+        return this.operationValue;
     }
 }

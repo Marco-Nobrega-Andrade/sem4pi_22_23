@@ -53,4 +53,20 @@ public class Task{
 
         return sb.toString();
     }
+
+    public boolean isAddPostIt() {
+        return operation.operationValue().equals(OperationValue.ADD);
+    }
+
+    public boolean isDoneByThisOwner(BoardOwner boardOwner) {
+        return this.boardOwner.equals(boardOwner);
+    }
+
+    public boolean isDoneByThisParticipant(BoardParticipant boardParticipant) {
+        return this.boardParticipant.equals(boardParticipant);
+    }
+
+    public boolean isInThisPostIt(PostIt currentPostIt) {
+        return this.postIt.equals(currentPostIt);
+    }
 }

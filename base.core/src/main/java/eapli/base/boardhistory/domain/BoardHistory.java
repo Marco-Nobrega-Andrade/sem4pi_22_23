@@ -1,5 +1,8 @@
 package eapli.base.boardhistory.domain;
 
+import eapli.base.boardparticipantmanagement.domain.BoardParticipant;
+import eapli.base.postitmanager.domain.PostIt;
+import eapli.base.usermanagement.domain.BoardOwner;
 import eapli.framework.domain.model.AggregateRoot;
 import javax.persistence.CascadeType;
 import javax.persistence.EmbeddedId;
@@ -50,5 +53,16 @@ public class BoardHistory implements AggregateRoot<BoardHistoryId> {
         }
         taskList.add(task);
         return true;
+    }
+
+    public boolean checkIfPostItCanBeUpdatedByUser(PostIt currentPostIt, BoardParticipant boardParticipant, BoardOwner boardOwner) {
+        for (Task task : taskList){
+            if (task.isAddPostIt()
+                    && (task.isDoneByThisParticipant(boardParticipant) || task.isDoneByThisOwner(boardOwner))
+                    && task.isInThisPostIt(currentPostIt)){
+                return true;
+            }
+        }
+        return false;
     }
 }
