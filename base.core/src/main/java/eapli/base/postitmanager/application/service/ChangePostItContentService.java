@@ -1,6 +1,8 @@
 package eapli.base.postitmanager.application.service;
 
 
+import eapli.base.board.application.services.AddNotificationService;
+import eapli.base.board.application.services.AddTaskToBoardHistoryService;
 import eapli.base.board.domain.Board;
 import eapli.base.board.domain.BoardTitle;
 import eapli.base.board.repositories.BoardRepository;
@@ -39,8 +41,9 @@ public class ChangePostItContentService {
 
         board.updateCell(newPostIt,row,column);
 
-        //TODO create notification and task in boardHistory
 
+        new AddNotificationService().addNotification("The post-it in row " + row +" and column " + column + "was updated" , boardTitle);
+        new AddTaskToBoardHistoryService().addChangePostItContentTaskToHistory(boardTitle,boardParticipant,boardOwner,oldPostIt);
 
         return false;
     }
