@@ -2,7 +2,8 @@
 autonumber
 title ShareBoard - SharedBoardServer
 
-participant ": AttendClient" as AC <<Application>>
+participant ": AttendClient" as UI <<UI>>
+participant ": ShareBoardRequest" as SBR <<UI>>
 participant ": DataInputStream" as DIS
 participant ": DataOutputStream" as DOS
 participant ": SBPMessageFormat" as SBPMF
@@ -15,17 +16,19 @@ database ": BoardParticipantRepository" as BPR <<Repository>>
 database PersonRepository as PR <<Repository>>
 participant ": AddNotificationService" as ANS <<Service>>
 participant ": AddTaskToBoardHistoryService" as ATTBHS <<Service>>
-activate AC
-AC -> DIS : readUTF()
+activate UI
+UI -> SBR : shareBoard(message, outputStream)
+activate SBR
+SBR -> DIS : readUTF()
 activate DIS
 return message
-AC -> SBPMF : decodeFormat(message)
+SBR -> SBPMF : decodeFormat(message)
 activate SBPMF
 return arrayFormat
-AC -> SBPMF : decodeParams(message)
+SBR -> SBPMF : decodeParams(message)
 activate SBPMF
 return params
-AC -> CTRL : shareBoard(boardTitle, email, permission)
+SBR -> CTRL : shareBoard(boardTitle, email, permission)
 activate CTRL
 CTRL -> SBS : shareBoard(boardTitle, email, permission)
 activate SBS
@@ -62,14 +65,14 @@ activate ATTBHS
 return true
 SBS --> CTRL : true
 deactivate SBS
-CTRL --> AC : true
+CTRL --> SBR : true
 deactivate CTRL
-AC -> SBPMF : createAcknowledgeRequest()
+SBR -> SBPMF : createAcknowledgeRequest()
 activate SBPMF
 return ackRequest
-AC -> DOS : writeUTF(ackRequest)
+SBR -> DOS : writeUTF(ackRequest)
 activate DOS
 deactivate DOS
-deactivate AC
-
+deactivate SBR
+deactivate UI
 @enduml
