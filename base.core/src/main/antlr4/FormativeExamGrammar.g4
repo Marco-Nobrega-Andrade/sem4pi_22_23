@@ -62,8 +62,11 @@ points: NEWLINE+ POINTS_ENTRY INT
       ;
 feedback: NEWLINE+ FEEDBACK_ENTRY phrase
         ;
-phrase: ANY_CHAR* ( (WORD | INT) ( ANY_CHAR+)*)+
- ;
+phrase : phrase_word+
+       ;
+
+phrase_word : (WORD|INT|PUNCTUATION|COMMA|HASH|COLON|DASH)
+            ;
 
 list_with_title: NEWLINE+ title_list list?
                ;
@@ -94,11 +97,10 @@ COMMA : ',';
 WS : [ \t]+ -> skip;
 HASH : '#';
 NEWLINE : [\r\n]+;
-WORD: [A-Za-z]+;
+WORD: [A-Za-zÀ-ÿ]+;
 COLON : ':' ;
 DASH : '-';
 INT : [0-9]+;
 NUMERICAL_VALUE : INT COMMA INT;
-ANY_CHAR : ~[\t\r\n];
-MISSING_WORD : '||WORD||'
-;
+PUNCTUATION : ~[A-Za-zÀ-ÿ \t\r\n];
+MISSING_WORD : '||WORD||';

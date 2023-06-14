@@ -1,9 +1,11 @@
 package eapli.base.persistence.impl.jpa;
 
 import eapli.base.Application;
+import eapli.base.boardhistory.domain.Task;
 import eapli.base.exams.domain.Exam;
 import eapli.base.exams.domain.ExamResolution;
 import eapli.base.exams.domain.ExamResolutionId;
+import eapli.base.exams.domain.ExamTitle;
 import eapli.base.exams.repositories.ExamResolutionRepository;
 import eapli.base.usermanagement.domain.Student;
 import eapli.framework.domain.repositories.TransactionalContext;
@@ -43,6 +45,13 @@ public class JpaExamResolutionRepository extends JpaAutoTxRepository<ExamResolut
         params.put("student", student);
         Optional<ExamResolution> opt =  matchOne(" e.student = :student AND e.exam = :exam",params);
         return opt.isPresent();
+    }
+
+    @Override
+    public List<ExamResolution> findExamResolutionsByExamId(ExamTitle examTitle) {
+        return createQuery("SELECT er FROM ExamResolution er WHERE er IN (SELECT er FROM Exam e JOIN e.examResolutions WHERE e.examTitle = :examTitle)", ExamResolution.class)
+                .setParameter("examTitle", examTitle)
+                .getResultList();
     }
 
     @Override
