@@ -65,9 +65,9 @@ public class TakeFormativeExamService {
 
             FormativeExamResolutionVisitor visitor = evaluateResolutionService.takeFormativeExam(resolution);
             Double grade = visitor.grade();
-            String feedback = visitor.feedback();
+            List<String> feedback = visitor.feedback();
             gradeAndFeedback.add(grade.toString());
-            gradeAndFeedback.add(feedback);
+            gradeAndFeedback.addAll(feedback);
 
         }
 

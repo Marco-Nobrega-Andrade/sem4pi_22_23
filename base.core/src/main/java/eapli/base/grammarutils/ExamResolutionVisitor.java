@@ -9,11 +9,74 @@ import java.util.List;
 
 public class ExamResolutionVisitor extends ExamGrammarBaseVisitor<String>{
     private Double grade;
-
+    private Integer questionNumber;
     private List<String> feedback = new ArrayList<>();
 
     public ExamResolutionVisitor(){
         this.grade = 0.0;
+        this.questionNumber = 0;
+    }
+
+    @Override
+    public String visitQuestion_type_with_feedback(ExamGrammarParser.Question_type_with_feedbackContext ctx) {
+        questionNumber++;
+        try {
+            ExamGrammarParser.PhraseContext phraseContext = ctx.feedback().phrase();
+            StringBuilder stringBuilder = new StringBuilder();
+
+            stringBuilder.append("Question "+ questionNumber + " : ");
+            for (ExamGrammarParser.Phrase_wordContext phrase_wordContext : phraseContext.phrase_word()){
+                stringBuilder.append(phrase_wordContext.getText());
+                stringBuilder.append(" ");
+            }
+
+            feedback.add(stringBuilder.toString());
+        } catch (Exception ignored) {
+
+        }
+
+        return visitQuestionsNodes(ctx.matching_type_question(),
+                ctx.select_missing_words(),
+                ctx.short_answer_question(),
+                ctx.true_false_question(),
+                ctx.numerical_question(),
+                ctx.multiple_choice_question());
+    }
+
+    @Override
+    public String visitQuestion_type_without_feedback(ExamGrammarParser.Question_type_without_feedbackContext ctx) {
+        questionNumber++;
+        return visitQuestionsNodes(ctx.matching_type_question(),
+                ctx.select_missing_words(),
+                ctx.short_answer_question(),
+                ctx.true_false_question(),
+                ctx.numerical_question(),
+                ctx.multiple_choice_question());
+    }
+
+    private String visitQuestionsNodes(ExamGrammarParser.Matching_type_questionContext matching_type_questionContext2,
+                                       ExamGrammarParser.Select_missing_wordsContext select_missing_wordsContext2,
+                                       ExamGrammarParser.Short_answer_questionContext short_answer_questionContext2,
+                                       ExamGrammarParser.True_false_questionContext true_false_questionContext2,
+                                       ExamGrammarParser.Numerical_questionContext numerical_questionContext2,
+                                       ExamGrammarParser.Multiple_choice_questionContext multiple_choice_questionContext2) {
+
+
+        if (matching_type_questionContext2 != null){
+            visitMatching_type_question(matching_type_questionContext2);
+        } else if (select_missing_wordsContext2 != null) {
+            visitSelect_missing_words(select_missing_wordsContext2);
+        } else if (short_answer_questionContext2 != null) {
+            visitShort_answer_question(short_answer_questionContext2);
+        } else if (true_false_questionContext2 != null) {
+            visitTrue_false_question(true_false_questionContext2);
+        } else if (numerical_questionContext2 != null) {
+            visitNumerical_question(numerical_questionContext2);
+        } else if (multiple_choice_questionContext2 != null) {
+            visitMultiple_choice_question(multiple_choice_questionContext2);
+        }
+
+        return null;
     }
 
     @Override

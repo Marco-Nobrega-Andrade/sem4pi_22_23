@@ -35,6 +35,7 @@ import eapli.base.app.other.console.presentation.courseClass.CreateClassAction;
 import eapli.base.app.other.console.presentation.courseClass.ScheduleExtraClassAction;
 import eapli.base.app.other.console.presentation.courseclasses.RescheduleClassAction;
 import eapli.base.app.other.console.presentation.exam.CreateExamAction;
+import eapli.base.app.other.console.presentation.exam.ViewCoursesGradesAction;
 import eapli.base.app.other.console.presentation.formativeexam.FormativeAction;
 import eapli.base.app.other.console.presentation.exam.UpdateExamAction;
 import eapli.base.app.other.console.presentation.question.AddQuestionAction;
@@ -101,6 +102,8 @@ public class MainMenu extends AbstractUI {
 
     private static final int UPDATE_QUESTION = 4;
     private static final int CREATE_FORMATIVE_EXAM_OPTION = 5;
+
+    private static final int VIEW_COURSES_GRADES_OPTION = 6;
 
 
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
@@ -213,6 +216,7 @@ public class MainMenu extends AbstractUI {
         examMenu.addItem(ADD_QUESTION, "Add Question", new AddQuestionAction());
         examMenu.addItem(UPDATE_QUESTION, "Update Question", new UpdateQuestionAction());
         examMenu.addItem(CREATE_FORMATIVE_EXAM_OPTION,"Create Formative Exam", new FormativeAction());
+        examMenu.addItem(VIEW_COURSES_GRADES_OPTION, "View Courses Grades", new ViewCoursesGradesAction());
         examMenu.addItem(EXIT_OPTION, "Return", Actions.SUCCESS);
         return examMenu;
     }

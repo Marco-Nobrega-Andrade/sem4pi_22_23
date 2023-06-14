@@ -46,8 +46,7 @@ public class TakeExamService {
             Double grade = visitor.grade();
 
             gradeAndFeedback.add(grade.toString());
-            //TODO get feedback
-            List<String> feedback = new ArrayList<>();
+            List<String> feedback = visitor.feedback();
             gradeAndFeedback.addAll(feedback);
 
 

@@ -245,6 +245,18 @@ public class QuestionGrammarBaseListener implements QuestionGrammarListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterPhrase_word(QuestionGrammarParser.Phrase_wordContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPhrase_word(QuestionGrammarParser.Phrase_wordContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterList_with_title(QuestionGrammarParser.List_with_titleContext ctx) { }
 	/**
 	 * {@inheritDoc}

@@ -4,11 +4,8 @@ import eapli.base.Application;
 import eapli.base.board.domain.Board;
 import eapli.base.usermanagement.domain.BoardOwner;
 import eapli.base.usermanagement.domain.BoardOwnerId;
-import eapli.base.usermanagement.domain.Person;
 import eapli.base.usermanagement.repositories.BoardOwnerRepository;
-import eapli.base.usermanagement.domain.Student;
 import eapli.framework.domain.repositories.TransactionalContext;
-import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
 import javax.persistence.TypedQuery;
@@ -31,5 +28,10 @@ public class JpaBoardOwnerRepository extends JpaAutoTxRepository<BoardOwner, Boa
         return query.getSingleResult();
     }
 
-
+    @Override
+    public BoardOwner findBoardOwnerByBoard(Board board) {
+        TypedQuery<BoardOwner> query = createQuery("SELECT bo FROM BoardOwner bo JOIN bo.boardList bl WHERE bl = :board",
+                BoardOwner.class).setParameter("board", board);
+        return query.getSingleResult();
+    }
 }

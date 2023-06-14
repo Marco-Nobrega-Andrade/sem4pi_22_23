@@ -31,4 +31,9 @@ protected Operation(){
     public int hashCode() {
         return Objects.hash(operationValue);
     }
+
+    @Override
+    public String toString() {
+        return operationValue.toString();
+    }
 }

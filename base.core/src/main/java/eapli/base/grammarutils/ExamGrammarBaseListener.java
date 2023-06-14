@@ -377,6 +377,18 @@ public class ExamGrammarBaseListener implements ExamGrammarListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterPhrase_word(ExamGrammarParser.Phrase_wordContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPhrase_word(ExamGrammarParser.Phrase_wordContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterList_with_title(ExamGrammarParser.List_with_titleContext ctx) { }
 	/**
 	 * {@inheritDoc}

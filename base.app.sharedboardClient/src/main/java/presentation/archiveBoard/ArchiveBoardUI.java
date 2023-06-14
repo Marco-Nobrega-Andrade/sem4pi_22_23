@@ -34,20 +34,20 @@ public class ArchiveBoardUI extends AbstractUI {
                     if(selected.selectedOption() != 0){
                         String board = selected.selectedElement();
                         StringBuilder stringBuilder = new StringBuilder();
-                        stringBuilder.append("Are you sure you want to archive ");
+                        stringBuilder.append("Are you sure you want to archive the board ");
                         stringBuilder.append(board);
-                        stringBuilder.append("?");
+                        stringBuilder.append("? (y/n)");
                         boolean proceed = Console.readBoolean(stringBuilder.toString());
                         if(proceed){
                             byte[] archiveBoardRequest = SBPMessageFormat.createArchiveBoardRequest(board);
                             dos.writeUTF(new String(archiveBoardRequest));
-                        }
-                        message = dis.readUTF();
-                        if(SBPMessageFormat.decodeFormat(message.getBytes())[SBPMessageFormat.CODE_OFFSET] == SBPMessageFormat.ACK_CODE){
-                            System.out.println("Operation success!");
-                        } else {
-                            List<String> errorMessage = SBPMessageFormat.decodeParam(message.getBytes());
-                            System.out.println(errorMessage.get(0));
+                            message = dis.readUTF();
+                            if(SBPMessageFormat.decodeFormat(message.getBytes())[SBPMessageFormat.CODE_OFFSET] == SBPMessageFormat.ACK_CODE){
+                                System.out.println("Operation success!");
+                            } else {
+                                List<String> errorMessage = SBPMessageFormat.decodeParam(message.getBytes());
+                                System.out.println(errorMessage.get(0));
+                            }
                         }
                     }
                 }else{

@@ -191,6 +191,12 @@ public interface ExamGrammarVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitPhrase(ExamGrammarParser.PhraseContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link ExamGrammarParser#phrase_word}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPhrase_word(ExamGrammarParser.Phrase_wordContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link ExamGrammarParser#list_with_title}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

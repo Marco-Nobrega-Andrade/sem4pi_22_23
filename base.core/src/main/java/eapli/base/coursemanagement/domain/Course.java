@@ -204,7 +204,7 @@ public class Course implements AggregateRoot<CourseIdentifier> {
     public List<Exam> findAllDoableExams(Date currDate) {
         List<Exam> result = new ArrayList<>();
         for (Exam ex : examsList){
-            if (ex.canBeTaken(currDate)){
+            if (!ex.cannotBeTaken(currDate)){
                 result.add(ex);
             }
         }

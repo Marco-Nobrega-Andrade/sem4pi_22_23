@@ -308,6 +308,16 @@ public interface ExamGrammarListener extends ParseTreeListener {
 	 */
 	void exitPhrase(ExamGrammarParser.PhraseContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link ExamGrammarParser#phrase_word}.
+	 * @param ctx the parse tree
+	 */
+	void enterPhrase_word(ExamGrammarParser.Phrase_wordContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ExamGrammarParser#phrase_word}.
+	 * @param ctx the parse tree
+	 */
+	void exitPhrase_word(ExamGrammarParser.Phrase_wordContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link ExamGrammarParser#list_with_title}.
 	 * @param ctx the parse tree
 	 */

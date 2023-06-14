@@ -23,7 +23,7 @@ public class HistoryOfUpdatesUI extends AbstractUI {
         DataInputStream dis;
         try {
             dos = new DataOutputStream(socket.getOutputStream());
-            dos.writeUTF(new String(SBPMessageFormat.createListBoardIOwnRequestSend()));
+            dos.writeUTF(new String(SBPMessageFormat.createListAllBoardsIParticipateAndCanRead()));
             dis = new DataInputStream(socket.getInputStream());
             String message = dis.readUTF();
             if(SBPMessageFormat.decodeFormat(message.getBytes())[SBPMessageFormat.CODE_OFFSET] == SBPMessageFormat.LIST_BOARD) {
@@ -35,9 +35,17 @@ public class HistoryOfUpdatesUI extends AbstractUI {
                         String board = selected.selectedElement();
                         byte[] historyOfUpdatesRequest = SBPMessageFormat.createHistoryOfUpdatesRequest(board);
                         dos.writeUTF(new String(historyOfUpdatesRequest));
-                        message = dis.readUTF();
-                        if(SBPMessageFormat.decodeFormat(message.getBytes())[SBPMessageFormat.CODE_OFFSET] == SBPMessageFormat.ACK_CODE){
-                            System.out.println("Operation success!");
+                        String taskListMessage = dis.readUTF();
+                        if(SBPMessageFormat.decodeFormat(taskListMessage.getBytes())[SBPMessageFormat.CODE_OFFSET] == SBPMessageFormat.TASK_LIST_CODE){
+                            List<String> taskList = SBPMessageFormat.decodeParam(taskListMessage.getBytes());
+                            int size = taskList.size();
+
+                            System.out.printf("\nHistory Of Updates of board %s:\n", board);
+
+                            for(int i = 0; i<size; i++){
+                                System.out.printf("%d. %s\n", i+1, taskList.get(i).toString());
+                            }
+
                         } else {
                             List<String> errorMessage = SBPMessageFormat.decodeParam(message.getBytes());
                             System.out.println(errorMessage.get(0));

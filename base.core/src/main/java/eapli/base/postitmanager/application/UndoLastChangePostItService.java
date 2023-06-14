@@ -1,15 +1,13 @@
 package eapli.base.postitmanager.application;
 
+import eapli.base.board.application.services.AddNotificationService;
 import eapli.base.board.domain.Board;
-import eapli.base.board.domain.Notification;
 import eapli.base.board.repositories.BoardRepository;
 import eapli.base.boardhistory.domain.OperationValue;
 import eapli.base.boardhistory.domain.TaskBuilder;
 import eapli.base.boardhistory.repositories.BoardHistoryRepository;
 import eapli.base.boardparticipantmanagement.domain.BoardParticipant;
 import eapli.base.boardparticipantmanagement.repositories.BoardParticipantRepository;
-import eapli.base.courseclasses.domain.Date;
-import eapli.base.exceptions.CellOccupiedException;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.postitmanager.domain.PostIt;
 import eapli.base.postitmanager.repositories.PostItRepository;
@@ -26,7 +24,7 @@ public class UndoLastChangePostItService {
     BoardHistoryRepository boardHistoryRepository = PersistenceContext.repositories().boardHistoryRepository();
     PersonRepository personRepository = PersistenceContext.repositories().personRepository();
     BoardParticipantRepository boardParticipantRepository = PersistenceContext.repositories().boardParticipantRepository();
-    public void undoLastChangePostIt(String boardTittle, int column, int row) throws CellOccupiedException {
+    public void undoLastChangePostIt(String boardTittle, int column, int row) {
 
         AuthorizationService authz = AuthzRegistry.authorizationService();
         SystemUser systemUser;
@@ -53,8 +51,8 @@ public class UndoLastChangePostItService {
             board.addTaskToHistory(taskBuilder.withBoardOwner(boardOwner).withPostIt(postIt).
                     withTaskId(boardHistoryRepository.getLastTaskId()+1).withOperation(OperationValue.UNDO_CHANGE).build());
 
-            board.addNotification(new Notification("The last change was removed in "+board.returnBoardTitleString()
-                    +" on column "+column+" and row "+row+ "by "+person.returnFullNameString(),new Date(new java.util.Date())));
+            new AddNotificationService().addNotification("The last change was removed in "+board.returnBoardTitleString()
+                    +" on column "+column+" and row "+row+ "by "+person.returnFullNameString(),board.returnBoardTitleString());
             postItRepository.save(lastVersionOfPostIt);
             boardRepository.save(board);
         }
@@ -62,8 +60,8 @@ public class UndoLastChangePostItService {
             BoardParticipant boardParticipant =boardParticipantRepository.findBoardParticipantByPerson(person);
             board.addTaskToHistory(taskBuilder.withBoardParticipant(boardParticipant).withPostIt(postIt).
                     withTaskId(boardHistoryRepository.getLastTaskId()+1).withOperation(OperationValue.UNDO_CHANGE).build());
-            board.addNotification(new Notification("The last change was removed in "+board.returnBoardTitleString()
-                    +" on column "+column+" and row "+row+ "by "+person.returnFullNameString(),new Date(new java.util.Date())));
+            new AddNotificationService().addNotification("The last change was removed in "+board.returnBoardTitleString()
+                    +" on column "+column+" and row "+row+ "by "+person.returnFullNameString(),board.returnBoardTitleString());
             postItRepository.save(lastVersionOfPostIt);
             boardRepository.save(board);
         }

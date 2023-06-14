@@ -64,4 +64,8 @@ public class PostIt implements AggregateRoot<PostItKey> {
     public long returnPostItIdentifier() {
         return postItKey.returnPostItIdentifier();
     }
+    @Override
+    public String toString() {
+        return postItKey.toString();
+    }
 }

@@ -258,6 +258,16 @@ public interface FormativeExamGrammarListener extends ParseTreeListener {
 	 */
 	void exitPhrase(FormativeExamGrammarParser.PhraseContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link FormativeExamGrammarParser#phrase_word}.
+	 * @param ctx the parse tree
+	 */
+	void enterPhrase_word(FormativeExamGrammarParser.Phrase_wordContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FormativeExamGrammarParser#phrase_word}.
+	 * @param ctx the parse tree
+	 */
+	void exitPhrase_word(FormativeExamGrammarParser.Phrase_wordContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link FormativeExamGrammarParser#list_with_title}.
 	 * @param ctx the parse tree
 	 */

@@ -8,6 +8,7 @@ import eapli.base.postitmanager.domain.PostIt;
 import eapli.framework.domain.model.AggregateRoot;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 @Entity
@@ -32,6 +33,7 @@ public class Board implements AggregateRoot<BoardTitle> {
         this.boardTitle = boardTiTle;
         this.cellList = cellList;
         this.boardStatus = new BoardStatus(true);
+        this.notificationList = new ArrayList<>();
     }
 
     protected Board(){

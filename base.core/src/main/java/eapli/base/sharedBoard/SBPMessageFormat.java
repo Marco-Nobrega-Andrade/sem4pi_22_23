@@ -3,7 +3,6 @@ package eapli.base.sharedBoard;
 import eapli.base.board.dto.BoardDTOWithTitle;
 import eapli.base.board.dto.CellDTOWithColumnRowContent;
 
-import javax.print.DocFlavor;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +31,12 @@ public class SBPMessageFormat {
 
     public static final int HISTORY_OF_UPDATES_CODE = 17;
 
+
     public static final int UNDO_LAST_CHANGE_POST_IT_REQUEST = 18;
+
+    public static final int TASK_LIST_CODE = 19;
+
+
     public static final int SHARE_BOARD_CODE = 7;
 
     public static final int ARCHIVE_BOARD_CODE = 8;
@@ -145,6 +149,28 @@ public class SBPMessageFormat {
         return encodeRequest(HISTORY_OF_UPDATES_CODE, boardTitle);
     }
 
+    public static byte[] createTaskListRequest(List<String> taskList){
+        StringBuilder stringBuilder = createTaskList(taskList);
+
+        if(stringBuilder.length()==0){
+            return encodeRequest(TASK_LIST_CODE, "");
+        }
+
+        return encodeRequest(TASK_LIST_CODE, stringBuilder.toString());
+    }
+
+    public static StringBuilder createTaskList(List<String> taskList){
+        StringBuilder strBuilder = new StringBuilder();
+
+        for(int i = 0; i < taskList.size(); i++){
+            strBuilder.append(taskList.get(i));
+            if(i < taskList.size() - 1){
+                strBuilder.append(',');
+            }
+        }
+
+        return strBuilder;
+    }
 
     public static byte[] encodeRequest(int code, String data){
         //Data values

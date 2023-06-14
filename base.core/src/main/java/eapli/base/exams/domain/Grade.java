@@ -42,4 +42,9 @@ public class Grade implements ValueObject {
     public int hashCode() {
         return Objects.hash(grade_value);
     }
+
+    @Override
+    public String toString() {
+        return "" + grade_value;
+    }
 }

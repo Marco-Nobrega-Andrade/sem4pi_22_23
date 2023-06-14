@@ -12,31 +12,25 @@ participant "ExamResolution" as ExamR <<Domain>>
 T->UI: Selects the courses that he \nwants to see the grades from
 activate T
 activate UI
-UI->CTRL : listGradesFromTeacherCourse(course)
+UI->CTRL : listGradesFromTeacherCourse(courses)
 activate CTRL
-CTRL->S: listGradesFromTeacherCourse(course)
+CTRL->S: listGradesFromTeacherCourse(courses)
 activate S
-loop foreach selected course
-S -> CR : ofIdentity(courseIdentifier)
-activate CR
-return course
-end loop
 loop foreach course in courseList
-S-> ER : getExamsFromCourse(courseIdentifier)
+S-> ER : findExamsFromCourse(courseIdentifier)
 activate ER
 return examList
 end loop
 loop foreach exam in examList
-S-> ERR : getExamResolutionsFromExam(examTitle)
+S-> ERR : findExamResolutionsByExamId(examTitle)
 activate ERR
 return examResolutionList
 end loop
 loop foreach examResolution in examResolutionList
-S-> ExamR : returnExamResolutionGradeString()
+S-> ExamR : returnGradeString()
 activate ExamR
 return grade
 end loop
-
 return gradesList
 return gradesList
 return show all grades from teacher\n selected courses

@@ -13,9 +13,9 @@ import java.util.Objects;
 @Embeddable
 public class DateInterval implements ValueObject {
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date initialDate;
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date finalDate;
 
     public DateInterval(Date initialDate, Date finalDate) {

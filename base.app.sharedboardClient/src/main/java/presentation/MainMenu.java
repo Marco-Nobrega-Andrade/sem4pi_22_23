@@ -71,7 +71,6 @@ public class MainMenu extends AbstractUI {
 
     private static final String SEPARATOR_LABEL = "--------------";
 
-    private final AuthorizationService authz = AuthzRegistry.authorizationService();
 
     @Override
     public boolean show() {
@@ -97,8 +96,7 @@ public class MainMenu extends AbstractUI {
     @Override
     public String headline() {
 
-        return authz.session().map(s -> "Base [ @" + s.authenticatedUser().identity() + " ]")
-                .orElse("Base [ ==Anonymous== ]");
+        return  "Base [@ClientApplication]";
     }
 
     private Menu buildMainMenu() {

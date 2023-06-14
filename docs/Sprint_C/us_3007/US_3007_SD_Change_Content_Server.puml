@@ -1,0 +1,74 @@
+@startuml
+autonumber
+title ShareBoard - SharedBoardServer
+
+participant AttendClient as AC <<Application>>
+participant DataInputStream as DIS
+participant DataOutputStream as DOS
+participant SBPMessageFormat as SBPMF
+control ChangePostItContentController as CONTROLLER <<ShareBoardServer>> <<Application>>
+participant ChangePostItContentService as SERVICE <<Service>>
+participant Board as BOARD <<Domain>>
+participant Cell as CELL <<Domain>>
+participant PostIt as POST_IT <<Domain>>
+participant BoardHistory as BOARD_HIS <<Domain>>
+participant Person as PERSON <<Domain>>
+database BoardRepository as BOARD_REPO <<Persistence>>
+
+
+activate AC
+AC -> DIS : create(socket)
+activate DIS
+deactivate DIS
+AC -> DOS : create(socket)
+activate DOS
+deactivate DOS
+AC -> DIS : readUTF()
+activate DIS
+return message
+AC -> SBPMF : decodeFormat(message)
+activate SBPMF
+return arrayFormat
+AC -> SBPMF : decodeParams(message)
+activate SBPMF
+return params
+AC -> CONTROLLER : changePostItContent(boardTitle, row, column, content)
+activate CONTROLLER
+CONTROLLER -> SERVICE : changePostItContent(boardTitle, row, column, content)
+activate SERVICE
+SERVICE -> BOARD_REPO :ofIdentity(boardTitle)
+activate BOARD_REPO
+return board
+SERVICE -> PERSON : boardParticipantOfBoard(board)
+activate PERSON
+return boardParticipant
+SERVICE -> PERSON : boardOwnerOfBoard(board)
+activate PERSON
+return boardOwner
+SERVICE -> BOARD : updatePostItContent(row, column, content, boardParticipant, boardOwner)
+activate BOARD
+BOARD -> CELL : currentPostIt()
+activate CELL
+return postIt
+BOARD -> BOARD_HIS : checkIfPostItCanBeUpdatedByUser(postIt, boardParticipant, boardOwner)
+activate BOARD_HIS
+return boolean
+BOARD -> POST_IT : create (postItId, currPostItVer+1, content)
+activate POST_IT
+return newPostIt
+BOARD -> CELL : updatePostIt(newPostIt)
+activate CELL
+return boolean
+return operation success
+return operation success
+CONTROLLER --> AC : true
+deactivate CONTROLLER
+AC -> SBPMF : createAcknowledgeRequest()
+activate SBPMF
+return ackRequest
+AC -> DOS : writeUTF(ackRequest)
+activate DOS
+deactivate DOS
+deactivate AC
+
+@enduml
