@@ -2,7 +2,8 @@
 autonumber
 title ArchiveBoard - SharedBoardServer
 
-participant ": AttendClient" as AC <<Application>>
+participant ": AttendClient" as UI <<UI>>
+participant ": ArchiveBoardRequest" as ABR <<UI>>
 participant ": DataInputStream" as DIS
 participant ": DataOutputStream" as DOS
 participant ": SBPMessageFormat" as SBPMF
@@ -12,63 +13,49 @@ participant ": Board" as B <<Domain>>
 participant ": Notification" as N <<Domain>>
 participant ": TaskBuilder" as TB <<Builder>>
 database ": BoardRepository" as BR <<Repository>>
-database ": BoardHistoryRepository" as BHR <<Repository>>
-database ": BoardOwnerRepository" as BOR <<Repository>>
-activate AC
-
-AC -> DIS : readUTF()
+participant ": AddNotificationService" as ANS <<Service>>
+participant ": AddTaskToBoardHistoryService" as ATTBHS <<Service>>
+activate UI
+UI -> ABR : archiveBoard(message, outputStream)
+activate ABR
+ABR -> DIS : readUTF()
 activate DIS
 return message
-AC -> SBPMF : decodeFormat(message)
+ABR -> SBPMF : decodeFormat(message)
 activate SBPMF
 return arrayFormat
-AC -> SBPMF : decodeParams(message)
+ABR -> SBPMF : decodeParams(message)
 activate SBPMF
 return params
-AC -> CTRL : archiveBoard(boardTitle)
+ABR -> CTRL : archiveBoard(boardTitle)
 activate CTRL
 CTRL -> SBS : archiveBoard(boardTitle)
 activate SBS
-SBS -> BR : findBoardByTitle()
+SBS -> BR : findBoardByTitle(boardTitle)
 activate BR
 return board
 SBS -> B : archiveBoard()
 activate B
 return true
-SBS -> N : create(notificationMessage);
-activate N
-deactivate N
-SBS -> B : addNotification(notification)
-activate B
-deactivate B
-SBS -> TB : create()
-activate TB
-deactivate TB
-SBS -> BHR : getLastTaskId()
-activate BHR
-return id
-SBS -> BOR : findBoardOwnerByBoard(board)
-activate BOR
-return boardOwner
-SBS -> TB : withTaskIdOperationBoardOwner().build()
-activate TB
-return task
-SBS -> B : addTaskToHistory(task)
-activate B
-deactivate B
 SBS -> BR : save(board)
 activate BR
 deactivate BR
+SBS -> ANS : addNotification(message, boardTitle)
+activate ANS
+return true
+SBS -> ATTBHS : addArchiveBoardTaskToHistory(boardTitle)
+activate ATTBHS
+return true
 SBS --> CTRL : true
 deactivate SBS
-CTRL --> AC : true
+CTRL --> ABR : true
 deactivate CTRL
-AC -> SBPMF : createAcknowledgeRequest()
+ABR -> SBPMF : createAcknowledgeRequest()
 activate SBPMF
 return ackRequest
-AC -> DOS : writeUTF(ackRequest)
+ABR -> DOS : writeUTF(ackRequest)
 activate DOS
 deactivate DOS
-deactivate AC
-
+deactivate ABR
+deactivate UI
 @enduml
