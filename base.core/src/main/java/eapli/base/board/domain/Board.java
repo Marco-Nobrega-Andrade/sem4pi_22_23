@@ -136,7 +136,7 @@ public class Board implements AggregateRoot<BoardTitle> {
         this.boardHistory.addTask(task);
     }
 
-    public void updatePostIt(PostIt postIt, int column, int row) {
+    public void updateCell(PostIt postIt, int column, int row) {
         for (Cell cell : cellList) {
             if (cell.isColumn(column)  && cell.isRow(row)) {
                 cell.addPostIt(postIt);
@@ -158,7 +158,7 @@ public class Board implements AggregateRoot<BoardTitle> {
         return currentPostIt;
     }
 
-    public boolean updatePostIt(PostIt newPostIt, Integer row, Integer column) throws CellDoesNotExistException {
+    public boolean updateCell(PostIt newPostIt, Integer row, Integer column) throws CellDoesNotExistException {
         cellFromRowAndColumn(row, column).addPostIt(newPostIt);
         return true;
     }

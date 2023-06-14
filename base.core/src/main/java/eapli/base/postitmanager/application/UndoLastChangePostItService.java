@@ -43,7 +43,7 @@ public class UndoLastChangePostItService {
         PostIt lastVersionOfPostIt = postItRepository.getLastVersionOfPostIt(version, id);
         lastVersionOfPostIt.updateVersion();
         lastVersionOfPostIt.updateVersion();
-        board.updatePostIt(lastVersionOfPostIt,column,row);
+        board.updateCell(lastVersionOfPostIt,column,row);
 
         TaskBuilder taskBuilder = new TaskBuilder();
         if (person.isBoardOwner(board)) {
