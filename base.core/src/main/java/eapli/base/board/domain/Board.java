@@ -132,4 +132,12 @@ public class Board implements AggregateRoot<BoardTitle> {
     public void addTaskToHistory(Task task){
         this.boardHistory.addTask(task);
     }
+
+    public void updatePostIt(PostIt postIt, int column, int row) {
+        for (Cell cell : cellList) {
+            if (cell.isColumn(column)  && cell.isRow(row)) {
+                cell.addPostIt(postIt);
+            }
+        }
+    }
 }
