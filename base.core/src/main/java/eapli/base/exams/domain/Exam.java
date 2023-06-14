@@ -118,7 +118,7 @@ public class Exam implements AggregateRoot<ExamTitle>  {
         return examResolutions.add(newExamResolution);
     }
 
-    public boolean canBeTaken(Date currDate) {
-        return currDate.after(dateInterval.initialDate()) && currDate.before(dateInterval.finalDate());
+    public boolean cannotBeTaken(Date currDate) {
+        return currDate.before(dateInterval.initialDate()) || currDate.after(dateInterval.finalDate());
     }
 }
