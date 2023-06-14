@@ -32,7 +32,7 @@ public class JpaExtraClassRepository extends JpaAutoTxRepository<ExtraClass, Ext
      */
     @Override
     public List<ExtraClass> findExtraClassesInACourse(Course course) {
-        return  createQuery("SELECT c FROM ExtraClass c WHERE c IN ( :course.extraClassesList )"
+        return  createQuery("SELECT c FROM ExtraClass c WHERE c IN (SELECT cl FROM Course co JOIN co.extraClassesList cl WHERE co = :course)"
                 , ExtraClass.class).
                 setParameter("course", course).getResultList();
     }

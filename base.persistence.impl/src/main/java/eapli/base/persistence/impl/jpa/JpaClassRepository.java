@@ -59,7 +59,7 @@ public class JpaClassRepository extends JpaAutoTxRepository<Class, ClassId,Class
 
     @Override
     public List<Class> findClassesInACourse(Course course) {
-        return  createQuery("SELECT c FROM Class c WHERE c IN ( :course.classesList )"
+        return  createQuery("SELECT c FROM Class c WHERE c IN (SELECT cl FROM Course co JOIN co.classesList cl WHERE co = :course)"
                 , Class.class).
                 setParameter("course", course).getResultList();
     }
