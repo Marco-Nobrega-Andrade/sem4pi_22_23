@@ -1,5 +1,6 @@
 package eapli.base.app.sharedboardServer;
 
+import eapli.base.app.sharedboardServer.Requests.*;
 import eapli.base.board.application.*;
 import eapli.base.board.application.services.BoardInformationController;
 import eapli.base.board.dto.BoardDTOWithTitle;
@@ -40,24 +41,13 @@ public class AttendClient implements Runnable{
                 arrayFormat = SBPMessageFormat.decodeFormat(message.getBytes());
                 switch (arrayFormat[SBPMessageFormat.CODE_OFFSET]) {
                     case SBPMessageFormat.AUTH_CODE:
-
-                        List<String> params = SBPMessageFormat.decodeParam(message.getBytes());
-                        if (credentialHandler.authenticated(params.get(0), params.get(1), null)) {
-                            byte[] authRequest = SBPMessageFormat.createAcknowledgeRequest();
-                            outputStream.writeUTF(new String(authRequest));
-                        } else {
-                            byte[] authRequest = SBPMessageFormat.
-                                    creteErrorRequest("Wrong username or password.");
-                            outputStream.writeUTF(new String(authRequest));
-                        }
+                        AuthRequest.authenticate(message, outputStream, credentialHandler);
                         break;
                     case SBPMessageFormat.COMMTEST_CODE:
-                        outputStream.writeUTF(new String(SBPMessageFormat.createAcknowledgeRequest()));
+                        CommtestRequest.test(outputStream);
                         break;
                     case SBPMessageFormat.LIST_BOARD_I_OWN_SEND:
-                        List<BoardDTOWithTitle> boardDTOList = new ListBoardsIOwnController().listBoardsIOwn();
-                        byte[] boardIOwnListRequest = SBPMessageFormat.createListBoardReceive(boardDTOList);
-                        outputStream.writeUTF(new String(boardIOwnListRequest));
+                        ListBoardsIOwnRequest.listBoardsIOwn(message, outputStream);
                         break;
                     case SBPMessageFormat.LIST_BOARD_I_PARTICIPATE_SEND:
                         List<BoardDTOWithTitle> boardDTOList2 = new ListBoardIParticipateController().
@@ -101,32 +91,10 @@ public class AttendClient implements Runnable{
                         break;
 
                     case SBPMessageFormat.SHARE_BOARD_CODE:
-                        List<String> shareBoardParams = SBPMessageFormat.decodeParam(message.getBytes());
-                        boolean permission;
-                        if (shareBoardParams.get(2).equals("t")) {
-                            permission = true;
-                        } else {
-                            permission = false;
-                        }
-                        try {
-                            new ShareBoardController().shareBoard(shareBoardParams.get(0),
-                                    shareBoardParams.get(1), permission);
-                            outputStream.writeUTF(new String(SBPMessageFormat.createAcknowledgeRequest()));
-                        }catch (DuplicateCreationException | ParameterNullBlankException e){
-                            outputStream.writeUTF(new String(SBPMessageFormat.creteErrorRequest(e.getMessage())));
-                        }catch (NoResultException e){
-                            outputStream.writeUTF(new String(SBPMessageFormat.
-                                    creteErrorRequest("ERROR: There are no people in the system with that e-mail")));
-                        }
+                        ShareBoardRequest.shareBoard(message, outputStream);
                         break;
                     case SBPMessageFormat.ARCHIVE_BOARD_CODE:
-                        List<String> archiveBoardParam = SBPMessageFormat.decodeParam(message.getBytes());
-                        try{
-                            new ArchiveBoardController().archiveBoard(archiveBoardParam.get(0));
-                            outputStream.writeUTF(new String(SBPMessageFormat.createAcknowledgeRequest()));
-                        }catch (AlreadyDeactivatedException e){
-                            outputStream.writeUTF(new String(SBPMessageFormat.creteErrorRequest(e.getMessage())));
-                        }
+                        ArchiveBoardRequest.archiveBoard(message,outputStream);
                         break;
                     case SBPMessageFormat.VIEW_IN_REAL_TIME_CODE:
                         List<String> param = SBPMessageFormat.decodeParam(message.getBytes());
