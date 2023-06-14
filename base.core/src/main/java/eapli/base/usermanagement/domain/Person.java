@@ -171,4 +171,32 @@ public class Person implements AggregateRoot<ID_Person> {
         }
         return false;
     }
+
+    /**
+     * Gets boardParticipant Object that is participating in board
+     * Used to know which board participant of a board the object person is
+     * @param board the board that the person participates/owns
+     * @return board participant obj, null otherwise (if null it must be board owner)
+     */
+    public BoardParticipant boardParticipantOfBoard(Board board) {
+        for (BoardParticipant bp : boardParticipantList){
+            if (bp.isBoardParticipant(board)){
+                return bp;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Gets board owner Object that is participating in board
+     * Used to know which board owner of a board the object person is
+     * @param board the board that the person participates/owns
+     * @return board owner obj, null otherwise (if null it must be board participant)
+     */
+    public BoardOwner boardOwnerOfBoard(Board board) {
+        if (boardOwner.isBoardOwner(board)){
+            return boardOwner;
+        }
+        return null;
+    }
 }
