@@ -24,23 +24,17 @@ public class ShareBoardService {
         BoardParticipantRepository boardParticipantRepository = repositoryFactory.boardParticipantRepository();
         BoardRepository boardRepository = repositoryFactory.boardRepository();
         PersonRepository personRepository = repositoryFactory.personRepository();
-        BoardHistoryRepository boardHistoryRepository = repositoryFactory.boardHistoryRepository();
-        BoardOwnerRepository boardOwnerRepository = repositoryFactory.boardOwnerRepository();
     public boolean shareBoard(String boardTitle, String email, boolean permission) throws ParameterNullBlankException, DuplicateCreationException {
         Board board = boardRepository.findBoardByTitle(boardTitle);
         BoardParticipantFactory factory = new BoardParticipantFactory();
         BoardParticipant boardParticipant = factory.buildBoardParticipant(boardParticipantRepository.findMaxId() + 1, permission, board);
         Person person = personRepository.findPersonByEmail(email);
         person.addBoardParticipant(boardParticipant);
-        board.addNotification(new Notification("The board " + boardTitle +" was shared with " + person.returnFullNameString()));
-        Task task = new TaskBuilder().withTaskId(boardHistoryRepository
-                        .getLastTaskId()+1).withOperation(OperationValue.ADD)
-                .withBoardOwner(boardOwnerRepository.findBoardOwnerByBoard(board))
-                .withBoardParticipant(boardParticipant).build();
-        board.addTaskToHistory(task);
         boardParticipantRepository.save(boardParticipant);
         personRepository.save(person);
-        boardRepository.save(board);
+
+        new AddNotificationService().addNotification("The board " + boardTitle +" was shared with " + person.returnFullNameString(), boardTitle);
+        new AddTaskToBoardHistoryService().addShareBoardTaskToHistory(boardTitle, boardParticipant);
         return true;
     }
 }
