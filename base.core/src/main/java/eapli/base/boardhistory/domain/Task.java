@@ -36,4 +36,21 @@ public class Task{
         return taskId.returnTaskIdString();
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Operation: " + operation.toString());
+
+        if(boardOwner!=null){
+            sb.append(" | BoardOwner: " + boardOwner);
+        }else {
+            sb.append(" | BoardParticipant: " + boardParticipant.toString());
+        }
+
+        if(postIt!=null){
+            sb.append(" | Post-It: " + postIt);
+        }
+
+        return sb.toString();
+    }
 }

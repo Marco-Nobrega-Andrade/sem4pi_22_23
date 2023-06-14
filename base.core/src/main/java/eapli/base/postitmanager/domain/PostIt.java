@@ -58,4 +58,8 @@ public class PostIt implements AggregateRoot<PostItKey> {
         this.postItKey.updateVersion();
     }
 
+    @Override
+    public String toString() {
+        return postItKey.toString();
+    }
 }

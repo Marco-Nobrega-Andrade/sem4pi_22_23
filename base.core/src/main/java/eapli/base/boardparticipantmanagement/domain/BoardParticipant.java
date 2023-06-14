@@ -64,4 +64,9 @@ public class BoardParticipant implements AggregateRoot<BoardParticipantId> {
     public boolean isBoardParticipant(Board board) {
         return this.board.equals(board);
     }
+
+    @Override
+    public String toString() {
+        return boardParticipantId.toString();
+    }
 }

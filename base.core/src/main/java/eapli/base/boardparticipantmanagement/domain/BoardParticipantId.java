@@ -41,4 +41,9 @@ public class BoardParticipantId  implements Comparable<BoardParticipantId>, Valu
         }
         return true;
     }
+
+    @Override
+    public String toString() {
+        return id.toString();
+    }
 }

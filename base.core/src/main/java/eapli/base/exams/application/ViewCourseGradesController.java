@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class ViewCourseGradesController {
 
-private static ViewCourseGradesService viewCourseGradesService;
+private static ViewCourseGradesService viewCourseGradesService = new ViewCourseGradesService();
 
     public List<String> listTeacherCourses(){
         return viewCourseGradesService.listTeacherCourses();

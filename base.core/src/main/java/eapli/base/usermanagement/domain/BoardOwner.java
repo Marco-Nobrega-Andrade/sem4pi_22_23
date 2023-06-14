@@ -71,4 +71,9 @@ public class BoardOwner implements AggregateRoot<BoardOwnerId> {
         }
         return false;
     }
+
+    @Override
+    public String toString() {
+        return boardOwnerId.toString();
+    }
 }

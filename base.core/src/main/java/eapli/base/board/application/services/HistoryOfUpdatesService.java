@@ -18,7 +18,7 @@ public class HistoryOfUpdatesService {
         List<Task> taskEntityList = boardHistoryRepository.historyOfUpdates(boardHistory.identity());
 
         for (Task task : taskEntityList) {
-            taskList.add(task.returnTaskIdString());
+            taskList.add(task.toString());
         }
 
 
