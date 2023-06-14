@@ -9,12 +9,12 @@ participant "SBPMessageFormat" as SBPF
 participant "DataOutputStream" as DOS
 participant "DataInputStream" as DIS
 activate User
-User -> UI : chooses boardId and post-it
+User -> UI : chooses boardTitle and post-it
 activate UI
 
-UI -> UI : sendChangePostItContentRequest(boardId, row, column, content)
+UI -> UI : sendChangePostItContentRequest(boardTitle, row, column, content)
 activate UI
-UI -> SBPF : createChangePostItContentRequest(boardId, row, column, content)
+UI -> SBPF : createChangePostItContentRequest(boardTitle, row, column, content)
 activate SBPF
 return changePostItContentRequest
 UI -> DOS : create(socket)

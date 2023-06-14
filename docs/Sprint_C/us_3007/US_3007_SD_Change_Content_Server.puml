@@ -32,11 +32,11 @@ return arrayFormat
 AC -> SBPMF : decodeParams(message)
 activate SBPMF
 return params
-AC -> CONTROLLER : changePostItContent(boardId, row, column, content)
+AC -> CONTROLLER : changePostItContent(boardTitle, row, column, content)
 activate CONTROLLER
-CONTROLLER -> SERVICE : changePostItContent(boardId, row, column, content)
+CONTROLLER -> SERVICE : changePostItContent(boardTitle, row, column, content)
 activate SERVICE
-SERVICE -> BOARD_REPO :ofIdentity(boardId)
+SERVICE -> BOARD_REPO :ofIdentity(boardTitle)
 activate BOARD_REPO
 return board
 SERVICE -> PERSON : boardParticipantOfBoard(board)
