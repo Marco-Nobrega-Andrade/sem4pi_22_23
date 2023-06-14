@@ -10,6 +10,7 @@ import eapli.base.exceptions.ParameterNullBlankException;
 import eapli.base.infrastructure.authz.AuthenticationCredentialHandler;
 import eapli.base.infrastructure.authz.CredentialHandler;
 import eapli.base.postitmanager.application.CreatePostItController;
+import eapli.base.postitmanager.application.UndoLastChangePostItController;
 import eapli.base.sharedBoard.SBPMessageFormat;
 
 import javax.persistence.NoResultException;
@@ -152,6 +153,15 @@ public class AttendClient implements Runnable{
                             outputStream.writeUTF(new String(SBPMessageFormat.creteErrorRequest(e.getMessage())));
                         }
                         break;
+                    case SBPMessageFormat.UNDO_LAST_CHANGE_POST_IT_REQUEST:
+                        List<String> postItParams = SBPMessageFormat.decodeParam(message.getBytes());
+                        try {
+                            new UndoLastChangePostItController().undoLastChangePostIt(postItParams.get(0),
+                                    Integer.parseInt(postItParams.get(1)), Integer.parseInt(postItParams.get(2)));
+                            outputStream.writeUTF(new String(SBPMessageFormat.createAcknowledgeRequest()));
+                        }catch (Exception e){
+                            outputStream.writeUTF(new String(SBPMessageFormat.creteErrorRequest(e.getMessage())));
+                        }
                 }
             }while (arrayFormat[SBPMessageFormat.CODE_OFFSET] != SBPMessageFormat.DISCONN_CODE) ;
         } catch (IOException e) {

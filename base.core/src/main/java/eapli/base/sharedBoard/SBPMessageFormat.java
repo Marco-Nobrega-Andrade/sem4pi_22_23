@@ -32,6 +32,7 @@ public class SBPMessageFormat {
 
     public static final int HISTORY_OF_UPDATES_CODE = 17;
 
+    public static final int UNDO_LAST_CHANGE_POST_IT_REQUEST = 18;
     public static final int SHARE_BOARD_CODE = 7;
 
     public static final int ARCHIVE_BOARD_CODE = 8;
@@ -198,5 +199,9 @@ public class SBPMessageFormat {
             format[i] = request[i];
         }
         return format;
+    }
+
+    public static byte[] createUndoLastChangePostItRequest(String board, int selectedColumn, int selectedRow) {
+        return encodeRequest(UNDO_LAST_CHANGE_POST_IT_REQUEST, board + "," + selectedColumn + "," + selectedRow);
     }
 }
