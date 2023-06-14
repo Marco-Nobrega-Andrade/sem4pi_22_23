@@ -38,4 +38,12 @@ public class PostItKey implements Comparable<PostItKey>, ValueObject {
     public void updateVersion() {
         this.postItVersion.updateVersion();
     }
+
+    public int returnPostItVersion() {
+        return this.postItVersion.returnVersion();
+    }
+
+    public long returnPostItIdentifier() {
+        return this.postItIdentifier.returnIdentifier();
+    }
 }

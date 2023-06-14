@@ -37,4 +37,8 @@ public class PostItIdentifier implements ValueObject {
     public int hashCode() {
         return Objects.hash(postItId);
     }
+
+    public long returnIdentifier() {
+        return this.postItId;
+    }
 }

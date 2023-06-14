@@ -36,4 +36,8 @@ public class PostItVersion implements ValueObject {
     public void updateVersion() {
         this.version++;
     }
+
+    public int returnVersion() {
+        return this.version;
+    }
 }
