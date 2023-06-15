@@ -171,7 +171,7 @@ public class Board implements AggregateRoot<BoardTitle> {
             }
         }
         if (cell == null){
-            throw new CellDoesNotExistException("This cell doesn't exist in this board");
+            throw new CellDoesNotExistException(String.format("This board doesn't have a cell in row %d, column %d",row,column));
         }
         return cell;
     }
