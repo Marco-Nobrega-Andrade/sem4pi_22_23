@@ -38,7 +38,7 @@ public class TakeExamUI extends AbstractUI {
             System.out.println();
             System.out.println(SEPARATOR);
             System.out.println();
-            System.out.println("Here is the exam specification.");
+            System.out.println("Here is the exam specification.\n\n");
             System.out.println("To submit your answer please create a .txt file with the following rules:");
             System.out.println("- Multiple answers to the same question should be separated by commas");
             System.out.println("- Multiple answers to different questions should be separated by newline");
@@ -49,11 +49,11 @@ public class TakeExamUI extends AbstractUI {
             System.out.println("Q3answer1,Q3answer2,Q3answer3");
 
             do {
-                String filePath = Console.readLine("Please insert the path to the resolution file");
+                String filePath = Console.readLine("\n\nPlease insert the path to the resolution file");
 
                 try {
                     List<String> gradeAndFeedback = new TakeExamController().takeExam(selectedExam.examTitle, filePath);
-                    System.out.println("Here is your grade and the feedback to each question:");
+                    System.out.println("\nHere is your grade and the feedback to each question:");
                     for (String str : gradeAndFeedback) {
                         System.out.println(str);
                     }
