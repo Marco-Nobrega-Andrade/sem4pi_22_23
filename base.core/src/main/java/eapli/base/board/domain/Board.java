@@ -175,4 +175,8 @@ public class Board implements AggregateRoot<BoardTitle> {
         }
         return cell;
     }
+
+    public boolean verifyIfCellIsAvailable(Integer row, Integer column) throws CellDoesNotExistException {
+        return !cellFromRowAndColumn(row, column).hasPostIt();
+    }
 }
