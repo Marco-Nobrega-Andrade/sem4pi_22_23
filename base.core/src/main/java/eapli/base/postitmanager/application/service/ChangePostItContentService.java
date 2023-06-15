@@ -41,6 +41,7 @@ public class ChangePostItContentService {
 
         board.updateCell(newPostIt,row,column);
 
+        boardRepo.save(board);
 
         new AddNotificationService().addNotification("The post-it in row " + row +" and column " + column + "was updated" , boardTitle);
         new AddTaskToBoardHistoryService().addChangePostItContentTaskToHistory(boardTitle,boardParticipant,boardOwner,oldPostIt);
