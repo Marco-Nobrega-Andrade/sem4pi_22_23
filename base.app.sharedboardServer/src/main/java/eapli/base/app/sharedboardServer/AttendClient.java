@@ -5,16 +5,12 @@ import eapli.base.board.application.*;
 import eapli.base.board.application.services.BoardInformationController;
 import eapli.base.board.dto.BoardDTOWithTitle;
 import eapli.base.board.dto.CellDTOWithColumnRowContent;
-import eapli.base.exceptions.AlreadyDeactivatedException;
-import eapli.base.exceptions.DuplicateCreationException;
-import eapli.base.exceptions.ParameterNullBlankException;
 import eapli.base.infrastructure.authz.AuthenticationCredentialHandler;
 import eapli.base.infrastructure.authz.CredentialHandler;
 import eapli.base.postitmanager.application.CreatePostItController;
 import eapli.base.postitmanager.application.UndoLastChangePostItController;
 import eapli.base.sharedBoard.SBPMessageFormat;
 
-import javax.persistence.NoResultException;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -89,7 +85,9 @@ public class AttendClient implements Runnable{
                             }
                         }
                         break;
-
+                    case SBPMessageFormat.CHANGE_POST_IT_CONTENT:
+                        ChangePostItContentRequest.changePostItContent(message, outputStream);
+                        break;
                     case SBPMessageFormat.SHARE_BOARD_CODE:
                         ShareBoardRequest.shareBoard(message, outputStream);
                         break;
