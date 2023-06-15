@@ -8,14 +8,14 @@ import java.util.*;
 
 public class ViewCoursesGradesUI extends AbstractUI {
 
-    private static ViewCourseGradesController viewCourseGradesController;
+    private static ViewCourseGradesController viewCourseGradesController = new ViewCourseGradesController();
 
     @Override
     protected boolean doShow() {
 
         List<String> courseList = viewCourseGradesController.listTeacherCourses();
 
-        if(!courseList.isEmpty()){
+        if (!courseList.isEmpty()) {
 
             Map<Integer, List<String>> gradesByCourse = new HashMap<>();
             int changeOption = 0;
@@ -26,37 +26,51 @@ public class ViewCoursesGradesUI extends AbstractUI {
             while (changeOption != -1) {
                 if (changeOption == 1) {
 
-                    List<String> newCourseList = new ArrayList<>();
+                    List<String> coursesCopy = new ArrayList<>();
+                    coursesCopy.addAll(courseList);
                     int size = courseList.size();
 
-                    for (int i = 0; i < size; i++) {
+                    int option = -1;
 
-                        System.out.printf("%d. Course Id: %s", i + 1, courseList.get(i));
-                    }
+                    List<String> selectedCourses = new ArrayList<>();
 
-                    int option = 0;
-                    List<Integer> selectedCourses = new ArrayList<>();
+                    while(option != 0) {
 
-                    while (option == 0) {
+                        for (int i = 0; i < size; i++) {
 
-                        System.out.println("0. end\n");
-                        selectedCourses.add(Console.readOption(1, size, 0));
-
-                    }
-
-                    if(!selectedCourses.contains(0)) {
-
-                        for (int idx : selectedCourses) {
-                            newCourseList.add(courseList.get(idx - 1));
+                            System.out.printf("%d. Course Id: %s\n", i + 1, coursesCopy.get(i));
                         }
 
-                        gradesByCourse = viewCourseGradesController.listGradesFromTeacherCourse(newCourseList);
+                        System.out.println("0. end\n");
 
-                        gradesByCoursePrinter(gradesByCourse, newCourseList);
+                        option = (Console.readOption(1, size, 0));
+
+                        if(option!=0) {
+
+                            selectedCourses.add(coursesCopy.get(option - 1));
+                            coursesCopy.remove(option - 1);
+
+                            size--;
+
+                            if (size == 0) {
+                                option = 0;
+                            }
+
+                            System.out.println("\nThe course you selected was added to the set of courses.\n");
+
+                        }
 
                     }
 
-                    changeOption = -1;
+                    if (!coursesCopy.equals(courseList)) {
+
+                        gradesByCourse = viewCourseGradesController.listGradesFromTeacherCourse(selectedCourses);
+
+                        gradesByCoursePrinter(gradesByCourse, selectedCourses);
+
+                        changeOption = -1;
+
+                    }
 
                 } else if (changeOption == 2) {
 
@@ -67,14 +81,23 @@ public class ViewCoursesGradesUI extends AbstractUI {
                     changeOption = -1;
 
                 }
+
+                changeOption = -1;
             }
-        }else{
+        }else
+
+        {
 
             System.out.println("You have no courses available!");
 
         }
+
+
         return false;
+
     }
+
+
 
     @Override
     public String headline() {
@@ -85,12 +108,20 @@ public class ViewCoursesGradesUI extends AbstractUI {
 
         for (Map.Entry<Integer, List<String>> info: gradesByCourse.entrySet()) {
 
-            System.out.printf("Course: %s\n", courses.get(info.getKey()-1));
+            System.out.printf("\nCourse: %s\n", courses.get(info.getKey()-1));
             int size = info.getValue().size();
 
-            for (int i = 0; i < size; i++) {
-                System.out.println("Grades List:");
-                System.out.printf("%d. %s \n", info.getValue().get(i));
+            if(size == 0){
+
+                System.out.println("There are no grades in this course.");
+
+            }else{
+
+                for (int i = 0; i < size; i++) {
+                    System.out.println("Grades List:");
+                    System.out.printf("%d. %s \n", i+1, info.getValue().get(i));
+                }
+
             }
 
         }

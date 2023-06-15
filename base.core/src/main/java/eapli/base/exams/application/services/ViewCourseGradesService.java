@@ -59,20 +59,27 @@ public class ViewCourseGradesService {
 
             if(!examList.isEmpty()) {
 
-                for (Exam exam : examList) {
+                int sizeExamList = examList.size();
+                List<String> gradeList = new ArrayList<>();
 
-                    List<String> gradeList = new ArrayList<>();
-                    List<ExamResolution> examResolutionList = examResolutionRepository.findExamResolutionsByExamId(new ExamTitle(exam.returnExamTitleString()));
+                for (int j = 0; j < sizeExamList; j++) {
 
-                    for (ExamResolution examResolution : examResolutionList) {
+                    List<ExamResolution> examResolutionList = examResolutionRepository.findExamResolutionsByExamId(new ExamTitle(examList.get(j).returnExamTitleString()));
 
-                        gradeList.add(examResolution.returnGradeString());
+                    if(!examResolutionList.isEmpty()){
+
+                        for (ExamResolution examResolution : examResolutionList) {
+
+                            gradeList.add(examResolution.returnGradeString());
+
+                        }
 
                     }
 
-                    gradesByCourse.put(i + 1, gradeList);
 
                 }
+
+                gradesByCourse.put(i + 1, gradeList);
 
             }else {
 
