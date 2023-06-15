@@ -79,6 +79,14 @@ public class Person implements AggregateRoot<ID_Person> {
     public String returnFullNameString(){
         return fullName.toString();
     }
+
+    public String returnShortNameString(){
+        return systemUser.name().toString();
+    }
+    public String returnEmailString(){
+        return systemUser.email().toString();
+    }
+
     @Override
     public boolean sameAs(Object other) {
         if (!(other instanceof Person)) {
