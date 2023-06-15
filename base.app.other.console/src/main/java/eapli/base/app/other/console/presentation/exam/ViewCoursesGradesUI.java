@@ -117,8 +117,9 @@ public class ViewCoursesGradesUI extends AbstractUI {
 
             }else{
 
+                System.out.println("Grades List:");
+
                 for (int i = 0; i < size; i++) {
-                    System.out.println("Grades List:");
                     System.out.printf("%d. %s \n", i+1, info.getValue().get(i));
                 }
 
