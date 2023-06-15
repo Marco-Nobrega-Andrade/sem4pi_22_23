@@ -56,7 +56,12 @@ public class FormativeService {
             List<Integer> randomNumbers = new ArrayList<>();
 
             int n=0;
-            while(n<number)  {
+
+            if(matchingQuestionStructures.size()<number){
+                number = matchingQuestionStructures.size();
+            }
+
+            while (n < number) {
                 int r = random.nextInt(matchingQuestionStructures.size());
                 if (!randomNumbers.contains(r)) {
                     randomNumbers.add(r);
