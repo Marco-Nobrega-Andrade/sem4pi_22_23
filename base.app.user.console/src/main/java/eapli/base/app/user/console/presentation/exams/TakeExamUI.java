@@ -49,9 +49,8 @@ public class TakeExamUI extends AbstractUI {
             System.out.println("Q3answer1,Q3answer2,Q3answer3");
 
             do {
-                String filePath = Console.readLine("\n\nPlease insert the path to the resolution file");
-
                 try {
+                    String filePath = Console.readLine("\n\nPlease insert the path to the resolution file");
                     List<String> gradeAndFeedback = new TakeExamController().takeExam(selectedExam.examTitle, filePath);
                     System.out.println("\nHere is your grade and the feedback to each question:");
                     for (String str : gradeAndFeedback) {
