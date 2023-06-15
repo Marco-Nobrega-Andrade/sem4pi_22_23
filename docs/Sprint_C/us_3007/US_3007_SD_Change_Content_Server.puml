@@ -38,7 +38,7 @@ AC -> CONTROLLER : changePostItContent(boardTitle, row, column, content)
 activate CONTROLLER
 CONTROLLER -> SERVICE : changePostItContent(boardTitle, row, column, content)
 activate SERVICE
-SERVICE -> BOARD_REPO :ofIdentity(boardTitle)
+SERVICE -> BOARD_REPO : findBoardByTitle(boardTitle)
 activate BOARD_REPO
 return board
 SERVICE -> PERSON : boardParticipantOfBoard(board)
