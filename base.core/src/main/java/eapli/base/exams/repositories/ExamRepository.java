@@ -17,6 +17,4 @@ public interface ExamRepository extends DomainRepository<ExamTitle, Exam> {
     List<Exam> findExamsFromCourse(CourseIdentifier courseId);
 
     List<Exam> findTeacherExams(Teacher teacher);
-
-    List<Exam> findAllStudentAvailableExamsOfGivenCourse(Course course, Date date);
 }
