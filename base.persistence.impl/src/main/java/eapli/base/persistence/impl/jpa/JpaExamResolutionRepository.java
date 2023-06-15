@@ -49,7 +49,7 @@ public class JpaExamResolutionRepository extends JpaAutoTxRepository<ExamResolut
 
     @Override
     public List<ExamResolution> findExamResolutionsByExamId(ExamTitle examTitle) {
-        return createQuery("SELECT er FROM ExamResolution er WHERE er IN (SELECT er FROM Exam e JOIN e.examResolutions WHERE e.examTitle = :examTitle)", ExamResolution.class)
+        return createQuery("SELECT er FROM ExamResolution er WHERE er IN (SELECT eres FROM Exam e JOIN e.examResolutions eres WHERE e.examTitle = :examTitle)", ExamResolution.class)
                 .setParameter("examTitle", examTitle)
                 .getResultList();
     }
