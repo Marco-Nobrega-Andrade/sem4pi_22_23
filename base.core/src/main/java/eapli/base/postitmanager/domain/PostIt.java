@@ -8,7 +8,6 @@ import eapli.framework.domain.model.AggregateRoot;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
@@ -16,7 +15,7 @@ public class PostIt implements AggregateRoot<PostItKey> {
     @EmbeddedId
     private PostItKey postItKey;
     private Content content;
-    private Date date;
+    private PostItDate date;
     protected PostIt(PostItKey postItKey, Content content) throws ZeroParameterException, NegativeParameterException,
             ParameterNullBlankException {
         if (postItKey == null || content == null) {
@@ -24,7 +23,7 @@ public class PostIt implements AggregateRoot<PostItKey> {
         }
         this.postItKey = postItKey;
         this.content = content;
-        this.date = new Date(new java.util.Date());
+        this.date = new PostItDate(new java.util.Date());
     }
     protected PostIt() {
         // for ORM only

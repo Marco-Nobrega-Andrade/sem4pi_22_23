@@ -2,6 +2,7 @@ package eapli.base.courseclasses.domain;
 
 import eapli.framework.domain.model.ValueObject;
 
+import javax.persistence.Embeddable;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.util.Calendar;
@@ -9,7 +10,7 @@ import java.util.Objects;
 
 public class Date implements ValueObject {
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private java.util.Date date_time;
 
     public Date(java.util.Date date_time) {
