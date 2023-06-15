@@ -158,10 +158,9 @@ public class Board implements AggregateRoot<BoardTitle> {
         return currentPostIt;
     }
 
-    public boolean updateCell(PostIt newPostIt, Integer row, Integer column) throws CellDoesNotExistException {
+    public void updateCell(PostIt newPostIt, Integer row, Integer column) throws CellDoesNotExistException {
         Cell cellToUpdate = cellFromRowAndColumn(row, column);
         cellToUpdate.addPostIt(newPostIt);
-        return true;
     }
 
     private Cell cellFromRowAndColumn(Integer row, Integer column) throws CellDoesNotExistException {
