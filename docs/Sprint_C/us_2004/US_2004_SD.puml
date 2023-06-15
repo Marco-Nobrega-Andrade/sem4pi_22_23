@@ -36,11 +36,11 @@ SERVICE -> EX_RES_REPO : save(newExamResolution)
 activate EX_RES_REPO
 deactivate EX_RES_REPO
 
-SERVICE --> CONTROLLER : Informs operation success
+SERVICE --> CONTROLLER : grade and feedback
 deactivate SERVICE
-CONTROLLER --> UI : Informs operation success
+CONTROLLER --> UI : grade and feedback
 deactivate CONTROLLER
-UI --> ACTOR : Informs operation success
+UI --> ACTOR : grade and feedback
 deactivate UI
 deactivate ACTOR
 @enduml
