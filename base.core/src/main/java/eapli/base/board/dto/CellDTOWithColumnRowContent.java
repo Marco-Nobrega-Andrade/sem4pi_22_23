@@ -7,13 +7,19 @@ public class CellDTOWithColumnRowContent {
     public String columnIdentifier;
     public String columnTitle;
     public String content;
+    public String date;
+    public String email;
+    public String name;
 
-    public CellDTOWithColumnRowContent(String rowIdentifier, String rowTitle, String columnIdentifier, String columnTitle, String content) {
+    public CellDTOWithColumnRowContent(String rowIdentifier, String rowTitle, String columnIdentifier, String columnTitle, String content, String date, String email, String name) {
         this.rowIdentifier = rowIdentifier;
         this.rowTitle = rowTitle;
         this.columnIdentifier = columnIdentifier;
         this.columnTitle = columnTitle;
         this.content = content;
+        this.date = date;
+        this.email = email;
+        this.name = name;
     }
 
     @Override
@@ -22,6 +28,9 @@ public class CellDTOWithColumnRowContent {
                 rowTitle + ',' +
                 columnIdentifier + ',' +
                 columnTitle + ',' +
-                content;
+                content + ',' +
+                date + ',' +
+                email + ',' +
+                name;
     }
 }
