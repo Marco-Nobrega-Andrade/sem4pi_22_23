@@ -5,6 +5,7 @@ import eapli.base.board.domain.Board;
 import eapli.base.board.domain.BoardTitle;
 import eapli.base.board.domain.Cell;
 import eapli.base.board.repositories.BoardRepository;
+import eapli.base.usermanagement.domain.Person;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
@@ -27,7 +28,7 @@ public class JpaBoardRepository extends JpaAutoTxRepository<Board, BoardTitle, B
 
     @Override
     public long getLastCellId() {
-        return createQuery("SELECT COUNT(c) FROM Cell c", Long.class).getSingleResult();
+        return createQuery("SELECT COUNT(c) FROM Cell c", java.lang.Long.class).getSingleResult();
     }
 
     /**
@@ -89,5 +90,23 @@ public class JpaBoardRepository extends JpaAutoTxRepository<Board, BoardTitle, B
                 " b IN (SELECT DISTINCT bp.board FROM BoardParticipant bp WHERE bp IN " +
                 "(SELECT bpl FROM Person p JOIN p.boardParticipantList bpl WHERE p.systemUser = :systemUser))", Board.class)
                 .setParameter("systemUser", user).getResultList();
+    }
+
+    @Override
+    public Person getCreatorOfAPostItBoardOwner(Cell cell) {
+        return createQuery( "SELECT p FROM Person p JOIN p.boardOwner bo " +
+                        "Where bo IN (SELECT Distinct b FROM Task t JOIN t.boardOwner b WHERE t.postIt.postItKey.postItIdentifier IN" +
+                        " (SELECT c.postIt.postItKey.postItIdentifier FROM Cell c WHERE c =:cell) AND t.operation.operationValue = 'ADD')"
+                , Person.class)
+                .setParameter("cell", cell).getSingleResult();
+    }
+
+    @Override
+    public Person getCreatorOfAPostItBoardParticipant(Cell cell) {
+        return createQuery( "SELECT p FROM Person p JOIN p.boardParticipantList bpl " +
+                        "WHERE bpl IN (SELECT Distinct bp FROM Task t JOIN t.boardParticipant bp WHERE t.postIt.postItKey.postItIdentifier IN " +
+                        "(SELECT c.postIt.postItKey.postItIdentifier FROM Cell c WHERE c =:cell) AND t.operation.operationValue = 'ADD')"
+                , Person.class)
+                .setParameter("cell", cell).getSingleResult();
     }
 }

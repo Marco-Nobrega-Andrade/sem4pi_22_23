@@ -4,6 +4,7 @@ import eapli.base.board.domain.Board;
 import eapli.base.board.domain.BoardTitle;
 import eapli.base.board.domain.Cell;
 import eapli.base.board.repositories.BoardRepository;
+import eapli.base.usermanagement.domain.Person;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
 
@@ -38,6 +39,16 @@ public class InMemoryBoardRepository extends InMemoryDomainRepository<Board, Boa
 
     @Override
     public List<Board> listAllBoardsIParticipateAndCanRead(SystemUser user) {
+        return null;
+    }
+
+    @Override
+    public Person getCreatorOfAPostItBoardParticipant(Cell cell) {
+        return null;
+    }
+
+    @Override
+    public Person getCreatorOfAPostItBoardOwner(Cell cell) {
         return null;
     }
 }
