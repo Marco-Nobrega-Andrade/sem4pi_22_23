@@ -158,9 +158,9 @@ public class Board implements AggregateRoot<BoardTitle> {
         return currentPostIt;
     }
 
-    public boolean updateCell(PostIt newPostIt, Integer row, Integer column) throws CellDoesNotExistException {
-        cellFromRowAndColumn(row, column).addPostIt(newPostIt);
-        return true;
+    public void updateCell(PostIt newPostIt, Integer row, Integer column) throws CellDoesNotExistException {
+        Cell cellToUpdate = cellFromRowAndColumn(row, column);
+        cellToUpdate.addPostIt(newPostIt);
     }
 
     private Cell cellFromRowAndColumn(Integer row, Integer column) throws CellDoesNotExistException {
@@ -174,5 +174,9 @@ public class Board implements AggregateRoot<BoardTitle> {
             throw new CellDoesNotExistException(String.format("This board doesn't have a cell in row %d, column %d",row,column));
         }
         return cell;
+    }
+
+    public boolean verifyIfCellIsAvailable(Integer row, Integer column) throws CellDoesNotExistException {
+        return !cellFromRowAndColumn(row, column).hasPostIt();
     }
 }

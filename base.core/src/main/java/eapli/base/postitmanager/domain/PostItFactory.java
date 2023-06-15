@@ -18,8 +18,7 @@ public class PostItFactory {
 
     }
 
-    public PostIt buildFromExistingPostIt(String content, PostItKey postItKey) throws ZeroParameterException, ParameterNullBlankException, NegativeParameterException, InvalidContentSizeForAPostItException {
-        postItKey.updateVersion();
-        return new PostIt(postItKey,new Content(content));
+    public PostIt buildFromExistingPostIt(String content, long oldId, int oldVer) throws ZeroParameterException, ParameterNullBlankException, NegativeParameterException, InvalidContentSizeForAPostItException {
+        return new PostIt(new PostItKey(new PostItIdentifier(oldId),new PostItVersion(oldVer + 1)),new Content(content));
     }
 }

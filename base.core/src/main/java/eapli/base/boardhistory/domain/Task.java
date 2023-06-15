@@ -72,6 +72,6 @@ public class Task{
     }
 
     public boolean isInThisPostIt(PostIt currentPostIt) {
-        return this.postIt.equals(currentPostIt);
+        return this.postIt.returnPostItIdentifier() == currentPostIt.returnPostItIdentifier();
     }
 }
