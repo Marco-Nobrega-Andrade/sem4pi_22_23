@@ -159,7 +159,8 @@ public class Board implements AggregateRoot<BoardTitle> {
     }
 
     public boolean updateCell(PostIt newPostIt, Integer row, Integer column) throws CellDoesNotExistException {
-        cellFromRowAndColumn(row, column).addPostIt(newPostIt);
+        Cell cellToUpdate = cellFromRowAndColumn(row, column);
+        cellToUpdate.addPostIt(newPostIt);
         return true;
     }
 

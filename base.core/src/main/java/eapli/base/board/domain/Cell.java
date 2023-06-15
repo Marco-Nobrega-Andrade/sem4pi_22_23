@@ -2,9 +2,7 @@ package eapli.base.board.domain;
 
 import eapli.base.postitmanager.domain.PostIt;
 
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @Entity
 public class Cell implements Comparable<Cell>{
@@ -13,7 +11,7 @@ public class Cell implements Comparable<Cell>{
     private Row row;
     private Column column;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private PostIt postIt;
 
     protected Cell(CellId cellId, Row row, Column column){
