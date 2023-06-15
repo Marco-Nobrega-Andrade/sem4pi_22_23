@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class BoardOwnerId implements Comparable<BoardOwnerId>, ValueObject {
 
-    private long boardOwner_Id;
+    private Long boardOwner_Id;
 
     public BoardOwnerId(long boardOwnerId){
         if(boardOwnerId<=0){
@@ -37,4 +37,8 @@ public class BoardOwnerId implements Comparable<BoardOwnerId>, ValueObject {
         return (int)(boardOwner_Id-o.boardOwner_Id);
     }
 
+    @Override
+    public String toString() {
+        return boardOwner_Id.toString();
+    }
 }
