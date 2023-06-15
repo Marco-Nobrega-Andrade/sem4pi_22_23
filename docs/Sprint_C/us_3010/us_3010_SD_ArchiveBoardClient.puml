@@ -12,24 +12,18 @@ activate User
 User -> UI : chooses board
 activate UI
 
-UI -> UI : sendArchiveBoardRequest(boardId)
-activate UI
-UI -> SBPF : createArchiveBoardRequest(boardId)
+
+UI -> SBPF : createArchiveBoardRequest(boardTitle)
 activate SBPF
 return archiveBoardRequest
-UI -> DOS : create(socket)
-activate DOS
-deactivate DOS
-UI -> DIS : create(socket)
-activate DIS
-deactivate DIS
+
+
 UI -> DOS : writeUTF(archiveBoardRequest)
 activate DOS
 deactivate DOS
 UI -> DIS : readUTF()
 activate DIS
 return message
-return true
 return : informs operation success
 deactivate UI
 @enduml

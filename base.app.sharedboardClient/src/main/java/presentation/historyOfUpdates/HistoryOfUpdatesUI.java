@@ -39,9 +39,13 @@ public class HistoryOfUpdatesUI extends AbstractUI {
                         if(SBPMessageFormat.decodeFormat(taskListMessage.getBytes())[SBPMessageFormat.CODE_OFFSET] == SBPMessageFormat.TASK_LIST_CODE){
                             List<String> taskList = SBPMessageFormat.decodeParam(taskListMessage.getBytes());
                             int size = taskList.size();
+
+                            System.out.printf("\nHistory Of Updates of board %s:\n", board);
+
                             for(int i = 0; i<size; i++){
-                                System.out.printf("%d. Task Id: %s\n", i+1, taskList.get(i));
+                                System.out.printf("%d. %s\n", i+1, taskList.get(i).toString());
                             }
+
                         } else {
                             List<String> errorMessage = SBPMessageFormat.decodeParam(message.getBytes());
                             System.out.println(errorMessage.get(0));
