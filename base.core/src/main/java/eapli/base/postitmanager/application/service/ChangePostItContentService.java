@@ -4,7 +4,6 @@ package eapli.base.postitmanager.application.service;
 import eapli.base.board.application.services.AddNotificationService;
 import eapli.base.board.application.services.AddTaskToBoardHistoryService;
 import eapli.base.board.domain.Board;
-import eapli.base.board.domain.BoardTitle;
 import eapli.base.board.repositories.BoardRepository;
 import eapli.base.boardparticipantmanagement.domain.BoardParticipant;
 import eapli.base.exceptions.*;
@@ -25,7 +24,7 @@ public class ChangePostItContentService {
         PersonRepository personRepo = PersistenceContext.repositories().personRepository();
         PostItRepository postItRepo = PersistenceContext.repositories().postItRepository();
 
-        Board board = boardRepo.ofIdentity(new BoardTitle(boardTitle)).get();
+        Board board = boardRepo.findBoardByTitle(boardTitle);
 
         SystemUser systemUser = AuthzRegistry.authorizationService().session().get().authenticatedUser();
         Person person = personRepo.findPersonBySystemUser(systemUser);
@@ -34,16 +33,17 @@ public class ChangePostItContentService {
         BoardOwner boardOwner = person.boardOwnerOfBoard(board);
 
         PostIt oldPostIt = board.verifyPostItCanBeUpdated(row, column, boardParticipant, boardOwner);
+        long id = oldPostIt.identity().returnPostItIdentifier();
+        int ver = oldPostIt.identity().returnPostItVersion();
 
-        PostIt newPostIt = new PostItFactory().buildFromExistingPostIt(content, oldPostIt.identity());
+        PostIt newPostIt = new PostItFactory().buildFromExistingPostIt(content, id, ver);
 
         postItRepo.save(newPostIt);
 
         board.updateCell(newPostIt,row,column);
-
         boardRepo.save(board);
 
-        new AddNotificationService().addNotification("The post-it in row " + row +" and column " + column + "was updated" , boardTitle);
+        new AddNotificationService().addNotification("The post-it in row " + row +" and column " + column + " was updated" , boardTitle);
         new AddTaskToBoardHistoryService().addChangePostItContentTaskToHistory(boardTitle,boardParticipant,boardOwner,oldPostIt);
 
         return false;
