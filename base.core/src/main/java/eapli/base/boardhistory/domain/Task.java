@@ -42,13 +42,13 @@ public class Task{
         sb.append("Operation: " + operation.toString());
 
         if(boardOwner!=null){
-            sb.append(" Board Owner: " + boardOwner);
+            sb.append(" | BoardOwner: " + boardOwner);
         }else {
-            sb.append(" Board Participator: " + boardParticipant.toString());
+            sb.append(" | BoardParticipant: " + boardParticipant.toString());
         }
 
         if(postIt!=null){
-            sb.append(" Post-It: " + postIt);
+            sb.append(" | Post-It: " + postIt);
         }
 
         return sb.toString();
