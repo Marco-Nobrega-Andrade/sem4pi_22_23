@@ -18,9 +18,9 @@ multiple_choice_solution : SOLUTION_ENTRY list_phrases
 /////////////////////////
 matching_type_question : HASH MT_Q points question list_with_title list_with_title matching_type_answer matching_type_solution (feedback)?
                        ;
-matching_type_answer : ANSWER_ENTRY ANSWER_ENTRY (phrase DASH phrase (COMMA phrase DASH phrase)*)?
+matching_type_answer : ANSWER_ENTRY (phrase DASH phrase (COMMA phrase DASH phrase)*)?
                      ;
-matching_type_solution : SOLUTION_ENTRY ANSWER_ENTRY phrase DASH phrase (COMMA phrase DASH phrase)*
+matching_type_solution : SOLUTION_ENTRY phrase DASH phrase (COMMA phrase DASH phrase)*
                        ;
 //////////////////////////
 true_false_question : HASH TF_Q points question true_false_answer true_false_solution (feedback)?
@@ -97,10 +97,10 @@ COMMA : ',';
 WS : [ \t]+ -> skip;
 HASH : '#';
 NEWLINE : [\r\n]+;
-WORD: [A-Za-zÀ-ÿ]+;
+WORD: [A-Za-z]+;
 COLON : ':' ;
 DASH : '-';
 INT : [0-9]+;
 NUMERICAL_VALUE : INT COMMA INT;
-PUNCTUATION : ~[A-Za-zÀ-ÿ \t\r\n];
+PUNCTUATION : ~[A-Za-z \t\r\n];
 MISSING_WORD : '||WORD||';

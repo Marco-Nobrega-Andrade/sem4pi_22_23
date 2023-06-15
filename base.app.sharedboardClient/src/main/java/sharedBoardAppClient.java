@@ -15,7 +15,6 @@ public class sharedBoardAppClient {
             final var clientIP = InetAddress.getLocalHost().getHostAddress();
             Socket socket = new Socket(clientIP, 5000);
             System.out.println("Connected");
-            System.out.println("To exit the program please insert bye");
             DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
             DataInputStream dis = new DataInputStream(socket.getInputStream());
             boolean error;

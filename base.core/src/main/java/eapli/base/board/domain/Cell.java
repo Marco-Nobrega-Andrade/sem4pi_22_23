@@ -68,4 +68,7 @@ public class Cell implements Comparable<Cell>{
         return this.postIt != null;
     }
 
+    public PostIt currentPostIt() {
+        return this.postIt;
+    }
 }

@@ -11,9 +11,11 @@ participant ChangePostItContentService as SERVICE <<Service>>
 participant Board as BOARD <<Domain>>
 participant Cell as CELL <<Domain>>
 participant PostIt as POST_IT <<Domain>>
+participant PostItFactory as P_FAC <<Domain>>
 participant BoardHistory as BOARD_HIS <<Domain>>
 participant Person as PERSON <<Domain>>
 database BoardRepository as BOARD_REPO <<Persistence>>
+database PostItRepository as POST_IT_REPO <<Persistence>>
 
 
 activate AC
@@ -45,7 +47,7 @@ return boardParticipant
 SERVICE -> PERSON : boardOwnerOfBoard(board)
 activate PERSON
 return boardOwner
-SERVICE -> BOARD : updatePostItContent(row, column, content, boardParticipant, boardOwner)
+SERVICE -> BOARD : verifyPostItCanBeUpdated(row, column, boardParticipant, boardOwner)
 activate BOARD
 BOARD -> CELL : currentPostIt()
 activate CELL
@@ -53,11 +55,15 @@ return postIt
 BOARD -> BOARD_HIS : checkIfPostItCanBeUpdatedByUser(postIt, boardParticipant, boardOwner)
 activate BOARD_HIS
 return boolean
-BOARD -> POST_IT : create (postItId, currPostItVer+1, content)
-activate POST_IT
+return oldPostIt
+SERVICE -> P_FAC : buildFromExistingPostIt(content, postItKey)
+activate P_FAC
 return newPostIt
-BOARD -> CELL : updatePostIt(newPostIt)
-activate CELL
+SERVICE -> POST_IT_REPO : save(newPostIt)
+activate POST_IT_REPO
+deactivate POST_IT_REPO
+SERVICE -> BOARD : updateCell(newPostIt,row,column)
+activate BOARD
 return boolean
 return operation success
 return operation success

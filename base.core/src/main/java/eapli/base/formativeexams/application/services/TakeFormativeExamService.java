@@ -49,27 +49,40 @@ public class TakeFormativeExamService {
 
         return formativeExamList;
     }
+
+    public String returnStudentViewOfFormativeExamSpecification(long formativeExamId){
+
+        FormativeExam formativeExam = formativeExamRepository.ofIdentity(new FormativeExamID(formativeExamId)).get();
+        String studentView = formativeExam.returnStudentViewOfFormativeExamSpecification();
+
+        return studentView;
+    }
     public List<String> takeFormativeExam(long formativeExamId,String resolutionFilePath){
 
         List<String> gradeAndFeedback = new ArrayList<>();
 
         FormativeExam formativeExam = formativeExamRepository.ofIdentity(new FormativeExamID(formativeExamId)).get();
 
-        String specification = formativeExam.returnFullFormativeExamSpecificationString();
-        Map<Integer, List<String>> answers = ResolutionReader.importAnswers(resolutionFilePath);
-        String resolution = SpecificationAndAnswerConcatenator.concatenate(specification, answers);
-        VerifyFormativeExamService verifyFormativeExamService = new VerifyFormativeExamService();
-        EvaluateResolutionService evaluateResolutionService = new EvaluateResolutionService();
+        try{
+            String specification = formativeExam.returnFullFormativeExamSpecificationString();
+            Map<Integer, List<String>> answers = ResolutionReader.importAnswers(resolutionFilePath);
+            String resolution = SpecificationAndAnswerConcatenator.concatenate(specification, answers);
+            VerifyFormativeExamService verifyFormativeExamService = new VerifyFormativeExamService();
+            EvaluateResolutionService evaluateResolutionService = new EvaluateResolutionService();
 
-        if(verifyFormativeExamService.verifyFormativeExamSpecification(resolution)){
+            if(verifyFormativeExamService.verifyFormativeExamSpecification(resolution)){
 
-            FormativeExamResolutionVisitor visitor = evaluateResolutionService.takeFormativeExam(resolution);
-            Double grade = visitor.grade();
-            List<String> feedback = visitor.feedback();
-            gradeAndFeedback.add(grade.toString());
-            gradeAndFeedback.addAll(feedback);
+                FormativeExamResolutionVisitor visitor = evaluateResolutionService.takeFormativeExam(resolution);
+                Double grade = visitor.grade();
+                List<String> feedback = visitor.feedback();
+                gradeAndFeedback.add(grade.toString());
+                gradeAndFeedback.addAll(feedback);
 
+            }
+        }catch (Exception e){
+            System.out.println("Something went wrong in the formative exam processing!");
         }
+
 
 
         return gradeAndFeedback;

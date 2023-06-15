@@ -41,6 +41,18 @@ public class QuestionGrammarBaseListener implements QuestionGrammarListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterMultiple_choice_answer(QuestionGrammarParser.Multiple_choice_answerContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMultiple_choice_answer(QuestionGrammarParser.Multiple_choice_answerContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterMultiple_choice_solution(QuestionGrammarParser.Multiple_choice_solutionContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -65,6 +77,18 @@ public class QuestionGrammarBaseListener implements QuestionGrammarListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterMatching_type_answer(QuestionGrammarParser.Matching_type_answerContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMatching_type_answer(QuestionGrammarParser.Matching_type_answerContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterMatching_type_solution(QuestionGrammarParser.Matching_type_solutionContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -84,6 +108,18 @@ public class QuestionGrammarBaseListener implements QuestionGrammarListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitTrue_false_question(QuestionGrammarParser.True_false_questionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterTrue_false_answer(QuestionGrammarParser.True_false_answerContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTrue_false_answer(QuestionGrammarParser.True_false_answerContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -125,6 +161,18 @@ public class QuestionGrammarBaseListener implements QuestionGrammarListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterMissing_word_answer(QuestionGrammarParser.Missing_word_answerContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMissing_word_answer(QuestionGrammarParser.Missing_word_answerContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterMissing_word_solution(QuestionGrammarParser.Missing_word_solutionContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -161,6 +209,18 @@ public class QuestionGrammarBaseListener implements QuestionGrammarListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterShort_answer_answer(QuestionGrammarParser.Short_answer_answerContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitShort_answer_answer(QuestionGrammarParser.Short_answer_answerContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterShort_answer_solution(QuestionGrammarParser.Short_answer_solutionContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -192,6 +252,18 @@ public class QuestionGrammarBaseListener implements QuestionGrammarListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitNumerical_answer(QuestionGrammarParser.Numerical_answerContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterNumerical_solution(QuestionGrammarParser.Numerical_solutionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitNumerical_solution(QuestionGrammarParser.Numerical_solutionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

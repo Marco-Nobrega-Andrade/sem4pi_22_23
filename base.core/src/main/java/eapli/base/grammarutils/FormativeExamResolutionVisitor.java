@@ -56,27 +56,7 @@ public class FormativeExamResolutionVisitor extends FormativeExamGrammarBaseVisi
             }
         }
 
-        return null;
-    }
-
-    @Override
-    public String visitFeedback(FormativeExamGrammarParser.FeedbackContext ctx) {
-        questionNumber++;
-
-        try {
-            FormativeExamGrammarParser.PhraseContext phraseContext = ctx.phrase();
-            StringBuilder stringBuilder = new StringBuilder();
-
-            stringBuilder.append("Question "+ questionNumber + " : ");
-            for (FormativeExamGrammarParser.Phrase_wordContext phrase_wordContext : phraseContext.phrase_word()){
-                stringBuilder.append(phrase_wordContext.getText());
-                stringBuilder.append(" ");
-            }
-
-            feedback.add(stringBuilder.toString());
-        } catch (Exception ignored) {
-
-        }
+        visitFeedback(ctx.feedback());
 
         return null;
     }
@@ -108,6 +88,9 @@ public class FormativeExamResolutionVisitor extends FormativeExamGrammarBaseVisi
                 this.grade += pointsByAnswer;
             }
         }
+
+        visitFeedback(ctx.feedback());
+
         return null;
     }
 
@@ -125,6 +108,9 @@ public class FormativeExamResolutionVisitor extends FormativeExamGrammarBaseVisi
         if ((answer.trim()).equalsIgnoreCase(solution.trim())){
             this.grade += points;
         }
+
+        visitFeedback(ctx.feedback());
+
         return null;
     }
 
@@ -144,6 +130,8 @@ public class FormativeExamResolutionVisitor extends FormativeExamGrammarBaseVisi
         if((answer.trim()).equalsIgnoreCase(solution.trim())){
             grade += points;
         }
+
+        visitFeedback(ctx.feedback());
 
         return null;
 
@@ -190,6 +178,8 @@ public class FormativeExamResolutionVisitor extends FormativeExamGrammarBaseVisi
             grade += points;
         }
 
+        visitFeedback(ctx.feedback());
+
         return null;
     }
 
@@ -230,14 +220,17 @@ public class FormativeExamResolutionVisitor extends FormativeExamGrammarBaseVisi
             grade += questionGrade;
         }
 
+        visitFeedback(ctx.feedback());
+
         return null;
     }
 
-    /*public void getQuestionFeedback(E ctx){
+    @Override
+    public String visitFeedback(FormativeExamGrammarParser.FeedbackContext ctx) {
         questionNumber++;
 
         try {
-            FormativeExamGrammarParser.PhraseContext phraseContext = ctx.feedback().phrase();
+            FormativeExamGrammarParser.PhraseContext phraseContext = ctx.phrase();
             StringBuilder stringBuilder = new StringBuilder();
 
             stringBuilder.append("Question "+ questionNumber + " : ");
@@ -250,7 +243,9 @@ public class FormativeExamResolutionVisitor extends FormativeExamGrammarBaseVisi
         } catch (Exception ignored) {
 
         }
-    }*/
+
+        return null;
+    }
 
 
 
