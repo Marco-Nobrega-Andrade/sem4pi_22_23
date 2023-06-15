@@ -15,7 +15,7 @@ public class ListStudentGradesUI extends AbstractUI {
             System.out.println("Grade | Exam Title");
             System.out.println("------------------");
             for (ExamResolutionDTOExamTitleGrade dto: listExamResolutionDTO) {
-                System.out.printf("%-5s | %s",dto.grade, dto.examTitle);
+                System.out.printf("%-5s | %s\n",dto.grade, dto.examTitle);
             }
         }
         System.out.println();
