@@ -5,6 +5,7 @@ import eapli.framework.domain.model.ValueObject;
 import javax.persistence.Embeddable;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import java.text.SimpleDateFormat;
 import java.util.Objects;
 @Embeddable
 public class PostItDate implements ValueObject {
@@ -28,5 +29,11 @@ public class PostItDate implements ValueObject {
     @Override
     public int hashCode() {
         return Objects.hash(date_time);
+    }
+
+    @Override
+    public String toString() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        return dateFormat.format(this.date_time);
     }
 }

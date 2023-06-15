@@ -50,6 +50,11 @@ public class Cell implements Comparable<Cell>{
         return postIt.returnContentString();
     }
 
+    public String returnPostItDateString(){
+        if (postIt == null) return " ";
+        return postIt.returnDateString();
+    }
+
     @Override
     public int compareTo(Cell o) {
         return this.cellId.compareTo(o.cellId);
