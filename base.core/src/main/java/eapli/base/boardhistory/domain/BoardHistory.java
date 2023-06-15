@@ -57,9 +57,16 @@ public class BoardHistory implements AggregateRoot<BoardHistoryId> {
 
     public boolean checkIfPostItCanBeUpdatedByUser(PostIt currentPostIt, BoardParticipant boardParticipant, BoardOwner boardOwner) {
         for (Task task : taskList){
-            if (task.isAddPostIt()
-                    && (task.isDoneByThisParticipant(boardParticipant) || task.isDoneByThisOwner(boardOwner))
-                    && task.isInThisPostIt(currentPostIt)){
+            if (task.isAddPostIt() && task.isInThisPostIt(currentPostIt)){
+                if (boardParticipant == null){
+                    if (task.isDoneByThisOwner(boardOwner)){
+                        return true;
+                    }
+                } else if (boardOwner == null) {
+                    if (task.isDoneByThisParticipant(boardParticipant)){
+                        return true;
+                    }
+                }
                 return true;
             }
         }
