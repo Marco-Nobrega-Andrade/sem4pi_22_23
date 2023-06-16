@@ -33,7 +33,7 @@ public class JpaBoardHistoryRepository extends JpaAutoTxRepository<BoardHistory,
 
     @Override
     public List<Task> historyOfUpdates(BoardHistoryId boardHistoryId) {
-        return createQuery("SELECT t FROM Task t WHERE t IN (SELECT t FROM BoardHistory bh JOIN bh.taskList WHERE bh.boardHistoryId = :boardHistoryId)", Task.class)
+        return createQuery("SELECT t FROM Task t WHERE t IN (SELECT task FROM BoardHistory bh JOIN bh.taskList task WHERE bh.boardHistoryId = :boardHistoryId)", Task.class)
                 .setParameter("boardHistoryId", boardHistoryId)
                 .getResultList();
     }

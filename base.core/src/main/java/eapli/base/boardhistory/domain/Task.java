@@ -41,11 +41,16 @@ public class Task{
         StringBuilder sb = new StringBuilder();
         sb.append("Operation: " + operation.toString());
 
-        if(boardOwner!=null){
-            sb.append(" | BoardOwner: " + boardOwner);
-        }else {
-            sb.append(" | BoardParticipant: " + boardParticipant.toString());
+        if(boardOwner!=null && boardParticipant!=null){
+            sb.append(" | BoardOwner: " + boardOwner + " | BoardParticipant: " + boardParticipant);
+        }else{
+            if(boardOwner!=null){
+                sb.append(" | BoardOwner: " + boardOwner);
+            }else {
+                sb.append(" | BoardParticipant: " + boardParticipant.toString());
+            }
         }
+
 
         if(postIt!=null){
             sb.append(" | Post-It: " + postIt);
