@@ -122,7 +122,7 @@ public class SBPMessageFormat {
         return encodeRequest(CHANGE_POST_IT_CONTENT, board + "," + row + "," + column  + "," + content);
     }
     public static byte[] createChangePostItPositionRequest(String board, int oldRow, int oldColumn, int newRow, int newColumn) {
-        return encodeRequest(CHANGE_POST_IT_CONTENT, board + "," + oldRow + "," + oldColumn  + "," + newRow + "," + newColumn);
+        return encodeRequest(CHANGE_POST_IT_POSITION, board + "," + oldRow + "," + oldColumn  + "," + newRow + "," + newColumn);
     }
 
     public static byte[] createViewInRealTimeRequest(String boardId){
