@@ -22,7 +22,7 @@ public class AddTaskToBoardHistoryService {
     public boolean addShareBoardTaskToHistory(String boardTitle, BoardParticipant boardParticipant){
         Board board = boardRepository.findBoardByTitle(boardTitle);
         Task task = new TaskBuilder().withTaskId(boardHistoryRepository
-                        .getLastTaskId()+1).withOperation(OperationValue.ADD)
+                        .getLastTaskId()+1).withOperation(OperationValue.SHARE_BOARD)
                 .withBoardOwner(boardOwnerRepository.findBoardOwnerByBoard(board))
                 .withBoardParticipant(boardParticipant).build();
         board.addTaskToHistory(task);
