@@ -10,6 +10,11 @@ public class TaskBuilder {
     private BoardOwner boardOwner;
     private BoardParticipant boardParticipant;
     private PostIt postIt;
+    private Integer oldRow;
+    private Integer oldColumn;
+    private Integer newRow;
+    private Integer newColumn;
+
     public TaskBuilder withTaskId(long taskId){
         this.taskId = new TaskId(taskId);
         return this;
@@ -33,8 +38,24 @@ public class TaskBuilder {
         this.postIt = postIt;
         return this;
     }
+    public TaskBuilder withOldRow(Integer oldRow){
+        this.oldRow = oldRow;
+        return this;
+    }
+    public TaskBuilder withOldColumn(Integer oldColumn){
+        this.oldColumn = oldColumn;
+        return this;
+    }
+    public TaskBuilder withNewRow(Integer newRow){
+        this.newRow = newRow;
+        return this;
+    }
+    public TaskBuilder withNewColumn(Integer newColumn){
+        this.newColumn = newColumn;
+        return this;
+    }
 
     public Task build(){
-        return new Task(this.taskId, this.operation, this.boardOwner, this.boardParticipant, this.postIt);
+        return new Task(this.taskId, this.operation, this.boardOwner, this.boardParticipant, this.postIt, this.oldRow, this.oldColumn, this.newRow, this.newColumn);
     }
 }

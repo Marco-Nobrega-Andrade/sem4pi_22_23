@@ -18,16 +18,29 @@ public class Task{
     @OneToOne
     private PostIt postIt;
 
-    protected Task(TaskId taskId, Operation operation, BoardOwner boardOwner, BoardParticipant boardParticipant, PostIt postIt){
+    private Integer oldRow;
+
+    private Integer oldColumn;
+
+    private Integer newRow;
+
+    private Integer newColumn;
+
+    protected Task(TaskId taskId, Operation operation, BoardOwner boardOwner, BoardParticipant boardParticipant, PostIt postIt, Integer oldRow, Integer oldColumn, Integer newRow, Integer newColumn) {
         if(taskId == null || operation == null || (boardParticipant == null && boardOwner == null)){
             throw new IllegalArgumentException("The task cannot be created with null Value Objects");
         }
         this.taskId = taskId;
         this.operation = operation;
         this.boardOwner = boardOwner;
-        this.postIt = postIt;
         this.boardParticipant = boardParticipant;
+        this.postIt = postIt;
+        this.oldRow = oldRow;
+        this.oldColumn = oldColumn;
+        this.newRow = newRow;
+        this.newColumn = newColumn;
     }
+
     protected Task(){
 
     }
