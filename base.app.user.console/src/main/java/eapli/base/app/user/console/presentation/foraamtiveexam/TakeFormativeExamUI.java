@@ -7,6 +7,7 @@ import eapli.framework.presentation.console.AbstractUI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TakeFormativeExamUI extends AbstractUI {
@@ -52,13 +53,22 @@ public class TakeFormativeExamUI extends AbstractUI {
                         }
                 }
 
-                List<String> gradeAndFeedback = takeFormativeExamController.takeFormativeExam(Long.parseLong(id.toString()), filePath);
+                List<String> gradeAndFeedback = new ArrayList<>();
+
+                try{
+                    gradeAndFeedback = takeFormativeExamController.takeFormativeExam(Long.parseLong(id.toString()), filePath);
+
+
 
                 System.out.println("\nHere are your grande and feedback:\n");
                 for (String info : gradeAndFeedback) {
 
                     System.out.println(info);
 
+                }
+
+                }catch (Exception e){
+                    System.out.println("Something went wrong in the formative exam processing!");
                 }
 
             }

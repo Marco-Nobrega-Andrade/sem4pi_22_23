@@ -63,7 +63,6 @@ public class TakeFormativeExamService {
 
         FormativeExam formativeExam = formativeExamRepository.ofIdentity(new FormativeExamID(formativeExamId)).get();
 
-        try{
             String specification = formativeExam.returnFullFormativeExamSpecificationString();
             Map<Integer, List<String>> answers = ResolutionReader.importAnswers(resolutionFilePath);
             String resolution = SpecificationAndAnswerConcatenator.concatenate(specification, answers);
@@ -79,11 +78,6 @@ public class TakeFormativeExamService {
                 gradeAndFeedback.addAll(feedback);
 
             }
-        }catch (Exception e){
-            System.out.println("Something went wrong in the formative exam processing!");
-        }
-
-
 
         return gradeAndFeedback;
     }
