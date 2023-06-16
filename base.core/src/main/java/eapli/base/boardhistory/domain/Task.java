@@ -64,11 +64,21 @@ public class Task{
     }
 
     public boolean isDoneByThisOwner(BoardOwner boardOwner) {
-        return this.boardOwner.equals(boardOwner);
+        if (this.boardOwner == null) {
+            return false;
+        } else {
+            return this.boardOwner.equals(boardOwner);
+        }
     }
 
     public boolean isDoneByThisParticipant(BoardParticipant boardParticipant) {
-        return this.boardParticipant.equals(boardParticipant);
+        if (this.boardParticipant == null){
+            return false;
+        }else{
+            return this.boardParticipant.equals(boardParticipant);
+        }
+
+
     }
 
     public boolean isInThisPostIt(PostIt currentPostIt) {

@@ -59,15 +59,10 @@ public class BoardHistory implements AggregateRoot<BoardHistoryId> {
         for (Task task : taskList){
             if (task.isAddPostIt() && task.isInThisPostIt(currentPostIt)){
                 if (boardParticipant == null){
-                    if (task.isDoneByThisOwner(boardOwner)){
-                        return true;
-                    }
+                    return task.isDoneByThisOwner(boardOwner);
                 } else if (boardOwner == null) {
-                    if (task.isDoneByThisParticipant(boardParticipant)){
-                        return true;
-                    }
+                    return task.isDoneByThisParticipant(boardParticipant);
                 }
-                return true;
             }
         }
         return false;

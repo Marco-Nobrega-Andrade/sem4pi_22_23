@@ -202,8 +202,10 @@ public class Person implements AggregateRoot<ID_Person> {
      * @return board owner obj, null otherwise (if null it must be board participant)
      */
     public BoardOwner boardOwnerOfBoard(Board board) {
-        if (boardOwner.isBoardOwner(board)){
-            return boardOwner;
+        if (boardOwner != null) {
+            if (boardOwner.isBoardOwner(board)){
+                return boardOwner;
+            }
         }
         return null;
     }
