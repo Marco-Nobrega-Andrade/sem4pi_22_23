@@ -9,7 +9,7 @@ import java.util.Objects;
 
 public class Date implements ValueObject {
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private java.util.Date date_time;
 
     public Date(java.util.Date date_time) {
