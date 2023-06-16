@@ -6,6 +6,7 @@ import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -15,6 +16,9 @@ public class SharedBoardAppServer {
             ServerSocket server = new ServerSocket(5000);
             AuthzRegistry.configure(PersistenceContext.repositories().users(),
                     new BasePasswordPolicy(), new PlainTextEncoder());
+            System.out.println("======================");
+            System.out.println(InetAddress.getLocalHost().getHostAddress());
+            System.out.println("======================");
             while (true) {
                 Socket socket = server.accept();
 
