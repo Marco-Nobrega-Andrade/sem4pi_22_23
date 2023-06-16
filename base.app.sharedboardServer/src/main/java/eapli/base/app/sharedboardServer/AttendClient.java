@@ -84,10 +84,10 @@ public class AttendClient implements Runnable{
                         }
                         break;
                     case SBPMessageFormat.CHANGE_POST_IT_CONTENT:
-                        ChangePostItContentRequest.changePostItContent(message, outputStream);
+                        new ChangePostItContentRequest().changePostItContent(message, outputStream);
                         break;
                     case SBPMessageFormat.CHANGE_POST_IT_POSITION:
-                        ChangePostItPositionRequest.changePostItPosition(message,outputStream);
+                        new ChangePostItPositionRequest().changePostItPosition(message,outputStream);
                         break;
                     case SBPMessageFormat.SHARE_BOARD_CODE:
                         new ShareBoardRequest().shareBoard(message, outputStream);
