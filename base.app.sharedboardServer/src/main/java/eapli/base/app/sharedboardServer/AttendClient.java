@@ -2,9 +2,7 @@ package eapli.base.app.sharedboardServer;
 
 import eapli.base.app.sharedboardServer.Requests.*;
 import eapli.base.board.application.*;
-import eapli.base.board.application.services.BoardInformationController;
 import eapli.base.board.dto.BoardDTOWithTitle;
-import eapli.base.board.dto.CellDTOWithColumnRowContent;
 import eapli.base.infrastructure.authz.AuthenticationCredentialHandler;
 import eapli.base.infrastructure.authz.CredentialHandler;
 import eapli.base.postitmanager.application.CreatePostItController;
@@ -37,13 +35,13 @@ public class AttendClient implements Runnable{
                 arrayFormat = SBPMessageFormat.decodeFormat(message.getBytes());
                 switch (arrayFormat[SBPMessageFormat.CODE_OFFSET]) {
                     case SBPMessageFormat.AUTH_CODE:
-                        AuthRequest.authenticate(message, outputStream, credentialHandler);
+                        new AuthRequest().authenticate(message, outputStream, credentialHandler);
                         break;
                     case SBPMessageFormat.COMMTEST_CODE:
-                        CommtestRequest.test(outputStream);
+                        new CommtestRequest().test(outputStream);
                         break;
                     case SBPMessageFormat.LIST_BOARD_I_OWN_SEND:
-                        ListBoardsIOwnRequest.listBoardsIOwn(message, outputStream);
+                        new ListBoardsIOwnRequest().listBoardsIOwn(message, outputStream);
                         break;
                     case SBPMessageFormat.LIST_BOARD_I_PARTICIPATE_SEND:
                         List<BoardDTOWithTitle> boardDTOList2 = new ListBoardIParticipateController().
@@ -86,32 +84,22 @@ public class AttendClient implements Runnable{
                         }
                         break;
                     case SBPMessageFormat.CHANGE_POST_IT_CONTENT:
-                        ChangePostItContentRequest.changePostItContent(message, outputStream);
+                        new ChangePostItContentRequest().changePostItContent(message, outputStream);
                         break;
                     case SBPMessageFormat.CHANGE_POST_IT_POSITION:
-                        ChangePostItPositionRequest.changePostItPosition(message,outputStream);
+                        new ChangePostItPositionRequest().changePostItPosition(message,outputStream);
                         break;
                     case SBPMessageFormat.SHARE_BOARD_CODE:
-                        ShareBoardRequest.shareBoard(message, outputStream);
+                        new ShareBoardRequest().shareBoard(message, outputStream);
                         break;
                     case SBPMessageFormat.ARCHIVE_BOARD_CODE:
-                        ArchiveBoardRequest.archiveBoard(message,outputStream);
+                        new ArchiveBoardRequest().archiveBoard(message,outputStream);
                         break;
                     case SBPMessageFormat.VIEW_IN_REAL_TIME_CODE:
-                        List<String> param = SBPMessageFormat.decodeParam(message.getBytes());
-                        try{
-                            List<CellDTOWithColumnRowContent>  listCellDTOWithColumnRowContent =
-                                    new BoardInformationController().getBoardInformation(param.get(0));
-                            outputStream.writeUTF(
-                                    new String(SBPMessageFormat.createBoardInfoRequest(listCellDTOWithColumnRowContent)));
-                        }catch (Exception e){
-                            outputStream.writeUTF(
-                                    new String(SBPMessageFormat.creteErrorRequest(e.getMessage())));
-                        }
+                        new ViewInRealTimeRequest().viewInRealTime(message,outputStream);
                         break;
                     case SBPMessageFormat.LIST_ALL_BOARDS_I_PARTICIPATE_AND_CAN_READ:
-                        List<BoardDTOWithTitle> listBoardDTO = new ListAllBoardsIParticipateAndCanReadController().listAllBoardsIParticipateAndCanRead();
-                        outputStream.writeUTF(new String(SBPMessageFormat.createListBoardReceive(listBoardDTO)));
+                        new ListAllBoardsIParticipateAndCanRead().ListAllBoardsIParticipateAndCanRead(message,outputStream);
                         break;
                     case SBPMessageFormat.HISTORY_OF_UPDATES_CODE:
                        HistoryOfUpdatesRequest.historyOfUpdates(message, outputStream);

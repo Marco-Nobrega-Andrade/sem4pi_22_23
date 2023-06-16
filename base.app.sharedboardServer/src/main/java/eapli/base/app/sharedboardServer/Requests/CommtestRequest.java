@@ -5,7 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 
 public class CommtestRequest {
-    public static void test(DataOutputStream outputStream) throws IOException {
+    public void test(DataOutputStream outputStream) throws IOException {
         outputStream.writeUTF(new String(SBPMessageFormat.createAcknowledgeRequest()));
 
     }

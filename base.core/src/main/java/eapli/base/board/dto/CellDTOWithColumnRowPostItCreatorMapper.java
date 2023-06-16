@@ -3,10 +3,10 @@ package eapli.base.board.dto;
 import eapli.base.board.domain.Cell;
 import eapli.base.usermanagement.domain.Person;
 
-public class CellDTOWithColumnRowContentMapper {
+public class CellDTOWithColumnRowPostItCreatorMapper {
 
-    public static CellDTOWithColumnRowContent toDTO(Cell cell, Person person){
-        CellDTOWithColumnRowContentBuilder builder = new CellDTOWithColumnRowContentBuilder();
+    public static CellDTOWithColumnRowPostItCreator toDTO(Cell cell, Person person){
+        CellDTOWithColumnRowPostItCreatorBuilder builder = new CellDTOWithColumnRowPostItCreatorBuilder();
         if (person != null) {
             return builder.withRowTitle(cell.returnRowTitleString()).withRowIdentifier(cell.returnRowIdentifierString())
                     .withColumnTitle(cell.returnColumnTitleString()).withColumnIdentifier(cell.returnColumnIdentifierString())

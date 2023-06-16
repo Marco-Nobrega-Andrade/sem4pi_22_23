@@ -41,7 +41,7 @@ public class HistoryOfUpdatesUI extends AbstractUI {
                             int size = taskList.size();
 
                             System.out.printf("\nHistory Of Updates of board %s:\n", board);
-
+                            System.out.println("(Type of Operation | Author | Operation Additional Info)");
                             for(int i = 0; i<size; i++){
                                 System.out.printf("%d. %s\n", i+1, taskList.get(i).toString());
                             }

@@ -1,6 +1,6 @@
 package eapli.base.board.dto;
 
-public class CellDTOWithColumnRowContent {
+public class CellDTOWithColumnRowPostItCreator {
 
     public String rowIdentifier;
     public String rowTitle;
@@ -11,7 +11,7 @@ public class CellDTOWithColumnRowContent {
     public String email;
     public String name;
 
-    public CellDTOWithColumnRowContent(String rowIdentifier, String rowTitle, String columnIdentifier, String columnTitle, String content, String date, String email, String name) {
+    public CellDTOWithColumnRowPostItCreator(String rowIdentifier, String rowTitle, String columnIdentifier, String columnTitle, String content, String date, String email, String name) {
         this.rowIdentifier = rowIdentifier;
         this.rowTitle = rowTitle;
         this.columnIdentifier = columnIdentifier;

@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class AuthRequest {
-    public static void authenticate(String message, DataOutputStream outputStream, CredentialHandler credentialHandler) throws IOException {
+    public void authenticate(String message, DataOutputStream outputStream, CredentialHandler credentialHandler) throws IOException {
         List<String> params = SBPMessageFormat.decodeParam(message.getBytes());
         if (credentialHandler.authenticated(params.get(0), params.get(1), null)) {
             byte[] authRequest = SBPMessageFormat.createAcknowledgeRequest();

@@ -52,7 +52,7 @@ public class Task{
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Operation: " + operation.toString());
+        sb.append("Operation: " + operation);
 
         if(boardOwner!=null && boardParticipant!=null){
             sb.append(" | BoardOwner: " + boardOwner + " | BoardParticipant: " + boardParticipant);
@@ -60,13 +60,18 @@ public class Task{
             if(boardOwner!=null){
                 sb.append(" | BoardOwner: " + boardOwner);
             }else {
-                sb.append(" | BoardParticipant: " + boardParticipant.toString());
+                sb.append(" | BoardParticipant: " + boardParticipant);
             }
         }
 
 
         if(postIt!=null){
             sb.append(" | Post-It: " + postIt);
+        }
+
+        if(operation.toString().equals("Change post-it position")){
+            sb.append(" | Old Positions: row = " + oldRow + " column = " + oldColumn);
+            sb.append(" | New Positions: row = " + newRow + " column = " + newColumn);
         }
 
         return sb.toString();

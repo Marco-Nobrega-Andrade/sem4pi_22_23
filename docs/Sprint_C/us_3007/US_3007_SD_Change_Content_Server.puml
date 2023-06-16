@@ -3,6 +3,7 @@ autonumber
 title ShareBoard - SharedBoardServer
 
 participant AttendClient as AC <<Application>>
+participant ChangePostItContentRequest as REQ
 participant DataInputStream as DIS
 participant DataOutputStream as DOS
 participant SBPMessageFormat as SBPMF
@@ -28,13 +29,15 @@ deactivate DOS
 AC -> DIS : readUTF()
 activate DIS
 return message
-AC -> SBPMF : decodeFormat(message)
+AC -> REQ : changePostItPosition(message, dos)
+activate REQ
+REQ -> SBPMF : decodeFormat(message)
 activate SBPMF
 return arrayFormat
-AC -> SBPMF : decodeParams(message)
+REQ -> SBPMF : decodeParams(message)
 activate SBPMF
 return params
-AC -> CONTROLLER : changePostItContent(boardTitle, row, column, content)
+REQ -> CONTROLLER : changePostItContent(boardTitle, row, column, content)
 activate CONTROLLER
 CONTROLLER -> SERVICE : changePostItContent(boardTitle, row, column, content)
 activate SERVICE
@@ -65,16 +68,18 @@ deactivate POST_IT_REPO
 SERVICE -> BOARD : updateCell(newPostIt,row,column)
 activate BOARD
 return boolean
+SERVICE -> BOARD_REPO : save(board)
+activate BOARD_REPO
+deactivate BOARD_REPO
 return operation success
 return operation success
-CONTROLLER --> AC : true
 deactivate CONTROLLER
-AC -> SBPMF : createAcknowledgeRequest()
+REQ -> SBPMF : createAcknowledgeRequest()
 activate SBPMF
 return ackRequest
-AC -> DOS : writeUTF(ackRequest)
+REQ -> DOS : writeUTF(ackRequest)
 activate DOS
 deactivate DOS
+deactivate REQ
 deactivate AC
-
 @enduml

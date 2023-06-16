@@ -7,6 +7,7 @@ import eapli.framework.domain.model.AggregateRoot;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
+import java.util.Objects;
 
 @Entity
 public class BoardParticipant implements AggregateRoot<BoardParticipantId> {
@@ -36,6 +37,20 @@ public class BoardParticipant implements AggregateRoot<BoardParticipantId> {
 
         return boardParticipantId.equals(that.boardParticipantId) && board.equals(that.board);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BoardParticipant that = (BoardParticipant) o;
+        return Objects.equals(boardParticipantId, that.boardParticipantId) && Objects.equals(permission, that.permission) && Objects.equals(board, that.board);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(boardParticipantId, permission, board);
+    }
+
     public String returnBoardTitleString(){
         return board.returnBoardTitleString();
     }
