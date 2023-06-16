@@ -28,6 +28,16 @@ public interface QuestionGrammarListener extends ParseTreeListener {
 	 */
 	void exitMultiple_choice_question(QuestionGrammarParser.Multiple_choice_questionContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link QuestionGrammarParser#multiple_choice_answer}.
+	 * @param ctx the parse tree
+	 */
+	void enterMultiple_choice_answer(QuestionGrammarParser.Multiple_choice_answerContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link QuestionGrammarParser#multiple_choice_answer}.
+	 * @param ctx the parse tree
+	 */
+	void exitMultiple_choice_answer(QuestionGrammarParser.Multiple_choice_answerContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link QuestionGrammarParser#multiple_choice_solution}.
 	 * @param ctx the parse tree
 	 */
@@ -48,6 +58,16 @@ public interface QuestionGrammarListener extends ParseTreeListener {
 	 */
 	void exitMatching_type_question(QuestionGrammarParser.Matching_type_questionContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link QuestionGrammarParser#matching_type_answer}.
+	 * @param ctx the parse tree
+	 */
+	void enterMatching_type_answer(QuestionGrammarParser.Matching_type_answerContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link QuestionGrammarParser#matching_type_answer}.
+	 * @param ctx the parse tree
+	 */
+	void exitMatching_type_answer(QuestionGrammarParser.Matching_type_answerContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link QuestionGrammarParser#matching_type_solution}.
 	 * @param ctx the parse tree
 	 */
@@ -67,6 +87,16 @@ public interface QuestionGrammarListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitTrue_false_question(QuestionGrammarParser.True_false_questionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link QuestionGrammarParser#true_false_answer}.
+	 * @param ctx the parse tree
+	 */
+	void enterTrue_false_answer(QuestionGrammarParser.True_false_answerContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link QuestionGrammarParser#true_false_answer}.
+	 * @param ctx the parse tree
+	 */
+	void exitTrue_false_answer(QuestionGrammarParser.True_false_answerContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link QuestionGrammarParser#true_false_solution}.
 	 * @param ctx the parse tree
@@ -98,6 +128,16 @@ public interface QuestionGrammarListener extends ParseTreeListener {
 	 */
 	void exitMissing_word_phrase(QuestionGrammarParser.Missing_word_phraseContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link QuestionGrammarParser#missing_word_answer}.
+	 * @param ctx the parse tree
+	 */
+	void enterMissing_word_answer(QuestionGrammarParser.Missing_word_answerContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link QuestionGrammarParser#missing_word_answer}.
+	 * @param ctx the parse tree
+	 */
+	void exitMissing_word_answer(QuestionGrammarParser.Missing_word_answerContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link QuestionGrammarParser#missing_word_solution}.
 	 * @param ctx the parse tree
 	 */
@@ -128,6 +168,16 @@ public interface QuestionGrammarListener extends ParseTreeListener {
 	 */
 	void exitShort_answer_question(QuestionGrammarParser.Short_answer_questionContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link QuestionGrammarParser#short_answer_answer}.
+	 * @param ctx the parse tree
+	 */
+	void enterShort_answer_answer(QuestionGrammarParser.Short_answer_answerContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link QuestionGrammarParser#short_answer_answer}.
+	 * @param ctx the parse tree
+	 */
+	void exitShort_answer_answer(QuestionGrammarParser.Short_answer_answerContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link QuestionGrammarParser#short_answer_solution}.
 	 * @param ctx the parse tree
 	 */
@@ -157,6 +207,16 @@ public interface QuestionGrammarListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitNumerical_answer(QuestionGrammarParser.Numerical_answerContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link QuestionGrammarParser#numerical_solution}.
+	 * @param ctx the parse tree
+	 */
+	void enterNumerical_solution(QuestionGrammarParser.Numerical_solutionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link QuestionGrammarParser#numerical_solution}.
+	 * @param ctx the parse tree
+	 */
+	void exitNumerical_solution(QuestionGrammarParser.Numerical_solutionContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link QuestionGrammarParser#question}.
 	 * @param ctx the parse tree

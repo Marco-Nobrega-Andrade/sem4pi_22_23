@@ -23,6 +23,12 @@ public interface QuestionGrammarVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitMultiple_choice_question(QuestionGrammarParser.Multiple_choice_questionContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link QuestionGrammarParser#multiple_choice_answer}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMultiple_choice_answer(QuestionGrammarParser.Multiple_choice_answerContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link QuestionGrammarParser#multiple_choice_solution}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -35,6 +41,12 @@ public interface QuestionGrammarVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitMatching_type_question(QuestionGrammarParser.Matching_type_questionContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link QuestionGrammarParser#matching_type_answer}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMatching_type_answer(QuestionGrammarParser.Matching_type_answerContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link QuestionGrammarParser#matching_type_solution}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -46,6 +58,12 @@ public interface QuestionGrammarVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitTrue_false_question(QuestionGrammarParser.True_false_questionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link QuestionGrammarParser#true_false_answer}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTrue_false_answer(QuestionGrammarParser.True_false_answerContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link QuestionGrammarParser#true_false_solution}.
 	 * @param ctx the parse tree
@@ -65,6 +83,12 @@ public interface QuestionGrammarVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitMissing_word_phrase(QuestionGrammarParser.Missing_word_phraseContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link QuestionGrammarParser#missing_word_answer}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMissing_word_answer(QuestionGrammarParser.Missing_word_answerContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link QuestionGrammarParser#missing_word_solution}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -83,6 +107,12 @@ public interface QuestionGrammarVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitShort_answer_question(QuestionGrammarParser.Short_answer_questionContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link QuestionGrammarParser#short_answer_answer}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitShort_answer_answer(QuestionGrammarParser.Short_answer_answerContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link QuestionGrammarParser#short_answer_solution}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -100,6 +130,12 @@ public interface QuestionGrammarVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitNumerical_answer(QuestionGrammarParser.Numerical_answerContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link QuestionGrammarParser#numerical_solution}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNumerical_solution(QuestionGrammarParser.Numerical_solutionContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link QuestionGrammarParser#question}.
 	 * @param ctx the parse tree
