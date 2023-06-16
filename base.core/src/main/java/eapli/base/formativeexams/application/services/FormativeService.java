@@ -22,8 +22,8 @@ public class FormativeService {
     private final CourseRepository courseRepository = PersistenceContext.repositories().courseRepository();
     public boolean createFormativeExam(String type, int number, CourseDTOWithIdTitle courseDTO) {
         // TODO
-        String matching = "Matching Type",multipleChoice = "Multiple Choice",shortAnswer = "Short Answer",
-                numerical = "Numerical",selectMissingWords = "Select Missing Words",trueOrFalse = "True/False Question";
+        String matching = "#Matching Type",multipleChoice = "#Multiple Choice",shortAnswer = "#Short Answer",
+                numerical = "#Numerical",selectMissingWords = "#Select Missing Words",trueOrFalse = "#True/False Question";
 
         if (type.equals(matching)||type.equals(multipleChoice)||type.equals(shortAnswer)||
                 type.equals(numerical)||type.equals(selectMissingWords)||type.equals(trueOrFalse)) {
