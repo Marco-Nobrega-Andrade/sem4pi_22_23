@@ -57,4 +57,27 @@ public class AddTaskToBoardHistoryService {
         boardRepository.save(board);
         return true;
     }
+
+    public boolean addChangePostItPositionTaskToHistory(String boardTitle, BoardParticipant boardParticipant, BoardOwner boardOwner, PostIt postIt, Integer oldRow, Integer oldColumn, Integer newRow, Integer newColumn ){
+        Board board = boardRepository.findBoardByTitle(boardTitle);
+        TaskBuilder builder = new TaskBuilder()
+                .withTaskId(boardHistoryRepository.getLastTaskId()+1)
+                .withOperation(OperationValue.CHANGE_POST_IT_POSITION)
+                .withPostIt(postIt)
+                .withOldRow(oldRow)
+                .withOldColumn(oldColumn)
+                .withNewRow(newRow)
+                .withNewColumn(newColumn);
+
+        Task task;
+        if (boardParticipant != null){
+            task = builder.withBoardParticipant(boardParticipant).build();
+        }else{
+            task = builder.withBoardOwner(boardOwner).build();
+        }
+
+        board.addTaskToHistory(task);
+        boardRepository.save(board);
+        return true;
+    }
 }

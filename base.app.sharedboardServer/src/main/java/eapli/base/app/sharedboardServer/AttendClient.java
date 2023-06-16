@@ -88,6 +88,9 @@ public class AttendClient implements Runnable{
                     case SBPMessageFormat.CHANGE_POST_IT_CONTENT:
                         ChangePostItContentRequest.changePostItContent(message, outputStream);
                         break;
+                    case SBPMessageFormat.CHANGE_POST_IT_POSITION:
+                        ChangePostItPositionRequest.changePostItPosition(message,outputStream);
+                        break;
                     case SBPMessageFormat.SHARE_BOARD_CODE:
                         ShareBoardRequest.shareBoard(message, outputStream);
                         break;
@@ -111,14 +114,7 @@ public class AttendClient implements Runnable{
                         outputStream.writeUTF(new String(SBPMessageFormat.createListBoardReceive(listBoardDTO)));
                         break;
                     case SBPMessageFormat.HISTORY_OF_UPDATES_CODE:
-                        List<String> boardParam = SBPMessageFormat.decodeParam(message.getBytes());
-                        try {
-                            List<String> taskList = new HistoryOfUpdatesController().historyOfUpdates(boardParam.get(0));
-                            byte[] taskListRequest = SBPMessageFormat.createTaskListRequest(taskList);
-                            outputStream.writeUTF(new String(taskListRequest));
-                        }catch (Exception e){
-                            outputStream.writeUTF(new String(SBPMessageFormat.creteErrorRequest(e.getMessage())));
-                        }
+                       HistoryOfUpdatesRequest.historyOfUpdates(message, outputStream);
                         break;
                     case SBPMessageFormat.UNDO_LAST_CHANGE_POST_IT_REQUEST:
                         List<String> postItParams = SBPMessageFormat.decodeParam(message.getBytes());

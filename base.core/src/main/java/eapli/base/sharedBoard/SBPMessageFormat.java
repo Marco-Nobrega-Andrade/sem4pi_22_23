@@ -24,6 +24,7 @@ public class SBPMessageFormat {
     public static final int NUMBER_OF_CELLS_REQUEST_RCV = 14;
     public static final int POST_IT_REQUEST_SEND = 15 ;
     public static final int CHANGE_POST_IT_CONTENT = 20;
+    public static final int CHANGE_POST_IT_POSITION = 21;
 
     public static final int BOARD_INFO_CODE = 9;
 
@@ -119,6 +120,9 @@ public class SBPMessageFormat {
 
     public static byte[] createChangePostItContentRequest(String board, String content, int row, int column) {
         return encodeRequest(CHANGE_POST_IT_CONTENT, board + "," + row + "," + column  + "," + content);
+    }
+    public static byte[] createChangePostItPositionRequest(String board, int oldRow, int oldColumn, int newRow, int newColumn) {
+        return encodeRequest(CHANGE_POST_IT_CONTENT, board + "," + oldRow + "," + oldColumn  + "," + newRow + "," + newColumn);
     }
 
     public static byte[] createViewInRealTimeRequest(String boardId){

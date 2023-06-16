@@ -18,16 +18,29 @@ public class Task{
     @OneToOne
     private PostIt postIt;
 
-    protected Task(TaskId taskId, Operation operation, BoardOwner boardOwner, BoardParticipant boardParticipant, PostIt postIt){
+    private Integer oldRow;
+
+    private Integer oldColumn;
+
+    private Integer newRow;
+
+    private Integer newColumn;
+
+    protected Task(TaskId taskId, Operation operation, BoardOwner boardOwner, BoardParticipant boardParticipant, PostIt postIt, Integer oldRow, Integer oldColumn, Integer newRow, Integer newColumn) {
         if(taskId == null || operation == null || (boardParticipant == null && boardOwner == null)){
             throw new IllegalArgumentException("The task cannot be created with null Value Objects");
         }
         this.taskId = taskId;
         this.operation = operation;
         this.boardOwner = boardOwner;
-        this.postIt = postIt;
         this.boardParticipant = boardParticipant;
+        this.postIt = postIt;
+        this.oldRow = oldRow;
+        this.oldColumn = oldColumn;
+        this.newRow = newRow;
+        this.newColumn = newColumn;
     }
+
     protected Task(){
 
     }
@@ -39,7 +52,7 @@ public class Task{
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Operation: " + operation.toString());
+        sb.append("Operation: " + operation);
 
         if(boardOwner!=null && boardParticipant!=null){
             sb.append(" | BoardOwner: " + boardOwner + " | BoardParticipant: " + boardParticipant);
@@ -47,13 +60,18 @@ public class Task{
             if(boardOwner!=null){
                 sb.append(" | BoardOwner: " + boardOwner);
             }else {
-                sb.append(" | BoardParticipant: " + boardParticipant.toString());
+                sb.append(" | BoardParticipant: " + boardParticipant);
             }
         }
 
 
         if(postIt!=null){
             sb.append(" | Post-It: " + postIt);
+        }
+
+        if(operation.toString().equals("Change post-it position")){
+            sb.append(" | Old Positions: row = " + oldRow + " column = " + oldColumn);
+            sb.append(" | New Positions: row = " + newRow + " column = " + newColumn);
         }
 
         return sb.toString();
@@ -64,11 +82,21 @@ public class Task{
     }
 
     public boolean isDoneByThisOwner(BoardOwner boardOwner) {
-        return this.boardOwner.equals(boardOwner);
+        if (this.boardOwner == null) {
+            return false;
+        } else {
+            return this.boardOwner.equals(boardOwner);
+        }
     }
 
     public boolean isDoneByThisParticipant(BoardParticipant boardParticipant) {
-        return this.boardParticipant.equals(boardParticipant);
+        if (this.boardParticipant == null){
+            return false;
+        }else{
+            return this.boardParticipant.equals(boardParticipant);
+        }
+
+
     }
 
     public boolean isInThisPostIt(PostIt currentPostIt) {

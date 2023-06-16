@@ -187,9 +187,11 @@ public class Person implements AggregateRoot<ID_Person> {
      * @return board participant obj, null otherwise (if null it must be board owner)
      */
     public BoardParticipant boardParticipantOfBoard(Board board) {
-        for (BoardParticipant bp : boardParticipantList){
-            if (bp.isBoardParticipant(board)){
-                return bp;
+        if (boardParticipantList != null) {
+            for (BoardParticipant bp : boardParticipantList){
+                if (bp.isBoardParticipant(board)){
+                    return bp;
+                }
             }
         }
         return null;
@@ -202,8 +204,10 @@ public class Person implements AggregateRoot<ID_Person> {
      * @return board owner obj, null otherwise (if null it must be board participant)
      */
     public BoardOwner boardOwnerOfBoard(Board board) {
-        if (boardOwner.isBoardOwner(board)){
-            return boardOwner;
+        if (boardOwner != null) {
+            if (boardOwner.isBoardOwner(board)){
+                return boardOwner;
+            }
         }
         return null;
     }
