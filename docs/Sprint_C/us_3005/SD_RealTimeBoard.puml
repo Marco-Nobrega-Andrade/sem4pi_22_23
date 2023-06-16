@@ -15,11 +15,11 @@ participant "HTTPmessage" as message
 
 activate user
 
-user -> ui: selects the board, and the port asks to view updates
+user -> ui: selects the board, ip, the port and asks to view updates
 activate ui
 
 
-ui -> ss: create(port)
+ui -> ss: create(port,50,ip)
 activate ss
 return sock
 ui -> ss: accept()
@@ -44,7 +44,8 @@ ui -> sbpf: decodeDTO(boardInfo)
 activate sbpf
 return boardCellsInfo
 
-ui -> request : create(cliSocket, BaseFolder, boardCellsInfo)
+ui -> request : create(cliSocket, BaseFolder, boardCellsInfo, boardId)
+ui -> request : start()
 activate request
 request -> dis: create
 request -> dos: create
