@@ -1,7 +1,7 @@
 package eapli.base.sharedBoard;
 
 import eapli.base.board.dto.BoardDTOWithTitle;
-import eapli.base.board.dto.CellDTOWithColumnRowContent;
+import eapli.base.board.dto.CellDTOWithColumnRowPostItCreator;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -130,11 +130,11 @@ public class SBPMessageFormat {
     }
 
 
-    public static byte[] createBoardInfoRequest(List<CellDTOWithColumnRowContent> listCellDTOWithColumnRowContent){
+    public static byte[] createBoardInfoRequest(List<CellDTOWithColumnRowPostItCreator> listCellDTOWithColumnRowPostItCreator){
         StringBuilder strBuilder = new StringBuilder();
-        for(int i = 0; i < listCellDTOWithColumnRowContent.size(); i++){
-            strBuilder.append(listCellDTOWithColumnRowContent.get(i).toString());
-            if(i < listCellDTOWithColumnRowContent.size() - 1){
+        for(int i = 0; i < listCellDTOWithColumnRowPostItCreator.size(); i++){
+            strBuilder.append(listCellDTOWithColumnRowPostItCreator.get(i).toString());
+            if(i < listCellDTOWithColumnRowPostItCreator.size() - 1){
                 strBuilder.append(",;,");
             }
         }

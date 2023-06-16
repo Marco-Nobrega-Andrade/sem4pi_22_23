@@ -1,7 +1,7 @@
 package eapli.base.app.sharedboardServer.Requests;
 
 import eapli.base.board.application.services.BoardInformationController;
-import eapli.base.board.dto.CellDTOWithColumnRowContent;
+import eapli.base.board.dto.CellDTOWithColumnRowPostItCreator;
 import eapli.base.sharedBoard.SBPMessageFormat;
 
 import java.io.DataOutputStream;
@@ -13,10 +13,10 @@ public class ViewInRealTimeRequest {
     public void viewInRealTime(String message, DataOutputStream outputStream) throws IOException {
         List<String> param = SBPMessageFormat.decodeParam(message.getBytes());
         try{
-            List<CellDTOWithColumnRowContent>  listCellDTOWithColumnRowContent =
+            List<CellDTOWithColumnRowPostItCreator> listCellDTOWithColumnRowPostItCreator =
                     new BoardInformationController().getBoardInformation(param.get(0));
             outputStream.writeUTF(
-                    new String(SBPMessageFormat.createBoardInfoRequest(listCellDTOWithColumnRowContent)));
+                    new String(SBPMessageFormat.createBoardInfoRequest(listCellDTOWithColumnRowPostItCreator)));
         }catch (Exception e){
             outputStream.writeUTF(
                     new String(SBPMessageFormat.creteErrorRequest(e.getMessage())));
