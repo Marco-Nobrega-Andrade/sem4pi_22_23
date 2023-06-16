@@ -2,9 +2,7 @@ package eapli.base.app.sharedboardServer;
 
 import eapli.base.app.sharedboardServer.Requests.*;
 import eapli.base.board.application.*;
-import eapli.base.board.application.services.BoardInformationController;
 import eapli.base.board.dto.BoardDTOWithTitle;
-import eapli.base.board.dto.CellDTOWithColumnRowContent;
 import eapli.base.infrastructure.authz.AuthenticationCredentialHandler;
 import eapli.base.infrastructure.authz.CredentialHandler;
 import eapli.base.postitmanager.application.CreatePostItController;
@@ -95,20 +93,10 @@ public class AttendClient implements Runnable{
                         ArchiveBoardRequest.archiveBoard(message,outputStream);
                         break;
                     case SBPMessageFormat.VIEW_IN_REAL_TIME_CODE:
-                        List<String> param = SBPMessageFormat.decodeParam(message.getBytes());
-                        try{
-                            List<CellDTOWithColumnRowContent>  listCellDTOWithColumnRowContent =
-                                    new BoardInformationController().getBoardInformation(param.get(0));
-                            outputStream.writeUTF(
-                                    new String(SBPMessageFormat.createBoardInfoRequest(listCellDTOWithColumnRowContent)));
-                        }catch (Exception e){
-                            outputStream.writeUTF(
-                                    new String(SBPMessageFormat.creteErrorRequest(e.getMessage())));
-                        }
+                        new ViewInRealTimeRequest().viewInRealTime(message,outputStream);
                         break;
                     case SBPMessageFormat.LIST_ALL_BOARDS_I_PARTICIPATE_AND_CAN_READ:
-                        List<BoardDTOWithTitle> listBoardDTO = new ListAllBoardsIParticipateAndCanReadController().listAllBoardsIParticipateAndCanRead();
-                        outputStream.writeUTF(new String(SBPMessageFormat.createListBoardReceive(listBoardDTO)));
+                        new ListAllBoardsIParticipateAndCanRead().ListAllBoardsIParticipateAndCanRead(message,outputStream);
                         break;
                     case SBPMessageFormat.HISTORY_OF_UPDATES_CODE:
                        HistoryOfUpdatesRequest.historyOfUpdates(message, outputStream);
