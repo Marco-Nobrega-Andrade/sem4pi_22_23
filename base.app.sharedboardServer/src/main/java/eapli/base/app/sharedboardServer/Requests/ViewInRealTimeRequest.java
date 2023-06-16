@@ -1,6 +1,6 @@
 package eapli.base.app.sharedboardServer.Requests;
 
-import eapli.base.board.application.services.BoardInformationController;
+import eapli.base.board.application.BoardInformationController;
 import eapli.base.board.dto.CellDTOWithColumnRowPostItCreator;
 import eapli.base.sharedBoard.SBPMessageFormat;
 
