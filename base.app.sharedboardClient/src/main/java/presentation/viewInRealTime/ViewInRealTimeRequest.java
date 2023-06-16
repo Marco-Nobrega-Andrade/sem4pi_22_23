@@ -17,10 +17,13 @@ public class ViewInRealTimeRequest extends Thread {
     private DataInputStream inS;
     private DataOutputStream outS;
 
-    public ViewInRealTimeRequest (Socket s, String f, List<List<String>> boardCellsInfo){
+    private String boardTitle;
+
+    public ViewInRealTimeRequest (Socket s, String f, List<List<String>> boardCellsInfo, String boardTitle){
         baseFolder=f;
         sock=s;
         this.boardCellsInfo = boardCellsInfo;
+        this.boardTitle = boardTitle;
     }
     public void run() {
         try {
@@ -34,7 +37,7 @@ public class ViewInRealTimeRequest extends Thread {
 
             if(request.getMethod().equals("GET")) {
                 if (request.getURI().equals("/table")) {
-                    String content = getTableInHTML(boardCellsInfo);
+                    String content = getTableInHTML(boardCellsInfo,boardTitle);
                     if (content != null) {
                         response.setContentFromString(content, "text/html");
                         response.setResponseStatus("200 Ok");
@@ -69,11 +72,12 @@ public class ViewInRealTimeRequest extends Thread {
         }
     }
 
-    private static synchronized String getTableInHTML(List<List<String>>  boardCellsInfo) {
+    private static synchronized String getTableInHTML(List<List<String>>  boardCellsInfo, String boardTitle) {
 
         int maxRow = getMaxRowNumber(boardCellsInfo);
         int maxCol = getMaxColumnNumber(boardCellsInfo);
         StringBuilder html = new StringBuilder();
+        html.append("<h1>" + boardTitle + "</h1>\n");
         html.append("<table>\n<tr>\n<th></th>\n");
         for (int col = 1; col <= maxCol; col++) {
             String colTitle = getColumnTitle(boardCellsInfo, col);
@@ -149,6 +153,15 @@ public class ViewInRealTimeRequest extends Thread {
             int rowNum = Integer.parseInt(rowData.get(0).replaceAll("[^0-9]", ""));
             int colNum = Integer.parseInt(rowData.get(2).replaceAll("[^0-9]", ""));
             if (rowNum == row && colNum == col) {
+                if(rowData.get(4).endsWith(".jpg") || rowData.get(4).endsWith(".png")){
+                    return "<img src=\" "+ rowData.get(4)+ "\" alt=\"Image Not Found\" width=\"300\" height=\"200\"> " +
+                            "<br><br><span class=\"small\";>Name: " + rowData.get(7) + "<br>Email: " + rowData.get(6) +
+                            "<br>Time:" + rowData.get(5)+"</span>";
+                }else if (!rowData.get(4).isBlank() && !rowData.get(4).isEmpty()){
+                    return rowData.get(4) +
+                            "<br><br><span class=\"small\";>Name: " + rowData.get(7) + "<br>Email: " + rowData.get(6) +
+                            "<br>Time:" + rowData.get(5)+" </span>";
+                }
                 return rowData.get(4);
             }
         }

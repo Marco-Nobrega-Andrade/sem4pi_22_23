@@ -9,6 +9,12 @@ public class CellDTOWithColumnRowContentBuilder {
     private String columnTitle;
     private String content;
 
+    public String date;
+
+    public String email;
+
+    public String name;
+
     public CellDTOWithColumnRowContentBuilder withRowTitle(String title){
         this.rowTitle = title;
         return this;
@@ -30,8 +36,24 @@ public class CellDTOWithColumnRowContentBuilder {
         return this;
     }
 
+    public CellDTOWithColumnRowContentBuilder withDate(String date){
+        this.date = date;
+        return this;
+    }
+
+    public CellDTOWithColumnRowContentBuilder withEmail(String email){
+        this.email = email;
+        return this;
+    }
+
+    public CellDTOWithColumnRowContentBuilder withName(String name){
+        this.name = name;
+        return this;
+    }
+
+
     public CellDTOWithColumnRowContent build(){
-        return new CellDTOWithColumnRowContent(rowIdentifier,rowTitle,columnIdentifier,columnTitle,content);
+        return new CellDTOWithColumnRowContent(rowIdentifier,rowTitle,columnIdentifier,columnTitle,content, date,email,name);
     }
 
 }

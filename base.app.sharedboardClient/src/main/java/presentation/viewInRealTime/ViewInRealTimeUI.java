@@ -74,7 +74,7 @@ public class ViewInRealTimeUI extends AbstractUI {
                             int[] format = SBPMessageFormat.decodeFormat(boardInfo.getBytes());
                             if (format[1] == SBPMessageFormat.BOARD_INFO_CODE) {
                                 List<List <String>> boardCellsInfo = SBPMessageFormat.decodeDTO(boardInfo.getBytes());
-                                ViewInRealTimeRequest request = new ViewInRealTimeRequest(cliSock, BASE_FOLDER, boardCellsInfo);
+                                ViewInRealTimeRequest request = new ViewInRealTimeRequest(cliSock, BASE_FOLDER, boardCellsInfo,board);
                                 request.start();
                             }else if (format[1] == SBPMessageFormat.ERR_CODE){
                                 System.out.println(SBPMessageFormat.decodeParam(boardInfo.getBytes()));
