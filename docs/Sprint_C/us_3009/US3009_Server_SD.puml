@@ -41,12 +41,6 @@ SBS --> CTRL : taskList
 deactivate SBS
 CTRL --> AC : taskList
 deactivate CTRL
-AC -> SBPMsgF : createAcknowledgeRequest()
-activate SBPMsgF
-return ackRequest
-AC -> DOS : writeUTF(ackRequest)
-activate DOS
-deactivate DOS
 deactivate AC
 
 @enduml

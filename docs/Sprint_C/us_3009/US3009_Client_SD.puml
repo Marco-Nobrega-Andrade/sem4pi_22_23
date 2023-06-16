@@ -23,13 +23,13 @@ deactivate DOS
 UI -> DIS : create(socket)
 activate DIS
 deactivate DIS
-UI -> DOS : writeUTF(archiveBoardRequest)
+UI -> DOS : writeUTF(historyOfUpdatesRequest)
 activate DOS
 deactivate DOS
 UI -> DIS : readUTF()
 activate DIS
 return message
 return true
-return : informs operation success
+return : shows task list
 deactivate UI
 @enduml
