@@ -1,6 +1,5 @@
 package eapli.base.postitmanager.domain;
 
-import eapli.base.courseclasses.domain.Date;
 import eapli.base.exceptions.NegativeParameterException;
 import eapli.base.exceptions.ParameterNullBlankException;
 import eapli.base.exceptions.ZeroParameterException;
@@ -56,6 +55,11 @@ public class PostIt implements AggregateRoot<PostItKey> {
     public String returnContentString(){
         return content.toString();
     }
+
+    public String returnDateString(){
+        return date.toString();
+    }
+
 
     public void updateVersion(){
         this.postItKey.updateVersion();
