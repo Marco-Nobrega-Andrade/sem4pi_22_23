@@ -42,8 +42,20 @@ public class ViewInRealTimeUI extends AbstractUI {
                     if (selected.selectedOption() != 0) {
                         String board = selected.selectedElement();
                         int port;
+                        int i = 1;
+                        InetAddress addrs[];
                         Socket cliSock;
                         while (true) {
+                            String hostName = InetAddress.getLocalHost().getHostName();
+                            addrs = InetAddress.getAllByName(hostName);
+                            System.out.println("Address Available to use: ");
+                            for (InetAddress add: addrs) {
+                                System.out.println(i +"." +add);
+                                i++;
+                            }
+                            do {
+                                i = Console.readInteger("Select address: ");
+                            } while (i < 1 || i > addrs.length);
                             port = Console.readInteger("Insert the port:");
                             if (port == socketServer.getPort()){
                                 System.out.println("This port is not valid!!!\n\n");
@@ -52,8 +64,8 @@ public class ViewInRealTimeUI extends AbstractUI {
                             }
                         }
                         try {
-                            sock = new ServerSocket(port);
-                            System.out.println("Connecting to http://" + InetAddress.getLocalHost().getHostAddress() + ":" + sock.getLocalPort());
+                            sock = new ServerSocket(port,50,addrs[i-1]);
+                            System.out.println("Connecting to http://" + addrs[i-1] + ":" + sock.getLocalPort());
                         } catch (IOException ex) {
                             System.out.println("Server failed to open local port " + port);
                             return false;
