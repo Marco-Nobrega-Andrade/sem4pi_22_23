@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class ArchiveBoardRequest {
-    public static void archiveBoard(String message, DataOutputStream outputStream) throws IOException {
+    public void archiveBoard(String message, DataOutputStream outputStream) throws IOException {
         List<String> archiveBoardParam = SBPMessageFormat.decodeParam(message.getBytes());
         try{
             new ArchiveBoardController().archiveBoard(archiveBoardParam.get(0));

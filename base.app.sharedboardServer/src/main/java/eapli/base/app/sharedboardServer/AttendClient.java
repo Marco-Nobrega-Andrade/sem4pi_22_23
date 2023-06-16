@@ -35,13 +35,13 @@ public class AttendClient implements Runnable{
                 arrayFormat = SBPMessageFormat.decodeFormat(message.getBytes());
                 switch (arrayFormat[SBPMessageFormat.CODE_OFFSET]) {
                     case SBPMessageFormat.AUTH_CODE:
-                        AuthRequest.authenticate(message, outputStream, credentialHandler);
+                        new AuthRequest().authenticate(message, outputStream, credentialHandler);
                         break;
                     case SBPMessageFormat.COMMTEST_CODE:
-                        CommtestRequest.test(outputStream);
+                        new CommtestRequest().test(outputStream);
                         break;
                     case SBPMessageFormat.LIST_BOARD_I_OWN_SEND:
-                        ListBoardsIOwnRequest.listBoardsIOwn(message, outputStream);
+                        new ListBoardsIOwnRequest().listBoardsIOwn(message, outputStream);
                         break;
                     case SBPMessageFormat.LIST_BOARD_I_PARTICIPATE_SEND:
                         List<BoardDTOWithTitle> boardDTOList2 = new ListBoardIParticipateController().
@@ -90,10 +90,10 @@ public class AttendClient implements Runnable{
                         ChangePostItPositionRequest.changePostItPosition(message,outputStream);
                         break;
                     case SBPMessageFormat.SHARE_BOARD_CODE:
-                        ShareBoardRequest.shareBoard(message, outputStream);
+                        new ShareBoardRequest().shareBoard(message, outputStream);
                         break;
                     case SBPMessageFormat.ARCHIVE_BOARD_CODE:
-                        ArchiveBoardRequest.archiveBoard(message,outputStream);
+                        new ArchiveBoardRequest().archiveBoard(message,outputStream);
                         break;
                     case SBPMessageFormat.VIEW_IN_REAL_TIME_CODE:
                         new ViewInRealTimeRequest().viewInRealTime(message,outputStream);
