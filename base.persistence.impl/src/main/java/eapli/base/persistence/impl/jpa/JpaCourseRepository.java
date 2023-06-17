@@ -43,14 +43,23 @@ public class JpaCourseRepository extends JpaAutoTxRepository<Course, CourseIdent
     }
 
     @Override
-    public List<Course> findTeacherCourses(SystemUser systemUser) {
+    public List<Course> findTeacherInChargeCourses(SystemUser systemUser) {
         TypedQuery<Course> query = createQuery(
-                "SELECT DISTINCT c FROM Course c JOIN c.teacherInCharge t JOIN Person p ON p.teacher = c.teacherInCharge WHERE p.systemUser = :systemUser AND c.courseStatus.courseStatusValue <> 'CLOSED' " +
-                        "OR (:systemUser IN (SELECT p.systemUser FROM c.teachersList t JOIN Person p ON t = p.teacher where c.courseStatus.courseStatusValue <> 'CLOSED'))",
+                "SELECT DISTINCT c FROM Course c JOIN c.teacherInCharge t JOIN Person p ON p.teacher = c.teacherInCharge WHERE (p.systemUser = :systemUser AND c.courseStatus.courseStatusValue <> 'CLOSED') ",
                 Course.class);
         query.setParameter("systemUser", systemUser);
         return query.getResultList();
 
+
+    }
+
+    @Override
+    public List<Course> findTeacherLecturesCourses(SystemUser systemUser) {
+        TypedQuery<Course> query = createQuery(
+                "SELECT DISTINCT c FROM Course c JOIN c.teachersList t JOIN Person p ON p.teacher = t WHERE (p.systemUser = :systemUser AND c.courseStatus.courseStatusValue <> 'CLOSED') ",
+                Course.class);
+        query.setParameter("systemUser", systemUser);
+        return query.getResultList();
 
     }
 
