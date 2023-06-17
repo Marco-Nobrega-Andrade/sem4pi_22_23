@@ -226,16 +226,25 @@ public class ExamResolutionVisitor extends ExamGrammarBaseVisitor<String>{
         String solutionNumericalValue = "";
 
         try{
-
             answerInt = ctx.numerical_answer().INT().getText();
-            answerNumericalValue = ctx.numerical_answer().NUMERICAL_VALUE().getText();
-
-            solutionInt = ctx.numerical_solution().INT().getText();
-            solutionNumericalValue = ctx.numerical_solution().NUMERICAL_VALUE().getText();
-
-        }catch (Exception ignore){
-
+        }catch (Exception ignored){
         }
+
+        try{
+            answerNumericalValue = ctx.numerical_answer().NUMERICAL_VALUE().getText();
+        }catch(Exception ignored){
+        }
+
+        try{
+            solutionInt = ctx.numerical_solution().INT().getText();
+        }catch(Exception ignored){
+        }
+
+        try{
+            solutionNumericalValue = ctx.numerical_solution().NUMERICAL_VALUE().getText();
+        }catch(Exception ignored){
+        }
+
 
         String finalAnswer = "";
         String finalSolution = "";
