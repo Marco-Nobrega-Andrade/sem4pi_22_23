@@ -1,7 +1,11 @@
 package eapli.base.infrastructure.bootstrapers.demo;
 
+import eapli.base.coursemanagement.dto.CourseDTOBuilder;
+import eapli.base.coursemanagement.dto.CourseDTOWithIdTitle;
 import eapli.base.infrastructure.bootstrapers.CourseBootstrapperBase;
 import eapli.base.infrastructure.bootstrapers.TestDataConstants;
+import eapli.base.usermanagement.dto.TeacherDTOBuilder;
+import eapli.base.usermanagement.dto.TeacherDTOWithAcronym;
 import eapli.framework.actions.Action;
 
 import java.util.ArrayList;
@@ -27,6 +31,16 @@ public class CourseBootstrapper extends CourseBootstrapperBase implements Action
         openEnrollmentsCourse("courseClosed", "courseClosedTitle");
         closeEnrollmentsCourse("courseClosed", "courseClosedTitle");
         closeCourse("courseClosed", "courseClosedTitle");
+
+        //add teacher
+        TeacherDTOWithAcronym teacherDTOWithAcronym= new TeacherDTOBuilder().withAcronym("OST").withDateOfBirth("01-11-2000").withTaxPayerNumber("100000001").buildWithAcronym();
+        CourseDTOWithIdTitle courseDTOWithIdTitle = new CourseDTOBuilder().withCourseTitle("courseOpenEnrollmentsTitle").withCourseIdentifier("courseOpenEnrollments").buildWithIdTitle();
+        addTeacherToCourse(teacherDTOWithAcronym, courseDTOWithIdTitle);
+
+        //add student
+        addStudentToCourse(courseDTOWithIdTitle,"base.bootstrappers/files/student");
+
+
         for(Boolean result : results){
             if(!result) return false;
         }
@@ -50,5 +64,13 @@ public class CourseBootstrapper extends CourseBootstrapperBase implements Action
 
     private void closeEnrollmentsCourse(final String courseId, final String courseTitle){
         closeEnrollmentsCourseBaseBootstrap(courseId, courseTitle);
+    }
+
+    private void addTeacherToCourse(final TeacherDTOWithAcronym teacher, final CourseDTOWithIdTitle course){
+        addTeacherToCourseBaseBootstrap(teacher, course);
+    }
+
+    private void addStudentToCourse(final CourseDTOWithIdTitle courseDTO, final String filePath){
+        addStudentToCourseBaseBootstrap(courseDTO, filePath);
     }
 }
