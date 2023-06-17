@@ -5,6 +5,7 @@ import eapli.base.boardhistory.domain.BoardHistory;
 import eapli.base.boardhistory.domain.BoardHistoryId;
 import eapli.base.boardhistory.domain.Task;
 import eapli.base.boardhistory.repositories.BoardHistoryRepository;
+import eapli.base.postitmanager.domain.PostIt;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
@@ -36,5 +37,12 @@ public class JpaBoardHistoryRepository extends JpaAutoTxRepository<BoardHistory,
         return createQuery("SELECT t FROM Task t WHERE t IN (SELECT task FROM BoardHistory bh JOIN bh.taskList task WHERE bh.boardHistoryId = :boardHistoryId)", Task.class)
                 .setParameter("boardHistoryId", boardHistoryId)
                 .getResultList();
+    }
+
+    @Override
+    public Task getLastTaskForPostIt(PostIt postIt) {
+        return createQuery("SELECT t FROM Task t WHERE t.postIt = :postIt AND t.id = (SELECT MAX(t2.id) " +
+                "FROM Task t2 WHERE t2.postIt = :postIt)",Task.class).
+                setParameter("postIt", postIt).getSingleResult();
     }
 }

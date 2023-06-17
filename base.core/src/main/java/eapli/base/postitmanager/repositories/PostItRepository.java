@@ -7,7 +7,7 @@ import eapli.framework.domain.repositories.DomainRepository;
 
 public interface PostItRepository extends DomainRepository<PostItKey, PostIt> {
 
-    PostIt getPostItInACell(Board board, int column, int row);
+    PostIt getPostItInACell(Board board, Integer column, Integer row);
 
     PostIt getLastVersionOfPostIt(int version, long id);
 }
