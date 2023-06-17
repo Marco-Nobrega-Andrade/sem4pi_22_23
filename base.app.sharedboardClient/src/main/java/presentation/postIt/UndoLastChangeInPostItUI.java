@@ -84,7 +84,7 @@ public class UndoLastChangeInPostItUI extends AbstractUI {
         if (selected.selectedOption() != 0) {
             String board = selected.selectedElement();
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append("Are you sure you want to create a Post-It in this Board ");
+            stringBuilder.append("Are you sure you want to undo the last change of a post-it in this Board ");
             stringBuilder.append(board);
             stringBuilder.append("?");
             if (Console.readBoolean(stringBuilder.toString())) {
@@ -98,15 +98,15 @@ public class UndoLastChangeInPostItUI extends AbstractUI {
         System.out.println("The board has " + numberOfColumns + " columns and " + numberOfRows + " rows.");
 
         // request the numberOfColumns and numberOfRows of the post-it
-        int selectedColumn = Console.readInteger("Select numberOfColumns");
+        int selectedColumn = Console.readInteger("Select column number position");
         while (selectedColumn > numberOfColumns || selectedColumn < 1) {
             System.out.println("Invalid numberOfColumns.");
-            selectedColumn = Console.readInteger("Select numberOfColumns");
+            selectedColumn = Console.readInteger("Select column number position");
         }
-        int selectedRow = Console.readInteger("Select numberOfRows");
+        int selectedRow = Console.readInteger("Select row number position");
         while (selectedRow > numberOfRows || selectedRow < 1) {
             System.out.println("Invalid numberOfRows.");
-            selectedRow = Console.readInteger("Select numberOfRows");
+            selectedRow = Console.readInteger("Select row number position");
         }
         return new int[]{selectedColumn, selectedRow};
     }
