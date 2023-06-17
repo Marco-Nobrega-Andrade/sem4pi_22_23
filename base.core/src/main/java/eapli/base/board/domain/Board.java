@@ -158,6 +158,33 @@ public class Board implements AggregateRoot<BoardTitle> {
         return currentPostIt;
     }
 
+    /**
+     * Returns a boolean if board participant or board owner from a given row and column is the owner of the post-it
+     * or throws an exception if the cell is empty or the user didn't create the post-it
+     * @param row int row number
+     * @param column int column number
+     * @param boardParticipant BoardParticipant
+     * @param boardOwner BoardOwner
+     * @return boolean
+     * @throws CellDoesNotExistException
+     * @throws CellIsEmptyException
+     * @throws UserDidNotCreatePostItException
+     */
+    public boolean verifyIfIsPostItOwner(Integer row, Integer column,
+                                         BoardParticipant boardParticipant, BoardOwner boardOwner)
+            throws CellDoesNotExistException, CellIsEmptyException, UserDidNotCreatePostItException {
+        Cell cellToUpdate = cellFromRowAndColumn(row, column);
+        PostIt currentPostIt = cellToUpdate.currentPostIt();
+        if (currentPostIt == null){
+            throw new CellIsEmptyException("This cell doesn't have a post-it");
+        }
+
+        if(!boardHistory.checkIfPostItCanBeUpdatedByUser(currentPostIt,boardParticipant,boardOwner)){
+            throw new UserDidNotCreatePostItException("The post-it couldn't be changed because you didn't create it");
+        }
+        return true;
+    }
+
     public void updateCell(PostIt newPostIt, Integer row, Integer column) throws CellDoesNotExistException {
         Cell cellToUpdate = cellFromRowAndColumn(row, column);
         cellToUpdate.addPostIt(newPostIt);
@@ -178,5 +205,13 @@ public class Board implements AggregateRoot<BoardTitle> {
 
     public boolean verifyIfCellIsAvailable(Integer row, Integer column) throws CellDoesNotExistException {
         return !cellFromRowAndColumn(row, column).hasPostIt();
+    }
+
+    public void removePostItFromCell(int row, int column) {
+        for (Cell cell : cellList) {
+            if (cell.isColumn(column)  && cell.isRow(row)) {
+                cell.removePostIt();
+            }
+        }
     }
 }
