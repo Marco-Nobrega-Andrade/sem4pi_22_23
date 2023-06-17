@@ -18,10 +18,10 @@ public class JpaPostItRepository extends JpaAutoTxRepository<PostIt, PostItKey, 
     }
 
     @Override
-    public PostIt getPostItInACell(Board board, int column, int row) {
+    public PostIt getPostItInACell(Board board, Integer column, Integer row) {
         return createQuery("SELECT p FROM PostIt p WHERE p = " +
                 "(SELECT c.postIt FROM Cell c WHERE c IN (SELECT cl FROM Board b JOIN b.cellList cl WHERE b = :board) " +
-                "AND c.column = :column AND c.row = :row)", PostIt.class)
+                "AND c.column.columnIdentifier.column_Identifier = :column AND c.row.rowIdentifier.row_Identifier = :row)", PostIt.class)
                 .setParameter("boardTittle", board).setParameter("column",column).
                 setParameter("row",row).getSingleResult();
     }

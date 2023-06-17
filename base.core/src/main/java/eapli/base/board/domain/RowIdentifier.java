@@ -45,6 +45,6 @@ class RowIdentifier implements Comparable<RowIdentifier>, ValueObject {
 
     @Override
     public String toString() {
-        return ""+rowIdentifier;
+        return ""+ rowIdentifier;
     }
 }

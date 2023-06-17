@@ -102,4 +102,15 @@ public class Task{
     public boolean isInThisPostIt(PostIt currentPostIt) {
         return this.postIt.returnPostItIdentifier() == currentPostIt.returnPostItIdentifier();
     }
+
+    public boolean verifyIfTaskWasMovePostIt() {
+        return operation.operationValue().equals(OperationValue.CHANGE_POST_IT_POSITION);
+    }
+
+    public int[] getLastPosition() {
+        int[] lastPosition = new int[2];
+        lastPosition[0] = oldRow;
+        lastPosition[1] = oldColumn;
+        return lastPosition;
+    }
 }
