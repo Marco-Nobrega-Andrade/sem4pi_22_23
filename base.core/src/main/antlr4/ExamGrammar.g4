@@ -84,9 +84,11 @@ points: NEWLINE+ POINTS_ENTRY INT
       ;
 feedback: NEWLINE+ FEEDBACK_ENTRY phrase
         ;
-phrase: (WORD|INT|PUNCTUATION|COMMA|HASH|COLON|DASH)+
- ;
+phrase : phrase_word+
+       ;
 
+phrase_word : (WORD|INT|PUNCTUATION|COMMA|HASH|COLON|DASH)
+            ;
 list_with_title: NEWLINE+ title_list list?
                ;
 title_list: phrase COLON
