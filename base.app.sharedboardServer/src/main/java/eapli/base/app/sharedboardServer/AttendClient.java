@@ -19,9 +19,11 @@ public class AttendClient implements Runnable{
 
     private final CredentialHandler credentialHandler = new AuthenticationCredentialHandler();
     private Socket socket;
+    private Object myLock;
 
-    protected AttendClient(Socket socket) {
+    protected AttendClient(Socket socket, Object myLock) {
         this.socket = socket;
+        this.myLock = myLock;
     }
     @Override
     public void run() {
@@ -68,7 +70,7 @@ public class AttendClient implements Runnable{
                         break;
 
                     case SBPMessageFormat.POST_IT_REQUEST_SEND:
-                        synchronized (this) {
+                        synchronized (myLock) {
                             List<String> postItParams = SBPMessageFormat.decodeParam(message.getBytes());
                             try {
                                 if (new CreatePostItController().createPostIt(postItParams.get(0), postItParams.get(1),
@@ -106,14 +108,17 @@ public class AttendClient implements Runnable{
                         historyOfUpdatesRequest.historyOfUpdates(message, outputStream);
                         break;
                     case SBPMessageFormat.UNDO_LAST_CHANGE_POST_IT_REQUEST:
-                        List<String> postItParams = SBPMessageFormat.decodeParam(message.getBytes());
-                        try {
-                            new UndoLastChangePostItController().undoLastChangePostIt(postItParams.get(0),
-                                    Integer.parseInt(postItParams.get(1)), Integer.parseInt(postItParams.get(2)));
-                            outputStream.writeUTF(new String(SBPMessageFormat.createAcknowledgeRequest()));
-                        }catch (Exception e){
-                            outputStream.writeUTF(new String(SBPMessageFormat.creteErrorRequest(e.getMessage())));
+                        synchronized (myLock) {
+                            List<String> postItParams = SBPMessageFormat.decodeParam(message.getBytes());
+                            try {
+                                new UndoLastChangePostItController().undoLastChangePostIt(postItParams.get(0),
+                                        Integer.parseInt(postItParams.get(1)), Integer.parseInt(postItParams.get(2)));
+                                outputStream.writeUTF(new String(SBPMessageFormat.createAcknowledgeRequest()));
+                            }catch (Exception e){
+                                outputStream.writeUTF(new String(SBPMessageFormat.creteErrorRequest(e.getMessage())));
+                            }
                         }
+                        break;
                 }
             }while (arrayFormat[SBPMessageFormat.CODE_OFFSET] != SBPMessageFormat.DISCONN_CODE) ;
         } catch (IOException e) {

@@ -33,10 +33,11 @@ public class SharedBoardAppServer {
                 System.out.println("======================");
                 System.out.println(server.getInetAddress().getHostAddress());
                 System.out.println("======================");
+                Object myLock = new Object();
                 while (true) {
                     Socket socket = server.accept();
 
-                    Thread clienConn = new Thread(new AttendClient(socket));
+                    Thread clienConn = new Thread(new AttendClient(socket,myLock));
                     clienConn.start();
                 }
             }
