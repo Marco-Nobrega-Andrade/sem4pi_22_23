@@ -134,12 +134,7 @@ public class FormativeExamResolutionVisitor extends FormativeExamGrammarBaseVisi
             grade += points;
         }
 
-        try{
-            if(ctx.feedback().phrase().getText()!=null)
-                visitFeedback(ctx.feedback());
-        }catch (Exception e){
-
-        }
+        visitFeedback(ctx.feedback());
 
         return null;
 
