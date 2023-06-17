@@ -65,7 +65,7 @@ public class ViewInRealTimeUI extends AbstractUI {
                         }
                         try {
                             sock = new ServerSocket(port,50,addrs[i-1]);
-                            System.out.println("Connecting to http://" + addrs[i-1] + ":" + sock.getLocalPort());
+                            System.out.println("Connecting to http://" + sock.getInetAddress().getHostAddress() + ":" + sock.getLocalPort());
                         } catch (IOException ex) {
                             System.out.println("Server failed to open local port " + port);
                             return false;
