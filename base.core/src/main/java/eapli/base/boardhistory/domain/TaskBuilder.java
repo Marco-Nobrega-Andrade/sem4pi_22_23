@@ -35,14 +35,6 @@ public class TaskBuilder {
     }
 
     public Task build(){
-        if (this.postIt == null){
-            return new Task(this.taskId, this.operation, this.boardOwner);
-        }
-        if (this.boardParticipant != null){
-            return new Task(this.taskId, this.operation, this.boardParticipant,this.postIt);
-        }
-        return new Task(this.taskId, this.operation, this.boardOwner,this.postIt);
+        return new Task(this.taskId, this.operation, this.boardOwner, this.boardParticipant, this.postIt);
     }
-
-
 }
