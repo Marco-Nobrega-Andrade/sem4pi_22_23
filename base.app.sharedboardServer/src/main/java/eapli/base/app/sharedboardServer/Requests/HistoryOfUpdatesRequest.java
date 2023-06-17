@@ -9,7 +9,7 @@ import java.util.List;
 
 public class HistoryOfUpdatesRequest {
 
-    public static void historyOfUpdates(String message, DataOutputStream outputStream) throws IOException {
+    public void historyOfUpdates(String message, DataOutputStream outputStream) throws IOException {
         List<String> boardParam = SBPMessageFormat.decodeParam(message.getBytes());
         try {
             List<String> taskList = new HistoryOfUpdatesController().historyOfUpdates(boardParam.get(0));
