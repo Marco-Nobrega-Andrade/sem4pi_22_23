@@ -19,6 +19,7 @@ public class FormativeExamResolutionVisitor extends FormativeExamGrammarBaseVisi
 
     @Override
     public String visitMatching_type_question(FormativeExamGrammarParser.Matching_type_questionContext ctx) {
+        questionNumber++;
         int points = Integer.parseInt(ctx.points().INT().getText());
 
         List<String> solutions = new ArrayList<>();
@@ -63,6 +64,7 @@ public class FormativeExamResolutionVisitor extends FormativeExamGrammarBaseVisi
 
     @Override
     public String visitSelect_missing_words(FormativeExamGrammarParser.Select_missing_wordsContext ctx) {
+        questionNumber++;
         int points = Integer.parseInt(ctx.points().INT().getText());
 
         List<String> solutions = new ArrayList<>();
@@ -96,6 +98,7 @@ public class FormativeExamResolutionVisitor extends FormativeExamGrammarBaseVisi
 
     @Override
     public String visitShort_answer_question(FormativeExamGrammarParser.Short_answer_questionContext ctx) {
+        questionNumber++;
         int points = Integer.parseInt(ctx.points().INT().getText());
         String answer;
         try {
@@ -116,7 +119,7 @@ public class FormativeExamResolutionVisitor extends FormativeExamGrammarBaseVisi
 
     @Override
     public String visitTrue_false_question(FormativeExamGrammarParser.True_false_questionContext ctx) {
-
+        questionNumber++;
         String answer;
 
         try {
@@ -131,7 +134,12 @@ public class FormativeExamResolutionVisitor extends FormativeExamGrammarBaseVisi
             grade += points;
         }
 
-        visitFeedback(ctx.feedback());
+        try{
+            if(ctx.feedback().phrase().getText()!=null)
+                visitFeedback(ctx.feedback());
+        }catch (Exception e){
+
+        }
 
         return null;
 
@@ -139,7 +147,7 @@ public class FormativeExamResolutionVisitor extends FormativeExamGrammarBaseVisi
 
     @Override
     public String visitNumerical_question(FormativeExamGrammarParser.Numerical_questionContext ctx) {
-
+        questionNumber++;
         double points = Double.parseDouble(ctx.points().INT().getText());
         String answerInt = "";
         String answerNumericalValue = "";
@@ -147,14 +155,33 @@ public class FormativeExamResolutionVisitor extends FormativeExamGrammarBaseVisi
         String solutionNumericalValue = "";
 
         try{
-
             answerInt = ctx.numerical_answer().INT().getText();
-            answerNumericalValue = ctx.numerical_answer().NUMERICAL_VALUE().getText();
 
-            solutionInt = ctx.numerical_solution().INT().getText();
-            solutionNumericalValue = ctx.numerical_solution().NUMERICAL_VALUE().getText();
+
+
 
         }catch (Exception e){
+
+        }
+
+        try{
+            answerNumericalValue = ctx.numerical_answer().NUMERICAL_VALUE().getText();
+
+        }catch(Exception e){
+
+        }
+
+        try{
+            solutionInt = ctx.numerical_solution().INT().getText();
+
+        }catch(Exception e){
+
+        }
+
+        try{
+            solutionNumericalValue = ctx.numerical_solution().NUMERICAL_VALUE().getText();
+
+        }catch(Exception e){
 
         }
 
@@ -185,7 +212,7 @@ public class FormativeExamResolutionVisitor extends FormativeExamGrammarBaseVisi
 
     @Override
     public String visitMultiple_choice_question(FormativeExamGrammarParser.Multiple_choice_questionContext ctx) {
-
+        questionNumber++;
         List<String> answerList;
         List<String> solutionList;
 
@@ -227,7 +254,7 @@ public class FormativeExamResolutionVisitor extends FormativeExamGrammarBaseVisi
 
     @Override
     public String visitFeedback(FormativeExamGrammarParser.FeedbackContext ctx) {
-        questionNumber++;
+
 
         try {
             FormativeExamGrammarParser.PhraseContext phraseContext = ctx.phrase();
