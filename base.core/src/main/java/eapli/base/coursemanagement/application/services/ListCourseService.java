@@ -11,6 +11,7 @@ import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ListCourseService {
 
@@ -24,7 +25,10 @@ public class ListCourseService {
             listCourse = courseRepository.findAll();
         }else{
             if (user.hasAny(BaseRoles.TEACHER)){
-                listCourse = courseRepository.findTeacherCourses(user);
+                List<Course> listCourseList = new ArrayList<>();
+                listCourseList.addAll(courseRepository.findTeacherInChargeCourses(user)) ;
+                listCourseList.addAll(courseRepository.findTeacherLecturesCourses(user)) ;
+                listCourse = listCourseList;
             }else{
                 listCourse = courseRepository.findStudentCourses(user);
             }
