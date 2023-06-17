@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class ShareBoardRequest {
-    public static void shareBoard(String message, DataOutputStream outputStream) throws IOException{
+    public void shareBoard(String message, DataOutputStream outputStream) throws IOException{
         List<String> shareBoardParams = SBPMessageFormat.decodeParam(message.getBytes());
         boolean permission;
         if (shareBoardParams.get(2).equals("t")) {

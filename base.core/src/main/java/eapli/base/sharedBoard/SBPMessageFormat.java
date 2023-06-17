@@ -1,7 +1,7 @@
 package eapli.base.sharedBoard;
 
 import eapli.base.board.dto.BoardDTOWithTitle;
-import eapli.base.board.dto.CellDTOWithColumnRowContent;
+import eapli.base.board.dto.CellDTOWithColumnRowPostItCreator;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -122,7 +122,7 @@ public class SBPMessageFormat {
         return encodeRequest(CHANGE_POST_IT_CONTENT, board + "," + row + "," + column  + "," + content);
     }
     public static byte[] createChangePostItPositionRequest(String board, int oldRow, int oldColumn, int newRow, int newColumn) {
-        return encodeRequest(CHANGE_POST_IT_CONTENT, board + "," + oldRow + "," + oldColumn  + "," + newRow + "," + newColumn);
+        return encodeRequest(CHANGE_POST_IT_POSITION, board + "," + oldRow + "," + oldColumn  + "," + newRow + "," + newColumn);
     }
 
     public static byte[] createViewInRealTimeRequest(String boardId){
@@ -130,11 +130,11 @@ public class SBPMessageFormat {
     }
 
 
-    public static byte[] createBoardInfoRequest(List<CellDTOWithColumnRowContent> listCellDTOWithColumnRowContent){
+    public static byte[] createBoardInfoRequest(List<CellDTOWithColumnRowPostItCreator> listCellDTOWithColumnRowPostItCreator){
         StringBuilder strBuilder = new StringBuilder();
-        for(int i = 0; i < listCellDTOWithColumnRowContent.size(); i++){
-            strBuilder.append(listCellDTOWithColumnRowContent.get(i).toString());
-            if(i < listCellDTOWithColumnRowContent.size() - 1){
+        for(int i = 0; i < listCellDTOWithColumnRowPostItCreator.size(); i++){
+            strBuilder.append(listCellDTOWithColumnRowPostItCreator.get(i).toString());
+            if(i < listCellDTOWithColumnRowPostItCreator.size() - 1){
                 strBuilder.append(",;,");
             }
         }

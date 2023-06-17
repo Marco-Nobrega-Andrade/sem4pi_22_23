@@ -35,6 +35,7 @@ import eapli.framework.presentation.console.menu.VerticalMenuRenderer;
 import presentation.archiveBoard.ArchiveBoardAction;
 import presentation.historyOfUpdates.HistoryOfUpdatesAction;
 import presentation.postIt.ChangePostItContentAction;
+import presentation.postIt.ChangePostItPositionAction;
 import presentation.postIt.CreatePostItAction;
 import presentation.shareBoard.ShareBoardAppAction;
 import presentation.shareBoard.ShareBoardUI;
@@ -63,6 +64,8 @@ public class MainMenu extends AbstractUI {
     private static final int CREATE_A_POST_IT = 3;
 
     private static final int CHANGE_POST_IT_CONTENT = 6;
+
+    private static final int CHANGE_POST_IT_POSITION = 7;
 
     private static final int HISTORY_OF_UPDATES_OPTION = 5;
 
@@ -110,6 +113,7 @@ public class MainMenu extends AbstractUI {
         mainMenu.addItem(VIEW_IN_REAL_TIME, "View Board In Real Time", new ViewInRealTimeAction(socket));
         mainMenu.addItem(HISTORY_OF_UPDATES_OPTION, "History of Updates", new HistoryOfUpdatesAction(socket));
         mainMenu.addItem(CHANGE_POST_IT_CONTENT, "Change post-it content", new ChangePostItContentAction(socket));
+        mainMenu.addItem(CHANGE_POST_IT_POSITION, "Change post-it position", new ChangePostItPositionAction(socket));
         mainMenu.addItem(EXIT_OPTION, "Exit", new ExitWithMessageAction("Bye, Bye"));
         return mainMenu;
     }

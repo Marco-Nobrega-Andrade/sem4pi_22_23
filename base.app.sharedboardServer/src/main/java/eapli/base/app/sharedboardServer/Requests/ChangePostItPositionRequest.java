@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class ChangePostItPositionRequest {
-    public static void changePostItPosition(String message, DataOutputStream outputStream) throws IOException {
+    public void changePostItPosition(String message, DataOutputStream outputStream) throws IOException {
         List<String> params = SBPMessageFormat.decodeParam(message.getBytes());
         try {
             new ChangePostItPositionController().changePostItPosition(params.get(0),Integer.parseInt(params.get(1)), Integer.parseInt(params.get(2)),Integer.parseInt(params.get(3)), Integer.parseInt(params.get(4)));

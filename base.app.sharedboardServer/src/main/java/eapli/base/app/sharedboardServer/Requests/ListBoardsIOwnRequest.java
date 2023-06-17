@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class ListBoardsIOwnRequest {
-    public static void listBoardsIOwn(String message, DataOutputStream outputStream) throws IOException {
+    public void listBoardsIOwn(String message, DataOutputStream outputStream) throws IOException {
         List<BoardDTOWithTitle> boardDTOList = new ListBoardsIOwnController().listBoardsIOwn();
         byte[] boardIOwnListRequest = SBPMessageFormat.createListBoardReceive(boardDTOList);
         outputStream.writeUTF(new String(boardIOwnListRequest));
