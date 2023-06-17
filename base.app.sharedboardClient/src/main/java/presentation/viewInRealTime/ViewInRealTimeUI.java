@@ -50,7 +50,7 @@ public class ViewInRealTimeUI extends AbstractUI {
                             addrs = InetAddress.getAllByName(hostName);
                             System.out.println("Address Available to use: ");
                             for (InetAddress add: addrs) {
-                                System.out.println(i +"." +add);
+                                System.out.println(i +". " +add.getHostAddress());
                                 i++;
                             }
                             do {
