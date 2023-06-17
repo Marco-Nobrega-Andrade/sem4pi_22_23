@@ -1,7 +1,8 @@
-#Title: exam1
+#Title: exam2
 
-#Type of grade: none
-#Type of feedback: none
+#Type of grade: on-submission
+#Type of feedback: on-submission
+#Header description: Header exam2
 
 #Section: 1
 #Section description: section1
@@ -20,19 +21,19 @@ Country:
 - Japan
 
 #Answer:
-#Solution: Tokyo-Japan, Italy-Rome, Canada-Ottawa
+#Solution: Tokyo-Japan, Rome-Italy, Ottawa-Canada
 
 #Points: 10
-#Question: Exam banger?
+#Question: Is a platypus a mammal?
 #Answer:
 #Solution: T
 
 #Section: 2
 
 #Points: 10
-#Question: Capital of Brazil length?
+#Question: How long is 5ft in meters?
 #Answer:
-#Solution: 222,22 km
+#Solution: 1,52 km
 
 #Points: 10
 #Question: Please select the correct missing words.
@@ -74,5 +75,6 @@ Select multiple options:
 -New York
 -Lisbon
 -Los Angeles
+
 #Answer:
 #Solution: New York, Los Angeles

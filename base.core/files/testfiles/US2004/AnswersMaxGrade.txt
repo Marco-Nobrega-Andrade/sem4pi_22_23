@@ -1,6 +1,6 @@
-Tokyo-Japan, Italy-Rome, Canada-Ottawa
+Tokyo-Japan, Rome-Italy, Ottawa-Canada
 T
-222,22 km
+1,52 m
 Berlengas
 Brasilia
 Tokyo
