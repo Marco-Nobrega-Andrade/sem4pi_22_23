@@ -29,7 +29,12 @@ public class InMemoryCourseRepository extends InMemoryDomainRepository<Course, C
     }
 
     @Override
-    public List<Course> findTeacherCourses(SystemUser systemUser) {
+    public List<Course> findTeacherInChargeCourses(SystemUser systemUser) {
+        return null;
+    }
+
+    @Override
+    public List<Course> findTeacherLecturesCourses(SystemUser systemUser) {
         return null;
     }
 

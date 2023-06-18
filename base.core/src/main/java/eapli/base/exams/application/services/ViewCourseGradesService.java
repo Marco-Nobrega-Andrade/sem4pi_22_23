@@ -9,10 +9,6 @@ import eapli.base.exams.domain.ExamTitle;
 import eapli.base.exams.repositories.ExamRepository;
 import eapli.base.exams.repositories.ExamResolutionRepository;
 import eapli.base.infrastructure.persistence.PersistenceContext;
-import eapli.base.usermanagement.domain.Student;
-import eapli.base.usermanagement.domain.Teacher;
-import eapli.base.usermanagement.repositories.StudentRepository;
-import eapli.base.usermanagement.repositories.TeacherRepository;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 
@@ -36,8 +32,8 @@ public class ViewCourseGradesService {
         List<String> courseList = new ArrayList<>();
 
         SystemUser systemUser = AuthzRegistry.authorizationService().session().get().authenticatedUser();
-        List<Course> courseEntityList = courseRepository.findTeacherCourses(systemUser);
-
+        List<Course> courseEntityList = courseRepository.findTeacherInChargeCourses(systemUser);
+        courseEntityList.addAll(courseRepository.findTeacherLecturesCourses(systemUser));
         for (Course course : courseEntityList) {
 
             courseList.add(course.returnCourseIdentifierString());
