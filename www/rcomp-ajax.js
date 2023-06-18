@@ -26,7 +26,7 @@ function refreshTable() {
         };
         
   	request.open("GET", "/table", true);
-	request.timeout = 5000;
+	request.timeout = 15000;
   	request.send();
 }
 
