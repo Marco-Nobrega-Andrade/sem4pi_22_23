@@ -1,18 +1,22 @@
 package eapli.base.board.domain;
 
-import eapli.base.courseclasses.domain.Date;
 import eapli.framework.domain.model.ValueObject;
 
 import javax.persistence.Embeddable;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Embeddable
 public class Notification implements ValueObject {
     private String message;
-
-    private eapli.base.courseclasses.domain.Date date;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date date;
     public Notification(String message){
         this.message = message;
-        this.date = new Date(new java.util.Date());
+        this.date = new Date();
     }
 
     public Notification() {
@@ -21,6 +25,7 @@ public class Notification implements ValueObject {
 
     @Override
     public String toString() {
-        return date.toString()+" "+message;
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        return dateFormat.format(this.date)+" - "+message;
     }
 }

@@ -14,34 +14,26 @@ public class SBPMessageFormat {
     public static final int ACK_CODE = 2;
     public static final int ERR_CODE = 3;
     public static final int AUTH_CODE = 4;
-
     public static final int LIST_BOARD_I_OWN_SEND = 5;
     public static final int LIST_BOARD = 6;
-
+    public static final int SHARE_BOARD_CODE = 7;
+    public static final int ARCHIVE_BOARD_CODE = 8;
+    public static final int BOARD_INFO_CODE = 9;
+    public static final int VIEW_IN_REAL_TIME_CODE = 10;
     public static final int LIST_BOARD_I_PARTICIPATE_SEND = 11;
-    public static final int NUMBER_OF_CELLS_REQUEST_SEND = 13;
     public static final int LIST_BOARD_I_PARTICIPATE_RCV = 12;
+    public static final int NUMBER_OF_CELLS_REQUEST_SEND = 13;
     public static final int NUMBER_OF_CELLS_REQUEST_RCV = 14;
     public static final int POST_IT_REQUEST_SEND = 15 ;
+    public static final int LIST_ALL_BOARDS_I_PARTICIPATE_AND_CAN_READ = 16;
+    public static final int HISTORY_OF_UPDATES_CODE = 17;
+    public static final int UNDO_LAST_CHANGE_POST_IT_REQUEST = 18;
+    public static final int TASK_LIST_CODE = 19;
     public static final int CHANGE_POST_IT_CONTENT = 20;
     public static final int CHANGE_POST_IT_POSITION = 21;
+    public static final int LIST_NOTIFICATION_SEND = 22;
+    public static final int LIST_NOTIFICATION_RECEIVE = 23;
 
-    public static final int BOARD_INFO_CODE = 9;
-
-    public static final int VIEW_IN_REAL_TIME_CODE = 10;
-    public static final int LIST_ALL_BOARDS_I_PARTICIPATE_AND_CAN_READ = 16;
-
-    public static final int HISTORY_OF_UPDATES_CODE = 17;
-
-
-    public static final int UNDO_LAST_CHANGE_POST_IT_REQUEST = 18;
-
-    public static final int TASK_LIST_CODE = 19;
-
-
-    public static final int SHARE_BOARD_CODE = 7;
-
-    public static final int ARCHIVE_BOARD_CODE = 8;
     public static final int VERSION_OFFSET = 0;
     public static final int CODE_OFFSET = 1;
     public static final int D_LENGTH1_OFFSET = 2;
@@ -166,6 +158,21 @@ public class SBPMessageFormat {
         }
 
         return encodeRequest(TASK_LIST_CODE, stringBuilder.toString());
+    }
+    public static byte[] createNotificationListSendRequest(){
+        return encodeRequest(LIST_NOTIFICATION_SEND, "");
+    }
+
+    public static byte[] createNotificationListReceiveRequest(List<String> notificationList){
+        if(notificationList.isEmpty()) return encodeRequest(LIST_NOTIFICATION_RECEIVE, "");
+        StringBuilder stringBuilder = new StringBuilder();
+        for(int i = 0; i < notificationList.size(); i++){
+            stringBuilder.append(notificationList.get(i));
+            if(i != notificationList.size()-1){
+                stringBuilder.append(",");
+            }
+        }
+        return encodeRequest(LIST_NOTIFICATION_RECEIVE, stringBuilder.toString());
     }
 
     public static StringBuilder createTaskList(List<String> taskList){

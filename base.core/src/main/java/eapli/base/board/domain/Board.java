@@ -214,4 +214,12 @@ public class Board implements AggregateRoot<BoardTitle> {
             }
         }
     }
+
+    public List<String> returnNotificationListString(){
+        List<String> notificationListString = new ArrayList<>();
+        for(Notification notification : notificationList){
+            notificationListString.add(notification.toString());
+        }
+        return notificationListString;
+    }
 }

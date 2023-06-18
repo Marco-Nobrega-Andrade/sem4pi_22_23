@@ -123,6 +123,9 @@ public class AttendClient implements Runnable{
                             }
                         }
                         break;
+                    case SBPMessageFormat.LIST_NOTIFICATION_SEND:
+                        new ListNotificationsRequest().listUserNotifications(outputStream);
+                        break;
                 }
             }while (arrayFormat[SBPMessageFormat.CODE_OFFSET] != SBPMessageFormat.DISCONN_CODE) ;
         } catch (IOException e) {
