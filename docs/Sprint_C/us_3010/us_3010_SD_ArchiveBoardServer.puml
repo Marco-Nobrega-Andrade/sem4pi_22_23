@@ -3,10 +3,10 @@ autonumber
 title ArchiveBoard - SharedBoardServer
 
 participant ": AttendClient" as UI <<UI>>
-participant ": ArchiveBoardRequest" as ABR <<UI>>
 participant ": DataInputStream" as DIS
-participant ": DataOutputStream" as DOS
+participant ": ArchiveBoardRequest" as ABR <<UI>>
 participant ": SBPMessageFormat" as SBPMF
+participant ": DataOutputStream" as DOS
 control "ArchiveBoardController" as CTRL <<ShareBoardServer>> <<Application>>
 participant ": ArchiveBoardService" as SBS <<Service>>
 participant ": Board" as B <<Domain>>
@@ -16,14 +16,14 @@ database ": BoardRepository" as BR <<Repository>>
 participant ": AddNotificationService" as ANS <<Service>>
 participant ": AddTaskToBoardHistoryService" as ATTBHS <<Service>>
 activate UI
-UI -> ABR : archiveBoard(message, outputStream)
-activate ABR
-ABR -> DIS : readUTF()
+UI -> DIS : readUTF()
 activate DIS
 return message
-ABR -> SBPMF : decodeFormat(message)
+UI -> SBPMF : decodeFormat(message)
 activate SBPMF
 return arrayFormat
+UI -> ABR : archiveBoard(message, outputStream)
+activate ABR
 ABR -> SBPMF : decodeParams(message)
 activate SBPMF
 return params
