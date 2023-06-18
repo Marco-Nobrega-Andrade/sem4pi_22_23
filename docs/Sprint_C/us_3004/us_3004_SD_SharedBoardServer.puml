@@ -3,10 +3,10 @@ autonumber
 title ShareBoard - SharedBoardServer
 
 participant ": AttendClient" as UI <<UI>>
-participant ": ShareBoardRequest" as SBR <<UI>>
 participant ": DataInputStream" as DIS
-participant ": DataOutputStream" as DOS
+participant ": ShareBoardRequest" as SBR <<UI>>
 participant ": SBPMessageFormat" as SBPMF
+participant ": DataOutputStream" as DOS
 control "ShareBoardController" as CTRL <<ShareBoardServer>> <<Application>>
 participant ": ShareBoardService" as SBS <<Service>>
 participant ": Person" as P <<Domain>>
@@ -17,14 +17,14 @@ database PersonRepository as PR <<Repository>>
 participant ": AddNotificationService" as ANS <<Service>>
 participant ": AddTaskToBoardHistoryService" as ATTBHS <<Service>>
 activate UI
-UI -> SBR : shareBoard(message, outputStream)
-activate SBR
-SBR -> DIS : readUTF()
+UI -> DIS : readUTF()
 activate DIS
 return message
-SBR -> SBPMF : decodeFormat(message)
+UI -> SBPMF : decodeFormat(message)
 activate SBPMF
 return arrayFormat
+UI -> SBR : shareBoard(message, outputStream)
+activate SBR
 SBR -> SBPMF : decodeParams(message)
 activate SBPMF
 return params
