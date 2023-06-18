@@ -1,6 +1,6 @@
 #True/False Question
 #Points: 10
-#Question: Grande Questão!
+#Question: Is a platypus a mammal?
 #Answer:
 #Solution: T
-#Feedback: Pay attention!
+#Feedback: Despite laying eggs, platypus is a mammal.

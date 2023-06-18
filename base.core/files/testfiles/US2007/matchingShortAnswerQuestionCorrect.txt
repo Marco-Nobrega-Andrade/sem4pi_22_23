@@ -1,6 +1,6 @@
 #Short Answer
-#Points: 3
+#Points: 10
 #Question: Capital of Brazil?
 #Answer:
 #Solution: Brasilia
-#Feedback: Very good
+#Feedback: Its Brasilia
