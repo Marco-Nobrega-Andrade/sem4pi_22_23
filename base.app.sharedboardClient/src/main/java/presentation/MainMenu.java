@@ -22,24 +22,20 @@ package presentation;/*
  * SOFTWARE.
  */
 
-import eapli.base.Application;
 import eapli.framework.actions.menu.Menu;
-import eapli.framework.infrastructure.authz.application.AuthorizationService;
-import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.presentation.console.AbstractUI;
 import eapli.framework.presentation.console.ExitWithMessageAction;
-import eapli.framework.presentation.console.menu.HorizontalMenuRenderer;
 import eapli.framework.presentation.console.menu.MenuItemRenderer;
 import eapli.framework.presentation.console.menu.MenuRenderer;
 import eapli.framework.presentation.console.menu.VerticalMenuRenderer;
 import presentation.archiveBoard.ArchiveBoardAction;
 import presentation.historyOfUpdates.HistoryOfUpdatesAction;
+import presentation.listNotifications.ListNotificationsAction;
 import presentation.postIt.ChangePostItContentAction;
 import presentation.postIt.ChangePostItPositionAction;
 import presentation.postIt.CreatePostItAction;
 import presentation.postIt.UndoLastChangeInPostItAction;
 import presentation.shareBoard.ShareBoardAppAction;
-import presentation.shareBoard.ShareBoardUI;
 import presentation.viewInRealTime.ViewInRealTimeAction;
 
 import java.net.Socket;
@@ -73,6 +69,7 @@ public class MainMenu extends AbstractUI {
     private static final int HISTORY_OF_UPDATES_OPTION = 7;
 
     private static final int VIEW_IN_REAL_TIME = 8;
+    private static final int NOTIFICATIONS = 9;
 
 
     // private static final int COMMTEST_OPTION = 1;
@@ -94,11 +91,7 @@ public class MainMenu extends AbstractUI {
     public boolean doShow() {
         final Menu menu = buildMainMenu();
         final MenuRenderer renderer;
-        if (Application.settings().isMenuLayoutHorizontal()) {
-            renderer = new HorizontalMenuRenderer(menu, MenuItemRenderer.DEFAULT);
-        } else {
-            renderer = new VerticalMenuRenderer(menu, MenuItemRenderer.DEFAULT);
-        }
+        renderer = new VerticalMenuRenderer(menu, MenuItemRenderer.DEFAULT);
         return renderer.render();
     }
 
@@ -118,7 +111,7 @@ public class MainMenu extends AbstractUI {
         mainMenu.addItem(UNDO_LAST_CHANGE_IN_A_POST_IT, "Undo last change in a Post-it", new UndoLastChangeInPostItAction(socket));
         mainMenu.addItem(HISTORY_OF_UPDATES_OPTION, "History of Updates", new HistoryOfUpdatesAction(socket));
         mainMenu.addItem(VIEW_IN_REAL_TIME, "View Board In Real Time", new ViewInRealTimeAction(socket));
-
+        mainMenu.addItem(NOTIFICATIONS, "Notifications", new ListNotificationsAction(socket));
         mainMenu.addItem(EXIT_OPTION, "Exit", new ExitWithMessageAction("Bye, Bye"));
         return mainMenu;
     }
