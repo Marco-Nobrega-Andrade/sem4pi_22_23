@@ -81,16 +81,8 @@ public class ViewInRealTimeUI extends AbstractUI {
 
                                 return false;
                             }
-                            dosServer.writeUTF(new String(SBPMessageFormat.createViewInRealTimeRequest(board)));
-                            String boardInfo = disServer.readUTF();
-                            int[] format = SBPMessageFormat.decodeFormat(boardInfo.getBytes());
-                            if (format[1] == SBPMessageFormat.BOARD_INFO_CODE) {
-                                List<List <String>> boardCellsInfo = SBPMessageFormat.decodeDTO(boardInfo.getBytes());
-                                ViewInRealTimeRequest request = new ViewInRealTimeRequest(cliSock, BASE_FOLDER, boardCellsInfo,board);
-                                request.start();
-                            }else if (format[1] == SBPMessageFormat.ERR_CODE){
-                                System.out.println(SBPMessageFormat.decodeParam(boardInfo.getBytes()));
-                            }
+                            ViewInRealTimeRequest request = new ViewInRealTimeRequest(cliSock, BASE_FOLDER,board, socketServer);
+                            request.start();
                         }
                     }
                 }else{

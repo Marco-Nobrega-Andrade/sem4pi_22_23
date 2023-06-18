@@ -1,5 +1,7 @@
 package presentation.viewInRealTime;
 
+import eapli.base.sharedBoard.SBPMessageFormat;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -12,63 +14,87 @@ public class ViewInRealTimeRequest extends Thread {
     private String baseFolder;
     private Socket sock;
 
-    private List<List<String>> boardCellsInfo;
-
     private DataInputStream inS;
     private DataOutputStream outS;
-
     private String boardTitle;
 
-    public ViewInRealTimeRequest (Socket s, String f, List<List<String>> boardCellsInfo, String boardTitle){
+    private Socket socketServer;
+
+    public ViewInRealTimeRequest (Socket s, String f, String boardTitle, Socket server){
         baseFolder=f;
         sock=s;
-        this.boardCellsInfo = boardCellsInfo;
         this.boardTitle = boardTitle;
+        this.socketServer = server;
     }
     public void run() {
+        var clientIp = socketServer.getInetAddress().getHostAddress();
+        DataOutputStream dosServer;
+        DataInputStream disServer;
         try {
-            outS = new DataOutputStream(sock.getOutputStream());
-            inS = new DataInputStream(sock.getInputStream());
-        }
-        catch(IOException ex) { System.out.println("Thread error on data streams creation"); }
-        try {
-            HTTPmessage request = new HTTPmessage(inS);
-            HTTPmessage response = new HTTPmessage();
+            Socket socketServerClone = new Socket(clientIp, 5000);
 
-            if(request.getMethod().equals("GET")) {
-                if (request.getURI().equals("/table")) {
-                    String content = getTableInHTML(boardCellsInfo,boardTitle);
-                    if (content != null) {
-                        response.setContentFromString(content, "text/html");
-                        response.setResponseStatus("200 Ok");
-                    } else {
-                        response.setContentFromString(
-                                "<span id=\"loading\">Error loading content, trying again...</span>", "text/html");
-                        response.setResponseStatus("404 Not Found");
-                    }
-                } else {
-                    String fullname = baseFolder/* + "/"*/;
-                    if (request.getURI().equals("/")) fullname += "/index.html";
-                    else fullname += request.getURI();
+            try {
+                dosServer= new DataOutputStream(socketServerClone.getOutputStream());
+                disServer = new DataInputStream(socketServerClone.getInputStream());
+                outS = new DataOutputStream(sock.getOutputStream());
+                inS = new DataInputStream(sock.getInputStream());
 
-                    if (response.setContentFromFile(fullname)) {
-                        response.setResponseStatus("200 Ok");
-                    } else {
-                        response.setContentFromString(
-                                "<html><body><h1>404 File not found</h1></body></html>", "text/html");
-                        response.setResponseStatus("404 Not Found");
+                try {
+                    HTTPmessage request = new HTTPmessage(inS);
+                    HTTPmessage response = new HTTPmessage();
+                    String content =  null;
+
+                    if(request.getMethod().equals("GET")) {
+                        if (request.getURI().equals("/table")) {
+                            dosServer.writeUTF(new String(SBPMessageFormat.createViewInRealTimeRequest(boardTitle)));
+                            String boardInfo = disServer.readUTF();
+                            int[] format = SBPMessageFormat.decodeFormat(boardInfo.getBytes());
+                            if (format[1] == SBPMessageFormat.BOARD_INFO_CODE) {
+                                List<List<String>> boardCellsInfo = SBPMessageFormat.decodeDTO(boardInfo.getBytes());
+                                content = getTableInHTML(boardCellsInfo,boardTitle);
+                            }else if (format[1] == SBPMessageFormat.ERR_CODE){
+                                System.out.println(SBPMessageFormat.decodeParam(boardInfo.getBytes()));
+                            }
+                            if (content != null) {
+                                response.setContentFromString(content, "text/html");
+                                response.setResponseStatus("200 Ok");
+                            } else {
+                                response.setContentFromString(
+                                        "<span id=\"loading\">Error loading content, trying again...</span>", "text/html");
+                                response.setResponseStatus("404 Not Found");
+                            }
+                        } else {
+                            String fullname = baseFolder/* + "/"*/;
+                            if (request.getURI().equals("/")) fullname += "/index.html";
+                            else fullname += request.getURI();
+
+                            if (response.setContentFromFile(fullname)) {
+                                response.setResponseStatus("200 Ok");
+                            } else {
+                                response.setContentFromString(
+                                        "<html><body><h1>404 File not found</h1></body></html>", "text/html");
+                                response.setResponseStatus("404 Not Found");
+                            }
+                        }
+                        response.send(outS);
                     }
+
+                }catch(IOException ex) {
+                    System.out.println("Thread error when reading request");
                 }
-                response.send(outS);
+
             }
-        }catch(IOException ex) {
-            System.out.println("Thread error when reading request");
-        }
-        try {
-            sock.close();
-        }
-        catch(IOException ex) {
-            System.out.println("CLOSE IOException");
+            catch(IOException ex) { System.out.println("Thread error on data streams creation"); }
+
+            try {
+                sock.close();
+                socketServerClone.close();
+            }
+            catch(IOException ex) {
+                System.out.println("CLOSE IOException");
+            }
+        } catch (IOException e) {
+            System.out.println("Error when communicating to the server");
         }
     }
 
