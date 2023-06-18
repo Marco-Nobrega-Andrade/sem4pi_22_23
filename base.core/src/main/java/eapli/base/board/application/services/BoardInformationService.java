@@ -22,16 +22,20 @@ public class BoardInformationService {
         List<CellDTOWithColumnRowPostItCreator> listCellDTO = new ArrayList<>();
 
         for (Cell cell: cellsList) {
-            try{
-            Person person = boardRepository.getCreatorOfAPostItBoardOwner(cell);
-            listCellDTO.add(CellDTOWithColumnRowPostItCreatorMapper.toDTO(cell,person));
-            }catch (NoResultException owner){
+            if(cell.hasPostIt()) {
                 try {
-                    Person person = boardRepository.getCreatorOfAPostItBoardParticipant(cell);
+                    Person person = boardRepository.getCreatorOfAPostItBoardOwner(cell);
                     listCellDTO.add(CellDTOWithColumnRowPostItCreatorMapper.toDTO(cell, person));
-                }catch (NoResultException participant){
-                    listCellDTO.add(CellDTOWithColumnRowPostItCreatorMapper.toDTO(cell, null));
+                } catch (NoResultException owner) {
+                    try {
+                        Person person = boardRepository.getCreatorOfAPostItBoardParticipant(cell);
+                        listCellDTO.add(CellDTOWithColumnRowPostItCreatorMapper.toDTO(cell, person));
+                    } catch (NoResultException participant) {
+                        listCellDTO.add(CellDTOWithColumnRowPostItCreatorMapper.toDTO(cell, null));
+                    }
                 }
+            }else{
+                listCellDTO.add(CellDTOWithColumnRowPostItCreatorMapper.toDTO(cell, null));
             }
         }
         return listCellDTO;
